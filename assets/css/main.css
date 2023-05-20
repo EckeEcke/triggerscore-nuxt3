@@ -2,11 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-    font-family: Pixel;
-    src: url("./assets/Thirteen-Pixel-Fonts.ttf");
-}
-
 .hide-scrollbar::-webkit-scrollbar {
     display: none;
 }
