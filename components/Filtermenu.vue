@@ -1,6 +1,6 @@
 <template>
     <client-only>
-        <div class="container sm:px-4 xl:w-10/12 mx-auto">
+        <div class="container hidden lg:block sm:px-4 xl:w-10/12 mx-auto">
             <div class="text-left pt-4 lg:pt-0 pb-5">
                 <h2 class="text-2xl md:text-3xl font-semibold mb-2 text-white">
                     {{ $t('index.headline') }}

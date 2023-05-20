@@ -37,11 +37,11 @@
         <Searchbox v-if="!isLoading" />
         <div v-if="!isLoading">
             <div class="container px-4 xl:w-10/12 mx-auto flex flex-col mt-8 mb-4">
-                <div class="text-left xl:hidden">
+                <div class="text-left lg:hidden">
                     <h2 class="text-2xl md:text-3xl font-semibold mb-2 text-yellow-500 ">{{ $t('index.headline') }}</h2>
                     <p class="text-sm text-white ">{{ $t('index.intro1') }}<span class="text-yellow-500 transition hover:text-yellow-600 font-semibold cursor-pointer" @click="focusSearch">{{ $t('index.search') }}</span>{{ $t('index.intro2') }}</p>
                 </div>
-                <div class="ml-auto mt-4 -mr-2 sm:mr-0 xl:hidden">
+                <div class="ml-auto mt-4 -mr-2 sm:mr-0 lg:hidden">
                     <button 
                         class="bg-yellow-500 text-white uppercase disabled:opacity-50 font-semibold p-3 rounded-lg shadow-lg transition duration-300 hover:scale-105 hover:bg-yellow-600" 
                         @click="handleMenu"
@@ -51,7 +51,7 @@
                     </button>
                 </div>  
             </div>
-            <Filtermenu class="hidden xl:block mt-4" />
+            <Filtermenu class="mt-4" />
             <LoadingAnimation v-if="isFiltering" />
             <section 
                 v-if="!isLoading && filteredMovies.length > 0 && !isFiltering" 
