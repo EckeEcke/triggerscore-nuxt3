@@ -16,7 +16,8 @@
             <span class="md:hidden flex self-center"><font-awesome-icon :icon="['fas', 'bars']" class="text-white text-lg self-center" @click="showNav = !showNav; showMenu = false; showSearch = false" /></span>
           </div>   
         </section>
-        <transition-group  
+        <Teleport to="#__nuxt">
+          <transition-group  
           enter-active-class="duration-300 ease-out"
           enter-from-class="opacity-0" 
           enter-to-class="opacity-100" 
@@ -24,8 +25,8 @@
           leave-from-class="opacity-100" 
           leave-to-class="opacity-0"
         >
-          <div v-if="showNav" key="backdrop" class="absolute bg-gray-900 bg-opacity-40 top-0 left-0 w-full h-screen overflow-none"  @click="showNav = false" />
-          <nav v-if="showNav" key="sidebar" class="w-80 bg-gray-900 bg-opacity-80 backdrop-blur h-screen absolute top-0 right-0 shadow-lg md:hidden z-40">
+          <div v-if="showNav" key="backdrop" class="fixed bg-gray-900 bg-opacity-40 top-0 left-0 w-full h-screen overflow-none"  @click="showNav = false" />
+          <nav v-if="showNav" key="sidebar" class="w-80 bg-gray-900 bg-opacity-80 backdrop-blur h-screen fixed top-0 right-0 shadow-lg md:hidden z-40">
             <div class="text-right text-xl p-4 text-white">
               <font-awesome-icon :icon="['fas', 'times']" @click="showNav = false" />
             </div>
@@ -41,6 +42,8 @@
             <NuxtLink to="/contact" tag="a" class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase"><div class="py-6" @click="showNav = false">{{ $t('header.contact') }}</div></NuxtLink>      
           </nav>
         </transition-group>
+        </Teleport>
+        
         <div v-if="showSearch" class="absolute top-0 left-0">
           <div class="relative h-screen w-screen bg-gray-900 bg-opacity-90 overflow-none backdrop-blur">
             <div class="absolute top-0 left-0 w-full h-full" @click="showSearch = false" />
