@@ -10,7 +10,7 @@
             />
             <Meta 
                 name="keywords" 
-                :content="movie.title, 'triggerscore', 'rating'"
+                :content="'Triggerscore, triggering movies'+ movie.title"
             />
             <Meta 
                 name="desription" 
