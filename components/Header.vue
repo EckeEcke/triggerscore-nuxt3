@@ -1,8 +1,8 @@
 <template>
     <header class="w-full h-auto bg-red-950 bg-opacity-95 z-30 shadow-md flex flex-col sticky top-0">
         <section class="container mx-auto h-full p-4 xl:w-10/12 flex justify-between">
-          <div class="flex">
-            <NuxtLink to="/" tag="h1" class="leading-5 text-xl md:leading-6 md:text-2xl self-center font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200 cursor-pointer">
+          <div class="flex" style="transform: translateY(-3px)">
+            <NuxtLink to="/" tag="h1" class="leading-none text-xl md:leading-6 md:text-2xl self-center font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200 cursor-pointer">
               TRIGGERSC<angry-animation />RE  <!--<font-awesome-icon :icon="['fas', 'angry']" class="text-white" />-->
             </NuxtLink>
           </div>

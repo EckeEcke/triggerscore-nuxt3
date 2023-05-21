@@ -1,6 +1,6 @@
 <template>
     <section v-if="store.triggerscores.length > 0" class="bg-transparent text-white py-6 md:pt-4 md:pb-12 md:px-0 text-left text-sm mx-auto md:rounded flex flex-col gap-x-12">
-      <div class="w-full px-4 sm:px-0 mb-8">
+      <div class="w-full px-4 sm:px-0 mb-12">
         <div class=" font-semibold w-full flex flex-col lg:flex-row  lg:gap-16">
           <div class="w-full lg:w-1/3">
             <div class="flex justify-between items-center border-b border-gray-800 py-4 gap-4">
