@@ -86,31 +86,28 @@ const form = ref(
 )
 
 if(route.query.comment){
-            form.value.message = t("contact.report") + route.query.id + " - '" + route.query.comment + "...'"
-        }
-    console.log(form.value.message)
+    form.value.message = t("contact.report") + route.query.id + " - '" + route.query.comment + "...'"
+}
+
 const submitted = ref(false)
 
-
-
-
-    function encode (data: any) {
-      return Object.keys(data)
-        .map(
-          key => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`
-        )
-        .join("&");
-    }
-    async function handleSubmit () {
-      await useFetch( '/', {
-        method: 'POST',
-        body: encode({
-          "form-name": "contact",
-          ...form
-        })
-    } )
-      .then(() => submitted.value = true)
-      .catch((error: any)=>console.log(error))
-    }
+function encode (data: any) {
+    return Object.keys(data)
+    .map(
+        key => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`
+    )
+    .join("&");
+}
+async function handleSubmit () {
+    await useFetch( '/', {
+    method: 'POST',
+    body: encode({
+        "form-name": "contact",
+        ...form
+    })
+} )
+    .then(() => submitted.value = true)
+    .catch((error: any)=>console.log(error))
+}
 
 </script>
