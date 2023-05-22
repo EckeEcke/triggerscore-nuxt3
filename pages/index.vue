@@ -1,6 +1,6 @@
 <template>
     <Head>
-        <Title>Triggerscore</Title>
+        <Title>Triggerscore - rating triggering movies</Title>
         <Meta 
             charset="UTF-8"
         />
