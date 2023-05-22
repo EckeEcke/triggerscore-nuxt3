@@ -102,7 +102,7 @@ const submitted = ref(false)
         .join("&");
     }
     async function handleSubmit () {
-      await $fetch( '/', {
+      await useFetch( '/', {
         method: 'POST',
         body: encode({
           "form-name": "contact",
