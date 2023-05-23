@@ -13,7 +13,7 @@
                 :content="'Triggerscore, triggering movies'+ movie.title"
             />
             <Meta 
-                name="desription" 
+                name="description" 
                 :content="'triggerscore rating for ' + movie.title"
             />
             <Meta 
@@ -30,7 +30,7 @@
             <div v-else class="flex flex-col lg:flex-row lg:rounded-b px-0 sm:px-4 md:px-0">
                 <div class="flex flex-col w-full radial-background text-white rounded-t lg:rounded justify-start lg:mr-6 md:p-4">
                     <div class="flex justify-between w-full sm:rounded-t p-4 pr-0">
-                        <img :src=poster class="w-1/2 lg:w-76 h-auto object-contain self-start rounded self-center" />
+                        <img :src=poster alt="movie poster" class="w-1/2 lg:w-76 h-auto object-contain self-start rounded self-center" />
                         <div v-if="scoreAvailable" class="w-full flex flex-col mx-2 self-center rounded-tr">
                             <div class="text-base md:text-2xl lg:text-lg self-center font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200">
                                 TRIGGERSC<font-awesome-icon :icon="['fas', 'angry']" class="text-white" />RE
@@ -106,22 +106,22 @@
                             <div class="flex justify-between my-4 mb-8 align-end">   
                                 <div class="streaming-services flex gap-4 w-full">
                                     <a  v-if="onNetflix" href="https://www.netflix.com" target="_blank" class="self-center">
-                                    <img class="w-16" src="https://image.tmdb.org/t/p/original/wwemzKWzjKYJFfCeiB57q3r4Bcm.svg">
+                                    <img class="w-16" alt="Logo Netflix" src="https://image.tmdb.org/t/p/original/wwemzKWzjKYJFfCeiB57q3r4Bcm.svg">
                                     </a>
                                     <a v-if="onAmazon" href="https://www.amazon.de/primevideo" target="_blank" class="self-center -mx-2">
-                                        <img  class="w-16" src="../assets/images/amazon-prime-logo3.svg">
+                                        <img  class="w-16" alt="Logo Prime Video" src="../assets/images/amazon-prime-logo3.svg">
                                     </a>
                                     <a v-if="onDisney" href="https://www.disneyplus.com/" target="_blank" class="self-center">
-                                        <img class="w-16" src="../assets/images/disney+-logo2.svg">
+                                        <img class="w-16" alt="Logo Disney Plus" src="../assets/images/disney+-logo2.svg">
                                     </a>
                                     <a v-if="onSky" href="https://skyticket.sky.de/home/login" target="_blank" class="self-center">
-                                        <img class="w-16" src="../assets/images/sky-logo.svg">
+                                        <img class="w-16" alt="Logo WOW" src="../assets/images/sky-logo.svg">
                                     </a>
                                     <a class="self-center" v-if="movie.id" :href="tmdbURL" target="_blank">
-                                        <img class="w-16" src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_1-5bdc75aaebeb75dc7ae79426ddd9be3b2be1e342510f8202baf6bffa71d7f5c4.svg">
+                                        <img class="w-16" alt="Logo TMDB" src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_1-5bdc75aaebeb75dc7ae79426ddd9be3b2be1e342510f8202baf6bffa71d7f5c4.svg">
                                     </a>
                                     <a class="self-center" v-if="movie.imdb_id" :href="imdbURL" target="_blank">
-                                        <img class="w-16" src="../assets/images/imdb-logo.svg">
+                                        <img class="w-16" alt="Logo IMDB" src="../assets/images/imdb-logo.svg">
                                     </a>
                                     
                                 </div>
@@ -156,11 +156,11 @@
                             class=""       
                             data-action="share/whatsapp/share"  
                             target="_blank"> 
-                            <img class="w-10" src="../assets/images/WhatsApp.svg">
+                            <img class="w-10" alt="Logo WhatsApp" src="../assets/images/WhatsApp.svg">
                         </a>
                         <a :href="'https://www.reddit.com/submit?url=' + currentURL"
                             target="_blank">
-                            <img class="w-10" src="../assets/images/reddit-logo.svg">
+                            <img alt="Logo Reddit" class="w-10" src="../assets/images/reddit-logo.svg">
                         </a>
                         <a :href="'mailto:?subject= ' + movie.title + ' on Triggerscore&body=Check out ' + movie.title + ' on Triggerscore: ' + currentURL"
                             title="Share by Email">

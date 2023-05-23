@@ -9,7 +9,7 @@
             content="triggering movies, ratings"
         />
         <Meta 
-            name="desription" 
+            name="description" 
             content="a website for rating old movies based on how much these trigger viewers today"
         />
         <Meta 

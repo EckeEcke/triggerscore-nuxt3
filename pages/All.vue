@@ -10,7 +10,7 @@
                 content="triggering movies, triggerscore"
             />
             <Meta 
-                name="desription" 
+                name="description" 
                 content="All the movies on Triggerscore"
             />
             <Meta 

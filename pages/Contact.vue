@@ -10,7 +10,7 @@
                 content="triggering movies, contact Triggerscore"
             />
             <Meta 
-                name="desription" 
+                name="description" 
                 content="contact page for Triggerscore"
             />
             <Meta 
@@ -55,11 +55,19 @@
             <h1 class="mb-4 text-xl md:text-2xl font-semibold uppercase">{{ t('header.contact') }}</h1>
             <p class="font-semibold">Christian Eckardt</p>
             <p class="mb-8 font-semibold">22301 Hamburg</p>
-            <p class="mb-8 font-semibold"><a href="https://eckeecke.github.io">eckeecke.github.io</a></p>
+            <p class="mb-8 font-semibold">
+                <a href="https://eckeecke.github.io">eckeecke.github.io</a>
+            </p>
             <p class="mb-8 flex">
-                <a href="https://github.com/EckeEcke" target="_blank"><img class="h-10 mr-4 filter invert" src="../assets/images/github.svg" /></a>
-                <a href="https://www.linkedin.com/in/christian-eckardt-41527216a/" target="_blank"><img class="h-10 mr-4" src="../assets/images/linkedin.svg" /></a>
-                <a href="https://www.xing.com/profile/Christian_Eckardt21/cv" target="_blank"><img class="h-10 mr-4" src="../assets/images/xing.svg" /></a>
+                <a href="https://github.com/EckeEcke" target="_blank">
+                    <img alt="Logo Github" class="h-10 mr-4 filter invert" src="../assets/images/github.svg" />
+                </a>
+                <a href="https://www.linkedin.com/in/christian-eckardt-41527216a/" target="_blank">
+                    <img alt="Logo LinkedIn" class="h-10 mr-4" src="../assets/images/linkedin.svg" />
+                </a>
+                <a href="https://www.xing.com/profile/Christian_Eckardt21/cv" target="_blank">
+                    <img alt="Logo Xing" class="h-10 mr-4" src="../assets/images/xing.svg" />
+                </a>
             </p>
         </div>  
     </div>

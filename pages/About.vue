@@ -10,7 +10,7 @@
               content="triggering movies, about Triggerscore"
           />
           <Meta 
-              name="desription" 
+              name="description" 
               content="information on what Triggerscore is about"
           />
           <Meta 
