@@ -104,7 +104,6 @@ function scrollRatings() {
     const ratings = document.getElementsByClassName("rating") // for fixing issues with flex-end and overflow-hidden
     for (let i = 0; i < ratings.length; i++) {
         ratings[i].scrollLeft -= 500;
-        console.log(ratings[i]);
     }
 }
 function submitRating(event: Event) {

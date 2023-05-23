@@ -35,7 +35,6 @@ const store = useStore()
 async function searchMovie() {
     if(store.searchInput.length > 0){
         await store.setSearchResults()
-        console.log('waited')
         router.push('/search')
     } 
 }
