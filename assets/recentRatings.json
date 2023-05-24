@@ -1,68 +1,391 @@
 [
     {
-        "id": 300,
-        "movie_id": 2169,
-        "rating_sexism": 7,
-        "rating_racism": 4,
-        "rating_others": 1,
-        "rating_cringe": 6,
-        "comment": "Nacktbilder von einer 14-jährigen (?)",
-        "liked": 1,
-        "disliked": 0
+       "adult":false,
+       "backdrop_path":"/sPzjFWvrcabcn1SoAZJm2WuCcBD.jpg",
+       "belongs_to_collection":{
+          "id":9338,
+          "name":"Police Academy Filmreihe",
+          "poster_path":"/3z1bV9HPdr7RJcpHs3HoEWmVtbU.jpg",
+          "backdrop_path":"/sNFFherrqugVmjqTXtENuAocQcN.jpg"
+       },
+       "budget":4500000,
+       "genres":[
+          {
+             "id":35,
+             "name":"Komödie"
+          },
+          {
+             "id":80,
+             "name":"Krimi"
+          }
+       ],
+       "homepage":"",
+       "id":9336,
+       "imdb_id":"tt0087928",
+       "original_language":"en",
+       "original_title":"Police Academy",
+       "overview":"Hier tobt die beknackteste, verrückteste und ausgeflippteste Polizei-Truppe aller Zeiten. Ein wild zusammengewürfelter Haufen: Tölpel, Freizeitsheriffs und total unfähige Taugenichtse melden sich zum Dienst. Die Ausbilder versuchen vergeblich, die Rekruten hinzubiegen. Die Witzfiguren in Uniform, die zuerst schießen, bevor sie ihr Gehirn einschalten, versetzen die hilfesuchenden Bürger der Stadt in Angst und Schrecken.",
+       "popularity":25.048,
+       "poster_path":"/9ydY1hqKDmKKByOKjwzNuRt78oS.jpg",
+       "production_companies":[
+          {
+             "id":7965,
+             "logo_path":null,
+             "name":"The Ladd Company",
+             "origin_country":"US"
+          },
+          {
+             "id":174,
+             "logo_path":"/IuAlhI9eVC9Z8UQWOIDdWRKSEJ.png",
+             "name":"Warner Bros. Pictures",
+             "origin_country":"US"
+          }
+       ],
+       "production_countries":[
+          {
+             "iso_3166_1":"US",
+             "name":"United States of America"
+          }
+       ],
+       "release_date":"1984-03-22",
+       "revenue":81198894,
+       "runtime":96,
+       "spoken_languages":[
+          {
+             "english_name":"English",
+             "iso_639_1":"en",
+             "name":"English"
+          }
+       ],
+       "status":"Released",
+       "tagline":"Merke: Ruf' sie niemals , wenn Du sie brauchst!",
+       "title":"Police Academy - Dümmer als die Polizei erlaubt",
+       "video":false,
+       "vote_average":6.656,
+       "vote_count":2316
     },
     {
-        "id": 299,
-        "movie_id": 274167,
-        "rating_sexism": 2,
-        "rating_racism": 0,
-        "rating_others": 0,
-        "rating_cringe": 1,
-        "comment": "It's alright.",
-        "liked": 1,
-        "disliked": 0
+       "adult":false,
+       "backdrop_path":"/w9eBtIHHpGgGfjqnEAJM3s7mCOa.jpg",
+       "belongs_to_collection":{
+          "id":328,
+          "name":"Jurassic Park Filmreihe",
+          "poster_path":"/ugJ6KXdOXq5wAKSypsKBTg0OgWv.jpg",
+          "backdrop_path":"/njFixYzIxX8jsn6KMSEtAzi4avi.jpg"
+       },
+       "budget":73000000,
+       "genres":[
+          {
+             "id":12,
+             "name":"Abenteuer"
+          },
+          {
+             "id":28,
+             "name":"Action"
+          },
+          {
+             "id":878,
+             "name":"Science Fiction"
+          }
+       ],
+       "homepage":"",
+       "id":330,
+       "imdb_id":"tt0119567",
+       "original_language":"en",
+       "original_title":"The Lost World: Jurassic Park",
+       "overview":"Vier Jahre nach dem Desaster im Jurassic Park: Auf einer nahegelegenen Insel haben die Dinosaurier unbemerkt überlebt und können sich frei bewegen. Doch jetzt droht eine noch viel größere Gefahr - der Plan, die Dinosaurier einzufangen und auf das Festland zu bringen. John Hammond, der die Kontrolle über seine Gesellschaft \"InGen\" verloren hat, sieht die Chance, seine Fehler aus der Vergangenheit wiedergutzumachen und sendet eine Expedition, geleitet von Ian Malcolm, zur Insel, bevor der beauftragte Jagd-Trupp dort ankommt. Die zwei Gruppen stehen sich in extremer Gefahr gegenüber und müssen sich in einem Wettlauf gegen die Zeit zusammenschließen, um zu überleben...",
+       "popularity":1.798,
+       "poster_path":"/zZgk9X8YWlUBZv7ZqkCRQv5hxzL.jpg",
+       "production_companies":[
+          {
+             "id":33,
+             "logo_path":"/8lvHyhjr8oUKOOy2dKXoALWKdp0.png",
+             "name":"Universal Pictures",
+             "origin_country":"US"
+          },
+          {
+             "id":56,
+             "logo_path":"/cEaxANEisCqeEoRvODv2dO1I0iI.png",
+             "name":"Amblin Entertainment",
+             "origin_country":"US"
+          },
+          {
+             "id":76068,
+             "logo_path":null,
+             "name":"Digital Image Associates",
+             "origin_country":""
+          }
+       ],
+       "production_countries":[
+          {
+             "iso_3166_1":"US",
+             "name":"United States of America"
+          }
+       ],
+       "release_date":"1997-05-23",
+       "revenue":618638999,
+       "runtime":129,
+       "spoken_languages":[
+          {
+             "english_name":"English",
+             "iso_639_1":"en",
+             "name":"English"
+          }
+       ],
+       "status":"Released",
+       "tagline":"Etwas hat überlebt",
+       "title":"Vergessene Welt: Jurassic Park",
+       "video":false,
+       "vote_average":6.527,
+       "vote_count":7511
     },
     {
-        "id": 298,
-        "movie_id": 9988,
-        "rating_sexism": 8,
-        "rating_racism": 7,
-        "rating_others": 7,
-        "rating_cringe": 9,
-        "comment": "",
-        "liked": 0,
-        "disliked": 1
+       "adult":false,
+       "backdrop_path":"/aRVQ1EgTx3vbhK6qls2O834bPQc.jpg",
+       "belongs_to_collection":null,
+       "budget":812000,
+       "genres":[
+          {
+             "id":16,
+             "name":"Animation"
+          },
+          {
+             "id":10751,
+             "name":"Familie"
+          }
+       ],
+       "homepage":"",
+       "id":11360,
+       "imdb_id":"tt0033563",
+       "original_language":"en",
+       "original_title":"Dumbo",
+       "overview":"Im Wanderzirkus gibt es endlich ein freudiges Ereignis: der Storch ist zu allen verliebten Tieren gekommen und sogar die Elefanten haben Nachwuchs. Doch was für eine Überraschung: der Babyelefant hat riesige Ohren und wird aus Spott bald Dumbo gerufen.Als er einen Auftritt verpatzt und seine besorgte Mutter außer Kontrolle gerät, wird sie eingesperrt und Dumbo ist bis auf seinen Freund, einen Mäuserich ganz allein. Doch nach dem Genuß von mit Champagner versetztem Wasser wacht Dumbo am nächsten Morgen auf einer Telegraphenleitung auf. Dafür kann es nur eine Erklärung geben: mit seinen riesigen Ohren ist der kleine Elefant geflogen...",
+       "popularity":36.637,
+       "poster_path":"/nPgVDz0iw78h0REFE2GufOse7sX.jpg",
+       "production_companies":[
+          {
+             "id":3166,
+             "logo_path":"/vyyv4Gy9nPqAZKElPm2izLlEaVS.png",
+             "name":"Walt Disney Productions",
+             "origin_country":"US"
+          }
+       ],
+       "production_countries":[
+          {
+             "iso_3166_1":"US",
+             "name":"United States of America"
+          }
+       ],
+       "release_date":"1941-10-31",
+       "revenue":1600000,
+       "runtime":64,
+       "spoken_languages":[
+          {
+             "english_name":"English",
+             "iso_639_1":"en",
+             "name":"English"
+          }
+       ],
+       "status":"Released",
+       "tagline":"Der fliegende Elefant",
+       "title":"Dumbo",
+       "video":false,
+       "vote_average":6.998,
+       "vote_count":4454
     },
     {
-        "id": 297,
-        "movie_id": 700,
-        "rating_sexism": 9,
-        "rating_racism": 7,
-        "rating_others": 6,
-        "rating_cringe": 7,
-        "comment": "",
-        "liked": 1,
-        "disliked": 0
+       "adult":false,
+       "backdrop_path":"/suN9hBtwA7uZjzKa2NaA3AJsoAD.jpg",
+       "belongs_to_collection":{
+          "id":165855,
+          "name":"Kleines Arschloch Filmreihe",
+          "poster_path":"/ayIx53r5l0PTX9hRBMoJLMcsrGE.jpg",
+          "backdrop_path":"/oJWaCCfkN4P15PghXNK72f2CR05.jpg"
+       },
+       "budget":0,
+       "genres":[
+          {
+             "id":16,
+             "name":"Animation"
+          },
+          {
+             "id":35,
+             "name":"Komödie"
+          }
+       ],
+       "homepage":"",
+       "id":8990,
+       "imdb_id":"tt0483706",
+       "original_language":"de",
+       "original_title":"Das kleine Arschloch und der alte Sack - Sterben ist Scheiße",
+       "overview":"Der „alte Sack“, der Großvater des kleinen Arschlochs, fällt bei Frau Mövenpicks Beerdigung in einen leeren Sarg, wird lebendig begraben und fährt prompt zur Hölle. Das kleine Arschloch will ihn zurückholen, doch der Großvater hat sich bereits eingelebt: Unter nymphomanen Krankenschwestern genießt er sein Nachleben, sauniert und zieht sich kühle Getränke ein. Auch der Satan, der dem Enkel aufs Haar gleicht, hat sich mit dem alten Sack befreundet. Die Befreiungsversuche des Enkels werden gelegentlich von seinen Eltern gestört, aber auch dadurch, dass ein schwules Pärchen in die Wohnung der verstorbenen Frau Mövenpick einziehen möchte. Die Versuche des kleinen Arschlochs, den Großvater zurückzuholen, darunter Beschwörungen und das Klonen von Frau Mövenpicks Hund, bleiben letztlich erfolglos.",
+       "popularity":1.526,
+       "poster_path":"/9UG6uhke0wsqezWrarJYSicpyqK.jpg",
+       "production_companies":[
+          {
+             "id":25603,
+             "logo_path":null,
+             "name":"TFC Trickompany Filmproduktion",
+             "origin_country":""
+          },
+          {
+             "id":191,
+             "logo_path":"/d5tPJd8jGLtJC5cp9NG0HeoTyoe.png",
+             "name":"Senator Film",
+             "origin_country":"DE"
+          }
+       ],
+       "production_countries":[
+          {
+             "iso_3166_1":"DE",
+             "name":"Germany"
+          }
+       ],
+       "release_date":"2006-10-05",
+       "revenue":0,
+       "runtime":76,
+       "spoken_languages":[
+          {
+             "english_name":"German",
+             "iso_639_1":"de",
+             "name":"Deutsch"
+          }
+       ],
+       "status":"Released",
+       "tagline":"frecher, derber, besser",
+       "title":"Das kleine Arschloch und der alte Sack - Sterben ist Scheiße",
+       "video":false,
+       "vote_average":6,
+       "vote_count":14
     },
     {
-        "id": 296,
-        "movie_id": 9604,
-        "rating_sexism": 6,
-        "rating_racism": 6,
-        "rating_others": 4,
-        "rating_cringe": 4,
-        "comment": "",
-        "liked": 0,
-        "disliked": 1
+       "adult":false,
+       "backdrop_path":"/zq1gg17cE6wu139QAbkCvAXJsUH.jpg",
+       "belongs_to_collection":{
+          "id":96671,
+          "name":"The Human Centipede Filmreihe",
+          "poster_path":"/mv0MySTqfXg2ndthOkBg6bGwlnk.jpg",
+          "backdrop_path":"/iNRMelQcaKeVdinF28uU9YOmvYx.jpg"
+       },
+       "budget":2011799,
+       "genres":[
+          {
+             "id":27,
+             "name":"Horror"
+          }
+       ],
+       "homepage":"",
+       "id":37169,
+       "imdb_id":"tt1467304",
+       "original_language":"en",
+       "original_title":"The Human Centipede (First Sequence)",
+       "overview":"Die Handlung setzt in Deutschland ein und der Protagonist, Dr. Heiter, entführt an einer Autobahnraststätte einen LKW-Fahrer in sein Haus. Später sind die zwei Touristinnen Lindsay und Jenny auf dem Weg zu einer Party, als sie auf einer verlassenen Waldstraße eine Reifenpanne haben. Nachdem sie von einem alten Mann belästigt werden, entscheiden sie sich, durch den Wald zu laufen, um irgendwo ein Telefon zu finden und den Pannendienst anzurufen, da ihre Handys keinen Empfang haben. Sie erreichen schließlich das großzügig angelegte Haus von Dr. Heiter, der die zwei Frauen erst freundlich empfängt, dann aber mit Medikamenten betäubt. Als sie wieder aufwachen, befinden sie sich in einem OP-Raum im Keller des Hauses.",
+       "popularity":29.974,
+       "poster_path":"/4VoiawDnwk8xymdl60xhhSpuko3.jpg",
+       "production_companies":[
+          {
+             "id":5652,
+             "logo_path":null,
+             "name":"Six Entertainment",
+             "origin_country":"NL"
+          }
+       ],
+       "production_countries":[
+          {
+             "iso_3166_1":"NL",
+             "name":"Netherlands"
+          }
+       ],
+       "release_date":"2009-10-31",
+       "revenue":252207,
+       "runtime":90,
+       "spoken_languages":[
+          {
+             "english_name":"English",
+             "iso_639_1":"en",
+             "name":"English"
+          },
+          {
+             "english_name":"German",
+             "iso_639_1":"de",
+             "name":"Deutsch"
+          },
+          {
+             "english_name":"Japanese",
+             "iso_639_1":"ja",
+             "name":"日本語"
+          }
+       ],
+       "status":"Released",
+       "tagline":"100% medizinisch korrekt",
+       "title":"The Human Centipede - Der menschliche Tausendfüßler",
+       "video":false,
+       "vote_average":5.237,
+       "vote_count":1905
     },
     {
-        "id": 295,
-        "movie_id": 4436,
-        "rating_sexism": 8,
-        "rating_racism": 6,
-        "rating_others": 3,
-        "rating_cringe": 6,
-        "comment": "",
-        "liked": 0,
-        "disliked": 1
+       "adult":false,
+       "backdrop_path":"/2MDqPMYUmX7DNZ0yIIDCHpyBC7d.jpg",
+       "belongs_to_collection":{
+          "id":3167,
+          "name":"Ace Ventura Filmreihe",
+          "poster_path":"/qCxH543pScFed1CycwJ1nVgrkOc.jpg",
+          "backdrop_path":"/pbs1VKy9J3MZ8qJI89WdDUNi7wM.jpg"
+       },
+       "budget":15000000,
+       "genres":[
+          {
+             "id":35,
+             "name":"Komödie"
+          },
+          {
+             "id":12,
+             "name":"Abenteuer"
+          }
+       ],
+       "homepage":"",
+       "id":3049,
+       "imdb_id":"tt0109040",
+       "original_language":"en",
+       "original_title":"Ace Ventura: Pet Detective",
+       "overview":"Detektiv Ace Ventura ist darauf spezialisiert, verlorengegangene Haustiere aufzuspüren. Als ihm der Fall des entführten Delphins Snowflake, dem Maskottchen der Footballmannschaft Miami Dolphins, übertragen wird, erweisen sich die animalischen Instinkte des Schnüfflers als äußerst hilfreich. Bei seinen Ermittlungen stößt Ace zwischen Liebesabenteuern und handgreiflichen Auseinandersetzungen mit den Cops schließlich auf einen ehemaligen Dolphins-Spieler, der nach einem Irrenhausaufenthalt untergetaucht ist.",
+       "popularity":23.116,
+       "poster_path":"/h8fixwTBtiEHRHFLjzgulZeHXwp.jpg",
+       "production_companies":[
+          {
+             "id":10210,
+             "logo_path":"/gHaNnHd4LjNAoAG5aJthVrdAjZo.png",
+             "name":"Morgan Creek",
+             "origin_country":"US"
+          },
+          {
+             "id":174,
+             "logo_path":"/IuAlhI9eVC9Z8UQWOIDdWRKSEJ.png",
+             "name":"Warner Bros. Pictures",
+             "origin_country":"US"
+          }
+       ],
+       "production_countries":[
+          {
+             "iso_3166_1":"US",
+             "name":"United States of America"
+          }
+       ],
+       "release_date":"1994-02-04",
+       "revenue":107217396,
+       "runtime":86,
+       "spoken_languages":[
+          {
+             "english_name":"English",
+             "iso_639_1":"en",
+             "name":"English"
+          }
+       ],
+       "status":"Released",
+       "tagline":"Er ist der Beste! Er ist voll drauf. (Eigentlich ist er der Einzige.)",
+       "title":"Ace Ventura - Ein tierischer Detektiv",
+       "video":false,
+       "vote_average":6.543,
+       "vote_count":5148
     }
-]
+ ]

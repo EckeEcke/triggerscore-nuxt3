@@ -70,16 +70,24 @@
 
 <script setup lang="ts">
 import { useStore } from '~/stores/store'
+import placeholderRatings from '~/assets/recentRatings.json'
 
 const store = useStore()
 const props = defineProps({
-    movie: Object,
+    movie: {
+        type: Object,
+        required: true,
+    },
     scores: Object,
+    id: {
+        type: Number,
+        required: true,
+    },
 })
 
-const poster2 = computed(() => `https://image.tmdb.org/t/p/original/${props.movie.poster_path}`)
+const poster2 = computed(() => `https://image.tmdb.org/t/p/original/${props.movie.poster_path ?? placeholderRatings[props.id].poster_path}`)
 const poster = computed(() => {
-    if (props.movie.backdrop_path) {
+    if (props.movie.backdrop_path ?? placeholderRatings[props.id].backdrop_path) {
         return `https://image.tmdb.org/t/p/original/${props.movie.backdrop_path}`;
     }
     else

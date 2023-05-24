@@ -1,5 +1,5 @@
 <template>
-    <div ref="swiper" v-if="store.triggerscores.length > 0 && movies?.length > 0" class="highlight-container w-full bg-gray-900 bg-opacity-95 px-4 mb-0 container mx-auto xl:w-10/12" :class="{'pt-4 pb-8': moreSpacing}">
+    <div ref="swiper" v-if="triggerscores.length > 0 && movies?.length > 0" class="highlight-container w-full bg-gray-900 bg-opacity-95 px-4 mb-0 container mx-auto xl:w-10/12" :class="{'pt-4 pb-8': moreSpacing}">
         <div class="font-semibold mb-4 pt-6" :class="{'border-t border-gray-800': showBorder}">
             <h2 class="text-xl text-yellow-500 text-left text-underline mb-2">{{title}}</h2>
             <p class="text-left text-white">{{subTitle}}</p>
@@ -11,12 +11,16 @@
                     :key="movie.id" 
                     :movie="movie" 
                     :shownScore="shownScore" 
-                    :scores="store.triggerscores[store.triggerscores.map(score => score.movie_id).indexOf(movie.id)]" 
+                    :scores="triggerscores[triggerscores.map(score => score.movie_id).indexOf(movie.id)]" 
                     :loadItem="true" 
                 />
                 <div class="justify-between md:px-4 container mx-auto xl:w-10/12 hidden  sm:group-hover:flex pointer-events-none absolute top-36 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                    <button @click="scrollHighlightContainer('left')" class="bg-white rounded-full"><font-awesome-icon class="h-full text-yellow-500 text-4xl transition transform scale-110 hover:scale-125 pointer-events-auto" :icon="['fas', 'arrow-circle-left']" /></button>
-                    <button @click="scrollHighlightContainer('right')" class="bg-white rounded-full"><font-awesome-icon class="h-full text-yellow-500 text-4xl transition transform scale-110 hover:scale-125 pointer-events-auto" :icon="['fas', 'arrow-circle-right']" /></button>
+                    <button @click="scrollHighlightContainer('left')" class="bg-white rounded-full">
+                        <font-awesome-icon class="h-full text-yellow-500 text-4xl transition transform scale-110 hover:scale-125 pointer-events-auto" :icon="['fas', 'arrow-circle-left']" />
+                    </button>
+                    <button @click="scrollHighlightContainer('right')" class="bg-white rounded-full">
+                        <font-awesome-icon class="h-full text-yellow-500 text-4xl transition transform scale-110 hover:scale-125 pointer-events-auto" :icon="['fas', 'arrow-circle-right']" />
+                    </button>
                 </div> 
             </div>
             <transition 
@@ -33,6 +37,7 @@
 </template>
 <script setup lang="ts">
 import { useStore } from '~/stores/store'
+import placeholderScores from '~/assets/triggerscores.json'
 
 const store = useStore()
 
@@ -48,6 +53,8 @@ const props = defineProps({
 const scrolled = ref(false)
 const swiper: Ref<any> = ref()
 const containerId = computed(() => 'highlight-container-' + props.shownScore?.toString())
+
+const triggerscores = computed(() => store.triggerscores ?? placeholderScores)
 
 
 onMounted(() => {
@@ -66,8 +73,8 @@ function handleScroll(){
 function scrollHighlightContainer(direction: string){
     const highlight = document.getElementById(containerId.value)
     if(direction == 'left'){
-        highlight.scrollBy({top: 0, left: -window.innerWidth/2, behavior : "smooth"})
-    } else highlight.scrollBy({top: 0, left: window.innerWidth/2, behavior : "smooth"})
+        highlight?.scrollBy({top: 0, left: -window.innerWidth/2, behavior : "smooth"})
+    } else highlight?.scrollBy({top: 0, left: window.innerWidth/2, behavior : "smooth"})
 }
 
 </script>

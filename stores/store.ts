@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import placeholderMovies from '../assets/allMovies.json'
-import placeholderStats from '../assets/stats.json'
-import placeholderRecentRatings from '../assets/recentRatings.json'
+import placeholderTriggerscores from '~/assets/triggerscores.json'
+import placeholderBondMovies from '~/assets/bondMovies.json'
 
 const url = "https://triggerscore-backend2.onrender.com/"
 // const url = "http://localhost:3000/"
@@ -59,7 +59,7 @@ export const useStore = defineStore({
   id: 'store',
   state: () => {
     return {
-        triggerscores: [],
+        triggerscores: placeholderTriggerscores,
         movies: [],
         recentRatings: [],
         recentScores: [],
@@ -68,7 +68,7 @@ export const useStore = defineStore({
         searchTerm: '',
         searchResults: [],
         searchError: false,
-        bondMovies: [],
+        bondMovies: placeholderBondMovies,
         bondMovieIDs: [646,657,658,660,667,668,681,253,682,691,698,699,700,707,708,709,710,714,36643,36669],
         filterMoviesByYearMin: 1900,
         filterMoviesByYearMax: 2011,
