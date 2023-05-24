@@ -1,16 +1,16 @@
 <template>
     <Head>
-        <Title>Triggerscore - rating triggering movies</Title>
+        <Title>Triggerscore - a website for rating movies based on triggering potential</Title>
         <Meta 
             charset="UTF-8"
         />
         <Meta 
             name="keywords" 
-            content="triggering movies, ratings"
+            content="triggering movies, ratings, movieratings, not aged well, bad movies"
         />
         <Meta 
             name="description" 
-            content="a website for rating old movies based on how much these trigger viewers today"
+            content="Rating movies from back in the day based on how much viewers today would be triggered. Triggerscore offers a new way of watching old movies: could this movie still be made like this nowadays? Or would it cause a huge sh*tstorm?"
         />
         <Meta 
             name="author" 

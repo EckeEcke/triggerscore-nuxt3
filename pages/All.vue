@@ -1,17 +1,17 @@
 <template>
     <div class="bg-gray-900">
         <Head>
-            <Title>Triggerscore - All Movies</Title>
+            <Title>Triggerscore - All Movies on Triggerscore / Filter Movies</Title>
             <Meta 
                 charset="UTF-8"
             />
             <Meta 
                 name="keywords" 
-                content="triggering movies, triggerscore"
+                content="triggering movies, triggerscore, all movies on Triggerscore, filter"
             />
             <Meta 
                 name="description" 
-                content="All the movies on Triggerscore"
+                content="Overview of all the movies on Triggerscore - filter movies to find what you are looking for"
             />
             <Meta 
                 name="author" 

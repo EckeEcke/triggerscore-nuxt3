@@ -1,7 +1,7 @@
 <template>
     <div class="container px-4 py-6 md:py-12 text-left text-sm md:text-base xl:w-10/12 mx-auto">
       <Head>
-          <Title>Triggerscore - About</Title>
+          <Title>Triggerscore - About / What is Triggerscore</Title>
           <Meta 
               charset="UTF-8"
           />

@@ -1,7 +1,7 @@
 <template>
     <div class="container text-white px-4 py-6 md:py-12 md:pb-8 text-left xl:w-10/12 mx-auto md:rounded-lg flex justify-start flex-wrap gap-12">
         <Head>
-            <Title>Triggerscore - Contact</Title>
+            <Title>Triggerscore - Contact / Feel free to reach out to me</Title>
             <Meta 
                 charset="UTF-8"
             />

@@ -1,7 +1,7 @@
 <template>
     <div class="container text-white py-6 px-4 md:py-12 xl:w-10/12 text-left text-sm md:text-base mx-auto md:rounded-lg">
         <Head>
-            <Title>Triggerscore - FAQ</Title>
+            <Title>Triggerscore - FAQ / Frequently asked questions</Title>
             <Meta 
                 charset="UTF-8"
             />
@@ -11,7 +11,7 @@
             />
             <Meta 
                 name="desription" 
-                content="frequently asked questions about Triggerscore"
+                content="Frequently asked questions about Triggerscore"
             />
             <Meta 
                 name="author" 
