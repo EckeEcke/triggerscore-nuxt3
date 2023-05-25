@@ -5,7 +5,7 @@
           <StatsOverview/>
         </div>
       </div>
-      <div v-if="store.triggerscores.length > 0" class="w-full sm:max-w-xl lg:max-w-none sm:flex-wrap px-4 sm:px-0 pb-2 flex sm:justify-center overflow-auto hide-scrollbar sm:mx-auto">
+      <div v-if="store.triggerscores.length > 0 && !store.moviesLoading" class="w-full sm:max-w-xl lg:max-w-none sm:flex-wrap px-4 sm:px-0 pb-2 flex sm:justify-center overflow-auto hide-scrollbar sm:mx-auto">
         <div>
           <h2 class="font-semibold mt-4 h-14 flex items-center pr-2">{{ t('stats.lowestScore') }}</h2>
           <MovieHighlightItem :scores="lowestScoreMovie" :movie="movie[0]" shownScore="rating_total" :loadItem=true />

@@ -78,7 +78,7 @@ export const useStore = defineStore({
         filterMoviesBySky: false,
         sortingOption: 'a-z',
         highlightsLoading: true,
-        moviesLoading: false,
+        moviesLoading: true,
         shownScore: "rating_total",
         top10Sexism: [],
         top10Racism: [],
