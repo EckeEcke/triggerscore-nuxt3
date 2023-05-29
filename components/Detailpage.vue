@@ -176,91 +176,90 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import { useStore } from '../stores/store'
+import { Movie, emptyMovie } from '~/types/movie'
 
 const store = useStore()
 const router = useRouter()
 const route = useRoute()
 const { t, locale } = useI18n()
 
-          const movie = ref({
-              genres: []
-          })
-          const backdrop = ref("")
-          const onNetflix = ref(false)
-          const onAmazon = ref(false)
-          const onDisney = ref(false)
-          const onSky = ref(false)
-          const releaseDate = ref(1900)
-          const score = ref({})
-          const triggerscoreLoading = ref(true)
-          const showMoreComments = ref(false)
+const movie: Ref<Movie> = ref(emptyMovie)
+const backdrop = ref("")
+const onNetflix = ref(false)
+const onAmazon = ref(false)
+const onDisney = ref(false)
+const onSky = ref(false)
+const releaseDate: Ref<number> = ref(1900)
+const score = ref({})
+const triggerscoreLoading = ref(true)
+const showMoreComments = ref(false)
 
-      const poster = computed(() => `https://image.tmdb.org/t/p/original/${movie.value.poster_path}`)
-      const genres = computed(() => movie.value.genres.map(genre => genre.name))
-      const triggerscores = computed(() => loadTriggerscore())
-      const scoreAvailable = computed(() => score.value !== undefined)
-      const totalRatings = computed(() => store.triggerscores.filter(movieFromStore => movieFromStore.movie_id == movie.value.id))
-      const regionProvider = computed(() => {
-          let region = locale.value.toUpperCase()
-          if(region == "EN"){
-              region = "GB"
-          }
-          return region
+const poster = computed(() => `https://image.tmdb.org/t/p/original/${movie.value.poster_path}`)
+const genres = computed(() => movie.value.genres.map(genre => genre.name))
+const triggerscores = computed(() => loadTriggerscore())
+const scoreAvailable = computed(() => score.value !== undefined)
+const totalRatings = computed(() => store.triggerscores.filter(movieFromStore => movieFromStore.movie_id == movie.value.id))
+const regionProvider = computed(() => {
+    let region = locale.value.toUpperCase()
+    if(region == "EN"){
+        region = "GB"
+    }
+    return region
 
-      })
-      const imdbURL = computed(() => `https://www.imdb.com/title/` + movie.value.imdb_id)
-      const tmdbURL = computed(() => `https://www.themoviedb.org/movie/` + movie.value.id)
-      const currentURL = computed(() => window.location.href)
-      const comments = computed(() => score.value ? score.value.comments.filter((comment: string) => {return comment.length > 3}) : null)
+})
+const imdbURL = computed(() => `https://www.imdb.com/title/` + movie.value.imdb_id)
+const tmdbURL = computed(() => `https://www.themoviedb.org/movie/` + movie.value.id)
+const currentURL = computed(() => window.location.href)
+const comments = computed(() => score.value ? score.value.comments.filter((comment: string) => {return comment.length > 3}) : null)
 
-      async function loadMovie() {
-          try {
-              const response = await fetch(`https://api.themoviedb.org/3/movie/${route.params.id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${locale}`)
-              const loadedMovie = await response.json()
-              movie.value = loadedMovie
-              releaseDate.value = movie.value.release_date.substring(0,4)
-              backdrop.value = `url(https://image.tmdb.org/t/p/original/${loadedMovie.backdrop_path})`
-          }
-          catch {
-              console.log("oops")
-          }
-      }
-      async function loadProviders(){
-          try {
-              const response = await fetch(`https://api.themoviedb.org/3/movie/${route.params.id}/watch/providers?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c`)
-              const providers = await response.json()
-              onNetflix.value = false
-              onAmazon.value = false
-              onDisney.value = false
-              onSky.value = false
-              onNetflix.value = providers.results[regionProvider.value].flatrate.some(provider => provider.provider_name == "Netflix")
-              onAmazon.value = providers.results[regionProvider.value].flatrate.some(provider => provider.provider_name == "Amazon Prime Video")
-              onDisney.value = providers.results[regionProvider.value].flatrate.some(provider => provider.provider_name == "Disney Plus")
-              onSky.value = providers.results[regionProvider.value].flatrate.some(provider => provider.provider_name == "WOW")
-          }
-          catch {
-              console.log("ooops")
-          }
-      }
-      async function loadTriggerscore(){
-          const response = await fetch(`https://triggerscore-backend2.onrender.com/movie/${route.params.id}`)
-          const scores = await response.json()
-          score.value = scores[0]
-          triggerscoreLoading.value = false
-      }
-      function pushToContact(comment: string){
-        router.push({ path: '/contact', query: { id: route.params.id, comment: comment.substring(0,Math.min(20,comment.length)) } })
-      }
+async function loadMovie() {
+    try {
+        const response = await fetch(`https://api.themoviedb.org/3/movie/${route.params.id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${locale.value}`)
+        const loadedMovie = await response.json()
+        movie.value = loadedMovie
+        releaseDate.value = movie.value.release_date.substring(0,4)
+        backdrop.value = `url(https://image.tmdb.org/t/p/original/${loadedMovie.backdrop_path})`
+    }
+    catch {
+        console.log("oops")
+    }
+}
+async function loadProviders(){
+    try {
+        const response = await fetch(`https://api.themoviedb.org/3/movie/${route.params.id}/watch/providers?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c`)
+        const providers = await response.json()
+        onNetflix.value = false
+        onAmazon.value = false
+        onDisney.value = false
+        onSky.value = false
+        onNetflix.value = providers.results[regionProvider.value].flatrate.some((provider: any) => provider.provider_name == "Netflix")
+        onAmazon.value = providers.results[regionProvider.value].flatrate.some((provider: any) => provider.provider_name == "Amazon Prime Video")
+        onDisney.value = providers.results[regionProvider.value].flatrate.some((provider: any) => provider.provider_name == "Disney Plus")
+        onSky.value = providers.results[regionProvider.value].flatrate.some((provider: any) => provider.provider_name == "WOW")
+    }
+    catch {
+        console.log("ooops")
+    }
+}
+async function loadTriggerscore(){
+    const response = await fetch(`https://triggerscore-backend2.onrender.com/movie/${route.params.id}`)
+    const scores = await response.json()
+    score.value = scores[0]
+    triggerscoreLoading.value = false
+}
+function pushToContact(comment: string){
+router.push({ path: '/contact', query: { id: route.params.id, comment: comment.substring(0,Math.min(20,comment.length)) } })
+}
   
-  watch(locale, () => {
+watch(locale, () => {
     loadMovie()
     loadProviders()
-  })
+})
 
-  loadMovie()  
-    loadProviders()
-    loadTriggerscore()
-    store.setTriggerscores()
-    store.filterMovies()
+loadMovie()  
+loadProviders()
+loadTriggerscore()
+store.setTriggerscores()
+store.filterMovies()
 
 </script>

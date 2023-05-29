@@ -2,11 +2,12 @@ import { defineStore } from 'pinia'
 import placeholderMovies from '../assets/allMovies.json'
 import placeholderTriggerscores from '~/assets/triggerscores.json'
 import placeholderBondMovies from '~/assets/bondMovies.json'
+import { Movie } from '~/types/movie'
 
 const url = "https://triggerscore-backend2.onrender.com/"
 // const url = "http://localhost:3000/"
 
-function sortAtoZ(x: {title: string, original_title: string}, y: {title: string, original_title: string}): 1 | -1 | 0 {
+function sortAtoZ(x: Movie, y: Movie): 1 | -1 | 0 {
     const titleX = x.title ? x.title : x.original_title
     const titleY = y.title ? y.title : y.original_title
     if (titleX < titleY) { return -1 }
@@ -14,7 +15,7 @@ function sortAtoZ(x: {title: string, original_title: string}, y: {title: string,
     return 0
 }
 
-function sortZtoA(x: {title: string, original_title: string}, y: {title: string, original_title: string}) {
+function sortZtoA(x: Movie, y: Movie) {
     const titleX = x.title ? x.title : x.original_title
     const titleY = y.title ? y.title : y.original_title
     if (titleX > titleY) { return -1 }
@@ -22,7 +23,7 @@ function sortZtoA(x: {title: string, original_title: string}, y: {title: string,
     return 0
 }
 
-function sortByDateDesc(x: {release_date: number}, y: {release_date: number}) {
+function sortByDateDesc(x: Movie, y: Movie) {
     return Number(new Date(y.release_date)) - Number(new Date(x.release_date))
 }
 
