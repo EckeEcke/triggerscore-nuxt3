@@ -94,7 +94,7 @@ export const useStore = defineStore({
   },
   actions: {
     async setTriggerscores(){  
-        if(localStorage && localStorage.getItem('store')) {
+        if(process.client && localStorage.getItem('store')) {
             this.moviesLoading = false
         }                                               //also loads movies for now
         const scores = await fetch(url)
