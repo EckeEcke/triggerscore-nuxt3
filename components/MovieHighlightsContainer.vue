@@ -14,7 +14,7 @@
                     :scores="triggerscores[triggerscores.map(score => score.movie_id).indexOf(movie.id)]" 
                     :loadItem="true" 
                 />
-                <div class="justify-between md:px-4 container mx-auto xl:w-10/12 hidden  sm:group-hover:flex pointer-events-none absolute top-36 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <div class="z-10 justify-between md:px-4 container mx-auto xl:w-10/12 hidden  sm:group-hover:flex pointer-events-none absolute top-36 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                     <button @click="scrollHighlightContainer('left')" class="bg-white rounded-full">
                         <font-awesome-icon class="h-full text-yellow-500 text-4xl transition transform scale-110 hover:scale-125 pointer-events-auto" :icon="['fas', 'arrow-circle-left']" />
                     </button>
