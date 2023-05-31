@@ -200,13 +200,12 @@ const triggerscores = computed(() => loadTriggerscore())
 const scoreAvailable = computed(() => score.value !== undefined)
 const totalRatings = computed(() => store.triggerscores.filter(movieFromStore => movieFromStore.movie_id == movie.value.id))
 const regionProvider = computed(() => {
-    let region = locale.value.toUpperCase()
-    if(region == "EN"){
-        region = "GB"
+    if(store.locale === "en"){
+        return "GB"
     }
-    return region
-
+    return store.locale.toUpperCase()
 })
+
 const imdbURL = computed(() => `https://www.imdb.com/title/` + movie.value.imdb_id)
 const tmdbURL = computed(() => `https://www.themoviedb.org/movie/` + movie.value.id)
 const currentURL = computed(() => window.location.href)
@@ -214,7 +213,7 @@ const comments = computed(() => score.value ? score.value.comments.filter((comme
 
 async function loadMovie() {
     try {
-        const response = await fetch(`https://api.themoviedb.org/3/movie/${route.params.id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${locale.value}`)
+        const response = await fetch(`https://api.themoviedb.org/3/movie/${route.params.id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${store.locale}`)
         const loadedMovie = await response.json()
         movie.value = loadedMovie
         releaseDate.value = movie.value.release_date.substring(0,4)

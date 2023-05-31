@@ -134,7 +134,8 @@
       "leaveComment": "Want to leave a comment for this movie?",
       "placeholder": "Write a comment...",
       "report": "Report",
-      "characters": "characters"
+      "characters": "characters",
+      "didYouLike": "Did you like the movie?"
     },
     "highlights": {
       "headline1": "James Bond Special",

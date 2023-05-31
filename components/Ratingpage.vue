@@ -63,7 +63,7 @@
         </div>
         <hr class="border-transparent">
         <div class="w-full">
-            <p class="my-4 text-lg font-semibold px-4 max-w-lg">Hat dir der Film gefallen? (optional)</p>
+            <p class="my-4 text-lg font-semibold px-4 max-w-lg">{{ t('rating.didYouLike') }} (optional)</p>
             <div class="flex justify-center md:justify-center gap-4 mx-4 my-4 max-w-lg">
                     <LikeAnimation :dislikeClicked="disliked" @likeClicked="handleLike" :class="{'opacity-30': !liked}" />
                     <DislikeAnimation :likeClicked="liked" @dislikeClicked="handleDislike" :class="{'opacity-30': !disliked}" />
