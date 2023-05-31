@@ -1,5 +1,5 @@
 <template>
-    <div ref="swiper" v-if="triggerscores.length > 0 && movies?.length > 0" class="highlight-container w-full bg-gray-900 bg-opacity-95 px-4 mb-0 container mx-auto xl:w-10/12" :class="{'pt-4 pb-8': moreSpacing}">
+    <div ref="swiper" v-if="triggerscores.length > 0 && movies && movies?.length > 0" class="highlight-container w-full bg-gray-900 bg-opacity-95 px-4 mb-0 container mx-auto xl:w-10/12" :class="{'pt-4 pb-8': moreSpacing}">
         <div class="font-semibold mb-4 pt-6" :class="{'border-t border-gray-800': showBorder}">
             <h2 class="text-xl text-yellow-500 text-left text-underline mb-2">{{title}}</h2>
             <p class="text-left text-white">{{subTitle}}</p>
