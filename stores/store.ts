@@ -93,7 +93,10 @@ export const useStore = defineStore({
     }
   },
   actions: {
-    async setTriggerscores(){                                                  //also loads movies for now
+    async setTriggerscores(){  
+        if(localStorage.getItem('store')) {
+            this.moviesLoading = false
+        }                                               //also loads movies for now
         const scores = await fetch(url)
         const triggerscores = await scores.json()
         this.triggerscores = triggerscores
@@ -394,5 +397,8 @@ export const useStore = defineStore({
         getStats: state => state.stats,
         getIsFiltering: state => state.isFiltering,
         getLocale: state => state.locale
+  },
+  persist: {
+    storage: persistedState.localStorage,
   },
 })

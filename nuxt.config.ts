@@ -16,5 +16,5 @@ export default defineNuxtConfig({
         autoprefixer: {},
         },
     },
-    modules: ['@pinia/nuxt', '@nuxtjs/robots'],
+    modules: ['@pinia/nuxt', '@pinia-plugin-persistedstate/nuxt', '@nuxtjs/robots'],
 })
