@@ -124,6 +124,7 @@ store.setTriggerscores()
 store.filterMovies()
 store.setRecentRatings()
 store.setBondMovies()
+store.resetFilter()
 
 const totalPages = computed(() => Math.ceil(filteredMovies.value.length / 24))
 const isLoading = computed(() => store.highlightsLoading || store.moviesLoading || store.triggerscores.length == 0)
