@@ -148,5 +148,15 @@
       "copy4": "These movies trigger. For reasons: movies with highest others ratings",
       "headline5": "Top 10 cringe movies",
       "copy5": "These movies are just cringeworthy: movies with highest cringe ratings"
+    },
+    "definition": {
+      "headline": "What does being 'triggered' mean?",
+      "text": "Being triggered means something like activating or causing a reaction of people. Especially in the context of the internet and social networks, the term is often used to describe aggressive to hateful user reactions to statements, videos, images or other posts. If a large group of people is 'triggered' within a short period of time, this is called a shitstorm.",
+      "list": {
+        "headline": "Typical examples that can trigger users:",
+        "list1": "Actions or statements that may be perceived as racist",
+        "list2": "Sexist remarks or behavior",
+        "list3": "Other forms of discrimination such as body shaming or ableism"
+      }
     }
   }

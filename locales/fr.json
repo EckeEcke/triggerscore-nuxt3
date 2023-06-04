@@ -148,5 +148,15 @@
       "copy4": "Ces films déclenchent. Pour des raisons: les films les mieux notés par les autres",
       "headline5": "Top 10 films cringe",
       "copy5": "Ces films sont tout simplement dignes d'intérêt: les films avec les cotes d'écoute les plus élevées"
+    },
+    "definition": {
+      "headline": "Que signifie être « triggered » ?",
+      "text": "Être triggered signifie quelque chose comme activer ou provoquer une réaction des gens. Surtout dans le contexte d'Internet et des réseaux sociaux, le terme est souvent utilisé pour décrire les réactions agressives ou haineuses des utilisateurs face aux déclarations, vidéos, images ou autres publications. Si un grand groupe de personnes est triggered dans un court laps de temps, cela s'appelle un shitstorm.",
+      "list": {
+        "headline": "Exemples typiques pouvant trigger des utilisateurs :",
+        "list1": "Actions ou déclarations pouvant être perçues comme racistes",
+        "list2": "Propos ou comportements sexistes",
+        "list3": "Autres formes de discrimination telles que la honte corporelle ou le capacitisme"
+      }
     }
   }

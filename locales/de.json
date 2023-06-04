@@ -148,5 +148,15 @@
       "copy4": "Diese Filme triggern. Aus Gründen: Filme mit höchsten Sonstige-Ratings",
       "headline5": "Top 10 Cringe Filme",
       "copy5": "Diese Filme sind einfach nur zum Fremdschämen: Filme mit höchsten Cringe-Ratings"
+    },
+    "definition": {
+      "headline": "Was bedeutet „getriggered“ zu werden?",
+      "text": "Ins Deutsche übersetzt bedeutet „getriggered“ so viel wie „auslösen“ oder „aktivieren“. Insbesondere im Kontext Internet und soziale Netzwerke wird der Begriff häufig verwendet, um aggressive bis hasserfüllte Reaktionen von Usern auf Aussagen, Videos, Bilder oder sonstige Beiträge zu beschreiben. Wenn eine große Personengruppe innerhalb eines kurzen Zeitraums „getriggered“ wird, spricht man von einem Shitstorm.",
+      "list": {
+        "headline": "Typische Beispiele, die User triggern können:",
+        "list1": "Aktionen oder Äußerungen, die als rassistisch empfunden werden können",
+        "list2": "Sexistische Äußerungen oder Verhaltensweisen",
+        "list3": "Sonstige Diskriminierungen wie Bodyshaming oder Ableism"
+      }
     }
   }
