@@ -165,7 +165,10 @@
                         <a :href="'mailto:?subject= ' + movie.title + ' on Triggerscore&body=Check out ' + movie.title + ' on Triggerscore: ' + currentURL"
                             title="Share by Email">
                             <font-awesome-icon :icon="['fas', 'envelope']" class="text-white" style="width:auto;height:2.5rem"/>
-                        </a> 
+                        </a>
+                        <div class="flex">
+                            <font-awesome-icon @click="copyLink" :icon="['fas', 'link']" class="text-white self-center text-3xl" />
+                        </div>
                     </div> 
                 </div>     
             </div>          
@@ -247,7 +250,11 @@ async function loadTriggerscore(){
     triggerscoreLoading.value = false
 }
 function pushToContact(comment: string){
-router.push({ path: '/contact', query: { id: route.params.id, comment: comment.substring(0,Math.min(20,comment.length)) } })
+    router.push({ path: '/contact', query: { id: route.params.id, comment: comment.substring(0,Math.min(20,comment.length)) } })
+}
+
+function copyLink() {
+    navigator.clipboard.writeText(currentURL.value)
 }
   
 watch(locale, () => {
