@@ -126,6 +126,9 @@
                                     
                                 </div>
                             </div>
+                            <div class="hidden md:block">
+                                <ShareMovie :movie="movie" />
+                            </div>
                         </div>
                     </div>
                     <div v-if="comments && comments.length > 0" class="px-4 mb-12 mt-4">
@@ -146,30 +149,8 @@
                 </div>
                 <Ratingpage :title="movie.title" :id="movie.id" />
                 <hr class="border-gray-800 md:hidden">
-                <div class="md:hidden flex flex-col justify-center gap-4 py-12 px-2 radial-background">
-                    <h3
-                        class="pb-0 text-white font-semibold text-lg self-center"       
-                        target="_blank">{{ t('rating.share') }}
-                    </h3>
-                    <div class="flex justify-center gap-6">
-                        <a :href="'whatsapp://send?text=' + 'Triggerscore - ' + movie.title.replace('&','and') + ' ' + currentURL"
-                            class=""       
-                            data-action="share/whatsapp/share"  
-                            target="_blank"> 
-                            <img class="w-10" alt="Logo WhatsApp" src="../assets/images/WhatsApp.svg">
-                        </a>
-                        <a :href="'https://www.reddit.com/submit?url=' + currentURL"
-                            target="_blank">
-                            <img alt="Logo Reddit" class="w-10" src="../assets/images/reddit-logo.svg">
-                        </a>
-                        <a :href="'mailto:?subject= ' + movie.title + ' on Triggerscore&body=Check out ' + movie.title + ' on Triggerscore: ' + currentURL"
-                            title="Share by Email">
-                            <font-awesome-icon :icon="['fas', 'envelope']" class="text-white" style="width:auto;height:2.5rem"/>
-                        </a>
-                        <div class="flex">
-                            <font-awesome-icon @click="copyLink" :icon="['fas', 'link']" class="text-white self-center text-3xl" />
-                        </div>
-                    </div> 
+                <div class="md:hidden py-12 px-2 radial-background">
+                    <ShareMovie :movie="movie" align-center />
                 </div>     
             </div>          
         </div>
@@ -211,7 +192,6 @@ const regionProvider = computed(() => {
 
 const imdbURL = computed(() => `https://www.imdb.com/title/` + movie.value.imdb_id)
 const tmdbURL = computed(() => `https://www.themoviedb.org/movie/` + movie.value.id)
-const currentURL = computed(() => window.location.href)
 const comments = computed(() => score.value ? score.value.comments.filter((comment: string) => {return comment.length > 3}) : null)
 
 async function loadMovie() {
@@ -251,10 +231,6 @@ async function loadTriggerscore(){
 }
 function pushToContact(comment: string){
     router.push({ path: '/contact', query: { id: route.params.id, comment: comment.substring(0,Math.min(20,comment.length)) } })
-}
-
-function copyLink() {
-    navigator.clipboard.writeText(currentURL.value)
 }
   
 watch(locale, () => {
