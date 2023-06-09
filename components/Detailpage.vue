@@ -26,7 +26,7 @@
             />
         </Head>
         <div class="container mx-auto sm:pt-6 sm:pb-12 xl:w-10/12 md:px-4">
-            <LoadingAnimation v-if="triggerscoreLoading"/>
+            <LoadingAnimation v-if="movieLoading"/>
             <div v-else class="flex flex-col lg:flex-row lg:rounded-b px-0 sm:px-4 md:px-0">
                 <div class="flex flex-col w-full radial-background text-white rounded-t lg:rounded justify-start lg:mr-6 md:p-4">
                     <div class="flex justify-between w-full sm:rounded-t p-4 pr-0">
@@ -83,8 +83,10 @@
                                 {{ releaseDate }}
                                 <span class="mx-2">|</span>
                                 <span>{{ movie.runtime }} {{ t('general.minutes') }}</span>
-                                <span v-if="totalRatings[0]" class="mx-2">|</span>
-                                <span v-if="totalRatings[0]">{{ totalRatings[0].ratings }} {{ t('general.ratings') }}</span>
+                                <template v-if="totalRatings.length">
+                                    <span v-if="totalRatings[0]" class="mx-2">|</span>
+                                    <span v-if="totalRatings[0]">{{ totalRatings[0].ratings }} {{ t('general.ratings') }}</span>
+                                </template>
                                 <span v-if="movie.vote_average" class="mx-2">|</span>
                                 <span v-if="movie.vote_average"><wbr>{{ t('rating.tmdb-rating') }}: {{ movie.vote_average.toFixed(2) }}</span>
                                 <span v-if="score" class="mx-2 mb-2">|</span>
@@ -175,14 +177,18 @@ const onDisney = ref(false)
 const onSky = ref(false)
 const releaseDate: Ref<number> = ref(1900)
 const score = ref({})
-const triggerscoreLoading = ref(true)
+const movieLoading = ref(true)
 const showMoreComments = ref(false)
 
 const poster = computed(() => `https://image.tmdb.org/t/p/original/${movie.value.poster_path}`)
 const genres = computed(() => movie.value.genres.map(genre => genre.name))
 const triggerscores = computed(() => loadTriggerscore())
 const scoreAvailable = computed(() => score.value !== undefined)
-const totalRatings = computed(() => store.triggerscores.filter(movieFromStore => movieFromStore.movie_id == movie.value.id))
+const totalRatings: any = computed(() => 
+    store.triggerscores.length > 0
+        ? store.triggerscores.filter(movieFromStore => movieFromStore.movie_id == movie.value.id)
+        : []
+)
 const regionProvider = computed(() => {
     if(store.locale === "en"){
         return "GB"
@@ -201,6 +207,7 @@ async function loadMovie() {
         movie.value = loadedMovie
         releaseDate.value = movie.value.release_date.substring(0,4)
         backdrop.value = `url(https://image.tmdb.org/t/p/original/${loadedMovie.backdrop_path})`
+        movieLoading.value = false
     }
     catch {
         console.log("oops")
@@ -227,7 +234,6 @@ async function loadTriggerscore(){
     const response = await fetch(`https://triggerscore-backend2.onrender.com/movie/${route.params.id}`)
     const scores = await response.json()
     score.value = scores[0]
-    triggerscoreLoading.value = false
 }
 function pushToContact(comment: string){
     router.push({ path: '/contact', query: { id: route.params.id, comment: comment.substring(0,Math.min(20,comment.length)) } })

@@ -36,7 +36,7 @@ export interface Movie {
         example: "http://www.foxmovies.com/movies/fight-club"
     },
     id: {
-        type: "integer",
+        type: "number",
         example: 550,
         default: 0
     },
@@ -207,7 +207,7 @@ export const emptyMovie: Movie = {
             example: "http://www.foxmovies.com/movies/fight-club"
         },
         id: {
-            type: "integer",
+            type: "number",
             example: 550,
             default: 0
         },
