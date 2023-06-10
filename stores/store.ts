@@ -103,6 +103,7 @@ export const useStore = defineStore({
         const loadedMovies = Promise.all(triggerscores.map((entry: any) => 
             fetch(`https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${this.locale}`)
             .then((res) => res.json())
+            .catch(() => console.log('oopsy'))
         ))
         loadedMovies.then(res => {
             this.movies = res
@@ -117,6 +118,7 @@ export const useStore = defineStore({
         const recentRatings = Promise.all(ratings.map((entry: any) => 
             fetch(`https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${this.locale}`)
             .then((res) => res.json())
+            .catch(() => console.log('oopsy'))
         ))
         recentRatings.then(res => this.recentRatings = res)
     },
@@ -126,6 +128,7 @@ export const useStore = defineStore({
         const loadedTop10 = Promise.all(top10.map((entry: any) => 
             fetch(`https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${this.locale}`)
             .then((res) => res.json())
+            .catch(() => console.log('oopsy'))
         ))
         loadedTop10.then(res => this.top10Sexism = res )
     },
@@ -135,6 +138,7 @@ export const useStore = defineStore({
         const loadedTop10 = Promise.all(top10.map((entry: any) => 
             fetch(`https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${this.locale}`)
             .then((res) => res.json())
+            .catch(() => console.log('oopsy'))
         ))
         loadedTop10.then(res => this.top10Racism = res )
     },
@@ -144,6 +148,7 @@ export const useStore = defineStore({
         const loadedTop10 = Promise.all(top10.map((entry: any) => 
             fetch(`https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${this.locale}`)
             .then((res) => res.json())
+            .catch(() => console.log('oopsy'))
         ))
         loadedTop10.then(res => this.top10Others = res )
     },
@@ -153,6 +158,7 @@ export const useStore = defineStore({
         const loadedTop10 = Promise.all(top10.map((entry:any) => 
             fetch(`https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${this.locale}`)
             .then((res) => res.json())
+            .catch(() => console.log('oopsy'))
         ))
         loadedTop10.then(res => this.top10Cringe = res )
     },
