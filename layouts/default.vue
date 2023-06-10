@@ -1,6 +1,6 @@
 <template>
   <Html :lang="store.locale"></Html>
-  <div class="bg-gray-900 min-h-screen flex flex-col">
+  <div class="bg-gray-900 min-h-screen flex flex-col pt-14">
     <Header />
     <slot />
     <Footer />
