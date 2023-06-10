@@ -1,6 +1,5 @@
 <template>
-    <section class="w-full bg-center bg-cover bg-fixed" 
-        style="min-height:100vh-5rem;" 
+    <section class="detailpage w-full bg-center bg-cover bg-fixed" 
         :style="{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)), ${backdrop}`,minHeight: 'calc(100vh - 20rem)'}"
     >
     <Head>
@@ -176,7 +175,7 @@ const onAmazon = ref(false)
 const onDisney = ref(false)
 const onSky = ref(false)
 const releaseDate: Ref<number> = ref(1900)
-const score = ref({})
+const score = ref(undefined)
 const movieLoading = ref(true)
 const showMoreComments = ref(false)
 
@@ -207,10 +206,12 @@ async function loadMovie() {
         movie.value = loadedMovie
         releaseDate.value = movie.value.release_date.substring(0,4)
         backdrop.value = `url(https://image.tmdb.org/t/p/original/${loadedMovie.backdrop_path})`
-        movieLoading.value = false
     }
     catch {
         console.log("oops")
+    }
+    finally {
+        movieLoading.value = false
     }
 }
 async function loadProviders(){
@@ -251,3 +252,9 @@ store.setTriggerscores()
 store.filterMovies()
 
 </script>
+
+<style lang="css" scoped>
+.detailpage {
+    min-height: calc(100vh-5rem);
+}
+</style>
