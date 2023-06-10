@@ -15,7 +15,7 @@
                                 {{ $t('filter.sort') }}
                             </h2>
                             <div class="flex w-full my-3 border border-gray-200 rounded">
-                                <select v-model="sortingOption" class="w-full h-8 md:h-10 bg-white rounded p-2 outline-none text-sm md:text-base text-black">
+                                <select v-model="store.sortingOption" class="w-full h-8 md:h-10 bg-white rounded p-2 outline-none text-sm md:text-base text-black">
                                     <option class="py-1" value="a-z">A-Z</option>
                                     <option class="py-1" value="z-a">Z-A</option>
                                     <option class="py-1" value="date-desc">{{ $t('filter.yearDesc') }}</option>
@@ -27,7 +27,7 @@
                             <hr class="my-4 border-gray-800">
                             <h2 class="font-semibold text-left mb-2">{{ $t('filter.displayedScore') }}</h2>
                             <div class="flex w-full my-3 border border-gray-200 rounded">
-                                <select v-model="shownScore" class="w-full h-8 md:h-10 bg-white rounded p-2 outline-none text-sm md:text-base text-black">
+                                <select v-model="store.shownScore" class="w-full h-8 md:h-10 bg-white rounded p-2 outline-none text-sm md:text-base text-black">
                                     <option class="py-1" value="rating_total">{{ $t('categories.totalScore') }}</option>
                                     <option class="py-1" value="rating_sexism">{{ $t('categories.sexism') }}</option>
                                     <option class="py-1" value="rating_racism">{{ $t('categories.racism') }}</option>
