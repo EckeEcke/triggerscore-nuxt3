@@ -11,7 +11,7 @@
             </ul>
         </div>
         <div class="mx-auto mt-8">
-            <img src="/images/triggered.jpg" alt="triggered-meme">
+            <img src="/images/triggered.webp" alt="triggered-meme">
         </div>
     </div>
 </template>
