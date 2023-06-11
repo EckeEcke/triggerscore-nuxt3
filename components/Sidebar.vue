@@ -47,25 +47,25 @@
                                 {{ $t('filter.filterByProvider') }}
                             </h2>
                             <div class="form-check text-left mb-2 h-8">
-                                <input v-model="netflixFilter" class="h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer accent-yellow-500" type="checkbox" id="filter-netflix">
+                                <input v-model="store.filterMoviesByNetflix" class="h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer accent-yellow-500" type="checkbox" id="filter-netflix">
                                 <label class="form-check-label inline-block text-gray-800 text-left" for="filter-netflix">
                                     <img alt="Logo Netflix" class="h-4 mt-1 mx-2" src="../assets/images/netflix-logo.svg">
                                 </label>
                             </div>
                             <div class="form-check text-left mb-2 h-8">
-                                <input v-model="primeFilter" class="h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer accent-yellow-500" type="checkbox" id="filter-amazon">
+                                <input v-model="store.filterMoviesByPrime" class="h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer accent-yellow-500" type="checkbox" id="filter-amazon">
                                 <label class="form-check-label inline-block text-gray-800 text-left" for="filter-amazon">
                                     <img alt="Logo Prime Video" class="h-6 mt-1 mx-2" src="../assets/images/amazon-prime-logo3.png">
                                 </label>
                             </div>
                             <div class="form-check text-left mb-2 h-8">
-                                <input v-model="disneyFilter" class="h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer accent-yellow-500" type="checkbox" id="filter-disney">
+                                <input v-model="store.filterMoviesByDisney" class="h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer accent-yellow-500" type="checkbox" id="filter-disney">
                                 <label class="form-check-label inline-block text-gray-800 text-left" for="filter-disney">
                                     <img alt="Logo Disney Plus" class="h-8 ml-2" src="../assets/images/disney+-logo2.svg">
                                 </label>
                             </div>
                             <div class="form-check text-left mb-2 h-8">
-                                <input v-model="skyFilter" class="h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer accent-yellow-500" type="checkbox" id="filter-disney">
+                                <input v-model="store.filterMoviesBySky" class="h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer accent-yellow-500" type="checkbox" id="filter-disney">
                                 <label class="form-check-label inline-block text-gray-800 text-left" for="filter-disney">
                                     <img alt="Logo WOW" class="h-4 mt-1 ml-2" src="../assets/images/sky-logo.svg">
                                 </label>
@@ -126,7 +126,7 @@ const { t, locale } = useI18n()
 const searchText = computed(() => t('index.intro'))
 const netflixFilter = ref(store.filterMoviesByNetflix)
 const primeFilter = computed(() => store.filterMoviesByPrime)
-const disneyFilter = computed(() => store.filterMoviesByPrime)
+const disneyFilter = computed(() => store.filterMoviesByDisney)
 const skyFilter = computed(() => store.filterMoviesBySky)
 const sortingOption = computed(() => store.sortingOption)
 const filterMin = computed(() => store.filterMoviesByYearMin)
@@ -134,19 +134,19 @@ const filterMax = computed(() => store.filterMoviesByYearMax)
 const results = computed(() => store.filteredMovies.length)
 const shownScore = computed(() => store.shownScore)
 
-watch(() => netflixFilter, (currentValue, oldValue) => {
+watch(() => store.filterMoviesByNetflix, (currentValue, oldValue) => {
     store.filterMovies()
 })
 
-watch(() => primeFilter, (currentValue, oldValue) => {
+watch(() => store.filterMoviesByPrime, (currentValue, oldValue) => {
     store.filterMovies()
 })
 
-watch(() => disneyFilter, (currentValue, oldValue) => {
+watch(() => store.filterMoviesByDisney, (currentValue, oldValue) => {
     store.filterMovies()
 })
 
-watch(() => skyFilter, (currentValue, oldValue) => {
+watch(() => store.filterMoviesBySky, (currentValue, oldValue) => {
     store.filterMovies()
 })
 
