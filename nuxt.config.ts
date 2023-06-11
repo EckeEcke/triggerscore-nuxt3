@@ -5,6 +5,9 @@ export default defineNuxtConfig({
             link: [{ rel: 'icon', type: 'image/png', href: '/favicon.ico' }]
         }
     },
+    build: {
+        transpile: ['@fortawesome/vue-fontawesome']
+    },
     css: [
         '~/assets/css/main.css',
         '@fortawesome/fontawesome-svg-core/styles.css',
