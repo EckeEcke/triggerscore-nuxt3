@@ -1,14 +1,5 @@
 <template>
     <NuxtLink :to="`movie/${movie.id}`" tag="div" class="movie-highlight-item bg-transparent text-white sm:rounded shadow-md flex flex-col relative border-b md:border-b-0 border-gray-800 cursor-pointer min-w-sm lg:hover:shadow-inner transform transition duration-300">
-        <div class="hidden md:block relative w-full h-52 p-2 text-white sm:rounded-t w-3/4 overflow-hidden">
-            <div class="absolute top-0 left-0 w-full h-full bg-cover bg-center movie-poster" :style="{ backgroundImage: 'linear-gradient(to bottom, rgba(22,0,0,0.1),rgba(22,0,0,0.2)),url(' + poster + ')'}" />
-            <div v-if="totalRatings[0].ratings == 1" class="flex items-center w-16 h-16 relative rounded-full justify-center drop-shadow">
-                <NewAnimation />
-            </div>  
-            <div class="flex absolute top-2 right-2 rounded-lg justify-center w-16 h-16 bg-opacity-80" :class="{'bg-red-700': scoreTotal >= 7, 'bg-yellow-500': scoreTotal < 7 && scoreTotal >=4, 'bg-green-600': scoreTotal < 4}">
-                <p class="self-center text-white text-xl font-semibold">{{scoreTotal}}</p>
-            </div>
-        </div>
         <div class="md:hidden sm:rounded-t p-3 pb-0 bg-transparent text-inherit">
             <div class="flex items-center gap-2 text-left">
                  
@@ -19,16 +10,27 @@
                     <h3 v-if="movie.title.length > 0" class="text-base font-semibold h-6 overflow-hidden whitespace-nowrap custom-headline">{{ movie.title }}</h3>
                     <h3 v-else class="text-base font-semibold overflow-hidden">{{ movie.original_title }}</h3>
                     <div class="text-xs pt-1">
-                    <span>{{ movie.release_date.substring(0,4) }}</span>
-                    <span class="mx-2">|</span>
-                    <span>{{ movie.runtime }} {{ $t('general.minutes') }}</span>
-                </div> 
+                        <span>{{ movie.release_date.substring(0,4) }}</span>
+                        <span class="mx-2">|</span>
+                        <span>{{ movie.runtime }} {{ $t('general.minutes') }}</span>
+                    </div> 
                 </div>
                    
                 </div>
         </div>
-        <div class="w-full px-3 md:px-0 pt-4 pb-3 flex gap-4">
-            <img class="h-36 hidden md:block rounded-sm" :alt="movie.original_title" :src="poster2">
+        <div class="w-full px-3 md:px-0 pt-4 pb-3 gap-4 flex">
+            <div class="relative hidden md:block">
+                <img class="h-36 w-32 rounded-sm" :alt="movie.original_title" :src="poster2">
+                <div class="flex absolute top-1 right-1 rounded-lg justify-center w-12 h-12 bg-opacity-80" :class="{'bg-red-700': scoreTotal >= 7, 'bg-yellow-500': scoreTotal < 7 && scoreTotal >=4, 'bg-green-600': scoreTotal < 4}">
+                    <p class="self-center text-white text-xl font-semibold">{{scoreTotal}}</p>
+                </div>
+                <div class="absolute bottom-0 right-0">
+                    <div v-if="totalRatings[0].ratings == 1" class="flex items-center w-16 h-16 relative rounded-full justify-center drop-shadow">
+                        <NewAnimation />
+                    </div>  
+                </div>
+            </div>
+            
             <article class="text-left relative w-full h-full flex flex-col">
                 <h3 v-if="movie.title.length > 0" class="hidden md:block text-base mb-1 font-semibold h-6 overflow-hidden">{{ movie.title }}</h3>
                 <h3 v-else class="hidden md:block text-base mb-1 font-semibold overflow-hidden">{{ movie.original_title }}</h3>

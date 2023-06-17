@@ -33,8 +33,8 @@
     />
     <LoadingAnimation v-if="isLoading" />
     <template v-if="!isLoading">
-        <section class="sm:mb-12 px-0 sm:px-4  container mx-auto xl:w-10/12">
-            <div class="py-16 md:py-20 sm:mb-12 bg-cover bg-center px-4 rounded" :style="{ backgroundImage: 'linear-gradient(to bottom, rgba(27,7,7,0.7), rgba(47,7,7,0.8)),url(' + ('images/backdrop-ballermann6.jpg') + ')'}">
+        <section class="mb-12 px-0 sm:px-4  container mx-auto xl:w-10/12">
+            <div class="py-16 md:py-20 mb-12 bg-cover bg-center px-4 rounded" :style="{ backgroundImage: 'linear-gradient(to bottom, rgba(27,7,7,0.7), rgba(47,7,7,0.8)),url(' + ('images/backdrop-ballermann6.jpg') + ')'}">
                 <h2 class="text-white text-2xl sm:text-4xl text-left font-semibold mb-2 uppercase">{{ $t('general.newest') }} 
                     <span class="text-2xl sm:text-4xl self-center font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200 cursor-pointer">
                         TRIGGERSC<font-awesome-icon :icon="['fas', 'angry']" class="text-white" />RES
@@ -44,14 +44,38 @@
                     {{ $t('general.recentRatings') }}
                 </p>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 sm:gap-6 justify-content-start">
-                <RecentRatingsItem 
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 sm:gap-8 justify-content-start items-center">
+                <div class="grid grid-cols-1 sm:grid-cols-2 sm:gap-4 col-span-2 justify-content-start recent-ratings">
+                    <RecentRatingsItem 
                     v-for="(rating,index) in store.recentRatings" 
                     :key="index" 
                     :movie="rating" 
                     :scores="store.recentScores[index]"
                     :id="index" 
-                />
+                    />
+                </div>
+                <div class="text-left text-white px-4 sm:px-0 col-span-2 lg:col-span-1">
+                    <h3 class="text-2xl font-semibold my-8">{{ $t('general.recentComments') }}</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
+                            <template v-for="(comment, index) in store.recentComments" :key="comment.movie_id">
+                                <div v-if="(index % 2 === 0) === toggleBool" class="bg-gradient-to-r from-gray-950 to-gray-800 p-4">
+                                    <div class=" mb-4">
+                                        <NuxtLink :to="`movie/${comment.movie_id}`" tag="h4" class="font-semibold cursor-pointer">{{ store.movies.filter(movie => movie.id === comment.movie_id)[0].title }}</NuxtLink>
+                                    </div>
+                                    <hr class="mb-4 w-36 border-yellow-500">
+                                    <div class="flex justify-between gap-2">
+                                        <p class="italic">{{ comment.comment }}</p>
+                                        <div v-if="comment.liked === 1"><font-awesome-icon :icon="['fas', 'thumbs-up']" class="text-green-500 text-xl" /></div>
+                                        <div v-if="comment.disliked === 1"><font-awesome-icon :icon="['fas', 'thumbs-down']" class="text-red-500 text-xl" /></div>
+                                    </div>
+                                </div>
+                            </template> 
+                    </div>
+                    <div class="flex gap-2 justify-center my-4">
+                        <font-awesome-icon :icon="['fas', 'circle']" class="text-xl" :class="[toggleBool ? 'text-yellow-500': 'text-grey-500 opacity-70']" @click="handleToggle(true)" />
+                        <font-awesome-icon :icon="['fas', 'circle']" class="text-xl" :class="[!toggleBool ? 'text-yellow-500': 'text-grey-500 opacity-70']" @click="handleToggle(false)" />
+                    </div>
+                </div>    
             </div>      
         </section>
         <section>
@@ -138,6 +162,8 @@
 import { useStore } from '~/stores/store'
 import placeholderBondMovies from '~/assets/bondMovies.json'
 
+const toggleBool = ref(false)
+
 const store = useStore()
 store.setTriggerscores()
 store.setBondMovies()
@@ -146,7 +172,36 @@ store.setTop10Racism()
 store.setTop10Sexism()
 store.setTop10Others()
 store.setTop10Cringe()
+store.setRecentComments()
 
 const isLoading = computed(() => store.highlightsLoading || store.moviesLoading || store.triggerscores.length == 0)
+let intervalId: any = undefined
+
+const handleToggle = (value: boolean) => {
+    toggleBool.value = value
+    clearInterval(intervalId)
+    intervalId = setInterval(() => {
+    toggleBool.value = !toggleBool.value
+    }, 10000)
+}
+
+onMounted(() => {
+    intervalId = setInterval(() => {
+    toggleBool.value = !toggleBool.value
+    }, 10000)
+})
+
+onUnmounted(() => {
+    clearInterval(intervalId);
+})
 
 </script>
+
+<style lang="css" scoped>
+@media (min-width:768px) {
+    .recent-ratings {
+        grid-auto-rows: min(10rem, 100%)
+    }
+}   
+
+</style>

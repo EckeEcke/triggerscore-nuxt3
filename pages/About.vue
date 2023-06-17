@@ -31,10 +31,10 @@
           {{ t('about.headline') }}
         </p>
         <hr class="my-4">
-        <p class="mt-2 leading-6 md:leading-7">
+        <p class="mt-2 leading-7 mb-4">
           {{ t('about.paragraph1') }}
         </p>
-        <p class="mt-2 leading-6 md:leading-7">
+        <p class="mt-2 leading-7">
           {{ t('about.paragraph2') }}
         </p>
       </section>

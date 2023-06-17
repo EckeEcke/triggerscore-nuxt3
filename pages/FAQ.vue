@@ -28,23 +28,23 @@
             </div>
             <p class="font-semibold">{{ $t('faq.subheadline') }}</p>
             <hr class="my-4">
-            <section class="mt-4 leading-6 md:leading-7">
+            <section class="mt-4 leading-7">
                 <p class="mb-2"><b>{{ $t('faq.question1') }}</b></p>
                 <p>{{ $t('faq.answer1') }}</p>
             </section>
-            <section class="mt-4 leading-6 md:leading-7">
+            <section class="mt-4 leading-7">
                 <p class="mb-2"><b>{{ $t('faq.question2') }}</b></p>
                 <p>{{ $t('faq.answer2') }}</p>
             </section>
-            <section class="mt-4 leading-6 md:leading-7">
+            <section class="mt-4 leading-7">
                 <p class="mb-2"><b>{{ $t('faq.question3') }}</b></p>
                 <p>{{ $t('faq.answer3') }}</p>
             </section>
-            <section class="mt-4 leading-6 md:leading-7">
+            <section class="mt-4 leading-7">
                 <p class="mb-2"><b>{{ $t('faq.question4') }}</b></p>
                 <p>{{ $t('faq.answer4') }}</p>
             </section>
-            <section class="mt-4 leading-6 md:leading-7">
+            <section class="mt-4 leading-7">
                 <p class="mb-2"><b>{{ $t('faq.question5') }}</b></p>
                 <p>{{ $t('faq.answer5') }}</p>
             </section>

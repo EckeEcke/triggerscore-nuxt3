@@ -144,10 +144,6 @@ function handleDislike(value: boolean){
     }
 }
 
-
-const poster = computed(() => `https://image.tmdb.org/t/p/original/${this.movie.poster_path}`)
-const overview = computed(() => this.movie.overview.length > 100 ? this.movie.overview.substring(0, 100) + "..." : this.movie.overview)
-
 onMounted(() => scrollRatings())
 
 </script>
@@ -180,14 +176,5 @@ onMounted(() => scrollRatings())
         .rating10:hover ~ button {
             opacity: 1
         }
-    }
-
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
-}
-.fade-enter-from, .fade-leave-to {
-  opacity: 0;
-}
-    
-    
+    }    
 </style>

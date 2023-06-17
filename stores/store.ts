@@ -63,6 +63,7 @@ export const useStore = defineStore({
         triggerscores: placeholderTriggerscores,
         movies: [],
         recentRatings: [],
+        recentComments: [],
         recentScores: [],
         filteredMovies: [] as any[],
         searchInput: '',
@@ -112,8 +113,8 @@ export const useStore = defineStore({
         
     },
     async setRecentRatings(){
-        const scores = await fetch(`${url}recentratings`)
-        const ratings = await scores.json()
+        const data = await fetch(`${url}recentratings`)
+        const ratings = await data.json()
         this.recentScores = ratings
         const recentRatings = Promise.all(ratings.map((entry: any) => 
             fetch(`https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${this.locale}`)
@@ -122,9 +123,14 @@ export const useStore = defineStore({
         ))
         recentRatings.then(res => this.recentRatings = res)
     },
+    async setRecentComments(){
+        const data = await fetch(`${url}recentcomments`)
+        const comments = await data.json()
+        this.recentComments = comments
+    },
     async setTop10Sexism(){
-        const scores = await fetch(`${url}top10-sexism`)
-        const top10 = await scores.json()
+        const data = await fetch(`${url}top10-sexism`)
+        const top10 = await data.json()
         const loadedTop10 = Promise.all(top10.map((entry: any) => 
             fetch(`https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${this.locale}`)
             .then((res) => res.json())

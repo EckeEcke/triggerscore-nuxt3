@@ -19,7 +19,8 @@
       "ratings": "rating(s)",
       "showMore": "Show more",
       "showLess": "Show less",
-      "comments": "Comments"
+      "comments": "Comments",
+      "recentComments": "Newest comments"
       
     },
     "header": {
