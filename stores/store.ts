@@ -106,7 +106,7 @@ export const useStore = defineStore({
             .then((res) => res.json())
             .catch(() => console.log('oopsy'))
         ))
-        loadedMovies.then(res => {
+        loadedMovies.then((res: any) => {
             this.movies = res
             this.moviesLoading = false
         })

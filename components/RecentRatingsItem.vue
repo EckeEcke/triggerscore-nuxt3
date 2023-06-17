@@ -4,7 +4,7 @@
             <div class="flex items-center gap-2 text-left">
                  
                 <div class="flex rounded-lg justify-center w-10 h-10 mr-2" :class="{'bg-red-700': scoreTotal >= 7, 'bg-yellow-500': scoreTotal < 7 && scoreTotal >=4, 'bg-green-600': scoreTotal < 4}">
-                    <p class="self-center text-white text-lg font-semibold">{{scoreTotal}}</p>
+                    <p class="self-center text-white text-lg font-semibold">{{scoreTotal !== -1 ? scoreTotal : '-'}}</p>
                 </div>
                 <div class=" w-9/12">
                     <h3 v-if="movie.title.length > 0" class="text-base font-semibold h-6 overflow-hidden whitespace-nowrap custom-headline">{{ movie.title }}</h3>
@@ -22,7 +22,7 @@
             <div class="relative hidden md:block">
                 <img class="h-36 w-32 rounded-sm" :alt="movie.original_title" :src="poster2">
                 <div class="flex absolute top-1 right-1 rounded-lg justify-center w-12 h-12 bg-opacity-80" :class="{'bg-red-700': scoreTotal >= 7, 'bg-yellow-500': scoreTotal < 7 && scoreTotal >=4, 'bg-green-600': scoreTotal < 4}">
-                    <p class="self-center text-white text-xl font-semibold">{{scoreTotal}}</p>
+                    <p class="self-center text-white text-xl font-semibold">{{scoreTotal !== -1 ? scoreTotal : '-'}}</p>
                 </div>
                 <div class="absolute bottom-0 right-0">
                     <div v-if="totalRatings[0].ratings == 1" class="flex items-center w-16 h-16 relative rounded-full justify-center drop-shadow">
@@ -41,26 +41,26 @@
                 </div> 
                 <div class="grid grid-cols-2 text-sm max-w-xs mt-auto">
                     <div class="flex my-1 text-sm">
-                            <div class="flex justify-center rounded-lg w-8 h-8 mr-2 bg-opacity-80"  :class="{'bg-red-700': scores.rating_sexism >= 7, 'bg-yellow-500': scores.rating_sexism < 7 && scores.rating_sexism >=4, 'bg-green-600': scores.rating_sexism < 4}">
-                                <div class="self-center text-white">{{scores.rating_sexism}}</div>
+                            <div class="flex justify-center rounded-lg w-8 h-8 mr-2 bg-opacity-80"  :class="{'bg-red-700': scores?.rating_sexism >= 7, 'bg-yellow-500': scores?.rating_sexism < 7 && scores?.rating_sexism >=4, 'bg-green-600': scores?.rating_sexism < 4}">
+                                <div class="self-center text-white">{{scores?.rating_sexism}}</div>
                             </div>
                             <p class="self-center">{{ $t('categories.sexism') }}</p>
                         </div>
                         <div class="flex my-1 text-sm">
-                            <div class="flex rounded-lg justify-center w-8 h-8 mr-2 bg-opacity-80" :class="{'bg-red-700': scores.rating_racism >= 7, 'bg-yellow-500': scores.rating_racism < 7 && scores.rating_racism >=4, 'bg-green-600': scores.rating_racism < 4}">
-                                <div class="self-center text-white">{{scores.rating_racism}}</div>
+                            <div class="flex rounded-lg justify-center w-8 h-8 mr-2 bg-opacity-80" :class="{'bg-red-700': scores?.rating_racism >= 7, 'bg-yellow-500': scores?.rating_racism < 7 && scores?.rating_racism >=4, 'bg-green-600': scores?.rating_racism < 4}">
+                                <div class="self-center text-white">{{scores?.rating_racism}}</div>
                             </div>
                             <p class="self-center">{{ $t('categories.racism') }}</p>
                         </div>
                         <div class="flex my-1 text-sm">
-                            <div class="flex rounded-lg justify-center w-8 h-8 mr-2 bg-opacity-80" :class="{'bg-red-700': scores.rating_others >= 7, 'bg-yellow-500': scores.rating_others < 7 && scores.rating_others >=4, 'bg-green-600': scores.rating_others < 4}">
-                                <div class="self-center text-white">{{scores.rating_others}}</div>
+                            <div class="flex rounded-lg justify-center w-8 h-8 mr-2 bg-opacity-80" :class="{'bg-red-700': scores?.rating_others >= 7, 'bg-yellow-500': scores?.rating_others < 7 && scores?.rating_others >=4, 'bg-green-600': scores?.rating_others < 4}">
+                                <div class="self-center text-white">{{scores?.rating_others}}</div>
                             </div>
                             <p class="self-center">{{ $t('categories.others') }}</p>
                         </div>
                         <div class="flex my-1 text-sm">
-                            <div class="flex rounded-lg justify-center w-8 h-8 mr-2 bg-opacity-80" :class="{'bg-red-700': scores.rating_cringe >= 7, 'bg-yellow-500': scores.rating_cringe < 7 && scores.rating_cringe >=4, 'bg-green-600': scores.rating_cringe < 4}">
-                                <div class="self-center text-white">{{scores.rating_cringe}}</div>
+                            <div class="flex rounded-lg justify-center w-8 h-8 mr-2 bg-opacity-80" :class="{'bg-red-700': scores?.rating_cringe >= 7, 'bg-yellow-500': scores?.rating_cringe < 7 && scores?.rating_cringe >=4, 'bg-green-600': scores?.rating_cringe < 4}">
+                                <div class="self-center text-white">{{scores?.rating_cringe}}</div>
                             </div> 
                             <p class="self-center">{{ $t('categories.cringe') }}</p>
                         </div>
@@ -96,12 +96,12 @@ const poster = computed(() => {
         return ("/images/film-poster-placeholder.png");
 })
 const scoreAvailable = computed(() => props.scores !== undefined)
-const scoreTotal = computed(() => {
+const scoreTotal: ComputedRef<number> = computed(() => {
     if (scoreAvailable.value) {
-        return Math.floor((props.scores.rating_sexism + props.scores.rating_racism + props.scores.rating_others) / 3 * 10) / 10;
+        return Math.floor((props.scores?.rating_sexism + props.scores?.rating_racism + props.scores?.rating_others) / 3 * 10) / 10;
     }
     else
-        return "-";
+        return -1;
 })
 const totalRatings = computed(() => store.triggerscores.filter(movie => movie.movie_id == props.movie.id))
 

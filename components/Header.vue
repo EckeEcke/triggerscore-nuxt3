@@ -7,10 +7,10 @@
             </NuxtLink>
           </div>
           <div class="flex sm:text-sm">
+            <NuxtLink to="/" tag="a" class="animated-link text-white font-semibold self-center mr-6 md:mr-10 hidden md:block hover:text-yellow-500 uppercase">HOME</NuxtLink>
             <NuxtLink to="/all" tag="a" class="animated-link text-white font-semibold self-center mr-6 md:mr-10 hidden md:block hover:text-yellow-500 uppercase">{{ $t('header.allMovies') }}</NuxtLink>
+            <NuxtLink to="/stats" tag="a" class="animated-link text-white font-semibold self-center mr-6 md:mr-10 hidden md:block hover:text-yellow-500 uppercase">STATS</NuxtLink>
             <NuxtLink to="/about" tag="a" class="animated-link text-white font-semibold self-center mr-6 md:mr-10 hidden md:block hover:text-yellow-500 uppercase">{{ $t('header.about') }}</NuxtLink>
-            <NuxtLink to="/faq" tag="a" class="animated-link text-white font-semibold self-center mr-6 md:mr-10 hidden md:block hover:text-yellow-500 uppercase">{{ $t('header.faq') }}</NuxtLink>
-            <NuxtLink to="/contact" tag="a" class="animated-link text-white font-semibold self-center mr-6 md:mr-10 hidden md:block hover:text-yellow-500 uppercase">{{ $t('header.contact') }}</NuxtLink>
             <LanguageSelect />
             <font-awesome-icon :icon="['fas', 'search']" class="text-lg text-white mr-6 sm:mr-10 md:mr-0 self-center hover:text-yellow-500" @click="openSearch" />
             <span class="md:hidden flex self-center"><font-awesome-icon :icon="['fas', 'bars']" class="text-white text-lg self-center" @click="showNav = !showNav; showMenu = false; showSearch = false" /></span>
@@ -36,9 +36,10 @@
               </NuxtLink> 
             </div>                
             <NuxtLink to="/" tag="a" class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase"><div class="py-6" @click="showNav = false">{{ $t('header.home') }}</div></NuxtLink>                  
-            <NuxtLink to="/all" tag="a" class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase"><div class="py-6" @click="showNav = false">{{ $t('header.allMovies') }}</div></NuxtLink>                
+            <NuxtLink to="/all" tag="a" class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase"><div class="py-6" @click="showNav = false">{{ $t('header.allMovies') }}</div></NuxtLink>
+            <NuxtLink to="/stats" tag="a" class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase"><div class="py-6" @click="showNav = false">Stats</div></NuxtLink>
+            <NuxtLink to="/about" tag="a" class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase"><div class="py-6" @click="showNav = false">{{ $t('header.about') }}</div></NuxtLink>                  
             <NuxtLink to="/faq" tag="a" class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase"><div class="py-6" @click="showNav = false">{{ $t('header.faq') }}</div></NuxtLink>                
-            <NuxtLink to="/about" tag="a" class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase"><div class="py-6" @click="showNav = false">{{ $t('header.about') }}</div></NuxtLink>  
             <NuxtLink to="/contact" tag="a" class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase"><div class="py-6" @click="showNav = false">{{ $t('header.contact') }}</div></NuxtLink>      
           </nav>
         </transition-group>
