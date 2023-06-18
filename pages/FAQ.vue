@@ -23,11 +23,11 @@
             />
         </Head>
         <div class="lg:w-3/4">
-            <div class="h-32 bg-cover bg-center py-12 px-8 mb-6" :style="{ backgroundImage: 'linear-gradient(to bottom, rgba(47,27,27,0.6), rgba(67,27,27,0.7)),url(' + ('/images/backdrop-scarymovie.jpg') + ')'}">
+            <div class="h-32 bg-cover bg-center py-12 px-8 mb-8" :style="{ backgroundImage: 'linear-gradient(to bottom, rgba(47,27,27,0.6), rgba(67,27,27,0.7)),url(' + ('/images/backdrop-scarymovie.jpg') + ')'}">
                 <h2 class="font-semibold text-4xl mb-2 uppercase">{{ $t('faq.headline') }}</h2>
             </div>
-            <p class="font-semibold">{{ $t('faq.subheadline') }}</p>
-            <hr class="my-4">
+            <p class="font-semibold text-2xl">{{ $t('faq.subheadline') }}</p>
+            <hr class="my-6">
             <section class="mt-4 leading-7">
                 <p class="mb-2"><b>{{ $t('faq.question1') }}</b></p>
                 <p>{{ $t('faq.answer1') }}</p>

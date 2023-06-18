@@ -23,14 +23,14 @@
           />
       </Head>
       <section class="text-white lg:w-3/4">
-        <div class="h-32 bg-cover bg-center py-12 px-8 mb-6" :style="{ backgroundImage: 'linear-gradient(to bottom, rgba(47,27,27,0.6), rgba(67,27,27,0.7)),url(' + ('/images/backdrop-scarymovie.jpg') + ')'}">
+        <div class="h-32 bg-cover bg-center py-12 px-8 mb-8" :style="{ backgroundImage: 'linear-gradient(to bottom, rgba(47,27,27,0.6), rgba(67,27,27,0.7)),url(' + ('/images/backdrop-scarymovie.jpg') + ')'}">
           <h2 class="font-semibold text-4xl mb-2 uppercase">About</h2>
         </div>
         
-        <p class="font-semibold">
+        <p class="font-semibold text-2xl">
           {{ t('about.headline') }}
         </p>
-        <hr class="my-4">
+        <hr class="my-6">
         <p class="mt-2 leading-7 mb-4">
           {{ t('about.paragraph1') }}
         </p>
