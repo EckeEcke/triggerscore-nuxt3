@@ -1,5 +1,5 @@
 <template>
-    <div class="max-w-screen p-16 relative flex justify-center mx-auto animate-pulse" style="width:600px;max-width:100vw">
+    <div class="max-w-screen p-16 relative flex justify-center mx-auto animate-pulse" style="width:600px;margin-bottom: 5rem; max-width:100vw">
         <client-only>
             <Vue3Lottie
                 :animationData="loadingJSON"
