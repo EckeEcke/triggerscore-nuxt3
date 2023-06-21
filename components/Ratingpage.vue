@@ -26,7 +26,7 @@
         <p class="px-4 mb-4 max-w-lg">{{ t('rating.descSexism') }}</p>
         <div class="max-w-full rating hide-scrollbar flex w-fit sm:justify-end ml-3 overflow-y-scroll sm:overflow-hidden mb-5">
             <button v-for="(n,i) in 11" :key="i" @click="ratingSexism = ratingSexism == 10-i ? null : 10-i " :class="[['rating' + (10-i)], [ratingSexism == 10-i ? 'opacity-100' : 'opacity-50'],[i == 0 ? 'mr-4' : '']]" class="w-12 sm:w-12 lg:w-10 xl:w-12 h-12 sm:h-12 lg:h-10 xl:h-12 p-1 text-center text-sm flex-none font-semibold text-white" >
-                <div class="w-full h-full rounded-lg flex text-center justify-center font-semibold" :class="{'transform scale-110 text-lg': ratingSexism == 10-i, 'bg-green-600': 10-i < 4, 'bg-yellow-500': 10-i > 2 && 10-i < 7, 'bg-red-700': 10-i > 6, 'opacity-100': ratingSexism == 10-i }"><span class="self-center">{{10-i}}</span></div>
+                <div class="w-full h-full rounded-lg flex text-center justify-center font-semibold" :class="{'transform scale-110 text-lg': ratingSexism == 10-i, 'bg-green-600': 10-i < 4, 'bg-yellow-500': 10-i > 3 && 10-i < 7, 'bg-red-700': 10-i > 6, 'opacity-100': ratingSexism == 10-i }"><span class="self-center">{{10-i}}</span></div>
             </button>
         </div>
         
@@ -35,7 +35,7 @@
         <p class="px-4 mb-4 max-w-lg">{{ t('rating.descRacism') }}</p>
         <div class="max-w-full rating hide-scrollbar flex w-fit sm:justify-end ml-3 overflow-y-scroll sm:overflow-hidden mb-5">
             <button v-for="(n,i) in 11" :key="i" @click="ratingRacism = ratingRacism == 10-i ? null : 10-i " :class="[['rating' + (10-i)], [ratingRacism == 10-i ? 'opacity-100' : 'opacity-50'],[i == 0 ? 'mr-4' : '']]" class="w-12 sm:w-12 lg:w-10 xl:w-12 h-12 sm:h-12 lg:h-10 xl:h-12 p-1 text-center text-sm flex-none font-semibold text-white">
-                <div class="w-full h-full rounded-lg flex text-center justify-center font-semibold" :class="{'transform scale-110 text-lg': ratingRacism == 10-i, 'bg-green-600': 10-i < 4, 'bg-yellow-500': 10-i > 2 && 10-i < 7, 'bg-red-700': 10-i > 6, 'opacity-100': ratingRacism == 10-i }"><span class="self-center">{{10-i}}</span></div>
+                <div class="w-full h-full rounded-lg flex text-center justify-center font-semibold" :class="{'transform scale-110 text-lg': ratingRacism == 10-i, 'bg-green-600': 10-i < 4, 'bg-yellow-500': 10-i > 3 && 10-i < 7, 'bg-red-700': 10-i > 6, 'opacity-100': ratingRacism == 10-i }"><span class="self-center">{{10-i}}</span></div>
             </button>
         </div>
         <hr class="border-transparent">
@@ -43,7 +43,7 @@
         <p class="px-4 mb-4 max-w-lg">{{ t('rating.descOthers') }}</p>
         <div class="max-w-full rating hide-scrollbar flex w-fit sm:justify-end ml-3 overflow-y-scroll sm:overflow-hidden mb-5">
             <button v-for="(n,i) in 11" :key="i" @click="ratingOthers = ratingOthers == 10-i ? null : 10-i " :class="[['rating' + (10-i)], [ratingOthers == 10-i ? 'opacity-100' : 'opacity-50'],[i == 0 ? 'mr-4' : '']]" class="w-12 sm:w-12 lg:w-10 xl:w-12 h-12 sm:h-12 lg:h-10 xl:h-12 p-1 text-center text-sm flex-none font-semibold text-white">
-                <div class="w-full h-full rounded-lg flex text-center justify-center font-semibold" :class="{'transform scale-110 text-lg': ratingOthers == 10-i, 'bg-green-600': 10-i < 4, 'bg-yellow-500': 10-i > 2 && 10-i < 7, 'bg-red-700': 10-i > 6, 'opacity-100': ratingOthers == 10-i }"><span class="self-center">{{10-i}}</span></div>
+                <div class="w-full h-full rounded-lg flex text-center justify-center font-semibold" :class="{'transform scale-110 text-lg': ratingOthers == 10-i, 'bg-green-600': 10-i < 4, 'bg-yellow-500': 10-i > 3 && 10-i < 7, 'bg-red-700': 10-i > 6, 'opacity-100': ratingOthers == 10-i }"><span class="self-center">{{10-i}}</span></div>
             </button>
         </div>
         

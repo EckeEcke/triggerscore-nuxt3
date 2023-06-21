@@ -90,7 +90,8 @@ export const useStore = defineStore({
         minScore: 0,
         maxScore: 10,
         isFiltering: false,
-        locale: "de"
+        locale: "de",
+        localeSetByUser: false
     }
   },
   actions: {

@@ -15,6 +15,25 @@ const store = useStore()
 const { locale } = useI18n()
 locale.value = store.locale
 
+onMounted(() => {
+  const AvailableLanguages = ['en', 'fr', 'de', 'es']
+  const splitNavigatorLanguage = (language: string) => {
+    return language.split('-')[0]
+  }
+
+  if(process.client && !store.localeSetByUser){
+    if(navigator && navigator.language){
+      const lang = navigator.language === 'en-US' ? 'us' : splitNavigatorLanguage(navigator.language)
+      if(AvailableLanguages.includes(lang)){
+        store.locale = lang
+        locale.value = lang
+      }
+    }
+  }
+})
+
+
+
 </script>
 
 <style>

@@ -45,7 +45,7 @@
                 </p>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 sm:gap-8 justify-content-start items-center">
-                <div class="grid grid-cols-1 sm:grid-cols-2 sm:gap-4 col-span-2 justify-content-start recent-ratings">
+                <div class="grid grid-cols-1 sm:grid-cols-2 sm:gap-8 col-span-2 justify-content-start recent-ratings">
                     <RecentRatingsItem 
                     v-for="(rating,index) in store.recentRatings" 
                     :key="index" 
@@ -56,7 +56,7 @@
                 </div>
                 <div class="text-left text-white px-4 sm:px-0 col-span-2 lg:col-span-1">
                     <h3 class="text-2xl font-semibold my-8">{{ $t('general.recentComments') }}</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
                             <template v-for="(comment, index) in store.recentComments" :key="comment.movie_id">
                                 <div v-if="(index % 2 === 0) === toggleBool" class="bg-gradient-to-r from-gray-950 to-gray-800 p-4">
                                     <div class=" mb-4 flex gap-2 items-center">
