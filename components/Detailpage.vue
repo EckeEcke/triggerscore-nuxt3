@@ -25,7 +25,7 @@
             />
             <Meta
                 property="og:title"
-                :content="movie.title"
+                :content="title"
             />
             <Meta
                 property="og:description"
@@ -199,6 +199,7 @@ const score = ref(undefined)
 const movieLoading = ref(true)
 const showMoreComments = ref(false)
 
+const title = computed(() => movie.value?.title ?? 'Movie on Triggerscore')
 const poster = computed(() => `https://image.tmdb.org/t/p/original/${movie.value.poster_path}`)
 const genres = computed(() => movie.value.genres.map(genre => genre.name))
 const triggerscores = computed(() => loadTriggerscore())
