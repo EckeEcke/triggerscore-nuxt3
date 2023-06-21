@@ -206,11 +206,7 @@ export const emptyMovie: Movie = {
             type: "string",
             example: "http://www.foxmovies.com/movies/fight-club"
         },
-        id: {
-            type: "number",
-            example: 550,
-            default: 0
-        },
+        id: -1,
         imdb_id: {
             type: "string",
             example: "tt0137523"
