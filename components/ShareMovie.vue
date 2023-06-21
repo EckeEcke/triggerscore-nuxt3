@@ -14,6 +14,9 @@
             target="_blank">
             <img alt="Logo Reddit" class="w-10" src="../assets/images/reddit-logo.svg">
         </a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=example.org" target="_blank">
+            <img alt="Logo Facebook" class="w-10" src="../assets/images/facebook-logo.svg">
+        </a>
         <a :href="'mailto:?subject= ' + movie.title + ' on Triggerscore&body=Check out ' + movie.title + ' on Triggerscore: ' + currentURL"
             title="Share by Email">
             <font-awesome-icon :icon="['fas', 'envelope']" class="text-white" style="width:auto;height:2.5rem"/>
