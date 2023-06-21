@@ -25,7 +25,7 @@
             />
             <Meta
                 property="og:title"
-                :content="title"
+                :content="title.toString()"
             />
             <Meta
                 property="og:description"
