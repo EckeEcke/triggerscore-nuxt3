@@ -1,0 +1,161 @@
+{
+    "general": {
+        "loadMovies": "Cargando películas",
+        "back": "Volver",
+        "rate": "Calificar",
+        "noRatings": "Sin calificaciones aún",
+        "released": "Estreno",
+        "noDescription": "Descripción no disponible",
+        "slogan": "'Una nueva forma de calificar películas'. Triggerscore es una plataforma de calificación de películas donde los usuarios pueden calificar cuánto impacto tienen las películas antiguas en los espectadores de hoy.",
+        "newest": "Más recientes",
+        "recentRatings": "Calificaciones recientes",
+        "top10": "Top 10",
+        "top10Copy": "Películas con los puntajes más altos en Triggerscore",
+        "stats": "Estadísticas",
+        "statsCopy": "Estadísticas para entusiastas de los números",
+        "minutes": "min.",
+        "discoverMoreMovies": "¿Quieres descubrir más películas en Triggerscore?",
+        "new": "NUEVO",
+        "ratings": "calificaciones",
+        "showMore": "Ver más",
+        "showLess": "Ver menos",
+        "comments": "Comentarios",
+        "recentComments": "Comentarios recientes"
+    },
+    "header": {
+        "home": "Inicio",
+        "allMovies": "Todas las películas",
+        "about": "About",
+        "faq": "FAQ",
+        "contact": "Contacto",
+        "searchPlaceholder": "Buscar película..."
+    },
+    "filter": {
+        "sort": "Ordenar",
+        "displayedScore": "Puntaje mostrado",
+        "AtoZ": "A-Z",
+        "ZtoA": "Z-A",
+        "scoreDesc": "Triggerscore descendente",
+        "scoreAsc": "Triggerscore ascendente",
+        "yearDesc": "Año descendente",
+        "yearAsc": "Año ascendente",
+        "filterByScore": "Filtrar por puntaje",
+        "filterByProvider": "Por proveedor de transmisión",
+        "filterByRelease": "Año de estreno",
+        "resetFilter": "Restablecer filtro",
+        "results": "resultados",
+        "chooseScore": "Seleccionar puntaje",
+        "from": "desde",
+        "to": "hasta"
+    },
+    "categories": {
+        "totalScore": "Puntaje total",
+        "sexism": "Sexismo",
+        "racism": "Racismo",
+        "others": "Otros",
+        "cringe": "Vergonzoso"
+    },
+    "index": {
+        "headline": "Descubre películas",
+        "intro1": "¿Tu película no está incluida? Simplemente ",
+        "intro2": "el título de tu película y envía una calificación",
+        "search": "buscar "
+    },
+    "search": {
+        "noResults": "Desafortunadamente, no se encontraron resultados",
+        "searchHeadline1": "Buscar película y enviar una ",
+        "searchHeadline2": "calificación",
+        "noResults1": "Desafortunadamente, tu búsqueda de ",
+        "noResults2": " no arrojó resultados",
+        "results": "Tu búsqueda de '{0}' tiene {1} resultados"
+    },
+    "stats": {
+        "average": "Promedio",
+        "totalRatings": "Cantidad de calificaciones enviadas",
+        "totalComments": "Cantidad de comentarios enviados",
+        "moviesOnTS": "Películas en Triggerscore",
+        "lowestScore": "Puntuación más baja",
+        "highestScore": "Puntuación más alta",
+        "mostRatings": "Película más calificada <br> ({0} calificaciones)",
+        "mostComments": "Más comentarios <br> ({0} comentarios)",
+        "mostLiked": "Más likes <br>({0} Me gusta)",
+        "mostDisliked": "Más dislikes <br>({0} No me gusta)",
+        "totalLikes": "Cantidad de likes enviados",
+        "totalDislikes": "Cantidad de dislikes enviados",
+        "averageRatings": "Promedio de calificaciones por película",
+        "averageComments": "Promedio de comentarios por película",
+        "averageLikes": "Promedio de likes por película",
+        "averageDislikes": "Promedio de dislikes por película",
+        "launch": "Año de lanzamiento Triggerscore"
+    },
+    "about": {
+        "headline": "Triggerscore: una nueva forma de ver películas antiguas",
+        "paragraph1": "La idea de Triggerscore surgió de mi placer culpable recién descubierto: hacer zapping en Netflix para ver películas antiguas (especialmente de los 90) y analizar cuánto podrían desencadenar a los espectadores en la actualidad. Triggerscore sirve como un portal donde los usuarios pueden encontrar y enviar calificaciones de Triggerscore.",
+        "paragraph2": "Triggerscore es un proyecto en solitario. La idea, concepción, diseño y desarrollo tanto del frontend como del backend están a cargo de mí mismo. El frontend se basa en el framework de JavaScript Nuxt 3, utilizando Pinia-store para la gestión del estado y el framework de CSS Tailwind para los estilos. El frontend de mi aplicación está alojado en Netlify. Para el backend, utilizo una base de datos MySQL alojada en AWS y un servidor NodeJS que se ejecuta en Render.com. Mi aplicación de backend recibe calificaciones desde el frontend y las guarda en mi base de datos. También lee y sirve calificaciones desde mi base de datos, así como calcula las puntuaciones. Además, mi backend proporciona los 10 mejores y estadísticas. Como base de datos de películas, utilizo la API de TMDB y la API de JustWatch para conocer los proveedores de transmisión disponibles."
+    },
+    "faq": {
+        "headline": "Preguntas frecuentes",
+        "subheadline": "Preguntas frecuentes",
+        "question1": "¿Qué es Triggerscore?",
+        "answer1": "Triggerscore es un portal de calificaciones donde los usuarios pueden calificar cuánto podrían desencadenar a los espectadores las películas antiguas en la actualidad. El nombre Triggerscore se compone de calificaciones en las categorías sexismo, racismo, otros y la categoría de bonificación cringe. La categoría cringe no se utiliza para calcular la puntuación general.",
+        "question2": "¿Cómo puedo calificar una película?",
+        "answer2": "Para calificar una película, simplemente busca el título o haz clic en uno de los títulos existentes. Dale una puntuación para cada una de las cuatro categorías y envía tu calificación. No es necesario iniciar sesión.",
+        "question3": "¿Se guarda algún dato personal cuando envío una calificación?",
+        "answer3": "No, en la base de datos de calificaciones solo se guarda la calificación enviada y el ID de la película.",
+        "question4": "¿De dónde provienen todos los datos de películas?",
+        "answer4": "Triggerscore utiliza la API de TMDB. Además, la aplicación utiliza la API de JustWatch para obtener información sobre la disponibilidad de películas en diferentes proveedores de transmisión. El Triggerscore en sí solo es proporcionado por y para Triggerscore.",
+        "question5": "¿Por qué a veces la página tarda tanto en cargar?",
+        "answer5": "Mi backend se ejecuta en un proveedor gratuito. Para ahorrar recursos, los servicios del backend se ponen en estado de suspensión después de un tiempo sin uso. Por lo tanto, cuando la página tarda un poco más en cargar, en la mayoría de los casos se debe a que el backend necesita 'despertarse' primero."
+    },
+    "contact": {
+        "sendFeedback": "Enviar comentarios",
+        "name": "Nombre",
+        "email": "Correo electrónico",
+        "message": "Mensaje",
+        "placeholderName": "Ingrese su nombre",
+        "placeholderEmail": "Ingrese su correo electrónico",
+        "placeholderMessage": "Ingrese su mensaje",
+        "send": "Enviar",
+        "success": "Mensaje enviado exitosamente",
+        "report": "Hola, quiero informar el siguiente comentario:",
+        "reportHeadline": "Informar comentario"
+    },
+    "rating": {
+        "thanks": "¡Gracias por tu calificación!",
+        "submit": "Enviar calificación",
+        "submitFor": "Enviar calificación para",
+        "descSexism": "¿Se presentan modelos de roles desactualizados?",
+        "descRacism": "¿Se presentan estereotipos racistas de manera acrítica?",
+        "descOthers": "¿La película contiene otros elementos desencadenantes (body shaming, abelismo...)?",
+        "descCringe": "¿La película contiene elementos que generan vergüenza ajena?",
+        "tmdb-rating": "TMDB",
+        "share": "Compartir película",
+        "leaveComment": "¿Quieres dejar un comentario sobre esta película?",
+        "placeholder": "Escribe un comentario...",
+        "report": "Reportar",
+        "characters": "caracteres",
+        "didYouLike": "¿Te gustó la película?"
+    },
+    "highlights": {
+        "headline1": "Especial de James Bond",
+        "copy1": "Licencia para desencadenar: haz clic en una película y envía un Triggerscore",
+        "headline2": "Las 10 películas más sexistas",
+        "copy2": "Es un mundo de hombres: películas con las calificaciones de sexismo más altas",
+        "headline3": "Las 10 películas más racistas",
+        "copy3": "Para los hombres blancos mayores: películas con las calificaciones de racismo más altas",
+        "headline4": "Las 10 películas con otros elementos",
+        "copy4": "Estas películas generan desencadenamientos. Por diversas razones: películas con las calificaciones de otros elementos más altas",
+        "headline5": "Las 10 películas más vergonzosas",
+        "copy5": "Estas películas son realmente vergonzosas: películas con las calificaciones de vergüenza ajena más altas"
+    },
+    "definition": {
+        "headline": "¿Qué significa 'desencadenado'?",
+        "text": "Ser desencadenado significa algo así como activar o provocar una reacción en las personas. Especialmente en el contexto de internet y las redes sociales, el término se utiliza a menudo para describir las reacciones agresivas o llenas de odio de los usuarios ante declaraciones, videos, imágenes u otras publicaciones. Si un gran grupo de personas se 'desencadena' en un corto período de tiempo, se le llama una tormenta de mierda.",
+        "list": {
+            "headline": "Ejemplos típicos que pueden desencadenar a los usuarios:",
+            "list1": "Acciones o declaraciones que pueden percibirse como racistas",
+            "list2": "Comentarios o comportamientos sexistas",
+            "list3": "Otras formas de discriminación, como el body shaming o el abelismo"
+        }
+    }
+}
