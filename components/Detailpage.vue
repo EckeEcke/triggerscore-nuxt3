@@ -23,6 +23,26 @@
                 name="viewport" 
                 content="width=device-width, initial-scale=1.0"
             />
+            <Meta
+                property="og:title"
+                :content="movie.title"
+            />
+            <Meta
+                property="og:description"
+                content="Triggerscore - rating old movies based on how much users today get triggered"
+            />
+            <Meta
+                property="og:image"
+                :content="poster"
+            />
+            <Meta
+                property="og:url"
+                :content="currentUrl ?? 'www.triggerscore.de'"
+            />
+            <Meta
+                property="og:type"
+                content="website"
+            />
         </Head>
         <div class="container mx-auto sm:pt-6 sm:pb-12 xl:w-10/12 md:px-4">
             <LoadingAnimation v-if="movieLoading"/>
