@@ -2,7 +2,7 @@
     <section class="detailpage w-full bg-center bg-cover bg-fixed" 
         :style="{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)), ${backdrop}`,minHeight: 'calc(100vh - 20rem)'}"
     >
-    <Head v-if="movie.id !== -1">
+    <Head>
         <client-only>
             <Title>{{ movie.title }}</Title>
             <Meta 
@@ -274,11 +274,15 @@ watch(locale, () => {
     loadProviders()
 })
 
-loadMovie()  
+// loadMovie()  
 loadProviders()
 loadTriggerscore()
 store.setTriggerscores()
 store.filterMovies()
+
+onBeforeMount(async () => {
+    await loadMovie()
+})
 
 </script>
 
