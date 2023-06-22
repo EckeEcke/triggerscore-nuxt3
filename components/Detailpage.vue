@@ -3,6 +3,7 @@
         :style="{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)), ${backdrop}`,minHeight: 'calc(100vh - 20rem)'}"
     >
     <Head v-if="movie.id !== -1">
+        <client-only>
             <Title>{{ movie.title }}</Title>
             <Meta 
                 charset="UTF-8"
@@ -43,6 +44,7 @@
                 property="og:type"
                 content="website"
             />
+        </client-only>
         </Head>
         <div class="container mx-auto sm:pt-6 sm:pb-12 xl:w-10/12 md:px-4">
             <LoadingAnimation v-if="movieLoading"/>
