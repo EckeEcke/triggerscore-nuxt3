@@ -39,10 +39,11 @@ const props = defineProps({
 })
 
 const copied = ref(false)
-const currentURL = computed(() => window.location.href)
+const route = useRoute()
+const currentURL = computed(() => `https://triggerscore.netlify.app/movie/${route.params.id}`)
 
 function copyLink() {
-    navigator.clipboard.writeText(currentURL.value!)
+    navigator.clipboard.writeText(currentURL.value)
     copied.value = true
     setTimeout(() => copied.value = false, 1000)
 }

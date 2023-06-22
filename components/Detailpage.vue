@@ -38,7 +38,7 @@
             />
             <Meta
                 property="og:url"
-                :content="currentURL"
+                :content="`https://triggerscore.netlify.app/movie/${route.params.id}`"
             />
             <Meta
                 property="og:type"
@@ -221,12 +221,6 @@ const regionProvider = computed(() => {
 const imdbURL = computed(() => `https://www.imdb.com/title/` + movie.value.imdb_id)
 const tmdbURL = computed(() => `https://www.themoviedb.org/movie/` + movie.value.id)
 const comments = computed(() => score.value ? score.value.comments.filter((comment: string) => {return comment.length > 3}) : null)
-const currentURL = computed(() => {
-        if(process.client){
-            return window.location.href
-        } else return ''
-    }
-)
 
 async function loadMovie() {
     try {
@@ -274,15 +268,11 @@ watch(locale, () => {
     loadProviders()
 })
 
-// loadMovie()  
+await loadMovie()  
 loadProviders()
 loadTriggerscore()
 store.setTriggerscores()
 store.filterMovies()
-
-onBeforeMount(async () => {
-    await loadMovie()
-})
 
 </script>
 
