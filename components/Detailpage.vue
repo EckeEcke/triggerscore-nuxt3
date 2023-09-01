@@ -4,17 +4,17 @@
     >
     <Head>
         <client-only>
-            <Title>{{ movie.title }}</Title>
+            <Title>{{ title }}</Title>
             <Meta 
                 charset="UTF-8"
             />
             <Meta 
                 name="keywords" 
-                :content="'Triggerscore, triggering movies'+ movie.title"
+                :content="'Triggerscore, triggering movies'+ title"
             />
             <Meta 
                 name="description" 
-                :content="'triggerscore rating for ' + movie.title"
+                :content="'triggerscore rating for ' + title"
             />
             <Meta 
                 name="author" 
@@ -47,7 +47,7 @@
         </client-only>
         </Head>
         <div class="container mx-auto sm:pt-6 sm:pb-12 xl:w-10/12 md:px-4">
-            <LoadingAnimation v-if="movieLoading"/>
+            <LoadingAnimation v-if="false"/>
             <div v-else class="flex flex-col lg:flex-row lg:rounded-b px-0 sm:px-4 md:px-0">
                 <div class="flex flex-col w-full radial-background text-white rounded-t lg:rounded justify-start lg:mr-6 md:p-4">
                     <div class="flex justify-between w-full sm:rounded-t p-4 pr-0">
@@ -174,7 +174,7 @@
                 <hr class="border-gray-800 md:hidden">
                 <div class="md:hidden py-12 px-2 radial-background">
                     <ShareMovie :movie="movie" align-center />
-                </div>     
+                </div>
             </div>          
         </div>
     </section>   
@@ -183,6 +183,8 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import { useStore } from '../stores/store'
+import { ref, computed, watch } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import { Movie, emptyMovie } from '~/types/movie'
 
 const store = useStore()
@@ -190,90 +192,43 @@ const router = useRouter()
 const route = useRoute()
 const { t, locale } = useI18n()
 
-const movie: Ref<Movie> = ref(emptyMovie)
-const backdrop = ref("")
+const movie = computed(() => store.selectedMovie)
+const backdrop = `url(https://image.tmdb.org/t/p/original/${movie.value.backdrop_path})`
 const onNetflix = ref(false)
 const onAmazon = ref(false)
 const onDisney = ref(false)
 const onSky = ref(false)
-const releaseDate: Ref<number> = ref(1900)
-const score = ref(undefined)
-const movieLoading = ref(true)
+const releaseDate = parseInt(movie.value.release_date.substring(0, 4))
+const score = store.selectedMovieScore
 const showMoreComments = ref(false)
 
-const title = computed(() => movie.value !== emptyMovie ? movie.value?.title : 'Movie on Triggerscore')
+const title = computed(() => movie.value !== emptyMovie ? movie.value.title : 'Movie on Triggerscore')
 const poster = computed(() => `https://image.tmdb.org/t/p/original/${movie.value.poster_path}`)
 const genres = computed(() => movie.value.genres.map(genre => genre.name))
-const triggerscores = computed(() => loadTriggerscore())
-const scoreAvailable = computed(() => score.value !== undefined)
-const totalRatings: any = computed(() => 
-    store.triggerscores.length > 0
-        ? store.triggerscores.filter(movieFromStore => movieFromStore.movie_id == movie.value.id)
-        : []
-)
-const regionProvider = computed(() => {
-    if(store.locale === "en"){
-        return "GB"
-    }
-    return store.locale.toUpperCase()
+const triggerscores = computed(() => store.triggerscores)
+const scoreAvailable = computed(() => store.selectedMovieScore !== undefined)
+const totalRatings = computed(() => {
+  return store.triggerscores.length > 0
+    ? store.triggerscores.filter(movieFromStore => movieFromStore.movie_id === movie.value.id)
+    : []
 })
 
-const imdbURL = computed(() => `https://www.imdb.com/title/` + movie.value.imdb_id)
-const tmdbURL = computed(() => `https://www.themoviedb.org/movie/` + movie.value.id)
-const comments = computed(() => score.value ? score.value.comments.filter((comment: string) => {return comment.length > 3}) : null)
+const imdbURL = computed(() => `https://www.imdb.com/title/${movie.value.imdb_id}`)
+const tmdbURL = computed(() => `https://www.themoviedb.org/movie/${movie.value.id}`)
+const comments = computed(() => score.value ? score.value.comments.filter((comment: string) => comment.length > 3) : null)
 
-async function loadMovie() {
-    try {
-        const response = await fetch(`https://api.themoviedb.org/3/movie/${route.params.id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${store.locale}`)
-        const loadedMovie = await response.json()
-        movie.value = loadedMovie
-        releaseDate.value = movie.value.release_date.substring(0,4)
-        backdrop.value = `url(https://image.tmdb.org/t/p/original/${loadedMovie.backdrop_path})`
-    }
-    catch {
-        console.log("oops")
-    }
-    finally {
-        movieLoading.value = false
-    }
+function pushToContact(comment: string) {
+  const truncatedComment = comment.substring(0, Math.min(20, comment.length))
+  router.push({ path: '/contact', query: { id: route.params.id, comment: truncatedComment } })
 }
-async function loadProviders(){
-    try {
-        const response = await fetch(`https://api.themoviedb.org/3/movie/${route.params.id}/watch/providers?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c`)
-        const providers = await response.json()
-        onNetflix.value = false
-        onAmazon.value = false
-        onDisney.value = false
-        onSky.value = false
-        onNetflix.value = providers.results[regionProvider.value].flatrate.some((provider: any) => provider.provider_name == "Netflix")
-        onAmazon.value = providers.results[regionProvider.value].flatrate.some((provider: any) => provider.provider_name == "Amazon Prime Video")
-        onDisney.value = providers.results[regionProvider.value].flatrate.some((provider: any) => provider.provider_name == "Disney Plus")
-        onSky.value = providers.results[regionProvider.value].flatrate.some((provider: any) => provider.provider_name == "WOW")
-    }
-    catch {
-        console.log("ooops")
-    }
-}
-async function loadTriggerscore(){
-    const response = await fetch(`https://triggerscore-backend2.onrender.com/movie/${route.params.id}`)
-    const scores = await response.json()
-    score.value = scores[0]
-}
-function pushToContact(comment: string){
-    router.push({ path: '/contact', query: { id: route.params.id, comment: comment.substring(0,Math.min(20,comment.length)) } })
-}
-  
+
 watch(locale, () => {
-    loadMovie()
-    loadProviders()
+  window.location.reload()
 })
 
-await loadMovie()  
-loadProviders()
-loadTriggerscore()
+
 store.setTriggerscores()
 store.filterMovies()
-
 </script>
 
 <style lang="css" scoped>

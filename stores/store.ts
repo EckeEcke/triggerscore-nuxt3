@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import placeholderMovies from '../assets/allMovies.json'
 import placeholderTriggerscores from '~/assets/triggerscores.json'
 import placeholderBondMovies from '~/assets/bondMovies.json'
-import { Movie } from '~/types/movie'
+import { Movie, emptyMovie } from '~/types/movie'
 
 const url = "https://triggerscore-backend2.onrender.com/"
 // const url = "http://localhost:3000/"
@@ -62,6 +62,12 @@ export const useStore = defineStore({
     return {
         triggerscores: placeholderTriggerscores,
         movies: [],
+        selectedMovie: undefined,
+        selectedMovieOnNetflix: false,
+        selectedMovieOnPrime: false,
+        selectedMovieOnDisney: false,
+        selectedMovieOnSky: false,
+        selectedMovieScore: undefined,
         recentRatings: [],
         recentComments: [],
         recentScores: [],
@@ -389,27 +395,28 @@ export const useStore = defineStore({
   },
   getters: {
     getTriggerscores: state => state.triggerscores,
-        getMovies: state => state.movies,
-        getRecentRatings: state => state.recentRatings,
-        getSearchInput: state => state.searchInput,
-        getSearchTerm: state => state.searchTerm,
-        getSearchResults: state => state.searchResults,
-        getSearchError: state => state.searchError,
-        getBondMovies: state => state.bondMovies,
-        getBondMovieIDs: state => state.bondMovieIDs,
-        getFilteredMovies: state => state.filteredMovies,
-        getSortingOption: state => state.sortingOption,
-        getHighlightsLoading: state => state.highlightsLoading,
-        getMoviesLoading: state => state.moviesLoading,
-        getShownScore: state => state.shownScore,
-        getTop10Sexism: state => state.top10Sexism,
-        getTop10Racism: state => state.top10Racism,
-        getTop10Others: state => state.top10Others,
-        getTop10Cringe: state => state.top10Cringe,
-        getRecentScores: state => state.recentScores,
-        getStats: state => state.stats,
-        getIsFiltering: state => state.isFiltering,
-        getLocale: state => state.locale
+    getMovies: state => state.movies,
+    getRecentRatings: state => state.recentRatings,
+    getSearchInput: state => state.searchInput,
+    getSearchTerm: state => state.searchTerm,
+    getSearchResults: state => state.searchResults,
+    getSearchError: state => state.searchError,
+    getBondMovies: state => state.bondMovies,
+    getBondMovieIDs: state => state.bondMovieIDs,
+    getFilteredMovies: state => state.filteredMovies,
+    getSortingOption: state => state.sortingOption,
+    getHighlightsLoading: state => state.highlightsLoading,
+    getMoviesLoading: state => state.moviesLoading,
+    getShownScore: state => state.shownScore,
+    getTop10Sexism: state => state.top10Sexism,
+    getTop10Racism: state => state.top10Racism,
+    getTop10Others: state => state.top10Others,
+    getTop10Cringe: state => state.top10Cringe,
+    getRecentScores: state => state.recentScores,
+    getStats: state => state.stats,
+    getIsFiltering: state => state.isFiltering,
+    getLocale: state => state.locale,
+    getSelectedMovie: state => state.selectedMovie
   },
   persist: {
     storage: persistedState.localStorage,
