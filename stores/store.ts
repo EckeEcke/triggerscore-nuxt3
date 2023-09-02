@@ -3,6 +3,7 @@ import placeholderMovies from '../assets/allMovies.json'
 import placeholderTriggerscores from '~/assets/triggerscores.json'
 import placeholderBondMovies from '~/assets/bondMovies.json'
 import { Movie, emptyMovie } from '~/types/movie'
+import { useLocaleStore } from './localeStore'
 
 const url = "https://triggerscore-backend2.onrender.com/"
 // const url = "http://localhost:3000/"
@@ -96,12 +97,11 @@ export const useStore = defineStore({
         minScore: 0,
         maxScore: 10,
         isFiltering: false,
-        locale: "de",
-        localeSetByUser: false
     }
   },
   actions: {
     async setTriggerscores(){  
+        const localeStore = useLocaleStore()
         if(process.client && localStorage.getItem('store')) {
             this.moviesLoading = false
         }                                               //also loads movies for now
@@ -109,7 +109,7 @@ export const useStore = defineStore({
         const triggerscores = await scores.json()
         this.triggerscores = triggerscores
         const loadedMovies = Promise.all(triggerscores.map((entry: any) => 
-            fetch(`https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${this.locale}`)
+            fetch(`https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${localeStore.locale}`)
             .then((res) => res.json())
             .catch(() => console.log('oopsy'))
         ))
@@ -120,11 +120,12 @@ export const useStore = defineStore({
         
     },
     async setRecentRatings(){
+        const localeStore = useLocaleStore()
         const data = await fetch(`${url}recentratings`)
         const ratings = await data.json()
         this.recentScores = ratings
         const recentRatings = Promise.all(ratings.map((entry: any) => 
-            fetch(`https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${this.locale}`)
+            fetch(`https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${localeStore.locale}`)
             .then((res) => res.json())
             .catch(() => console.log('oopsy'))
         ))
@@ -136,40 +137,44 @@ export const useStore = defineStore({
         this.recentComments = comments
     },
     async setTop10Sexism(){
+        const localeStore = useLocaleStore()
         const data = await fetch(`${url}top10-sexism`)
         const top10 = await data.json()
         const loadedTop10 = Promise.all(top10.map((entry: any) => 
-            fetch(`https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${this.locale}`)
+            fetch(`https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${localeStore.locale}`)
             .then((res) => res.json())
             .catch(() => console.log('oopsy'))
         ))
         loadedTop10.then(res => this.top10Sexism = res )
     },
     async setTop10Racism(){
+        const localeStore = useLocaleStore()
         const scores = await fetch(`${url}top10-racism`)
         const top10 = await scores.json()
         const loadedTop10 = Promise.all(top10.map((entry: any) => 
-            fetch(`https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${this.locale}`)
+            fetch(`https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${localeStore.locale}`)
             .then((res) => res.json())
             .catch(() => console.log('oopsy'))
         ))
         loadedTop10.then(res => this.top10Racism = res )
     },
     async setTop10Others(){
+        const localeStore = useLocaleStore()
         const scores = await fetch(`${url}top10-others`)
         const top10 = await scores.json()
         const loadedTop10 = Promise.all(top10.map((entry: any) => 
-            fetch(`https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${this.locale}`)
+            fetch(`https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${localeStore.locale}`)
             .then((res) => res.json())
             .catch(() => console.log('oopsy'))
         ))
         loadedTop10.then(res => this.top10Others = res )
     },
     async setTop10Cringe(){
+        const localeStore = useLocaleStore()
         const scores = await fetch(`${url}top10-cringe`)
         const top10 = await scores.json()
         const loadedTop10 = Promise.all(top10.map((entry:any) => 
-            fetch(`https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${this.locale}`)
+            fetch(`https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${localeStore.locale}`)
             .then((res) => res.json())
             .catch(() => console.log('oopsy'))
         ))
@@ -206,8 +211,9 @@ export const useStore = defineStore({
         })
     },
     async searchMore(page:any){
+        const localeStore = useLocaleStore()
         const searchTerm = this.searchTerm
-        const adjustedLocale = adjustLocale(this.locale) // turns US locale into EN for search request
+        const adjustedLocale = adjustLocale(localeStore.locale) // turns US locale into EN for search request
         const fetchedSearchResults = fetch(`https://api.themoviedb.org/3/search/movie?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${adjustedLocale}&include_adult=false&page=${page}&query=${searchTerm}`)
                             .then(res => res.json())
                             .catch(error => console.log(error))
@@ -230,11 +236,12 @@ export const useStore = defineStore({
         this.searchError = payload
     },
     async setBondMovies(){
+        const localeStore = useLocaleStore()
         const loadedMovies = Promise.all(this.bondMovieIDs.map((id: number) =>
-            fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${this.locale}`)
+            fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${localeStore.locale}`)
             .then((res) => res.json())
             .catch(()=>setTimeout(()=>{
-                fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${this.locale}`)
+                fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${localeStore.locale}`)
                 .then((res) => res.json())
                 .catch(error=>console.log("Something went wrong: " + error))
             },1000))            
@@ -245,11 +252,12 @@ export const useStore = defineStore({
         })
     },
     async filterMovies(){
+        const localeStore = useLocaleStore()
         this.isFiltering = true
         this.sortMovies(this.sortingOption,this.movies,this.triggerscores,this.shownScore)
         this.filterByYear(this.filterMoviesByYearMax,this.filterMoviesByYearMin,this.filteredMovies)
         this.filterByScore(this.filteredMovies,this.triggerscores,this.minScore,this.maxScore,this.shownScore)  
-        this.filterByProvider(this.filterMoviesByNetflix,this.filterMoviesByPrime,this.filterMoviesByDisney,this.filterMoviesBySky,this.triggerscores,this.filteredMovies,this.locale)
+        this.filterByProvider(this.filterMoviesByNetflix,this.filterMoviesByPrime,this.filterMoviesByDisney,this.filterMoviesBySky,this.triggerscores,this.filteredMovies,localeStore.locale)
     },
     resetFilter(){
         this.filterMoviesByPrime = false
@@ -281,9 +289,6 @@ export const useStore = defineStore({
     },
     setIsFiltering(payload:any){
         this.isFiltering = payload
-    },
-    setLocale(payload:any){
-        this.locale = payload
     },
     sortMovies(sortingOption: string,array: any[],triggerscores: any[],shownScore: string){
         let clonedArray = [...array]
@@ -415,7 +420,6 @@ export const useStore = defineStore({
     getRecentScores: state => state.recentScores,
     getStats: state => state.stats,
     getIsFiltering: state => state.isFiltering,
-    getLocale: state => state.locale,
     getSelectedMovie: state => state.selectedMovie
   },
   persist: {

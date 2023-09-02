@@ -1,5 +1,5 @@
 <template>
-  <Html :lang="store.locale"></Html>
+  <Html :lang="locale"></Html>
   <div class="bg-gray-900 min-h-screen flex flex-col pt-14">
     <Header />
     <slot />
@@ -9,23 +9,24 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
+import { useLocaleStore } from '~/stores/localeStore'
 import { useStore } from '~/stores/store'
 
 const store = useStore()
+const localeStore = useLocaleStore()
 const { locale } = useI18n()
-locale.value = store.locale
 
-onMounted(() => {
+onBeforeMount(() => {
+  locale.value = localeStore.locale
   const AvailableLanguages = ['en', 'fr', 'de', 'es']
   const splitNavigatorLanguage = (language: string) => {
     return language.split('-')[0]
   }
-
-  if(process.client && !store.localeSetByUser){
+  if(process.client && !localeStore.localeSetByUser){
     if(navigator && navigator.language){
       const lang = navigator.language === 'en-US' ? 'us' : splitNavigatorLanguage(navigator.language)
       if(AvailableLanguages.includes(lang)){
-        store.locale = lang
+        localeStore.locale = lang
         locale.value = lang
       }
     }

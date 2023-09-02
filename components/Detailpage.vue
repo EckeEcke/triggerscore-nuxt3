@@ -51,7 +51,7 @@
             <div v-else class="flex flex-col lg:flex-row lg:rounded-b px-0 sm:px-4 md:px-0">
                 <div class="flex flex-col w-full radial-background text-white rounded-t lg:rounded justify-start lg:mr-6 md:p-4">
                     <div class="flex justify-between w-full sm:rounded-t p-4 pr-0">
-                        <img :src=poster alt="movie poster" class="w-1/2 lg:w-76 h-auto object-contain self-start rounded self-center" />
+                        <img :src=poster :key="localeFromStore" alt="movie poster" class="w-1/2 lg:w-76 h-auto object-contain self-start rounded self-center" />
                         <div v-if="scoreAvailable" class="w-full flex flex-col mx-2 self-center rounded-tr">
                             <div class="text-base md:text-2xl lg:text-lg self-center font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200">
                                 TRIGGERSC<font-awesome-icon :icon="['fas', 'angry']" class="text-white" />RE
@@ -186,8 +186,11 @@ import { useStore } from '../stores/store'
 import { ref, computed, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { Movie, emptyMovie } from '~/types/movie'
+import { useLocaleStore } from '~/stores/localeStore'
 
 const store = useStore()
+const localeStore = useLocaleStore()
+const localeFromStore = computed(() => localeStore.locale)
 const router = useRouter()
 const route = useRoute()
 const { t, locale } = useI18n()
@@ -223,7 +226,44 @@ function pushToContact(comment: string) {
 }
 
 watch(locale, () => {
-  window.location.reload()
+    console.log("localechange")
+
+    console.log(route)
+    const localeStore = useLocaleStore()
+    const regionProvider = computed(() => {
+      if (localeStore.locale === "en") {
+        return "GB"
+      }
+      return localeStore.locale.toUpperCase()
+    })
+    const loadMovie = async () => {
+      try {
+        const response = await fetch(`https://api.themoviedb.org/3/movie/${route.params.id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${localeStore.locale}`)
+        const loadedMovie = await response.json()
+        store.selectedMovie = loadedMovie
+        console.log(loadedMovie)
+      } catch (error) {
+        console.log("Oops, an error occurred while loading the movie:", error)
+      }
+    }
+
+    const loadProviders = async () => {
+        console.log(route)
+      try {
+        const response = await fetch(`https://api.themoviedb.org/3/movie/${route.params.id}/watch/providers?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c`)
+        const providers = await response.json()
+        const regionProviders = providers.results[regionProvider.value]?.flatrate || []
+        store.selectedMovieOnNetflix = regionProviders.some((provider: any) => provider.provider_name === "Netflix")
+        store.selectedMovieOnPrime = regionProviders.some((provider: any) => provider.provider_name === "Amazon Prime Video")
+        store.selectedMovieOnDisney = regionProviders.some((provider: any) => provider.provider_name === "Disney Plus")
+        store.selectedMovieOnSky = regionProviders.some((provider: any) => provider.provider_name === "WOW")
+      } catch (error) {
+        console.log("Oops, an error occurred while loading the providers:", error)
+      }
+    }
+
+    loadMovie()
+    loadProviders()
 })
 
 

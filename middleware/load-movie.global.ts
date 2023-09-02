@@ -1,18 +1,20 @@
+import { useLocaleStore } from '~/stores/localeStore'
 import { useStore } from '../stores/store'
 
 export default defineNuxtRouteMiddleware(async (to) => {
   if (to.path.includes('/movie/')) {
     const store = useStore()
+    const localeStore = useLocaleStore()
     const regionProvider = computed(() => {
-      if (store.locale === "en") {
+      if (localeStore.locale === "en") {
         return "GB"
       }
-      return store.locale.toUpperCase()
+      return localeStore.locale.toUpperCase()
     })
 
     async function loadMovie() {
       try {
-        const response = await fetch(`https://api.themoviedb.org/3/movie/${to.params.id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${store.locale}`)
+        const response = await fetch(`https://api.themoviedb.org/3/movie/${to.params.id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${localeStore.locale}`)
         const loadedMovie = await response.json()
         store.selectedMovie = loadedMovie
       } catch (error) {
