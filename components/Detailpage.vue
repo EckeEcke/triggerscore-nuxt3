@@ -1,6 +1,6 @@
 <template>
     <section class="detailpage w-full bg-center bg-cover bg-fixed" 
-        :style="{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)), ${backdrop}`,minHeight: 'calc(100vh - 20rem)'}"
+        :style="{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), ${backdrop}`,minHeight: 'calc(100vh - 20rem)'}"
     >
     <Head>
         <client-only>
