@@ -165,7 +165,7 @@ store.setTop10Others()
 store.setTop10Cringe()
 store.setRecentComments()
 
-const isLoading = computed(() => store.highlightsLoading || store.moviesLoading || store.triggerscores.length == 0)
+const isLoading = computed(() => store.highlightsLoading || store.moviesLoading || store.triggerscores.length == 0 || store.loadingSelectedMovie)
 let intervalId: any = undefined
 
 const handleToggle = (value: boolean) => {

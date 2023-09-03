@@ -64,6 +64,7 @@ export const useStore = defineStore({
         triggerscores: placeholderTriggerscores,
         movies: [],
         selectedMovie: undefined,
+        loadingSelectedMovie: false,
         selectedMovieOnNetflix: false,
         selectedMovieOnPrime: false,
         selectedMovieOnDisney: false,

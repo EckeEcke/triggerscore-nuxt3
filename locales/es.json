@@ -67,7 +67,8 @@
         "searchHeadline2": "calificación",
         "noResults1": "Desafortunadamente, tu búsqueda de ",
         "noResults2": " no arrojó resultados",
-        "results": "Tu búsqueda de '{0}' tiene {1} resultados"
+        "results": "Tu búsqueda de '{0}' tiene {1} resultados",
+        "searchMore": "Busca mas"
     },
     "stats": {
         "average": "Promedio",
