@@ -202,7 +202,7 @@ const onAmazon = computed(() => store.selectedMovieOnPrime)
 const onDisney = computed(() => store.selectedMovieOnDisney)
 const onSky = computed(() => store.selectedMovieOnSky)
 const releaseDate = parseInt(movie.value.release_date.substring(0, 4))
-const score = store.selectedMovieScore
+const score = computed(() => store.selectedMovieScore)
 const showMoreComments = ref(false)
 
 const title = computed(() => movie.value !== emptyMovie ? movie.value.title : 'Movie on Triggerscore')
