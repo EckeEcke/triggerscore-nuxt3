@@ -197,10 +197,10 @@ const { t, locale } = useI18n()
 
 const movie = computed(() => store.selectedMovie)
 const backdrop = `url(https://image.tmdb.org/t/p/original/${movie.value.backdrop_path})`
-const onNetflix = ref(false)
-const onAmazon = ref(false)
-const onDisney = ref(false)
-const onSky = ref(false)
+const onNetflix = computed(() => store.selectedMovieOnNetflix)
+const onAmazon = computed(() => store.selectedMovieOnPrime)
+const onDisney = computed(() => store.selectedMovieOnDisney)
+const onSky = computed(() => store.selectedMovieOnSky)
 const releaseDate = parseInt(movie.value.release_date.substring(0, 4))
 const score = store.selectedMovieScore
 const showMoreComments = ref(false)
