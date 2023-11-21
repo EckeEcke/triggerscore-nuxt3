@@ -23,7 +23,7 @@ const props = defineProps({
 
 const anim = ref(null);
 
-const emit = defineEmits(['dislikeClicked'])
+const emit = defineEmits(["dislikeClicked"]);
 
 function runAnimation() {
   dislikeClicked.value = !dislikeClicked.value;
@@ -35,9 +35,12 @@ function runAnimation() {
     anim.value!.stop();
   }
 }
-watch(() => props.likeClicked, (currentValue, oldValue) => {
-  if (currentValue && dislikeClicked.value === true) {
-    runAnimation();
+watch(
+  () => props.likeClicked,
+  (currentValue, oldValue) => {
+    if (currentValue && dislikeClicked.value === true) {
+      runAnimation();
+    }
   }
-})
+);
 </script>

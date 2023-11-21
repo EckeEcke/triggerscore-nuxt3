@@ -189,8 +189,14 @@ const scoreTotal: ComputedRef<number> = computed(() => {
       Math.floor(
         ((props.scores?.rating_sexism +
           props.scores?.rating_racism +
-          props.scores?.rating_others) /
-          3) *
+          props.scores?.rating_others +
+          Math.max(
+            props.scores?.rating_sexism,
+            props.scores?.rating_racism,
+            props.scores?.rating_others
+          ) *
+            5) /
+          8) *
           10
       ) / 10
     );
