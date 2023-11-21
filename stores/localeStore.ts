@@ -1,14 +1,14 @@
-import { defineStore } from 'pinia'
+import { defineStore } from "pinia";
 
 export const useLocaleStore = defineStore({
-  id: 'locale',
+  id: "locale",
   state: () => {
     return {
-        locale: "de",
-        localeSetByUser: false
-    }
+      locale: "de",
+      localeSetByUser: false,
+    };
   },
   persist: {
     // storage: persistedState.localStorage,
   },
-})
+});

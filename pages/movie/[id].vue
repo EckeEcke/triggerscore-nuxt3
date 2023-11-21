@@ -1,3 +1,3 @@
 <template>
-    <Detailpage />
+  <Detailpage />
 </template>
