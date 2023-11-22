@@ -18,7 +18,7 @@ const { locale } = useI18n();
 
 useHead({
   script: [
-    { src: "//static.getclicky.com/js", async: true, "data-id": "101434680" },
+    { src: "//static.getclicky.com/js", async: false, "data-id": "101434680" },
   ],
 });
 
