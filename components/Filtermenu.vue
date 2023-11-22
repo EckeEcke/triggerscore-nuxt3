@@ -207,7 +207,7 @@
             {{ results }} {{ $t("filter.results") }}
           </div>
           <button
-            class="font-semibold text-yellow-500 p-3 w-auto text-white uppercase"
+            class="font-semibold p-3 w-auto text-white uppercase"
             @click="resetFilter"
           >
             {{ $t("filter.resetFilter") }}

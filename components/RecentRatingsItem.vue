@@ -84,70 +84,22 @@
           <span>{{ movie.runtime }} {{ $t("general.minutes") }}</span>
         </div>
         <div class="grid grid-cols-2 text-sm max-w-xs mt-auto">
-          <div class="flex my-1 text-sm">
-            <div
-              class="flex justify-center rounded-lg w-8 h-8 mr-2 bg-opacity-80"
-              :class="{
-                'bg-red-700': scores?.rating_sexism >= 7,
-                'bg-yellow-500':
-                  scores?.rating_sexism < 7 && scores?.rating_sexism >= 4,
-                'bg-green-600': scores?.rating_sexism < 4,
-              }"
-            >
-              <div class="self-center text-white">
-                {{ scores?.rating_sexism }}
-              </div>
-            </div>
-            <p class="self-center">{{ $t("categories.sexism") }}</p>
-          </div>
-          <div class="flex my-1 text-sm">
-            <div
-              class="flex rounded-lg justify-center w-8 h-8 mr-2 bg-opacity-80"
-              :class="{
-                'bg-red-700': scores?.rating_racism >= 7,
-                'bg-yellow-500':
-                  scores?.rating_racism < 7 && scores?.rating_racism >= 4,
-                'bg-green-600': scores?.rating_racism < 4,
-              }"
-            >
-              <div class="self-center text-white">
-                {{ scores?.rating_racism }}
-              </div>
-            </div>
-            <p class="self-center">{{ $t("categories.racism") }}</p>
-          </div>
-          <div class="flex my-1 text-sm">
-            <div
-              class="flex rounded-lg justify-center w-8 h-8 mr-2 bg-opacity-80"
-              :class="{
-                'bg-red-700': scores?.rating_others >= 7,
-                'bg-yellow-500':
-                  scores?.rating_others < 7 && scores?.rating_others >= 4,
-                'bg-green-600': scores?.rating_others < 4,
-              }"
-            >
-              <div class="self-center text-white">
-                {{ scores?.rating_others }}
-              </div>
-            </div>
-            <p class="self-center">{{ $t("categories.others") }}</p>
-          </div>
-          <div class="flex my-1 text-sm">
-            <div
-              class="flex rounded-lg justify-center w-8 h-8 mr-2 bg-opacity-80"
-              :class="{
-                'bg-red-700': scores?.rating_cringe >= 7,
-                'bg-yellow-500':
-                  scores?.rating_cringe < 7 && scores?.rating_cringe >= 4,
-                'bg-green-600': scores?.rating_cringe < 4,
-              }"
-            >
-              <div class="self-center text-white">
-                {{ scores?.rating_cringe }}
-              </div>
-            </div>
-            <p class="self-center">{{ $t("categories.cringe") }}</p>
-          </div>
+          <RecentRatingsItemScoreDisplay
+            :score="scores?.rating_sexism"
+            :name="$t('categories.sexism')"
+          />
+          <RecentRatingsItemScoreDisplay
+            :score="scores?.rating_racism"
+            :name="$t('categories.racism')"
+          />
+          <RecentRatingsItemScoreDisplay
+            :score="scores?.rating_others"
+            :name="$t('categories.others')"
+          />
+          <RecentRatingsItemScoreDisplay
+            :score="scores?.rating_cringe"
+            :name="$t('categories.cringe')"
+          />
         </div>
       </article>
     </div>
