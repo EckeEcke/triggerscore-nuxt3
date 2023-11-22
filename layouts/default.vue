@@ -5,6 +5,12 @@
     <slot />
     <Footer />
   </div>
+  <a class="bg-red-950 w-full flex justify-end" title="Privacy-friendly Web Analytics" href="https://clicky.com/101434671"
+    ><img
+      alt="Clicky"
+      src="//static.getclicky.com/media/links/badge.gif"
+      border="0"
+  /></a>
 </template>
 
 <script setup lang="ts">
@@ -15,6 +21,12 @@ import { useStore } from "~/stores/store";
 const store = useStore();
 const localeStore = useLocaleStore();
 const { locale } = useI18n();
+
+useHead({
+  script: [
+    { src: "//static.getclicky.com/js", async: true, "data-id": "101434671" },
+  ],
+});
 
 onBeforeMount(() => {
   locale.value = localeStore.locale;
