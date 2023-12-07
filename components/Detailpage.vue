@@ -410,7 +410,6 @@ watch(locale, () => {
   };
 
   const loadProviders = async () => {
-    console.log(route);
     try {
       const response = await fetch(
         `https://api.themoviedb.org/3/movie/${route.params.id}/watch/providers?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c`

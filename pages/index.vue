@@ -13,7 +13,10 @@
     <Meta name="author" content="Christian Eckardt" />
     <Meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </Head>
-  <Searchbox showTitle />
+  
+  <LoadingAnimation v-show="isLoading" />
+  <template v-if="!isLoading">
+    <Searchbox showTitle />
 
   <MovieHighlightsContainer
     :movies="store.bondMovies"
@@ -22,8 +25,6 @@
     :subTitle="$t('highlights.copy1')"
     moreSpacing
   />
-  <LoadingAnimation v-if="isLoading" />
-  <template v-if="!isLoading">
     <section class="mb-12 px-0 sm:px-4 container mx-auto xl:w-10/12">
       <div
         class="py-16 md:py-20 mb-12 bg-cover bg-center px-4 rounded"
@@ -217,8 +218,7 @@
         showBorder
       />
     </section>
-  </template>
-  <section
+    <section
     class="rounded p-4 py-8 sm:p-12 my-4 container xl:w-10/12 mx-auto bg-gradient-to-r from-gray-950 to-gray-80 text-white text-left"
   >
     <DefinitionTriggered />
@@ -237,6 +237,8 @@
       </div>
     </div>
   </section>
+  </template>
+  
 </template>
 
 <script setup lang="ts">
