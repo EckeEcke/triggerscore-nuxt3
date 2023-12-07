@@ -1,7 +1,7 @@
 <template>
   <NuxtLink
     v-if="movie"
-    :to="`movie/${movie.id}`"
+    :to="pathToNavigate"
     tag="div"
     class="movie-highlight-item w-40 h-auto mr-3 bg-transparent shadow-md flex flex-none flex-col relative rounded transform transition duration-300 lg:hover-shadow-inner container-xl cursor-pointer"
     style="scroll-snap-align: start"
@@ -47,7 +47,7 @@
     <div class="w-full py-3 text-white">
       <article class="text-left relative w-full h-full">
         <h3
-          v-if="movie.title.length > 0"
+          v-if="movie.title && movie.title.length > 0"
           class="text-sm max-h-14 mb-1 font-semibold overflow-hidden"
         >
           {{ movie.title }}
@@ -70,7 +70,8 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
+const localePath = useLocalePath();
 
 const props = defineProps({
   movie: Object,
@@ -78,6 +79,8 @@ const props = defineProps({
   shownScore: String,
   loadItem: Boolean,
 });
+
+const pathToNavigate = computed(() => `${locale.value}/movie/${props.movie.id}`);
 
 const loadItem2 = true; // replace when intersection observer is fixed
 const poster = computed(

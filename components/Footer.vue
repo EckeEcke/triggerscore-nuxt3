@@ -19,14 +19,14 @@
         </h2>
         <div class="flex text-white my-4 justify-center lg:justify-start">
           <NuxtLink
-            to="/about"
+            :to="localePath('/about')"
             class="border-r border-white px-4 lg:pl-0 uppercase"
             >{{ $t("header.about") }}</NuxtLink
           >
-          <NuxtLink to="/faq" class="border-r border-white px-4 uppercase">{{
+          <NuxtLink :to="localePath('/faq')" class="border-r border-white px-4 uppercase">{{
             $t("header.faq")
           }}</NuxtLink>
-          <NuxtLink to="/contact" class="px-4 uppercase">{{
+          <NuxtLink :to="localePath('/contact')" class="px-4 uppercase">{{
             $t("header.contact")
           }}</NuxtLink>
         </div>
@@ -79,3 +79,7 @@
     </section>
   </footer>
 </template>
+
+<script setup lang="ts">
+const localePath = useLocalePath()
+</script>

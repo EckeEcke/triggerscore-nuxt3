@@ -19,5 +19,12 @@ export default defineNuxtConfig({
         autoprefixer: {},
         },
     },
-    modules: ['@pinia/nuxt', '@pinia-plugin-persistedstate/nuxt', '@nuxtjs/robots'],
+    modules: ['@pinia/nuxt', '@pinia-plugin-persistedstate/nuxt', '@nuxtjs/robots', '@nuxtjs/i18n'],
+    i18n: {
+        locales: ['de', 'en', 'es', 'fr', 'us'],
+        defaultLocale: 'de',
+        strategy: 'prefix',
+        detectBrowserLanguage: false,
+        vueI18n: "./i18n.config.ts",
+    }
 })

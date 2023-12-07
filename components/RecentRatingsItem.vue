@@ -1,8 +1,6 @@
 <template>
-  <NuxtLink
-    :to="`movie/${movie.id}`"
-    tag="div"
-    class="movie-highlight-item bg-transparent text-white sm:rounded shadow-md flex flex-col relative border-b md:border-b-0 border-gray-800 cursor-pointer min-w-sm lg:hover:shadow-inner transform transition duration-300"
+  <div
+    class="movie-highlight-item bg-transparent text-white sm:rounded shadow-md flex flex-col relative border-b md:border-b-0 border-gray-800 min-w-sm lg:hover:shadow-inner transform transition duration-300"
   >
     <div class="md:hidden sm:rounded-t p-3 pb-0 bg-transparent text-inherit">
       <div class="flex items-center gap-2 text-left">
@@ -19,15 +17,19 @@
           </p>
         </div>
         <div class="w-9/12">
-          <h3
+          <NuxtLink
             v-if="movie.title.length > 0"
-            class="text-base font-semibold h-6 overflow-hidden whitespace-nowrap custom-headline"
+            tag="h3"
+            :to="pathToNavigate(movie.id)"
+            class="text-base font-semibold h-6 overflow-hidden whitespace-nowrap custom-headline cursor-pointer"
           >
             {{ movie.title }}
-          </h3>
-          <h3 v-else class="text-base font-semibold overflow-hidden">
+          </NuxtLink>
+          <NuxtLink v-else class="text-base font-semibold overflow-hidden cursor-pointer"
+          :to="pathToNavigate(movie.id)"
+          tag="h3">
             {{ movie.original_title }}
-          </h3>
+          </NuxtLink>
           <div class="text-xs pt-1">
             <span>{{ movie.release_date.substring(0, 4) }}</span>
             <span class="mx-2">|</span>
@@ -38,13 +40,15 @@
     </div>
     <div class="w-full px-3 md:px-0 pt-4 pb-3 gap-4 flex">
       <div class="relative hidden md:block">
-        <img
-          class="h-36 w-32 rounded-sm"
-          :alt="movie.original_title"
-          :src="poster2"
-        />
+        <NuxtLink :to="pathToNavigate(movie.id)">
+          <img
+            class="h-36 w-32 rounded-sm cursor-pointer"
+            :alt="movie.original_title"
+            :src="poster2"
+          />
+        </NuxtLink>
         <div
-          class="flex absolute top-1 right-1 rounded-lg justify-center w-12 h-12 bg-opacity-80"
+          class="flex absolute top-1 right-1 rounded-lg justify-center w-12 h-12 bg-opacity-80 pointer-events-none"
           :class="{
             'bg-red-700': scoreTotal >= 7,
             'bg-yellow-500': scoreTotal < 7 && scoreTotal >= 4,
@@ -55,9 +59,9 @@
             {{ scoreTotal !== -1 ? scoreTotal : "-" }}
           </p>
         </div>
-        <div class="absolute bottom-0 right-0">
+        <div class="absolute bottom-0 right-0 pointer-events-none">
           <div
-            v-if="totalRatings[0].ratings == 1"
+            v-if="totalRatings[0].ratings === 1"
             class="flex items-center w-16 h-16 relative rounded-full justify-center drop-shadow"
           >
             <NewAnimation />
@@ -66,18 +70,22 @@
       </div>
 
       <article class="text-left relative w-full h-full flex flex-col">
-        <h3
-          v-if="movie.title.length > 0"
-          class="hidden md:block text-base mb-1 font-semibold h-6 overflow-hidden"
+        <NuxtLink
+          :to="pathToNavigate(movie.id)"
+          tag="h3"
+          v-if="movie.title && movie.title.length > 0"
+          class="hidden md:block text-base mb-1 font-semibold h-6 overflow-hidden cursor-pointer "
         >
           {{ movie.title }}
-        </h3>
-        <h3
+        </NuxtLink>
+        <NuxtLink
+        :to="pathToNavigate(movie.id)"
+          tag="h3"
           v-else
-          class="hidden md:block text-base mb-1 font-semibold overflow-hidden"
+          class="hidden md:block text-base mb-1 font-semibold overflow-hidden cursor-pointer"
         >
           {{ movie.original_title }}
-        </h3>
+        </NuxtLink>
         <div class="text-xs mb-1 py-1 hidden md:block">
           <span>{{ movie.release_date.substring(0, 4) }}</span>
           <span class="mx-2">|</span>
@@ -103,13 +111,15 @@
         </div>
       </article>
     </div>
-  </NuxtLink>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { useStore } from "~/stores/store";
 import placeholderRatings from "~/assets/recentRatings.json";
 
+const { locale } = useI18n();
+const localePath = useLocalePath();
 const store = useStore();
 const props = defineProps({
   movie: {
@@ -123,6 +133,7 @@ const props = defineProps({
   },
 });
 
+const pathToNavigate = (id: string) => `${locale.value}/movie/${id}`;
 const poster2 = computed(
   () =>
     `https://image.tmdb.org/t/p/original/${

@@ -16,7 +16,7 @@
       >
         {{ t("search.searchHeadline1")
         }}<NuxtLink
-          to="/faq"
+          :to="localePath('/faq')"
           class="text-yellow-500 transition hover:text-yellow-600"
           >Triggerscore</NuxtLink
         >
@@ -60,14 +60,14 @@ const props = defineProps({
 });
 
 const { t } = useI18n();
+const localePath = useLocalePath();
 
-const router = useRouter();
 const store = useStore();
 
 async function searchMovie() {
   if (store.searchInput.length > 0) {
     await store.setSearchResults();
-    router.push("/search");
+    navigateTo(localePath("/search"));
   }
 }
 function resetSearchResults() {

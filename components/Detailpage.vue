@@ -45,7 +45,7 @@
           <div class="flex justify-between w-full sm:rounded-t p-4 pr-0">
             <img
               :src="poster"
-              :key="localeFromStore"
+              :key="locale"
               alt="movie poster"
               class="w-1/2 lg:w-76 h-auto object-contain self-start rounded self-center"
             />
@@ -158,7 +158,7 @@
                 <h2
                   class="text-xl font-semibold md:text-2xl self-center mb-1 sm:mb-2"
                 >
-                  {{ movie.title }}
+                  {{ movie.title ?? movie.original_title }}
                 </h2>
               </div>
               <div class="mb-4 text-xs md:text-md text-gray-400">
@@ -336,11 +336,8 @@ import { useStore } from "../stores/store";
 import { ref, computed, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { Movie, emptyMovie } from "~/types/movie";
-import { useLocaleStore } from "~/stores/localeStore";
 
 const store = useStore();
-const localeStore = useLocaleStore();
-const localeFromStore = computed(() => localeStore.locale);
 const router = useRouter();
 const route = useRoute();
 const { t, locale } = useI18n();
@@ -393,20 +390,16 @@ function pushToContact(comment: string) {
 }
 
 watch(locale, () => {
-  console.log("localechange");
-
-  console.log(route);
-  const localeStore = useLocaleStore();
   const regionProvider = computed(() => {
-    if (localeStore.locale === "en") {
+    if (locale.value === "en") {
       return "GB";
     }
-    return localeStore.locale.toUpperCase();
+    return locale.value.toUpperCase();
   });
   const loadMovie = async () => {
     try {
       const response = await fetch(
-        `https://api.themoviedb.org/3/movie/${route.params.id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${localeStore.locale}`
+        `https://api.themoviedb.org/3/movie/${route.params.id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${locale.value}`
       );
       const loadedMovie = await response.json();
       store.selectedMovie = loadedMovie;
@@ -449,8 +442,8 @@ watch(locale, () => {
   loadProviders();
 });
 
-store.setTriggerscores();
-store.filterMovies();
+store.setTriggerscores(locale.value);
+store.filterMovies(locale.value);
 </script>
 
 <style lang="css" scoped>

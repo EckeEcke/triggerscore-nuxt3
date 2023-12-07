@@ -41,7 +41,7 @@
         </p>
         <button
           class="bg-yellow-500 transition hover:bg-yellow-600 p-3 mt-3 rounded font-semibold text-white uppercase"
-          @click="$router.go(-1)"
+          @click="navigateTo(localePath('/'))"
         >
           <font-awesome-icon
             :icon="['fas', 'arrow-circle-left']"
@@ -86,24 +86,23 @@
 <script setup lang="ts">
 import { useStore } from "~/stores/store";
 import { useI18n } from "vue-i18n";
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
 const store = useStore();
-const router = useRouter();
-
+const localePath = useLocalePath();
 const page = ref(2);
 const hideLoadMore = ref(false);
 const loadingMore = ref(false);
 
 function resetSearch() {
   store.resetSearch;
-  router.go(-1);
+  navigateTo(localePath('/'));
 }
 
 async function searchMore() {
   loadingMore.value = true;
   const lengthBeforeLoad = store.searchResults.length.valueOf();
-  await store.searchMore(page.value);
+  await store.searchMore(page.value, locale.value);
   page.value += 1;
   setTimeout(() => {
     loadingMore.value = false;
@@ -114,7 +113,7 @@ async function searchMore() {
 }
 
 if (store.searchTerm == "") {
-  router.push("/");
+  navigateTo(localePath('/'));
 }
 </script>
 

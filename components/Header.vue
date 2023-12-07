@@ -7,7 +7,7 @@
     >
       <div class="flex" style="transform: translateY(-3px)">
         <NuxtLink
-          to="/"
+        :to="localePath('/')"
           tag="h1"
           class="leading-none text-xl md:leading-6 md:text-2xl self-center font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200 cursor-pointer"
         >
@@ -17,25 +17,25 @@
       </div>
       <div class="flex sm:text-sm">
         <NuxtLink
-          to="/"
+          :to="localePath('/')"
           tag="a"
           class="animated-link text-white font-semibold self-center mr-6 md:mr-10 hidden md:block hover:text-yellow-500 uppercase"
           >HOME</NuxtLink
         >
         <NuxtLink
-          to="/all"
+          :to="localePath('/all')"
           tag="a"
           class="animated-link text-white font-semibold self-center mr-6 md:mr-10 hidden md:block hover:text-yellow-500 uppercase"
           >{{ $t("header.allMovies") }}</NuxtLink
         >
         <NuxtLink
-          to="/stats"
+          :to="localePath('/stats')"
           tag="a"
           class="animated-link text-white font-semibold self-center mr-6 md:mr-10 hidden md:block hover:text-yellow-500 uppercase"
           >STATS</NuxtLink
         >
         <NuxtLink
-          to="/about"
+          :to="localePath('/about')"
           tag="a"
           class="animated-link text-white font-semibold self-center mr-6 md:mr-10 hidden md:block hover:text-yellow-500 uppercase"
           >{{ $t("header.about") }}</NuxtLink
@@ -86,7 +86,7 @@
           </div>
           <div class="">
             <NuxtLink
-              to="/"
+              :to="localePath('/')"
               tag="div"
               class="text-2xl md:text-2xl self-center font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200 cursor-pointer pb-12"
               @click="showNav = false"
@@ -98,7 +98,7 @@
             </NuxtLink>
           </div>
           <NuxtLink
-            to="/"
+            :to="localePath('/')"
             tag="a"
             class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase"
             ><div class="py-6" @click="showNav = false">
@@ -106,7 +106,7 @@
             </div></NuxtLink
           >
           <NuxtLink
-            to="/all"
+            :to="localePath('/all')"
             tag="a"
             class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase"
             ><div class="py-6" @click="showNav = false">
@@ -114,13 +114,13 @@
             </div></NuxtLink
           >
           <NuxtLink
-            to="/stats"
+            :to="localePath('/stats')"
             tag="a"
             class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase"
             ><div class="py-6" @click="showNav = false">Stats</div></NuxtLink
           >
           <NuxtLink
-            to="/about"
+            :to="localePath('/about')"
             tag="a"
             class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase"
             ><div class="py-6" @click="showNav = false">
@@ -128,7 +128,7 @@
             </div></NuxtLink
           >
           <NuxtLink
-            to="/faq"
+            :to="localePath('/faq')"
             tag="a"
             class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase"
             ><div class="py-6" @click="showNav = false">
@@ -136,7 +136,7 @@
             </div></NuxtLink
           >
           <NuxtLink
-            to="/contact"
+            :to="localePath('/contact')"
             tag="a"
             class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase"
             ><div class="py-6" @click="showNav = false">
@@ -211,6 +211,7 @@
 import { useI18n } from "vue-i18n";
 import { useStore } from "../stores/store";
 
+const { locale } = useI18n();
 const showSearch = ref(false);
 const showMenu = ref(false);
 const showNav = ref(false);
@@ -218,6 +219,7 @@ const showNav = ref(false);
 const store = useStore();
 const router = useRouter();
 const i18n = useI18n();
+const localePath = useLocalePath()
 
 const searchHeader = ref();
 
@@ -236,7 +238,7 @@ function searchMovie() {
   if (store.searchInput.length > 0) {
     store.setSearchResults();
     showSearch.value = false;
-    router.push("/search");
+    navigateTo(localePath("/search"));
   }
 }
 function resetSearchResults() {
@@ -244,7 +246,7 @@ function resetSearchResults() {
 }
 function resetFilter() {
   store.resetFilter;
-  store.filterMovies;
+  store.filterMovies(locale.value);
 }
 function focusSearch() {
   searchHeader.value.focus();

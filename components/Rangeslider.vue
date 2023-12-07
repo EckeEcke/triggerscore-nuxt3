@@ -53,6 +53,7 @@
 <script setup lang="ts">
 import { useStore } from "~/stores/store";
 
+const { locale } = useI18n();
 const store = useStore();
 const min = ref(0);
 const max = ref(10);
@@ -72,7 +73,7 @@ function mintrigger() {
   }
   minthumb.value =
     ((parseInt(minScore.value) - min.value) / (max.value - min.value)) * 100;
-  store.filterMovies();
+  store.filterMovies(locale.value);
 }
 
 function maxtrigger() {
@@ -84,7 +85,7 @@ function maxtrigger() {
   }
   maxthumb.value =
     100 - ((maxScore.value - min.value) / (max.value - min.value)) * 100;
-  store.filterMovies();
+  store.filterMovies(locale.value);
 }
 
 onMounted(() => {
@@ -95,7 +96,7 @@ onMounted(() => {
     (currentValue, oldValue) => {
       if (currentValue == 0) {
         mintrigger();
-        store.filterMovies();
+        store.filterMovies(locale.value);
       }
     }
   );
@@ -105,7 +106,7 @@ onMounted(() => {
     (currentValue, oldValue) => {
       if (currentValue == 10) {
         maxtrigger();
-        store.filterMovies();
+        store.filterMovies(locale.value);
       }
     }
   );

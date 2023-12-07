@@ -3,7 +3,6 @@ import placeholderMovies from "../assets/allMovies.json";
 import placeholderTriggerscores from "~/assets/triggerscores.json";
 import placeholderBondMovies from "~/assets/bondMovies.json";
 import { Movie, emptyMovie } from "~/types/movie";
-import { useLocaleStore } from "./localeStore";
 
 const url = "https://triggerscore-backend2.onrender.com/";
 // const url = "http://localhost:3000/"
@@ -133,8 +132,7 @@ export const useStore = defineStore({
     };
   },
   actions: {
-    async setTriggerscores() {
-      const localeStore = useLocaleStore();
+    async setTriggerscores(locale) {
       if (process.client && localStorage.getItem("store")) {
         this.moviesLoading = false;
       } //also loads movies for now
@@ -144,7 +142,7 @@ export const useStore = defineStore({
       const loadedMovies = Promise.all(
         triggerscores.map((entry: any) =>
           fetch(
-            `https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${localeStore.locale}`
+            `https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${locale}`
           )
             .then((res) => res.json())
             .catch(() => console.log("oopsy"))
@@ -155,15 +153,14 @@ export const useStore = defineStore({
         this.moviesLoading = false;
       });
     },
-    async setRecentRatings() {
-      const localeStore = useLocaleStore();
+    async setRecentRatings(locale) {
       const data = await fetch(`${url}recentratings`);
       const ratings = await data.json();
       this.recentScores = ratings;
       const recentRatings = Promise.all(
         ratings.map((entry: any) =>
           fetch(
-            `https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${localeStore.locale}`
+            `https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${locale}`
           )
             .then((res) => res.json())
             .catch(() => console.log("oopsy"))
@@ -176,14 +173,13 @@ export const useStore = defineStore({
       const comments = await data.json();
       this.recentComments = comments;
     },
-    async setTop10Sexism() {
-      const localeStore = useLocaleStore();
+    async setTop10Sexism(locale) {
       const data = await fetch(`${url}top10-sexism`);
       const top10 = await data.json();
       const loadedTop10 = Promise.all(
         top10.map((entry: any) =>
           fetch(
-            `https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${localeStore.locale}`
+            `https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${locale}`
           )
             .then((res) => res.json())
             .catch(() => console.log("oopsy"))
@@ -191,14 +187,13 @@ export const useStore = defineStore({
       );
       loadedTop10.then((res) => (this.top10Sexism = res));
     },
-    async setTop10Racism() {
-      const localeStore = useLocaleStore();
+    async setTop10Racism(locale) {
       const scores = await fetch(`${url}top10-racism`);
       const top10 = await scores.json();
       const loadedTop10 = Promise.all(
         top10.map((entry: any) =>
           fetch(
-            `https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${localeStore.locale}`
+            `https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${locale}`
           )
             .then((res) => res.json())
             .catch(() => console.log("oopsy"))
@@ -206,14 +201,13 @@ export const useStore = defineStore({
       );
       loadedTop10.then((res) => (this.top10Racism = res));
     },
-    async setTop10Others() {
-      const localeStore = useLocaleStore();
+    async setTop10Others(locale) {
       const scores = await fetch(`${url}top10-others`);
       const top10 = await scores.json();
       const loadedTop10 = Promise.all(
         top10.map((entry: any) =>
           fetch(
-            `https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${localeStore.locale}`
+            `https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${locale}`
           )
             .then((res) => res.json())
             .catch(() => console.log("oopsy"))
@@ -221,14 +215,13 @@ export const useStore = defineStore({
       );
       loadedTop10.then((res) => (this.top10Others = res));
     },
-    async setTop10Cringe() {
-      const localeStore = useLocaleStore();
+    async setTop10Cringe(locale) {
       const scores = await fetch(`${url}top10-cringe`);
       const top10 = await scores.json();
       const loadedTop10 = Promise.all(
         top10.map((entry: any) =>
           fetch(
-            `https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${localeStore.locale}`
+            `https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${locale}`
           )
             .then((res) => res.json())
             .catch(() => console.log("oopsy"))
@@ -274,10 +267,9 @@ export const useStore = defineStore({
         }
       });
     },
-    async searchMore(page: any) {
-      const localeStore = useLocaleStore();
+    async searchMore(page: any, locale) {
       const searchTerm = this.searchTerm;
-      const adjustedLocale = adjustLocale(localeStore.locale); // turns US locale into EN for search request
+      const adjustedLocale = adjustLocale(locale); // turns US locale into EN for search request
       const fetchedSearchResults = fetch(
         `https://api.themoviedb.org/3/search/movie?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${adjustedLocale}&include_adult=false&page=${page}&query=${searchTerm}`
       )
@@ -307,18 +299,17 @@ export const useStore = defineStore({
     setSearchError(payload: any) {
       this.searchError = payload;
     },
-    async setBondMovies() {
-      const localeStore = useLocaleStore();
+    async setBondMovies(locale) {
       const loadedMovies = Promise.all(
         this.bondMovieIDs.map((id: number) =>
           fetch(
-            `https://api.themoviedb.org/3/movie/${id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${localeStore.locale}`
+            `https://api.themoviedb.org/3/movie/${id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${locale}`
           )
             .then((res) => res.json())
             .catch(() =>
               setTimeout(() => {
                 fetch(
-                  `https://api.themoviedb.org/3/movie/${id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${localeStore.locale}`
+                  `https://api.themoviedb.org/3/movie/${id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${locale}`
                 )
                   .then((res) => res.json())
                   .catch((error) =>
@@ -333,8 +324,7 @@ export const useStore = defineStore({
         this.highlightsLoading = false;
       });
     },
-    async filterMovies() {
-      const localeStore = useLocaleStore();
+    async filterMovies(locale) {
       this.isFiltering = true;
       this.sortMovies(
         this.sortingOption,
@@ -361,7 +351,7 @@ export const useStore = defineStore({
         this.filterMoviesBySky,
         this.triggerscores,
         this.filteredMovies,
-        localeStore.locale
+        locale
       );
     },
     resetFilter() {

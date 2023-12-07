@@ -1,6 +1,6 @@
 <template>
   <NuxtLink
-    :to="`movie/${movie.id}`"
+    :to="pathToNavigate"
     tag="div"
     class="movie-highlight-item transition-300 w-full h-44 bg-transparent sm:bg-gradient-to-r from-gray-950 to-gray-800 md:hover:from-gray-900 text-white sm:border border-t border-b sm:border-r-0 border-gray-950 border-opacity- md:border-0 shadow-md flex relative md:rounded container-xl cursor-pointer"
   >
@@ -71,8 +71,6 @@
 import { useStore } from "~/stores/store";
 import { useI18n } from "vue-i18n";
 
-const store = useStore();
-const { t } = useI18n();
 const props = defineProps({
   movie: {
     type: Object,
@@ -83,6 +81,11 @@ const props = defineProps({
     required: true,
   },
 });
+
+const store = useStore();
+const { t, locale } = useI18n();
+const pathToNavigate = computed(() => `movie/${props.movie.id}`);
+
 
 const poster = computed(
   () => `https://image.tmdb.org/t/p/original/${props.movie.poster_path}`

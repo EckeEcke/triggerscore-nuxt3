@@ -80,7 +80,7 @@
 <script lang="ts" setup>
 import { useI18n } from "vue-i18n";
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
 const props = defineProps({
   movie: {},
@@ -90,7 +90,7 @@ const props = defineProps({
 const copied = ref(false);
 const route = useRoute();
 const currentURL = computed(
-  () => `https://triggerscore.netlify.app/movie/${route.params.id}`
+  () => `https://triggerscore.de/${locale.value}/movie/${route.params.id}`
 );
 
 function copyLink() {

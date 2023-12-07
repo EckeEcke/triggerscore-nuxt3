@@ -233,62 +233,62 @@ const shownScore = computed(() => store.shownScore);
 watch(
   () => store.filterMoviesByNetflix,
   (currentValue, oldValue) => {
-    store.filterMovies();
+    store.filterMovies(locale.value);
   }
 );
 
 watch(
   () => store.filterMoviesByPrime,
   (currentValue, oldValue) => {
-    store.filterMovies();
+    store.filterMovies(locale.value);
   }
 );
 
 watch(
   () => store.filterMoviesByDisney,
   (currentValue, oldValue) => {
-    store.filterMovies();
+    store.filterMovies(locale.value);
   }
 );
 
 watch(
   () => store.filterMoviesBySky,
   (currentValue, oldValue) => {
-    store.filterMovies();
+    store.filterMovies(locale.value);
   }
 );
 
 watch(
   () => sortingOption,
   (currentValue, oldValue) => {
-    store.filterMovies();
+    store.filterMovies(locale.value);
   }
 );
 
 watch(
   () => filterMin,
   (currentValue, oldValue) => {
-    store.filterMovies();
+    store.filterMovies(locale.value);
   }
 );
 
 watch(
   () => filterMax,
   (currentValue, oldValue) => {
-    store.filterMovies();
+    store.filterMovies(locale.value);
   }
 );
 
 watch(
   () => shownScore,
   (currentValue, oldValue) => {
-    store.filterMovies();
+    store.filterMovies(locale.value);
   }
 );
 
 function resetFilter() {
   store.resetFilter();
-  store.filterMovies();
+  store.filterMovies(locale.value);
 }
 function focusSearch() {
   const search = document.getElementById("search");

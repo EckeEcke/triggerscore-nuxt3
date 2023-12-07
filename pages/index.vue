@@ -108,10 +108,9 @@
                     </div>
                   </div>
                   <NuxtLink
-                    :to="`movie/${comment.movie_id}`"
+                    :to="pathToNavigate(comment.movie_id)"
                     tag="h4"
-                    class="font-semibold cursor-pointer text-sm"
-                  >
+                    class="font-semibold cursor-pointer text-sm">
                     {{
                       store.movies.filter(
                         (movie) => movie.id === comment.movie_id
@@ -231,7 +230,7 @@
       </h2>
       <div class="py-8">
         <NuxtLink
-          to="/all"
+          :to="localePath('/all')"
           class="bg-yellow-500 transition hover:bg-yellow-600 p-3 rounded-lg text-white font-semibold uppercase my-4"
           >{{ $t("header.allMovies") }}</NuxtLink
         >
@@ -244,16 +243,20 @@
 import { useStore } from "~/stores/store";
 import placeholderBondMovies from "~/assets/bondMovies.json";
 
+const { locale } = useI18n();
+const localePath = useLocalePath();
 const toggleBool = ref(false);
 
+const pathToNavigate = (id: string) => `${locale.value}/movie/${id}`;
+console.log()
 const store = useStore();
-store.setTriggerscores();
-store.setBondMovies();
-store.setRecentRatings();
-store.setTop10Racism();
-store.setTop10Sexism();
-store.setTop10Others();
-store.setTop10Cringe();
+store.setTriggerscores(locale.value);
+store.setBondMovies(locale.value);
+store.setRecentRatings(locale.value);
+store.setTop10Racism(locale.value);
+store.setTop10Sexism(locale.value);
+store.setTop10Others(locale.value);
+store.setTop10Cringe(locale.value);
 store.setRecentComments();
 
 const isLoading = computed(

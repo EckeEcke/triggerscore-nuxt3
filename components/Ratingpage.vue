@@ -6,7 +6,7 @@
     >
       <div
         v-if="submitted"
-        class="bg-green-500 text-white text-center text-2xl px-6 py-16 rounded-b lg:rounded h-72 lg:sticky lg:bottom-0"
+        class="bg-green-550 text-white text-center text-2xl px-6 py-16 rounded-b lg:rounded h-72 lg:sticky lg:bottom-0"
       >
         <Transition name="fade" mode="out-in">
           <div v-if="animCompleted" class="font-bold pt-8" key="text">

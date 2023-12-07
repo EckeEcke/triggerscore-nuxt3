@@ -41,7 +41,7 @@
             class="bg-white rounded-full"
           >
             <font-awesome-icon
-              class="h-full text-yellow-500 text-4xl transition transform scale-110 hover:scale-125 pointer-events-auto"
+              class="h-full text-yellow-500 text-4xl transition transform scale-125 hover:scale-150 pointer-events-auto"
               :icon="['fas', 'arrow-circle-left']"
             />
           </button>
@@ -50,7 +50,7 @@
             class="bg-white rounded-full"
           >
             <font-awesome-icon
-              class="h-full text-yellow-500 text-4xl transition transform scale-110 hover:scale-125 pointer-events-auto"
+              class="h-full text-yellow-500 text-4xl transition transform scale-125 hover:scale-150 pointer-events-auto"
               :icon="['fas', 'arrow-circle-right']"
             />
           </button>

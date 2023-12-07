@@ -132,6 +132,7 @@
 import { useStore } from "~/stores/store";
 
 const store = useStore();
+const {locale } = useI18n();
 const showNavbar = ref(true);
 const lastScrollPosition = ref(0);
 const showMenu = ref(false);
@@ -139,10 +140,10 @@ const loadMoviesAmount = ref(24);
 const start = ref(0);
 const end = ref(24);
 
-store.setTriggerscores();
-store.filterMovies();
-store.setRecentRatings();
-store.setBondMovies();
+store.setTriggerscores(locale.value);
+store.filterMovies(locale.value);
+store.setRecentRatings(locale.value);
+store.setBondMovies(locale.value);
 store.resetFilter();
 
 const totalPages = computed(() => Math.ceil(filteredMovies.value.length / 24));
@@ -199,7 +200,7 @@ function resetSearchResults() {
 
 function resetFilter() {
   store.resetFilter();
-  store.filterMovies();
+  store.filterMovies(locale.value);
 }
 
 function setPage(startValue: any, endValue: any) {
@@ -210,7 +211,7 @@ function setPage(startValue: any, endValue: any) {
 watch(
   () => movies.value,
   (currentValue, oldValue) => {
-    store.filterMovies();
+    store.filterMovies(locale.value);
   }
 );
 

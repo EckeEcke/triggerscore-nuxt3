@@ -1,7 +1,7 @@
 <template>
   <div class="relative flex align-center">
     <button
-      v-if="localeStore.locale == 'de'"
+      v-if="locale == 'de'"
       @click="showSelection = !showSelection"
       class="mr-6 sm:mr-10"
     >
@@ -12,7 +12,7 @@
       />
     </button>
     <button
-      v-if="localeStore.locale == 'en'"
+      v-if="locale == 'en'"
       @click="showSelection = !showSelection"
       class="mr-6 sm:mr-10"
     >
@@ -23,7 +23,7 @@
       />
     </button>
     <button
-      v-if="localeStore.locale == 'us'"
+      v-if="locale == 'us'"
       @click="showSelection = !showSelection"
       class="mr-6 sm:mr-10"
     >
@@ -34,7 +34,7 @@
       />
     </button>
     <button
-      v-if="localeStore.locale == 'fr'"
+      v-if="locale == 'fr'"
       @click="showSelection = !showSelection"
       class="mr-6 sm:mr-10"
     >
@@ -45,7 +45,7 @@
       />
     </button>
     <button
-      v-if="localeStore.locale == 'es'"
+      v-if="locale == 'es'"
       @click="showSelection = !showSelection"
       class="mr-6 sm:mr-10"
     >
@@ -60,51 +60,55 @@
       v-click-away="hideSelection"
       class="absolute -left-2 bg-gradient-to-r from-gray-950 to-gray-800 text-white top-9 md:top-10 p-2 flex flex-col gap-2 w-20"
     >
-      <li
-        @click="switchLanguage('us')"
+      <NuxtLink
+        :to="switchLocalePath('us')"
+        tag="li"
         class="flex gap-2 cursor-pointer hover:text-yellow-500"
       >
         <img class="w-6 self-center h-3" src="../assets/images/usa.svg" />US
-      </li>
-      <li
-        @click="switchLanguage('en')"
+      </NuxtLink>
+      <NuxtLink
+        :to="switchLocalePath('en')"
+        tag="li"
         class="flex gap-2 cursor-pointer hover:text-yellow-500"
       >
         <img class="w-6 self-center h-3" src="../assets/images/uk.svg" />EN
-      </li>
-      <li
-        @click="switchLanguage('de')"
+      </NuxtLink>
+      <NuxtLink
+        :to="switchLocalePath('de')"
+        tag="li"
         class="flex gap-2 cursor-pointer hover:text-yellow-500"
       >
         <img class="w-6 self-center h-3" src="../assets/images/germany.svg" />DE
-      </li>
-      <li
-        @click="switchLanguage('fr')"
+      </NuxtLink>
+      <NuxtLink
+        :to="switchLocalePath('fr')"
+        tag="li"
         class="flex gap-2 cursor-pointer hover:text-yellow-500"
       >
         <img class="w-6 self-center h-3" src="../assets/images/france.svg" />FR
-      </li>
-      <li
-        @click="switchLanguage('es')"
+      </NuxtLink>
+      <NuxtLink
+        :to="switchLocalePath('es')"
+        tag="li"
         class="flex gap-2 cursor-pointer hover:text-yellow-500"
       >
         <img class="w-6 self-center h-3" src="../assets/images/spain.svg" />ES
-      </li>
+      </NuxtLink>
     </ul>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import { useLocaleStore } from "~/stores/localeStore";
 import { useStore } from "../stores/store";
 
 const { locale } = useI18n();
 const selectedLocale = computed(() => locale.value);
+const switchLocalePath = useSwitchLocalePath()
 
 const showSelection = ref(false);
 const store = useStore();
-const localeStore = useLocaleStore();
 
 function hideSelection() {
   showSelection.value = false;
@@ -112,15 +116,13 @@ function hideSelection() {
 
 function switchLanguage(language: string) {
   locale.value = language;
-  localeStore.locale = language;
-  localeStore.localeSetByUser = true;
-  store.setTriggerscores();
-  store.setRecentRatings();
-  store.setTop10Sexism();
-  store.setTop10Racism();
-  store.setTop10Others();
-  store.setTop10Cringe();
-  store.setBondMovies();
+  store.setTriggerscores(locale.value);
+  store.setRecentRatings(locale.value);
+  store.setTop10Sexism(locale.value);
+  store.setTop10Racism(locale.value);
+  store.setTop10Others(locale.value);
+  store.setTop10Cringe(locale.value);
+  store.setBondMovies(locale.value);
 }
 </script>
 

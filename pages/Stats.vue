@@ -39,6 +39,7 @@
 import { useStore } from "~/stores/store";
 import placeholderBondMovies from "~/assets/bondMovies.json";
 
+const { locale } = useI18n();
 const toggleBool = ref(false);
 const isLoading = computed(
   () =>
@@ -48,12 +49,12 @@ const isLoading = computed(
 );
 
 const store = useStore();
-store.setTriggerscores();
-store.setBondMovies();
-store.setRecentRatings();
-store.setTop10Racism();
-store.setTop10Sexism();
-store.setTop10Others();
-store.setTop10Cringe();
+store.setTriggerscores(locale.value);
+store.setBondMovies(locale.value);
+store.setRecentRatings(locale.value);
+store.setTop10Racism(locale.value);
+store.setTop10Sexism(locale.value);
+store.setTop10Others(locale.value);
+store.setTop10Cringe(locale.value);
 store.setRecentComments();
 </script>
