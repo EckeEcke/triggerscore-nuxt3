@@ -84,20 +84,11 @@
                     class="flex shrink-0 justify-center rounded-lg w-8 h-8 mr-2 bg-opacity-80"
                     :class="{
                       'bg-red-700':
-                        store.triggerscores.filter(
-                          (score) => score.movie_id === comment.movie_id
-                        )[0].rating_total >= 7,
+                        commentTotalRating(comment.movie_id, 11, 7),
                       'bg-yellow-500':
-                        store.triggerscores.filter(
-                          (score) => score.movie_id === comment.movie_id
-                        )[0].rating_total < 7 &&
-                        store.triggerscores.filter(
-                          (movie) => movie.id === comment.id
-                        )[0].rating_total >= 4,
+                        commentTotalRating(comment.movie_id, 7, 4),
                       'bg-green-600':
-                        store.triggerscores.filter(
-                          (score) => score.movie_id === comment.movie_id
-                        )[0].rating_total < 4,
+                        commentTotalRating(comment.movie_id, 4, 0),
                     }"
                   >
                     <div class="self-center text-white">
@@ -250,7 +241,6 @@ const localePath = useLocalePath();
 const toggleBool = ref(false);
 
 const pathToNavigate = (id: string) => `${locale.value}/movie/${id}`;
-console.log()
 const store = useStore();
 store.setTriggerscores(locale.value);
 store.setBondMovies(locale.value);
@@ -267,8 +257,17 @@ const isLoading = computed(
     store.moviesLoading ||
     store.triggerscores.length == 0 ||
     store.loadingSelectedMovie
-);
-let intervalId: any = undefined;
+)
+
+const commentTotalRating = (commentId: number, limitTop: number, limitBottom: number) => {
+  const wantedMovie = store.triggerscores.filter(score => score.movie_id === commentId)[0]
+  return wantedMovie !== undefined &&
+      wantedMovie.rating_total !== undefined &&
+      wantedMovie.rating_total < limitTop &&
+      wantedMovie.rating_total >= limitBottom
+}
+
+let intervalId: any = undefined
 
 const handleToggle = (value: boolean) => {
   toggleBool.value = value;

@@ -132,7 +132,7 @@ export const useStore = defineStore({
     };
   },
   actions: {
-    async setTriggerscores(locale) {
+    async setTriggerscores(locale: string) {
       if (process.client && localStorage.getItem("store")) {
         this.moviesLoading = false;
       } //also loads movies for now
@@ -153,7 +153,7 @@ export const useStore = defineStore({
         this.moviesLoading = false;
       });
     },
-    async setRecentRatings(locale) {
+    async setRecentRatings(locale: string) {
       const data = await fetch(`${url}recentratings`);
       const ratings = await data.json();
       this.recentScores = ratings;
@@ -166,14 +166,14 @@ export const useStore = defineStore({
             .catch(() => console.log("oopsy"))
         )
       );
-      recentRatings.then((res) => (this.recentRatings = res));
+      recentRatings.then((res: any) => (this.recentRatings = res));
     },
     async setRecentComments() {
       const data = await fetch(`${url}recentcomments`);
       const comments = await data.json();
       this.recentComments = comments;
     },
-    async setTop10Sexism(locale) {
+    async setTop10Sexism(locale: string) {
       const data = await fetch(`${url}top10-sexism`);
       const top10 = await data.json();
       const loadedTop10 = Promise.all(
@@ -185,9 +185,9 @@ export const useStore = defineStore({
             .catch(() => console.log("oopsy"))
         )
       );
-      loadedTop10.then((res) => (this.top10Sexism = res));
+      loadedTop10.then((res: any) => (this.top10Sexism = res));
     },
-    async setTop10Racism(locale) {
+    async setTop10Racism(locale: string) {
       const scores = await fetch(`${url}top10-racism`);
       const top10 = await scores.json();
       const loadedTop10 = Promise.all(
@@ -199,9 +199,9 @@ export const useStore = defineStore({
             .catch(() => console.log("oopsy"))
         )
       );
-      loadedTop10.then((res) => (this.top10Racism = res));
+      loadedTop10.then((res: any) => (this.top10Racism = res));
     },
-    async setTop10Others(locale) {
+    async setTop10Others(locale: string) {
       const scores = await fetch(`${url}top10-others`);
       const top10 = await scores.json();
       const loadedTop10 = Promise.all(
@@ -213,9 +213,9 @@ export const useStore = defineStore({
             .catch(() => console.log("oopsy"))
         )
       );
-      loadedTop10.then((res) => (this.top10Others = res));
+      loadedTop10.then((res: any) => (this.top10Others = res));
     },
-    async setTop10Cringe(locale) {
+    async setTop10Cringe(locale: string) {
       const scores = await fetch(`${url}top10-cringe`);
       const top10 = await scores.json();
       const loadedTop10 = Promise.all(
@@ -227,7 +227,7 @@ export const useStore = defineStore({
             .catch(() => console.log("oopsy"))
         )
       );
-      loadedTop10.then((res) => (this.top10Cringe = res));
+      loadedTop10.then((res: any) => (this.top10Cringe = res));
     },
     async setStats() {
       const response = await fetch(`${url}stats`);
@@ -267,7 +267,7 @@ export const useStore = defineStore({
         }
       });
     },
-    async searchMore(page: any, locale) {
+    async searchMore(page: number, locale: string) {
       const searchTerm = this.searchTerm;
       const adjustedLocale = adjustLocale(locale); // turns US locale into EN for search request
       const fetchedSearchResults = fetch(
@@ -299,7 +299,7 @@ export const useStore = defineStore({
     setSearchError(payload: any) {
       this.searchError = payload;
     },
-    async setBondMovies(locale) {
+    async setBondMovies(locale: string) {
       const loadedMovies = Promise.all(
         this.bondMovieIDs.map((id: number) =>
           fetch(
@@ -324,7 +324,7 @@ export const useStore = defineStore({
         this.highlightsLoading = false;
       });
     },
-    async filterMovies(locale) {
+    async filterMovies(locale: string) {
       this.isFiltering = true;
       this.sortMovies(
         this.sortingOption,
