@@ -70,83 +70,7 @@
           <h3 class="text-2xl font-semibold my-8">
             {{ $t("general.recentComments") }}
           </h3>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
-            <template
-              v-for="(comment, index) in store.recentComments"
-              :key="comment.movie_id"
-            >
-              <div
-                v-if="(index % 2 === 0) === toggleBool"
-                class="bg-gradient-to-r from-gray-950 to-gray-800 p-4"
-              >
-                <div class="mb-4 flex gap-2 items-center">
-                  <div
-                    class="flex shrink-0 justify-center rounded-lg w-8 h-8 mr-2 bg-opacity-80"
-                    :class="{
-                      'bg-red-700':
-                        commentTotalRating(comment.movie_id, 11, 7),
-                      'bg-yellow-500':
-                        commentTotalRating(comment.movie_id, 7, 4),
-                      'bg-green-600':
-                        commentTotalRating(comment.movie_id, 4, 0),
-                    }"
-                  >
-                    <div class="self-center text-white">
-                      {{
-                        store.triggerscores.filter(
-                          (score) => score.movie_id === comment.movie_id
-                        )[0].rating_total
-                      }}
-                    </div>
-                  </div>
-                  <NuxtLink
-                    :to="pathToNavigate(comment.movie_id)"
-                    tag="h4"
-                    class="font-semibold cursor-pointer text-sm">
-                    {{
-                      store.movies.filter(
-                        (movie) => movie.id === comment.movie_id
-                      )[0].title
-                    }}
-                  </NuxtLink>
-                </div>
-                <hr class="mb-4 w-36 border-yellow-500" />
-                <div class="flex justify-between gap-2">
-                  <p class="italic text-sm">"{{ comment.comment }}"</p>
-                  <div v-if="comment.liked === 1">
-                    <font-awesome-icon
-                      :icon="['fas', 'thumbs-up']"
-                      class="text-green-500 text-xl"
-                    />
-                  </div>
-                  <div v-if="comment.disliked === 1">
-                    <font-awesome-icon
-                      :icon="['fas', 'thumbs-down']"
-                      class="text-red-500 text-xl"
-                    />
-                  </div>
-                </div>
-              </div>
-            </template>
-          </div>
-          <div class="flex gap-2 justify-center my-4">
-            <font-awesome-icon
-              :icon="['fas', 'circle']"
-              class="text-xl transform transition-300 hover:scale-110"
-              :class="[
-                toggleBool ? 'text-yellow-500' : 'text-grey-500 opacity-50',
-              ]"
-              @click="handleToggle(true)"
-            />
-            <font-awesome-icon
-              :icon="['fas', 'circle']"
-              class="text-xl transform transition-300 hover:scale-110"
-              :class="[
-                !toggleBool ? 'text-yellow-500' : 'text-grey-500 opacity-50',
-              ]"
-              @click="handleToggle(false)"
-            />
-          </div>
+          <RecentComments />
         </div>
       </div>
     </section>
@@ -237,9 +161,6 @@ import { useStore } from "~/stores/store"
 
 const { locale } = useI18n()
 const localePath = useLocalePath()
-const toggleBool = ref(false)
-
-const pathToNavigate = (id: string) => `${locale.value}/movie/${id}`
 const store = useStore()
 store.setTriggerscores(locale.value)
 store.setBondMovies(locale.value)
@@ -257,34 +178,6 @@ const isLoading = computed(
     store.triggerscores.length == 0 ||
     store.loadingSelectedMovie
 )
-
-const commentTotalRating = (commentId: number, limitTop: number, limitBottom: number) => {
-  const wantedMovie = store.triggerscores.filter(score => score.movie_id === commentId)[0]
-  return wantedMovie !== undefined &&
-      wantedMovie.rating_total !== undefined &&
-      wantedMovie.rating_total < limitTop &&
-      wantedMovie.rating_total >= limitBottom
-}
-
-let intervalId: any = undefined
-
-const handleToggle = (value: boolean) => {
-  toggleBool.value = value
-  clearInterval(intervalId)
-  intervalId = setInterval(() => {
-    toggleBool.value = !toggleBool.value
-  }, 10000)
-}
-
-onMounted(() => {
-  intervalId = setInterval(() => {
-    toggleBool.value = !toggleBool.value
-  }, 10000)
-})
-
-onUnmounted(() => {
-  clearInterval(intervalId)
-})
 </script>
 
 <style lang="css" scoped>
