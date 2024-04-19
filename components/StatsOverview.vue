@@ -186,45 +186,45 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "~/stores/store";
-import { useI18n } from "vue-i18n";
-import statsPlaceholder from "~/assets/stats.json";
+import { useStore } from "~/stores/store"
+import { useI18n } from "vue-i18n"
+import statsPlaceholder from "~/assets/stats.json"
 
-const { t } = useI18n();
+const { t } = useI18n()
 
-const placeholder = statsPlaceholder;
+const placeholder = statsPlaceholder
 
 const totalRatings = computed(
   () => store.stats.totalRatings ?? placeholder.totalRatings
-);
+)
 const amountMovies = computed(
   () => store.stats.amountMovies ?? placeholder.amountMovies
-);
+)
 const amountComments = computed(
   () => store.stats.amountComments ?? placeholder.amountComments
-);
+)
 const amountLikes = computed(
   () => store.stats.amountLikes ?? placeholder.amountLikes
-);
+)
 const amountDislikes = computed(
   () => store.stats.amountDislikes ?? placeholder.amountDislikes
-);
+)
 
 const averageTotal = computed(
   () => store.stats.averageScoreTotal ?? placeholder.averageScoreTotal
-);
+)
 const averageSexism = computed(
   () => store.stats.averageScoreSexism ?? placeholder.averageScoreSexism
-);
+)
 const averageRacism = computed(
   () => store.stats.averageScoreRacism ?? placeholder.averageScoreRacism
-);
+)
 const averageCringe = computed(
   () => store.stats.averageScoreCringe ?? placeholder.averageScoreCringe
-);
+)
 const averageOthers = computed(
   () => store.stats.averageScoreOthers ?? placeholder.averageScoreOthers
-);
+)
 
 const store = useStore();
 </script>

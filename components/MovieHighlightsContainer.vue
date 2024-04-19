@@ -79,10 +79,10 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useStore } from "~/stores/store";
-import placeholderScores from "~/assets/triggerscores.json";
+import { useStore } from "~/stores/store"
+import placeholderScores from "~/assets/triggerscores.json"
 
-const store = useStore();
+const store = useStore()
 
 const props = defineProps({
   movies: Array,
@@ -91,42 +91,42 @@ const props = defineProps({
   subTitle: String,
   showBorder: Boolean,
   moreSpacing: Boolean,
-});
+})
 
-const scrolled = ref(false);
-const swiper: Ref<any> = ref();
+const scrolled = ref(false)
+const swiper: Ref<any> = ref()
 const containerId = computed(
   () => "highlight-container-" + props.shownScore?.toString()
-);
+)
 
-const triggerscores = computed(() => store.triggerscores ?? placeholderScores);
+const triggerscores = computed(() => store.triggerscores ?? placeholderScores)
 
 onMounted(() => {
-  if (swiper.value) swiper.value.addEventListener("scroll", handleScroll);
-});
+  if (swiper.value) swiper.value.addEventListener("scroll", handleScroll)
+})
 onBeforeUnmount(() => {
-  if (swiper.value) swiper.value.removeEventListener("scroll", handleScroll);
-});
+  if (swiper.value) swiper.value.removeEventListener("scroll", handleScroll)
+})
 
 function handleScroll() {
-  scrolled.value = true;
+  scrolled.value = true
   if (swiper.value && swiper.value.scrollLeft == 0) {
-    scrolled.value = false;
+    scrolled.value = false
   }
 }
 function scrollHighlightContainer(direction: string) {
-  const highlight = document.getElementById(containerId.value);
+  const highlight = document.getElementById(containerId.value)
   if (direction == "left") {
     highlight?.scrollBy({
       top: 0,
       left: -window.innerWidth / 2,
       behavior: "smooth",
-    });
+    })
   } else
     highlight?.scrollBy({
       top: 0,
       left: window.innerWidth / 2,
       behavior: "smooth",
-    });
+    })
 }
 </script>

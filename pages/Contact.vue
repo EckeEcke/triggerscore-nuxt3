@@ -129,21 +129,21 @@
 </template>
 
 <script setup lang="ts">
-import { useI18n } from "vue-i18n";
-import { ref } from "vue";
+import { useI18n } from "vue-i18n"
+import { ref } from "vue"
 
-const route = useRoute();
+const route = useRoute()
 const reportedMovie = computed(() => {
-  route.params.id;
-});
+  route.params.id
+})
 
-const { t } = useI18n();
+const { t } = useI18n()
 
 const form = ref({
   name: "",
   mail: "",
   message: "",
-});
+})
 
 if (route.query.comment) {
   form.value.message =
@@ -154,12 +154,12 @@ if (route.query.comment) {
     "...'";
 }
 
-const submitted = ref(false);
+const submitted = ref(false)
 
 function encode(data: any) {
   return Object.keys(data)
     .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
-    .join("&");
+    .join("&")
 }
 async function handleSubmit() {
   await useFetch("/", {
@@ -170,6 +170,6 @@ async function handleSubmit() {
     }),
   })
     .then(() => (submitted.value = true))
-    .catch((error: any) => console.log(error));
+    .catch((error: any) => console.log(error))
 }
 </script>

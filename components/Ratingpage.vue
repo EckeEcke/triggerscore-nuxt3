@@ -229,35 +229,35 @@
 </template>
 
 <script setup lang="ts">
-import { useI18n } from "vue-i18n";
+import { useI18n } from "vue-i18n"
 
-const ratingSexism = ref(null);
-const ratingRacism = ref(null);
-const ratingOthers = ref(null);
-const ratingCringe = ref(null);
-const comment = ref("");
-const submitted = ref(false);
-const liked = ref(false);
-const disliked = ref(false);
-const animCompleted = ref(false);
+const ratingSexism = ref(null)
+const ratingRacism = ref(null)
+const ratingOthers = ref(null)
+const ratingCringe = ref(null)
+const comment = ref("")
+const submitted = ref(false)
+const liked = ref(false)
+const disliked = ref(false)
+const animCompleted = ref(false)
 
 const props = defineProps({
   title: String,
   id: Number,
-});
+})
 
-const { t } = useI18n();
-const router = useRouter();
+const { t } = useI18n()
+const router = useRouter()
 
 function scrollRatings() {
-  const ratings = document.getElementsByClassName("rating"); // for fixing issues with flex-end and overflow-hidden
+  const ratings = document.getElementsByClassName("rating") // for fixing issues with flex-end and overflow-hidden
   for (let i = 0; i < ratings.length; i++) {
-    ratings[i].scrollLeft -= 500;
+    ratings[i].scrollLeft -= 500
   }
 }
 function submitRating(event: Event) {
-  event.preventDefault();
-  submitted.value = true;
+  event.preventDefault()
+  submitted.value = true
   const data = {
     movieID: props.id,
     sexism: ratingSexism.value,
@@ -267,7 +267,7 @@ function submitRating(event: Event) {
     comment: comment.value,
     like: liked.value,
     dislike: disliked.value,
-  };
+  }
   fetch("https://triggerscore-backend2.onrender.com/post", {
     method: "post",
     headers: {
@@ -278,22 +278,22 @@ function submitRating(event: Event) {
   })
     .then((response) => response.json())
     .then((data) => console.log(data))
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err))
 }
 function handleLike(value: boolean) {
-  liked.value = value;
+  liked.value = value
   if (liked.value === true) {
-    disliked.value = false;
+    disliked.value = false
   }
 }
 function handleDislike(value: boolean) {
-  disliked.value = value;
+  disliked.value = value
   if (disliked.value === true) {
-    liked.value = false;
+    liked.value = false
   }
 }
 
-onMounted(() => scrollRatings());
+onMounted(() => scrollRatings())
 </script>
 
 <style>

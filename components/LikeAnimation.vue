@@ -12,26 +12,26 @@
 </template>
 
 <script setup lang="ts">
-import likeAnimation from "../assets/images/like-animation.json";
+import likeAnimation from "../assets/images/like-animation.json"
 import { ref } from "vue";
 
-const likeClicked = ref(false);
+const likeClicked = ref(false)
 
 const props = defineProps({
   dislikeClicked: Boolean,
 });
 
-const emit = defineEmits(["likeClicked"]);
-const anim = ref();
+const emit = defineEmits(["likeClicked"])
+const anim = ref()
 
 function runAnimation() {
-  likeClicked.value = !likeClicked.value;
-  emit("likeClicked", likeClicked.value);
+  likeClicked.value = !likeClicked.value
+  emit("likeClicked", likeClicked.value)
   if (likeClicked.value) {
-    anim.value.stop();
-    anim.value.play();
+    anim.value.stop()
+    anim.value.play()
   } else {
-    anim.value.stop();
+    anim.value.stop()
   }
 }
 
@@ -39,8 +39,8 @@ watch(
   () => props.dislikeClicked,
   (currentValue, oldValue) => {
     if (currentValue && likeClicked.value === true) {
-      runAnimation();
+      runAnimation()
     }
   }
-);
+)
 </script>

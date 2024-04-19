@@ -52,25 +52,25 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "~/stores/store";
-import { useI18n } from "vue-i18n";
+import { useStore } from "~/stores/store"
+import { useI18n } from "vue-i18n"
 
 const props = defineProps({
   showTitle: Boolean,
 });
 
-const { t } = useI18n();
-const localePath = useLocalePath();
+const { t } = useI18n()
+const localePath = useLocalePath()
 
-const store = useStore();
+const store = useStore()
 
 async function searchMovie() {
   if (store.searchInput.length > 0) {
-    await store.setSearchResults();
-    navigateTo(localePath("/search"));
+    await store.setSearchResults()
+    navigateTo(localePath("/search"))
   }
 }
 function resetSearchResults() {
-  store.resetSearch();
+  store.resetSearch()
 }
 </script>

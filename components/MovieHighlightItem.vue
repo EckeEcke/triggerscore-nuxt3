@@ -68,10 +68,9 @@
 </template>
 
 <script setup lang="ts">
-import { useI18n } from "vue-i18n";
+import { useI18n } from "vue-i18n"
 
-const { t, locale } = useI18n();
-const localePath = useLocalePath();
+const { t, locale } = useI18n()
 
 const props = defineProps({
   movie: Object,
@@ -80,27 +79,27 @@ const props = defineProps({
   loadItem: Boolean,
 });
 
-const pathToNavigate = computed(() => `${locale.value}/movie/${props.movie.id}`);
+const pathToNavigate = computed(() => `${locale.value}/movie/${props.movie!.id}`)
 
-const loadItem2 = true; // replace when intersection observer is fixed
+const loadItem2 = true // replace when intersection observer is fixed
 const poster = computed(
-  () => `https://image.tmdb.org/t/p/original/${props.movie.poster_path}`
-);
+  () => `https://image.tmdb.org/t/p/original/${props.movie!.poster_path}`
+)
 const overview = computed(() =>
-  props.movie.overview.length > 100
-    ? props.movie.overview.substring(0, 100) + "..."
-    : props.movie.overview
-);
-const scoreAvailable = computed(() => props.scores !== undefined);
+  props.movie!.overview.length > 100
+    ? props.movie!.overview.substring(0, 100) + "..."
+    : props.movie!.overview
+)
+const scoreAvailable = computed(() => props.scores !== undefined)
 const displayedScore = computed(() => {
   if (props.shownScore == "rating_sexism") {
-    return "Sexism";
+    return "Sexism"
   } else if (props.shownScore == "rating_racism") {
-    return "Racism";
+    return "Racism"
   } else if (props.shownScore == "rating_others") {
-    return "Others";
+    return "Others"
   } else if (props.shownScore == "rating_cringe") {
-    return "Cringe";
-  } else return "";
-});
+    return "Cringe"
+  } else return ""
+})
 </script>

@@ -129,89 +129,68 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "~/stores/store";
+import { useStore } from "~/stores/store"
 
-const store = useStore();
-const {locale } = useI18n();
-const showNavbar = ref(true);
-const lastScrollPosition = ref(0);
-const showMenu = ref(false);
-const loadMoviesAmount = ref(24);
-const start = ref(0);
-const end = ref(24);
+const store = useStore()
+const {locale } = useI18n()
+const showNavbar = ref(true)
+const lastScrollPosition = ref(0)
+const showMenu = ref(false)
+const start = ref(0)
+const end = ref(24)
 
-store.setTriggerscores(locale.value);
-store.filterMovies(locale.value);
-store.setRecentRatings(locale.value);
-store.setBondMovies(locale.value);
-store.resetFilter();
+store.setTriggerscores(locale.value)
+store.filterMovies(locale.value)
+store.setRecentRatings(locale.value)
+store.setBondMovies(locale.value)
+store.resetFilter()
 
-const totalPages = computed(() => Math.ceil(filteredMovies.value.length / 24));
+const totalPages = computed(() => Math.ceil(filteredMovies.value.length / 24))
 const isLoading = computed(
   () =>
     store.highlightsLoading ||
     store.moviesLoading ||
     store.triggerscores.length == 0
-);
-const filteredMovies = computed(() => store.filteredMovies);
+)
+const filteredMovies = computed(() => store.filteredMovies)
 const loadedMovies = computed(() =>
   [...filteredMovies.value].filter(
     (movie, index) => index >= start.value && index < end.value
   )
-);
-const triggerscores = computed(() => store.triggerscores);
-const movies = computed(() => store.movies);
-const shownScore = computed(() => store.shownScore);
-const searchInput = computed(() => store.searchInput);
-const searchResults = computed(() => store.searchResults);
-const isFiltering = computed(() => store.isFiltering);
-const currentPage = computed(() => Math.floor(start.value / 24) + 1);
+)
+const triggerscores = computed(() => store.triggerscores)
+const movies = computed(() => store.movies)
+const isFiltering = computed(() => store.isFiltering)
+const currentPage = computed(() => Math.floor(start.value / 24) + 1)
 
 function handleMenu() {
-  showMenu.value = !showMenu.value;
-}
-
-function searchMovie() {
-  store.setSearchResults();
-}
-
-function onScroll() {
-  const currentScrollPosition =
-    window.pageYOffset || document.documentElement.scrollTop;
-  if (currentScrollPosition < 0) {
-    return;
-  }
-  if (Math.abs(currentScrollPosition - lastScrollPosition.value) < 60) {
-    return;
-  }
-  showNavbar.value = currentScrollPosition < lastScrollPosition.value;
-  lastScrollPosition.value = currentScrollPosition;
+  showMenu.value = !showMenu.value
 }
 
 function focusSearch() {
-  const search = document.getElementById("search");
-  search!.scrollIntoView();
-  search!.focus();
+  const search = document.getElementById("search")
+  search!.scrollIntoView()
+  search!.focus()
 }
 
 function resetSearchResults() {
-  store.resetSearch();
+  store.resetSearch()
 }
 
 function resetFilter() {
-  store.resetFilter();
-  store.filterMovies(locale.value);
+  store.resetFilter()
+  store.filterMovies(locale.value)
 }
 
 function setPage(startValue: any, endValue: any) {
-  start.value = startValue;
-  end.value = endValue;
+  start.value = startValue
+  end.value = endValue
 }
 
 watch(
   () => movies.value,
   (currentValue, oldValue) => {
-    store.filterMovies(locale.value);
+    store.filterMovies(locale.value)
   }
 );
 
@@ -227,7 +206,7 @@ watch(
       }
     }
   }
-);
+)
 </script>
 
 <style scoped>

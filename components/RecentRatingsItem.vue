@@ -118,9 +118,8 @@
 import { useStore } from "~/stores/store";
 import placeholderRatings from "~/assets/recentRatings.json";
 
-const { locale } = useI18n();
-const localePath = useLocalePath();
-const store = useStore();
+const { locale } = useI18n()
+const store = useStore()
 const props = defineProps({
   movie: {
     type: Object,
@@ -131,21 +130,16 @@ const props = defineProps({
     type: Number,
     required: true,
   },
-});
+})
 
-const pathToNavigate = (id: string) => `${locale.value}/movie/${id}`;
+const pathToNavigate = (id: string) => `${locale.value}/movie/${id}`
 const poster2 = computed(
   () =>
     `https://image.tmdb.org/t/p/original/${
       props.movie.poster_path ?? placeholderRatings[props.id].poster_path
     }`
-);
-const poster = computed(() => {
-  if (props.movie.backdrop_path ?? placeholderRatings[props.id].backdrop_path) {
-    return `https://image.tmdb.org/t/p/original/${props.movie.backdrop_path}`;
-  } else return "/images/film-poster-placeholder.png";
-});
-const scoreAvailable = computed(() => props.scores !== undefined);
+)
+const scoreAvailable = computed(() => props.scores !== undefined)
 const scoreTotal: ComputedRef<number> = computed(() => {
   if (scoreAvailable.value) {
     return (
@@ -162,12 +156,12 @@ const scoreTotal: ComputedRef<number> = computed(() => {
           8) *
           10
       ) / 10
-    );
-  } else return -1;
-});
+    )
+  } else return -1
+})
 const totalRatings = computed(() =>
   store.triggerscores.filter((movie) => movie.movie_id == props.movie.id)
-);
+)
 </script>
 
 <style>

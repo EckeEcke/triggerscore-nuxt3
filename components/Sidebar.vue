@@ -217,86 +217,77 @@ import { useStore } from "~/stores/store";
 import { useI18n } from "vue-i18n";
 
 const store = useStore();
-const { t, locale } = useI18n();
+const { locale } = useI18n();
 
-const searchText = computed(() => t("index.intro"));
-const netflixFilter = ref(store.filterMoviesByNetflix);
-const primeFilter = computed(() => store.filterMoviesByPrime);
-const disneyFilter = computed(() => store.filterMoviesByDisney);
-const skyFilter = computed(() => store.filterMoviesBySky);
-const sortingOption = computed(() => store.sortingOption);
-const filterMin = computed(() => store.filterMoviesByYearMin);
-const filterMax = computed(() => store.filterMoviesByYearMax);
-const results = computed(() => store.filteredMovies.length);
-const shownScore = computed(() => store.shownScore);
+const sortingOption = computed(() => store.sortingOption)
+const filterMin = computed(() => store.filterMoviesByYearMin)
+const filterMax = computed(() => store.filterMoviesByYearMax)
+const results = computed(() => store.filteredMovies.length)
+const shownScore = computed(() => store.shownScore)
 
 watch(
   () => store.filterMoviesByNetflix,
   (currentValue, oldValue) => {
-    store.filterMovies(locale.value);
+    store.filterMovies(locale.value)
   }
-);
+)
 
 watch(
   () => store.filterMoviesByPrime,
   (currentValue, oldValue) => {
-    store.filterMovies(locale.value);
+    store.filterMovies(locale.value)
   }
-);
+)
 
 watch(
   () => store.filterMoviesByDisney,
   (currentValue, oldValue) => {
-    store.filterMovies(locale.value);
+    store.filterMovies(locale.value)
   }
-);
+)
 
 watch(
   () => store.filterMoviesBySky,
   (currentValue, oldValue) => {
-    store.filterMovies(locale.value);
+    store.filterMovies(locale.value)
   }
-);
+)
 
 watch(
   () => sortingOption,
   (currentValue, oldValue) => {
-    store.filterMovies(locale.value);
+    store.filterMovies(locale.value)
   }
 );
 
 watch(
   () => filterMin,
   (currentValue, oldValue) => {
-    store.filterMovies(locale.value);
+    store.filterMovies(locale.value)
   }
 );
 
 watch(
   () => filterMax,
   (currentValue, oldValue) => {
-    store.filterMovies(locale.value);
+    store.filterMovies(locale.value)
   }
-);
+)
 
 watch(
   () => shownScore,
   (currentValue, oldValue) => {
-    store.filterMovies(locale.value);
+    store.filterMovies(locale.value)
   }
-);
+)
 
 function resetFilter() {
-  store.resetFilter();
-  store.filterMovies(locale.value);
+  store.resetFilter()
+  store.filterMovies(locale.value)
 }
-function focusSearch() {
-  const search = document.getElementById("search");
-  search!.scrollIntoView({ block: "start" });
-  search!.focus();
-}
+
 function scrollToTop() {
-  window.scrollTo(0, 0);
+  window.scrollTo(0, 0)
 }
 </script>
 

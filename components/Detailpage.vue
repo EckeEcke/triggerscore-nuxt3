@@ -342,14 +342,14 @@ const router = useRouter();
 const route = useRoute();
 const { t, locale } = useI18n();
 
-const movie = computed(() => store.selectedMovie);
+const movie: any = computed(() => store.selectedMovie);
 const backdrop = `url(https://image.tmdb.org/t/p/original/${movie.value.backdrop_path})`;
 const onNetflix = computed(() => store.selectedMovieOnNetflix);
 const onAmazon = computed(() => store.selectedMovieOnPrime);
 const onDisney = computed(() => store.selectedMovieOnDisney);
 const onSky = computed(() => store.selectedMovieOnSky);
 const releaseDate = parseInt(movie.value.release_date.substring(0, 4));
-const score = computed(() => store.selectedMovieScore);
+const score: any = computed(() => store.selectedMovieScore);
 const showMoreComments = ref(false);
 
 const title = computed(() =>
@@ -358,7 +358,7 @@ const title = computed(() =>
 const poster = computed(
   () => `https://image.tmdb.org/t/p/original/${movie.value.poster_path}`
 );
-const genres = computed(() => movie.value.genres.map((genre) => genre.name));
+const genres = computed(() => movie.value.genres.map((genre: any) => genre.name));
 const triggerscores = computed(() => store.triggerscores);
 const scoreAvailable = computed(() => store.selectedMovieScore !== undefined);
 const totalRatings = computed(() => {

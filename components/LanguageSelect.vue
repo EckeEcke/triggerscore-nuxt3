@@ -100,29 +100,15 @@
 </template>
 
 <script setup lang="ts">
-import { useI18n } from "vue-i18n";
-import { useStore } from "../stores/store";
+import { useI18n } from "vue-i18n"
 
 const { locale } = useI18n();
-const selectedLocale = computed(() => locale.value);
 const switchLocalePath = useSwitchLocalePath()
 
-const showSelection = ref(false);
-const store = useStore();
+const showSelection = ref(false)
 
 function hideSelection() {
-  showSelection.value = false;
-}
-
-function switchLanguage(language: string) {
-  locale.value = language;
-  store.setTriggerscores(locale.value);
-  store.setRecentRatings(locale.value);
-  store.setTop10Sexism(locale.value);
-  store.setTop10Racism(locale.value);
-  store.setTop10Others(locale.value);
-  store.setTop10Cringe(locale.value);
-  store.setBondMovies(locale.value);
+  showSelection.value = false
 }
 </script>
 

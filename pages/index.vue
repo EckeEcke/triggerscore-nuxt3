@@ -233,23 +233,22 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "~/stores/store";
-import placeholderBondMovies from "~/assets/bondMovies.json";
+import { useStore } from "~/stores/store"
 
-const { locale } = useI18n();
-const localePath = useLocalePath();
-const toggleBool = ref(false);
+const { locale } = useI18n()
+const localePath = useLocalePath()
+const toggleBool = ref(false)
 
-const pathToNavigate = (id: string) => `${locale.value}/movie/${id}`;
-const store = useStore();
-store.setTriggerscores(locale.value);
-store.setBondMovies(locale.value);
-store.setRecentRatings(locale.value);
-store.setTop10Racism(locale.value);
-store.setTop10Sexism(locale.value);
-store.setTop10Others(locale.value);
-store.setTop10Cringe(locale.value);
-store.setRecentComments();
+const pathToNavigate = (id: string) => `${locale.value}/movie/${id}`
+const store = useStore()
+store.setTriggerscores(locale.value)
+store.setBondMovies(locale.value)
+store.setRecentRatings(locale.value)
+store.setTop10Racism(locale.value)
+store.setTop10Sexism(locale.value)
+store.setTop10Others(locale.value)
+store.setTop10Cringe(locale.value)
+store.setRecentComments()
 
 const isLoading = computed(
   () =>
@@ -270,22 +269,22 @@ const commentTotalRating = (commentId: number, limitTop: number, limitBottom: nu
 let intervalId: any = undefined
 
 const handleToggle = (value: boolean) => {
-  toggleBool.value = value;
-  clearInterval(intervalId);
+  toggleBool.value = value
+  clearInterval(intervalId)
   intervalId = setInterval(() => {
-    toggleBool.value = !toggleBool.value;
-  }, 10000);
-};
+    toggleBool.value = !toggleBool.value
+  }, 10000)
+}
 
 onMounted(() => {
   intervalId = setInterval(() => {
-    toggleBool.value = !toggleBool.value;
-  }, 10000);
-});
+    toggleBool.value = !toggleBool.value
+  }, 10000)
+})
 
 onUnmounted(() => {
-  clearInterval(intervalId);
-});
+  clearInterval(intervalId)
+})
 </script>
 
 <style lang="css" scoped>

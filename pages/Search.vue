@@ -84,36 +84,36 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "~/stores/store";
-import { useI18n } from "vue-i18n";
-const { t, locale } = useI18n();
+import { useStore } from "~/stores/store"
+import { useI18n } from "vue-i18n"
+const { t, locale } = useI18n()
 
-const store = useStore();
-const localePath = useLocalePath();
-const page = ref(2);
-const hideLoadMore = ref(false);
-const loadingMore = ref(false);
+const store = useStore()
+const localePath = useLocalePath()
+const page = ref(2)
+const hideLoadMore = ref(false)
+const loadingMore = ref(false)
 
 function resetSearch() {
-  store.resetSearch;
-  navigateTo(localePath('/'));
+  store.resetSearch
+  navigateTo(localePath('/'))
 }
 
 async function searchMore() {
-  loadingMore.value = true;
-  const lengthBeforeLoad = store.searchResults.length.valueOf();
-  await store.searchMore(page.value, locale.value);
-  page.value += 1;
+  loadingMore.value = true
+  const lengthBeforeLoad = store.searchResults.length.valueOf()
+  await store.searchMore(page.value, locale.value)
+  page.value += 1
   setTimeout(() => {
-    loadingMore.value = false;
+    loadingMore.value = false
     if (lengthBeforeLoad == store.searchResults.length) {
-      hideLoadMore.value = true;
+      hideLoadMore.value = true
     }
-  }, 2000);
+  }, 2000)
 }
 
 if (store.searchTerm == "") {
-  navigateTo(localePath('/'));
+  navigateTo(localePath('/'))
 }
 </script>
 

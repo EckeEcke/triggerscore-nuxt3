@@ -78,24 +78,24 @@
 </template>
 
 <script lang="ts" setup>
-import { useI18n } from "vue-i18n";
+import { useI18n } from "vue-i18n"
 
-const { t, locale } = useI18n();
+const { t, locale } = useI18n()
 
 const props = defineProps({
   movie: {},
   alignCenter: Boolean,
-});
+})
 
-const copied = ref(false);
-const route = useRoute();
+const copied = ref(false)
+const route = useRoute()
 const currentURL = computed(
   () => `https://triggerscore.de/${locale.value}/movie/${route.params.id}`
-);
+)
 
 function copyLink() {
-  navigator.clipboard.writeText(currentURL.value);
-  copied.value = true;
-  setTimeout(() => (copied.value = false), 1000);
+  navigator.clipboard.writeText(currentURL.value)
+  copied.value = true
+  setTimeout(() => (copied.value = false), 1000)
 }
 </script>

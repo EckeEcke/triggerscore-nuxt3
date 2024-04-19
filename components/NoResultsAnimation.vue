@@ -7,5 +7,5 @@
 </template>
 
 <script setup lang="ts">
-import noResultsJSON from "../assets/images/noresults-animation.json";
+import noResultsJSON from "../assets/images/noresults-animation.json"
 </script>

@@ -208,54 +208,35 @@
 </template>
 
 <script setup lang="ts">
-import { useI18n } from "vue-i18n";
-import { useStore } from "../stores/store";
+import { useStore } from "../stores/store"
 
-const { locale } = useI18n();
-const showSearch = ref(false);
-const showMenu = ref(false);
-const showNav = ref(false);
+const showSearch = ref(false)
+const showMenu = ref(false)
+const showNav = ref(false)
 
 const store = useStore();
-const router = useRouter();
-const i18n = useI18n();
 const localePath = useLocalePath()
 
-const searchHeader = ref();
-
-const searchInput = computed(() => store.searchInput);
-
-const netflixFilter = computed(() => store.filterMoviesByNetflix);
-const primeFilter = computed(() => store.filterMoviesByPrime);
-const disneyFilter = computed(() => store.filterMoviesByDisney);
-
-const sortingOption = computed(() => store.sortingOption);
-const filterMin = computed(() => store.filterMoviesByYearMin);
-const filterMax = computed(() => store.filterMoviesByYearMax);
-const results = computed(() => store.getFilteredMovies.length);
+const searchHeader = ref()
 
 function searchMovie() {
   if (store.searchInput.length > 0) {
-    store.setSearchResults();
-    showSearch.value = false;
-    navigateTo(localePath("/search"));
+    store.setSearchResults()
+    showSearch.value = false
+    navigateTo(localePath("/search"))
   }
 }
 function resetSearchResults() {
-  store.resetSearch;
-}
-function resetFilter() {
-  store.resetFilter;
-  store.filterMovies(locale.value);
+  store.resetSearch
 }
 function focusSearch() {
-  searchHeader.value.focus();
+  searchHeader.value.focus()
 }
 function openSearch() {
-  showSearch.value = !showSearch.value;
-  showMenu.value = false;
-  showNav.value = false;
-  setTimeout(focusSearch, 200);
+  showSearch.value = !showSearch.value
+  showMenu.value = false
+  showNav.value = false
+  setTimeout(focusSearch, 200)
 }
 </script>
 

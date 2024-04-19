@@ -1,45 +1,43 @@
-import { defineStore } from "pinia";
-import placeholderMovies from "../assets/allMovies.json";
-import placeholderTriggerscores from "~/assets/triggerscores.json";
-import placeholderBondMovies from "~/assets/bondMovies.json";
-import { Movie, emptyMovie } from "~/types/movie";
+import { defineStore } from "pinia"
+import placeholderTriggerscores from "~/assets/triggerscores.json"
+import placeholderBondMovies from "~/assets/bondMovies.json"
+import { Movie } from "~/types/movie"
 
-const url = "https://triggerscore-backend2.onrender.com/";
-// const url = "http://localhost:3000/"
+const url = "https://triggerscore-backend2.onrender.com/"
 
 function sortAtoZ(x: Movie, y: Movie): 1 | -1 | 0 {
-  const titleX = x.title ? x.title : x.original_title;
-  const titleY = y.title ? y.title : y.original_title;
+  const titleX = x.title ? x.title : x.original_title
+  const titleY = y.title ? y.title : y.original_title
   if (titleX < titleY) {
-    return -1;
+    return -1
   }
   if (titleX > titleY) {
-    return 1;
+    return 1
   }
-  return 0;
+  return 0
 }
 
 function sortZtoA(x: Movie, y: Movie) {
-  const titleX = x.title ? x.title : x.original_title;
-  const titleY = y.title ? y.title : y.original_title;
+  const titleX = x.title ? x.title : x.original_title
+  const titleY = y.title ? y.title : y.original_title
   if (titleX > titleY) {
-    return -1;
+    return -1
   }
   if (titleX < titleY) {
-    return 1;
+    return 1
   }
-  return 0;
+  return 0
 }
 
 function sortByDateDesc(x: Movie, y: Movie) {
-  return Number(new Date(y.release_date)) - Number(new Date(x.release_date));
+  return Number(new Date(y.release_date)) - Number(new Date(x.release_date))
 }
 
 function sortByDateAsc(
   x: { release_date: number },
   y: { release_date: number }
 ) {
-  return Number(new Date(x.release_date)) - Number(new Date(y.release_date));
+  return Number(new Date(x.release_date)) - Number(new Date(y.release_date))
 }
 
 function sortByTsDesc(array: any[], key: string): any {
@@ -47,16 +45,16 @@ function sortByTsDesc(array: any[], key: string): any {
     const triggerscoreX =
       array[
         array.map((score: { movie_id: number }) => score.movie_id).indexOf(x.id)
-      ][key];
+      ][key]
     const triggerscoreY =
       array[
         array.map((score: { movie_id: number }) => score.movie_id).indexOf(y.id)
-      ][key];
+      ][key]
     if (triggerscoreX > triggerscoreY) {
-      return -1;
+      return -1
     }
     if (triggerscoreX < triggerscoreY) {
-      return 1;
+      return 1
     }
   };
 }
@@ -64,25 +62,25 @@ function sortByTsDesc(array: any[], key: string): any {
 function sortByTsAsc(array: any[], key: any): any {
   return function (x: { id: string }, y: { id: string }): any {
     const triggerscoreX =
-      array[array.map((score: any) => score.movie_id).indexOf(x.id)][key];
+      array[array.map((score: any) => score.movie_id).indexOf(x.id)][key]
     const triggerscoreY =
       array[
         array.map((score: { movie_id: string }) => score.movie_id).indexOf(y.id)
-      ][key];
+      ][key]
     if (triggerscoreX < triggerscoreY) {
-      return -1;
+      return -1
     }
     if (triggerscoreX > triggerscoreY) {
-      return 1;
+      return 1
     }
-  };
+  }
 }
 
 function adjustLocale(locale: string) {
   if (locale == "us") {
-    return "en";
+    return "en"
   }
-  return locale;
+  return locale
 }
 
 export const useStore = defineStore({
@@ -129,16 +127,16 @@ export const useStore = defineStore({
       minScore: 0,
       maxScore: 10,
       isFiltering: false,
-    };
+    }
   },
   actions: {
     async setTriggerscores(locale: string) {
       if (process.client && localStorage.getItem("store")) {
-        this.moviesLoading = false;
+        this.moviesLoading = false
       } //also loads movies for now
-      const scores = await fetch(url);
-      const triggerscores = await scores.json();
-      this.triggerscores = triggerscores;
+      const scores = await fetch(url)
+      const triggerscores = await scores.json()
+      this.triggerscores = triggerscores
       const loadedMovies = Promise.all(
         triggerscores.map((entry: any) =>
           fetch(
@@ -149,14 +147,14 @@ export const useStore = defineStore({
         )
       );
       loadedMovies.then((res: any) => {
-        this.movies = res;
-        this.moviesLoading = false;
-      });
+        this.movies = res
+        this.moviesLoading = false
+      })
     },
     async setRecentRatings(locale: string) {
-      const data = await fetch(`${url}recentratings`);
-      const ratings = await data.json();
-      this.recentScores = ratings;
+      const data = await fetch(`${url}recentratings`)
+      const ratings = await data.json()
+      this.recentScores = ratings
       const recentRatings = Promise.all(
         ratings.map((entry: any) =>
           fetch(
@@ -165,17 +163,17 @@ export const useStore = defineStore({
             .then((res) => res.json())
             .catch(() => console.log("oopsy"))
         )
-      );
-      recentRatings.then((res: any) => (this.recentRatings = res));
+      )
+      recentRatings.then((res: any) => (this.recentRatings = res))
     },
     async setRecentComments() {
-      const data = await fetch(`${url}recentcomments`);
-      const comments = await data.json();
-      this.recentComments = comments;
+      const data = await fetch(`${url}recentcomments`)
+      const comments = await data.json()
+      this.recentComments = comments
     },
     async setTop10Sexism(locale: string) {
-      const data = await fetch(`${url}top10-sexism`);
-      const top10 = await data.json();
+      const data = await fetch(`${url}top10-sexism`)
+      const top10 = await data.json()
       const loadedTop10 = Promise.all(
         top10.map((entry: any) =>
           fetch(
@@ -184,12 +182,12 @@ export const useStore = defineStore({
             .then((res) => res.json())
             .catch(() => console.log("oopsy"))
         )
-      );
-      loadedTop10.then((res: any) => (this.top10Sexism = res));
+      )
+      loadedTop10.then((res: any) => (this.top10Sexism = res))
     },
     async setTop10Racism(locale: string) {
-      const scores = await fetch(`${url}top10-racism`);
-      const top10 = await scores.json();
+      const scores = await fetch(`${url}top10-racism`)
+      const top10 = await scores.json()
       const loadedTop10 = Promise.all(
         top10.map((entry: any) =>
           fetch(
@@ -198,12 +196,12 @@ export const useStore = defineStore({
             .then((res) => res.json())
             .catch(() => console.log("oopsy"))
         )
-      );
-      loadedTop10.then((res: any) => (this.top10Racism = res));
+      )
+      loadedTop10.then((res: any) => (this.top10Racism = res))
     },
     async setTop10Others(locale: string) {
-      const scores = await fetch(`${url}top10-others`);
-      const top10 = await scores.json();
+      const scores = await fetch(`${url}top10-others`)
+      const top10 = await scores.json()
       const loadedTop10 = Promise.all(
         top10.map((entry: any) =>
           fetch(
@@ -212,12 +210,12 @@ export const useStore = defineStore({
             .then((res) => res.json())
             .catch(() => console.log("oopsy"))
         )
-      );
-      loadedTop10.then((res: any) => (this.top10Others = res));
+      )
+      loadedTop10.then((res: any) => (this.top10Others = res))
     },
     async setTop10Cringe(locale: string) {
-      const scores = await fetch(`${url}top10-cringe`);
-      const top10 = await scores.json();
+      const scores = await fetch(`${url}top10-cringe`)
+      const top10 = await scores.json()
       const loadedTop10 = Promise.all(
         top10.map((entry: any) =>
           fetch(
@@ -226,31 +224,30 @@ export const useStore = defineStore({
             .then((res) => res.json())
             .catch(() => console.log("oopsy"))
         )
-      );
-      loadedTop10.then((res: any) => (this.top10Cringe = res));
+      )
+      loadedTop10.then((res: any) => (this.top10Cringe = res))
     },
     async setStats() {
-      const response = await fetch(`${url}stats`);
-      const stats = await response.json();
-      this.stats = stats;
+      const response = await fetch(`${url}stats`)
+      const stats = await response.json()
+      this.stats = stats
     },
     setSearchInput(state: any, payload: any) {
-      this.searchInput = payload;
+      this.searchInput = payload
     },
     setSearchTerm(payload: any) {
-      this.searchTerm = payload;
+      this.searchTerm = payload
     },
     async setSearchResults() {
-      this.searchResults = [];
-      this.searchError = false;
-      this.searchTerm = this.searchInput;
-      const adjustedLocale = "en";
-      // const adjustedLocale = adjustLocale(this.locale) // turns US locale into EN for search request
+      this.searchResults = []
+      this.searchError = false
+      this.searchTerm = this.searchInput
+      const adjustedLocale = "en"
       const fetchedSearchResults = fetch(
         `https://api.themoviedb.org/3/search/movie?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${adjustedLocale}&include_adult=false&page=1&query=${this.searchTerm}`
       )
         .then((res) => res.json())
-        .catch((error) => console.log(error));
+        .catch((error) => console.log(error))
       fetchedSearchResults.then((res) => {
         let filteredResults = res.results.filter((result: any) => {
           return (
@@ -258,23 +255,23 @@ export const useStore = defineStore({
             result.overview &&
             result.release_date &&
             parseInt(result.release_date.substring(0, 4)) <= 2017
-          );
-        });
+          )
+        })
         // filter search results to not show garbage entries
-        this.searchResults = filteredResults;
+        this.searchResults = filteredResults
         if (this.searchResults.length == 0) {
-          this.searchError = true;
+          this.searchError = true
         }
-      });
+      })
     },
     async searchMore(page: number, locale: string) {
-      const searchTerm = this.searchTerm;
-      const adjustedLocale = adjustLocale(locale); // turns US locale into EN for search request
+      const searchTerm = this.searchTerm
+      const adjustedLocale = adjustLocale(locale) // turns US locale into EN for search request
       const fetchedSearchResults = fetch(
         `https://api.themoviedb.org/3/search/movie?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${adjustedLocale}&include_adult=false&page=${page}&query=${searchTerm}`
       )
         .then((res) => res.json())
-        .catch((error) => console.log(error));
+        .catch((error) => console.log(error))
       fetchedSearchResults.then((res) => {
         let filteredResults = res.results.filter((result: any) => {
           return (
@@ -282,22 +279,22 @@ export const useStore = defineStore({
             result.overview &&
             result.release_date &&
             parseInt(result.release_date.substring(0, 4)) <= 2017
-          );
-        });
+          )
+        })
         // filter search results to not show garbage entries
-        let currentSearchResults: any = this.searchResults;
-        filteredResults.map((entry: any) => currentSearchResults.push(entry));
-        this.searchResults = currentSearchResults;
+        let currentSearchResults: any = this.searchResults
+        filteredResults.map((entry: any) => currentSearchResults.push(entry))
+        this.searchResults = currentSearchResults
         if (this.searchResults.length === 0) {
-          this.searchError = true;
+          this.searchError = true
         }
-      });
+      })
     },
     resetSearch() {
-      this.searchError = false;
+      this.searchError = false
     },
     setSearchError(payload: any) {
-      this.searchError = payload;
+      this.searchError = payload
     },
     async setBondMovies(locale: string) {
       const loadedMovies = Promise.all(
@@ -314,36 +311,36 @@ export const useStore = defineStore({
                   .then((res) => res.json())
                   .catch((error) =>
                     console.log("Something went wrong: " + error)
-                  );
+                  )
               }, 1000)
             )
         )
-      );
+      )
       loadedMovies.then((res: any) => {
-        this.bondMovies = res;
-        this.highlightsLoading = false;
-      });
+        this.bondMovies = res
+        this.highlightsLoading = false
+      })
     },
     async filterMovies(locale: string) {
-      this.isFiltering = true;
+      this.isFiltering = true
       this.sortMovies(
         this.sortingOption,
         this.movies,
         this.triggerscores,
         this.shownScore
-      );
+      )
       this.filterByYear(
         this.filterMoviesByYearMax,
         this.filterMoviesByYearMin,
         this.filteredMovies
-      );
+      )
       this.filterByScore(
         this.filteredMovies,
         this.triggerscores,
         this.minScore,
         this.maxScore,
         this.shownScore
-      );
+      )
       this.filterByProvider(
         this.filterMoviesByNetflix,
         this.filterMoviesByPrime,
@@ -352,38 +349,38 @@ export const useStore = defineStore({
         this.triggerscores,
         this.filteredMovies,
         locale
-      );
+      )
     },
     resetFilter() {
-      this.filterMoviesByPrime = false;
-      this.filterMoviesByNetflix = false;
-      this.filterMoviesByDisney = false;
-      this.filterMoviesBySky = false;
-      this.filterMoviesByYearMin = 0;
-      this.filterMoviesByYearMax = 2100;
-      this.minScore = 0;
-      this.maxScore = 10;
+      this.filterMoviesByPrime = false
+      this.filterMoviesByNetflix = false
+      this.filterMoviesByDisney = false
+      this.filterMoviesBySky = false
+      this.filterMoviesByYearMin = 0
+      this.filterMoviesByYearMax = 2100
+      this.minScore = 0
+      this.maxScore = 10
     },
     setSortingOption(state: any, payload: any) {
-      this.sortingOption = payload;
+      this.sortingOption = payload
     },
     setMovieYearMin(state: any, payload: any) {
-      this.filterMoviesByYearMin = payload;
+      this.filterMoviesByYearMin = payload
     },
     setMovieYearMax(state: any, payload: any) {
-      this.filterMoviesByYearMax = payload;
+      this.filterMoviesByYearMax = payload
     },
     setShownScore(state: any, payload: any) {
-      this.shownScore = payload;
+      this.shownScore = payload
     },
     setMinScore(state: any, payload: any) {
-      this.minScore = payload;
+      this.minScore = payload
     },
     setMaxScore(state: any, payload: any) {
-      this.maxScore = payload;
+      this.maxScore = payload
     },
     setIsFiltering(payload: any) {
-      this.isFiltering = payload;
+      this.isFiltering = payload
     },
     sortMovies(
       sortingOption: string,
@@ -391,41 +388,41 @@ export const useStore = defineStore({
       triggerscores: any[],
       shownScore: string
     ) {
-      let clonedArray = [...array];
+      let clonedArray = [...array]
       if (sortingOption == "a-z") {
-        clonedArray = clonedArray.sort(sortAtoZ);
+        clonedArray = clonedArray.sort(sortAtoZ)
       }
       if (sortingOption == "z-a") {
-        clonedArray = clonedArray.sort(sortZtoA);
+        clonedArray = clonedArray.sort(sortZtoA)
       }
       if (sortingOption == "date-desc") {
-        clonedArray = clonedArray.sort(sortByDateDesc);
+        clonedArray = clonedArray.sort(sortByDateDesc)
       }
       if (sortingOption == "date-asc") {
-        clonedArray = clonedArray.sort(sortByDateAsc);
+        clonedArray = clonedArray.sort(sortByDateAsc)
       }
       if (sortingOption == "ts-desc") {
-        clonedArray = clonedArray.sort(sortByTsDesc(triggerscores, shownScore));
+        clonedArray = clonedArray.sort(sortByTsDesc(triggerscores, shownScore))
       }
       if (sortingOption == "ts-asc") {
-        clonedArray = clonedArray.sort(sortByTsAsc(triggerscores, shownScore));
+        clonedArray = clonedArray.sort(sortByTsAsc(triggerscores, shownScore))
       }
-      this.filteredMovies = clonedArray;
+      this.filteredMovies = clonedArray
     },
     filterByYear(filterMax: number, filterMin: number, array: any[]) {
-      let clonedArray = [...array];
+      let clonedArray = [...array]
       if (filterMin != null && filterMin >= 1900 && filterMin <= 2011) {
         clonedArray = clonedArray.filter(
           (movie: any) => Number(movie.release_date.slice(0, 4)) >= filterMin
-        );
+        )
       }
       if (filterMax != null && filterMax >= 1900 && filterMax <= 2011) {
         clonedArray = clonedArray.filter(
           (movie: any) =>
             Number(movie.release_date.slice(0, 4)) <= filterMax + 1
-        );
+        )
       }
-      this.filteredMovies = clonedArray;
+      this.filteredMovies = clonedArray
     },
     filterByScore(
       array: any[],
@@ -434,19 +431,19 @@ export const useStore = defineStore({
       max: number,
       shownScore: string
     ) {
-      let clonedArray = [...array];
-      let clonedScores = [...triggerscores];
+      let clonedArray = [...array]
+      let clonedScores = [...triggerscores]
       clonedScores = clonedScores.filter((score) => {
-        return score[shownScore] >= min && score[shownScore] <= max;
-      });
+        return score[shownScore] >= min && score[shownScore] <= max
+      })
       clonedArray = clonedArray.filter((movie: { id: number }) => {
         return (
           clonedScores
             .map((score: { movie_id: number }) => score.movie_id)
             .indexOf(movie.id) > -1
-        );
-      });
-      this.filteredMovies = clonedArray;
+        )
+      })
+      this.filteredMovies = clonedArray
     },
     async filterByProvider(
       netflix: boolean,
@@ -457,10 +454,10 @@ export const useStore = defineStore({
       array: any[],
       locale: String
     ) {
-      let clonedArray = [...array];
+      let clonedArray = [...array]
       if (netflix || prime || disney || sky) {
-        let providerIDs: any = [];
-        let providerRegion = locale.toUpperCase();
+        let providerIDs: any = []
+        let providerRegion = locale.toUpperCase()
         if (providerRegion == "EN") {
           providerRegion = "GB";
         }
@@ -481,7 +478,7 @@ export const useStore = defineStore({
                       (provider: any) => provider.provider_name == "Netflix"
                     )
                   ) {
-                    providerIDs.push(entry.movie_id);
+                    providerIDs.push(entry.movie_id)
                   }
                   if (
                     prime &&
@@ -490,7 +487,7 @@ export const useStore = defineStore({
                         provider.provider_name == "Amazon Prime Video"
                     )
                   ) {
-                    providerIDs.push(entry.movie_id);
+                    providerIDs.push(entry.movie_id)
                   }
                   if (
                     disney &&
@@ -498,7 +495,7 @@ export const useStore = defineStore({
                       (provider: any) => provider.provider_name == "Disney Plus"
                     )
                   ) {
-                    providerIDs.push(entry.movie_id);
+                    providerIDs.push(entry.movie_id)
                   }
                   if (
                     sky &&
@@ -506,7 +503,7 @@ export const useStore = defineStore({
                       (provider: any) => provider.provider_name == "WOW"
                     )
                   ) {
-                    providerIDs.push(entry.movie_id);
+                    providerIDs.push(entry.movie_id)
                   }
                 }
               })
@@ -528,7 +525,7 @@ export const useStore = defineStore({
                               provider.provider_name == "Netflix"
                           )
                         ) {
-                          providerIDs.push(entry.movie_id);
+                          providerIDs.push(entry.movie_id)
                         }
                         if (
                           prime &&
@@ -537,7 +534,7 @@ export const useStore = defineStore({
                               provider.provider_name == "Amazon Prime Video"
                           )
                         ) {
-                          providerIDs.push(entry.movie_id);
+                          providerIDs.push(entry.movie_id)
                         }
                         if (
                           disney &&
@@ -546,7 +543,7 @@ export const useStore = defineStore({
                               provider.provider_name == "Disney Plus"
                           )
                         ) {
-                          providerIDs.push(entry.movie_id);
+                          providerIDs.push(entry.movie_id)
                         }
                         if (
                           sky &&
@@ -554,13 +551,13 @@ export const useStore = defineStore({
                             (provider: any) => provider.provider_name == "WOW"
                           )
                         ) {
-                          providerIDs.push(entry.movie_id);
+                          providerIDs.push(entry.movie_id)
                         }
                       }
                     })
                     .catch((error) =>
                       console.log("Something went wrong: " + error)
-                    );
+                    )
                 }, 1000)
               )
           )
@@ -572,12 +569,12 @@ export const useStore = defineStore({
               ))
           )
           .then(() => {
-            this.filteredMovies = clonedArray;
-            this.isFiltering = false;
-          });
+            this.filteredMovies = clonedArray
+            this.isFiltering = false
+          })
       } else {
-        this.filteredMovies = clonedArray;
-        this.isFiltering = false;
+        this.filteredMovies = clonedArray
+        this.isFiltering = false
       }
     },
   },
@@ -608,4 +605,4 @@ export const useStore = defineStore({
   persist: {
     storage: persistedState.localStorage,
   },
-});
+})

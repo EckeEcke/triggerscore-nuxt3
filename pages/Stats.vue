@@ -36,25 +36,23 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "~/stores/store";
-import placeholderBondMovies from "~/assets/bondMovies.json";
+import { useStore } from "~/stores/store"
 
-const { locale } = useI18n();
-const toggleBool = ref(false);
+const { locale } = useI18n()
 const isLoading = computed(
   () =>
     store.highlightsLoading ||
     store.moviesLoading ||
     store.triggerscores.length == 0
-);
+)
 
-const store = useStore();
-store.setTriggerscores(locale.value);
-store.setBondMovies(locale.value);
-store.setRecentRatings(locale.value);
-store.setTop10Racism(locale.value);
-store.setTop10Sexism(locale.value);
-store.setTop10Others(locale.value);
-store.setTop10Cringe(locale.value);
-store.setRecentComments();
+const store = useStore()
+store.setTriggerscores(locale.value)
+store.setBondMovies(locale.value)
+store.setRecentRatings(locale.value)
+store.setTop10Racism(locale.value)
+store.setTop10Sexism(locale.value)
+store.setTop10Others(locale.value)
+store.setTop10Cringe(locale.value)
+store.setRecentComments()
 </script>

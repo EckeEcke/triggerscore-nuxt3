@@ -8,17 +8,15 @@
 </template>
 
 <script setup lang="ts">
-import { useI18n } from "vue-i18n";
-import { useStore } from "~/stores/store";
+import { useI18n } from "vue-i18n"
 
-const store = useStore();
-const { locale } = useI18n();
+const { locale } = useI18n()
 
 useHead({
   script: [
     { src: "//static.getclicky.com/js", async: false, "data-id": "101434680" },
   ],
-});
+})
 </script>
 
 <style>

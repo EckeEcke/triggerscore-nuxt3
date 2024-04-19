@@ -7,5 +7,5 @@
 </template>
 
 <script setup lang="ts">
-import newJSON from "../assets/images/new-animation.json";
+import newJSON from "../assets/images/new-animation.json"
 </script>

@@ -15,5 +15,5 @@
 </template>
 
 <script setup lang="ts">
-import loadingJSON from "../assets/images/loading-animation3.json";
+import loadingJSON from "../assets/images/loading-animation3.json"
 </script>

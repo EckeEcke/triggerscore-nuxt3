@@ -68,8 +68,7 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "~/stores/store";
-import { useI18n } from "vue-i18n";
+import { useStore } from "~/stores/store"
 
 const props = defineProps({
   movie: {
@@ -80,11 +79,10 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-});
+})
 
-const store = useStore();
-const { t, locale } = useI18n();
-const pathToNavigate = computed(() => `movie/${props.movie.id}`);
+const store = useStore()
+const pathToNavigate = computed(() => `movie/${props.movie.id}`)
 
 
 const poster = computed(
@@ -94,24 +92,24 @@ const overview = computed(() =>
   props.movie.overview.length > 100
     ? props.movie.overview.substring(0, 110) + "..."
     : props.movie.overview
-);
+)
 
-const scoreAvailable = computed(() => props.scores !== undefined);
+const scoreAvailable = computed(() => props.scores !== undefined)
 
 const displayedScore = computed(() => {
   if (store.shownScore == "rating_sexism") {
-    return "Sexism";
+    return "Sexism"
   } else if (store.shownScore == "rating_racism") {
-    return "Racism";
+    return "Racism"
   } else if (store.shownScore == "rating_others") {
-    return "Others";
+    return "Others"
   } else if (store.shownScore == "rating_cringe") {
-    return "Cringe";
-  } else return "";
-});
+    return "Cringe"
+  } else return ""
+})
 const score = computed(() => {
   if (store.shownScore && scoreAvailable.value) {
-    return props.scores[store.shownScore];
-  } else return props.scores["rating_total"];
-});
+    return props.scores[store.shownScore]
+  } else return props.scores["rating_total"]
+})
 </script>

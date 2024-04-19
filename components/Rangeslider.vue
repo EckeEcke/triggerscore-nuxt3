@@ -51,66 +51,66 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "~/stores/store";
+import { useStore } from "~/stores/store"
 
-const { locale } = useI18n();
-const store = useStore();
-const min = ref(0);
-const max = ref(10);
-const minthumb = ref(0);
-const maxthumb = ref(0);
+const { locale } = useI18n()
+const store = useStore()
+const min = ref(0)
+const max = ref(10)
+const minthumb = ref(0)
+const maxthumb = ref(0)
 
-const minScore = computed(() => store.minScore);
+const minScore = computed(() => store.minScore)
 
-const maxScore = computed(() => store.maxScore);
+const maxScore = computed(() => store.maxScore)
 
 function mintrigger() {
   if (minScore.value >= maxScore.value) {
-    minScore.value = parseInt(maxScore.value) - 1;
+    store.minScore = parseInt(maxScore.value) - 1
   }
   if (minScore.value == 10) {
-    minScore.value = 0;
+    store.minScore = 0
   }
   minthumb.value =
-    ((parseInt(minScore.value) - min.value) / (max.value - min.value)) * 100;
-  store.filterMovies(locale.value);
+    ((parseInt(minScore.value) - min.value) / (max.value - min.value)) * 100
+  store.filterMovies(locale.value)
 }
 
 function maxtrigger() {
   if (maxScore.value >= max.value) {
-    maxScore.value = 10;
+    store.maxScore = 10
   }
   if (parseInt(maxScore.value) <= parseInt(minScore.value)) {
-    maxScore.value = parseInt(minScore.value) + 1;
+    store.maxScore = parseInt(minScore.value) + 1
   }
   maxthumb.value =
-    100 - ((maxScore.value - min.value) / (max.value - min.value)) * 100;
-  store.filterMovies(locale.value);
+    100 - ((maxScore.value - min.value) / (max.value - min.value)) * 100
+  store.filterMovies(locale.value)
 }
 
 onMounted(() => {
-  mintrigger();
-  maxtrigger();
+  mintrigger()
+  maxtrigger()
   watch(
     () => store.minScore,
     (currentValue, oldValue) => {
       if (currentValue == 0) {
-        mintrigger();
-        store.filterMovies(locale.value);
+        mintrigger()
+        store.filterMovies(locale.value)
       }
     }
-  );
+  )
 
   watch(
     () => store.maxScore,
     (currentValue, oldValue) => {
       if (currentValue == 10) {
-        maxtrigger();
-        store.filterMovies(locale.value);
+        maxtrigger()
+        store.filterMovies(locale.value)
       }
     }
-  );
-});
+  )
+})
 </script>
 
 <style scoped>
