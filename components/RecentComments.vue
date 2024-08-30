@@ -131,8 +131,8 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-    container.value!.removeEventListener('touchstart', handleTouchStart, false)
-    container.value!.removeEventListener('touchend', handleTouchEnd, false)
+    container.value?.removeEventListener('touchstart', handleTouchStart, false)
+    container.value?.removeEventListener('touchend', handleTouchEnd, false)
     clearInterval(intervalId)
 })
 </script>
