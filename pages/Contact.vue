@@ -133,9 +133,6 @@ import { useI18n } from "vue-i18n"
 import { ref } from "vue"
 
 const route = useRoute()
-const reportedMovie = computed(() => {
-  route.params.id
-})
 
 const { t } = useI18n()
 

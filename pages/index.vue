@@ -17,14 +17,13 @@
   <LoadingAnimation v-show="isLoading" />
   <template v-if="!isLoading">
     <Searchbox showTitle />
-
-  <MovieHighlightsContainer
-    :movies="store.bondMovies"
-    shownScore="rating_total"
-    :title="$t('highlights.headline1')"
-    :subTitle="$t('highlights.copy1')"
-    moreSpacing
-  />
+    <MovieHighlightsContainer
+      :movies="store.bondMovies"
+      shownScore="rating_total"
+      :title="$t('highlights.headline1')"
+      :subTitle="$t('highlights.copy1')"
+      moreSpacing
+    />
     <section class="mb-12 px-0 sm:px-4 container mx-auto xl:w-10/12">
       <div
         class="py-16 md:py-20 mb-12 bg-cover bg-center px-4 rounded"

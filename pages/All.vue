@@ -133,8 +133,6 @@ import { useStore } from "~/stores/store"
 
 const store = useStore()
 const {locale } = useI18n()
-const showNavbar = ref(true)
-const lastScrollPosition = ref(0)
 const showMenu = ref(false)
 const start = ref(0)
 const end = ref(24)
@@ -171,10 +169,6 @@ function focusSearch() {
   const search = document.getElementById("search")
   search!.scrollIntoView()
   search!.focus()
-}
-
-function resetSearchResults() {
-  store.resetSearch()
 }
 
 function resetFilter() {
