@@ -1,9 +1,4 @@
 const i18nLocales = ['de', 'en', 'es', 'fr', 'us']
-const getContactRouteForAllLocales = () => {
-    const routesToPrerender = ['/contact'];
-
-    return i18nLocales.flatMap(lang => routesToPrerender.map(route => `/${lang}${route}`))
-}
 
 export default defineNuxtConfig({
     app: {
