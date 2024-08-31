@@ -29,7 +29,7 @@
         action="./contact.html"
         @submit.prevent="handleSubmit"
       >
-        <input type="hidden" name="contact-form" value="contact" />
+        <input type="hidden" name="form-name" value="contact" />
         <div class="flex flex-col gap-1 mb-4">
           <label class="font-semibold mb-2 text-white">{{
             t("contact.name")
