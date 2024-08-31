@@ -10,7 +10,7 @@
       <Meta name="author" content="Christian Eckardt" />
       <Meta name="viewport" content="width=device-width, initial-scale=1.0" />
     </Head>
-    <div v-if="!submitted" class="mr-8 max-w-full">
+    <div v-show="!submitted" class="mr-8 max-w-full">
       <h1
         v-if="route.query.comment"
         class="mb-4 text-xl md:text-2xl font-semibold uppercase"
@@ -78,7 +78,7 @@
       </form>
     </div>
     <div
-      v-else
+      v-show=submitted
       class="w-full sm:w-1/2 lg:w-1/4 h-64 bg-green-500 rounded-lg flex flex-col align-center justify-center"
     >
       <SuccessAnimation />
