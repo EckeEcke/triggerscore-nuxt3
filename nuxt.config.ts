@@ -33,9 +33,4 @@ export default defineNuxtConfig({
         detectBrowserLanguage: false,
         vueI18n: "./i18n.config.ts",
     },
-    nitro: {
-        prerender: {
-            routes: getContactRouteForAllLocales()
-        }
-      },
 })
