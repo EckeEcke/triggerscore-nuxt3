@@ -1,4 +1,10 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+const i18nLocales = ['de', 'en', 'es', 'fr', 'us']
+const getContactRouteForAllLocales = () => {
+    const routesToPrerender = ['/contact'];
+
+    return i18nLocales.flatMap(lang => routesToPrerender.map(route => `/${lang}${route}`))
+}
+
 export default defineNuxtConfig({
     app: {
         head: {
@@ -21,10 +27,15 @@ export default defineNuxtConfig({
     },
     modules: ['@pinia/nuxt', '@pinia-plugin-persistedstate/nuxt', '@nuxtjs/robots', '@nuxtjs/i18n'],
     i18n: {
-        locales: ['de', 'en', 'es', 'fr', 'us'],
+        locales: i18nLocales,
         defaultLocale: 'de',
         strategy: 'prefix',
         detectBrowserLanguage: false,
         vueI18n: "./i18n.config.ts",
-    }
+    },
+    nitro: {
+        prerender: {
+            routes: getContactRouteForAllLocales()
+        }
+      },
 })
