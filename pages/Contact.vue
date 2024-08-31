@@ -26,9 +26,10 @@
         method="post"
         data-netlify="true"
         data-netlify-honeypot="bot-field"
+        action="./contact.html"
         @submit.prevent="handleSubmit"
       >
-        <p class="hidden"><input name="bot-field" /></p>
+        <input type="hidden" name="contact-form" value="contact" />
         <div class="flex flex-col gap-1 mb-4">
           <label class="font-semibold mb-2 text-white">{{
             t("contact.name")

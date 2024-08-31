@@ -231,10 +231,10 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n"
 
-const ratingSexism = ref(null)
-const ratingRacism = ref(null)
-const ratingOthers = ref(null)
-const ratingCringe = ref(null)
+const ratingSexism: Ref<null | number> = ref(null)
+const ratingRacism: Ref<null | number> = ref(null)
+const ratingOthers: Ref<null | number> = ref(null)
+const ratingCringe: Ref<null | number> = ref(null)
 const comment = ref("")
 const submitted = ref(false)
 const liked = ref(false)
@@ -268,6 +268,7 @@ function submitRating(event: Event) {
     like: liked.value,
     dislike: disliked.value,
   }
+  console.log(JSON.stringify(data))
   fetch("https://triggerscore-backend2.onrender.com/post", {
     method: "post",
     headers: {
