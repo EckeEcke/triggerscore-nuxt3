@@ -348,15 +348,8 @@ export const useStore = defineStore({
         this.maxScore,
         this.shownScore
       )
-      this.filterByProvider(
-        this.filterMoviesByNetflix,
-        this.filterMoviesByPrime,
-        this.filterMoviesByDisney,
-        this.filterMoviesBySky,
-        this.triggerscores,
-        this.filteredMovies,
-        locale
-      )
+      this.filterByProvider()
+      this.isFiltering = false
     },
     resetFilter() {
       this.filterMoviesByPrime = false
@@ -457,18 +450,8 @@ export const useStore = defineStore({
       const providerData = await data.json()
       this.providerData = providerData
     },
-    async filterByProvider(
-      netflix: boolean,
-      prime: boolean,
-      disney: boolean,
-      sky: boolean,
-      triggerscores: any[],
-      array: any[],
-      locale: String
-    ) {
-
-      if (!netflix && !prime && !disney && !sky) {
-        this.isFiltering = false
+    async filterByProvider() {
+      if (!this.filterMoviesByNetflix && !this.filterMoviesByPrime && !this.filterMoviesByDisney && !this.filterMoviesBySky) {
         return
       }
       const clonedArray = [...this.filteredMovies]
@@ -478,7 +461,6 @@ export const useStore = defineStore({
       if (this.filterMoviesByDisney) validIds.push(...this.providerData.disney)
       if (this.filterMoviesBySky) validIds.push(...this.providerData.sky)
       this.filteredMovies = clonedArray.filter((movie: any) => validIds.includes(movie.id))
-      this.isFiltering = false
     }
   },
   getters: {
