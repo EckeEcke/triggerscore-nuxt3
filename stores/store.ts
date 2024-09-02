@@ -304,18 +304,10 @@ export const useStore = defineStore({
       this.searchError = payload
     },
     async setBondMovies(locale: string) {
-      try {
-        const bondMoviePromises = this.bondMovieIDs.map(async (id: number) => {
-          const { data } = await useFetch(`/api/movie/${id}`)
-          return data.value
-        });
-    
-        const bondMovieResponses = await Promise.all(bondMoviePromises)
-        this.bondMovies = bondMovieResponses as any
-        this.highlightsLoading = false
-      } catch (error) {
-        console.log("oops", error);
-      }
+      const data = await fetch(`${url}highlights/${locale}`)
+      const bondMovieData = await data.json()
+      this.bondMovies = bondMovieData
+      this.highlightsLoading = false
     },
     async filterMovies(locale: string) {
       this.isFiltering = true
