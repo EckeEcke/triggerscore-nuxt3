@@ -91,6 +91,12 @@ export const useStore = defineStore({
       movies: [],
       selectedMovie: undefined,
       loadingSelectedMovie: false,
+      providerData: {
+        netflix: [],
+        prime: [],
+        disney: [],
+        sky: [],
+      },
       selectedMovieOnNetflix: false,
       selectedMovieOnPrime: false,
       selectedMovieOnDisney: false,
@@ -146,7 +152,7 @@ export const useStore = defineStore({
             .then((res) => res.json())
             .catch(() => console.log("oopsy"))
         )
-      );
+      )
       loadedMovies.then((res: any) => {
         this.movies = res
         this.moviesLoading = false
@@ -446,6 +452,11 @@ export const useStore = defineStore({
       })
       this.filteredMovies = clonedArray
     },
+    async loadProviderData(locale: string) {
+      const data = await fetch(`${url}providers/${locale}`)
+      const providerData = await data.json()
+      this.providerData = providerData
+    },
     async filterByProvider(
       netflix: boolean,
       prime: boolean,
@@ -455,129 +466,20 @@ export const useStore = defineStore({
       array: any[],
       locale: String
     ) {
-      let clonedArray = [...array]
-      if (netflix || prime || disney || sky) {
-        let providerIDs: any = []
-        let providerRegion = locale.toUpperCase()
-        if (providerRegion == "EN") {
-          providerRegion = "GB";
-        }
-        Promise.all(
-          triggerscores.map((entry: any) =>
-            fetch(
-              `https://api.themoviedb.org/3/movie/${entry.movie_id}/watch/providers?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c`
-            )
-              .then((res) => res.json())
-              .then((res) => {
-                if (
-                  res.results[providerRegion] &&
-                  res.results[providerRegion].flatrate !== undefined
-                ) {
-                  if (
-                    netflix &&
-                    res.results[providerRegion].flatrate.some(
-                      (provider: any) => provider.provider_name == "Netflix"
-                    )
-                  ) {
-                    providerIDs.push(entry.movie_id)
-                  }
-                  if (
-                    prime &&
-                    res.results[providerRegion].flatrate.some(
-                      (provider: any) =>
-                        provider.provider_name == "Amazon Prime Video"
-                    )
-                  ) {
-                    providerIDs.push(entry.movie_id)
-                  }
-                  if (
-                    disney &&
-                    res.results[providerRegion].flatrate.some(
-                      (provider: any) => provider.provider_name == "Disney Plus"
-                    )
-                  ) {
-                    providerIDs.push(entry.movie_id)
-                  }
-                  if (
-                    sky &&
-                    res.results[providerRegion].flatrate.some(
-                      (provider: any) => provider.provider_name == "WOW"
-                    )
-                  ) {
-                    providerIDs.push(entry.movie_id)
-                  }
-                }
-              })
-              .catch(() =>
-                setTimeout(() => {
-                  fetch(
-                    `https://api.themoviedb.org/3/movie/${entry.movie_id}/watch/providers?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c`
-                  )
-                    .then((res) => res.json())
-                    .then((res) => {
-                      if (
-                        res.results[providerRegion] &&
-                        res.results[providerRegion].flatrate !== undefined
-                      ) {
-                        if (
-                          netflix &&
-                          res.results[providerRegion].flatrate.some(
-                            (provider: any) =>
-                              provider.provider_name == "Netflix"
-                          )
-                        ) {
-                          providerIDs.push(entry.movie_id)
-                        }
-                        if (
-                          prime &&
-                          res.results[providerRegion].flatrate.some(
-                            (provider: any) =>
-                              provider.provider_name == "Amazon Prime Video"
-                          )
-                        ) {
-                          providerIDs.push(entry.movie_id)
-                        }
-                        if (
-                          disney &&
-                          res.results[providerRegion].flatrate.some(
-                            (provider: any) =>
-                              provider.provider_name == "Disney Plus"
-                          )
-                        ) {
-                          providerIDs.push(entry.movie_id)
-                        }
-                        if (
-                          sky &&
-                          res.results[providerRegion].flatrate.some(
-                            (provider: any) => provider.provider_name == "WOW"
-                          )
-                        ) {
-                          providerIDs.push(entry.movie_id)
-                        }
-                      }
-                    })
-                    .catch((error) =>
-                      console.log("Something went wrong: " + error)
-                    )
-                }, 1000)
-              )
-          )
-        )
-          .then(
-            () =>
-              (clonedArray = clonedArray.filter((movie: any) =>
-                providerIDs.includes(movie.id)
-              ))
-          )
-          .then(() => {
-            this.filteredMovies = clonedArray
-            this.isFiltering = false
-          })
-      } else {
-        this.filteredMovies = clonedArray
+
+      if (!netflix && !prime && !disney && !sky) {
         this.isFiltering = false
+        return
       }
-    },
+      const clonedArray = [...this.filteredMovies]
+      const validIds: number[] = []
+      if (this.filterMoviesByNetflix) validIds.push(...this.providerData.netflix)
+      if (this.filterMoviesByPrime) validIds.push(...this.providerData.prime)
+      if (this.filterMoviesByDisney) validIds.push(...this.providerData.disney)
+      if (this.filterMoviesBySky) validIds.push(...this.providerData.sky)
+      this.filteredMovies = clonedArray.filter((movie: any) => validIds.includes(movie.id))
+      this.isFiltering = false
+    }
   },
   getters: {
     getTriggerscores: (state) => state.triggerscores,

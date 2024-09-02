@@ -1,12 +1,13 @@
 import { useStore } from "../stores/store"
 
 export default defineNuxtRouteMiddleware(async (to) => {
-  console.log(to.fullPath.split("/")[0])
+  const store = useStore()
+  const localeFromFullPath = to.fullPath.split("/")[1]
+  const validLocales = ['de', 'en', 'es', 'fr', 'us']
+  const locale = validLocales.includes(localeFromFullPath) ? localeFromFullPath : 'de'
+  store.loadProviderData(locale)
+
   if (to.path.includes("/movie/")) {
-    const store = useStore()
-    const localeFromFullPath = to.fullPath.split("/")[1]
-    const validLocales = ['de', 'en', 'es', 'fr', 'us']
-    const locale = validLocales.includes(localeFromFullPath) ? localeFromFullPath : 'de'
     store.loadingSelectedMovie = true
     const regionProvider = computed(() => {
       if (locale === "en") {
@@ -17,10 +18,10 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
     async function loadMovie() {
       try {
-        const response = await fetch(
-          `https://api.themoviedb.org/3/movie/${to.params.id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${locale}`
+        const { data } = await useFetch(
+          `/api/movie/${to.params.id}`
         )
-        const loadedMovie = await response.json()
+        const loadedMovie = data.value as any
         store.selectedMovie = loadedMovie
       } catch (error) {
         Promise.reject()
@@ -30,10 +31,10 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
     async function loadProviders() {
       try {
-        const response = await fetch(
-          `https://api.themoviedb.org/3/movie/${to.params.id}/watch/providers?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c`
+        const { data } = await useFetch(
+          `/api/providers/${to.params.id}`
         )
-        const providers = await response.json()
+        const providers = data.value as any
         const regionProviders = providers.results
           ? providers.results[regionProvider.value]?.flatrate
           : []

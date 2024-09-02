@@ -230,6 +230,7 @@
 
 <script setup lang="ts">
 import { useI18n } from "vue-i18n"
+import { useStore } from "~/stores/store"
 
 const ratingSexism: Ref<null | number> = ref(null)
 const ratingRacism: Ref<null | number> = ref(null)
@@ -241,13 +242,11 @@ const liked = ref(false)
 const disliked = ref(false)
 const animCompleted = ref(false)
 
-const props = defineProps({
-  title: String,
-  id: Number,
-})
-
 const { t } = useI18n()
 const router = useRouter()
+const store = useStore()
+
+const movie: ComputedRef<any> = computed(() => store.selectedMovie)
 
 function scrollRatings() {
   const ratings = document.getElementsByClassName("rating") // for fixing issues with flex-end and overflow-hidden
@@ -255,11 +254,12 @@ function scrollRatings() {
     ratings[i].scrollLeft -= 500
   }
 }
+
 function submitRating(event: Event) {
   event.preventDefault()
   submitted.value = true
   const data = {
-    movieID: props.id,
+    movieID: movie.value.id,
     sexism: ratingSexism.value,
     racism: ratingRacism.value,
     others: ratingOthers.value,
@@ -267,8 +267,18 @@ function submitRating(event: Event) {
     comment: comment.value,
     like: liked.value,
     dislike: disliked.value,
+    title: movie.value.title,
+    original_title: movie.value.original_title,
+    runtime: movie.value.runtime,
+    vote_average: movie.value.vote_average,
+    tagline: movie.value.tagline,
+    overview: movie.value.overview,
+    imdb_id: movie.value.imdb_id,
+    backdrop_path: movie.value.backdrop_path,
+    poster_path: movie.value.poster_path,
+    release_date: movie.value.release_date,
   }
-  console.log(JSON.stringify(data))
+
   fetch("https://triggerscore-backend2.onrender.com/post", {
     method: "post",
     headers: {

@@ -28,4 +28,7 @@ export default defineNuxtConfig({
         detectBrowserLanguage: false,
         vueI18n: "./i18n.config.ts",
     },
+    runtimeConfig: {
+        apiKey: process.env.TMDB_API_KEY,
+    },
 })

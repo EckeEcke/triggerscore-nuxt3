@@ -320,7 +320,7 @@
             </p>
           </div>
         </div>
-        <Ratingpage :title="movie.title" :id="movie.id" />
+        <Ratingpage />
         <hr class="border-gray-800 md:hidden" />
         <div class="md:hidden py-12 px-2 radial-background">
           <ShareMovie :movie="movie" align-center />
@@ -350,7 +350,7 @@ const onDisney = computed(() => store.selectedMovieOnDisney);
 const onSky = computed(() => store.selectedMovieOnSky);
 const releaseDate = parseInt(movie.value.release_date.substring(0, 4));
 const score: any = computed(() => store.selectedMovieScore);
-const showMoreComments = ref(false);
+const showMoreComments = ref(false)
 
 const title = computed(() =>
   movie.value !== emptyMovie ? movie.value.title : "Movie on Triggerscore"
