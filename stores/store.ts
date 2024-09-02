@@ -304,29 +304,18 @@ export const useStore = defineStore({
       this.searchError = payload
     },
     async setBondMovies(locale: string) {
-      const loadedMovies = Promise.all(
-        this.bondMovieIDs.map((id: number) =>
-          fetch(
-            `https://api.themoviedb.org/3/movie/${id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${locale}`
-          )
-            .then((res) => res.json())
-            .catch(() =>
-              setTimeout(() => {
-                fetch(
-                  `https://api.themoviedb.org/3/movie/${id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${locale}`
-                )
-                  .then((res) => res.json())
-                  .catch((error) =>
-                    console.log("Something went wrong: " + error)
-                  )
-              }, 1000)
-            )
-        )
-      )
-      loadedMovies.then((res: any) => {
-        this.bondMovies = res
+      try {
+        const bondMoviePromises = this.bondMovieIDs.map(async (id: number) => {
+          const { data } = await useFetch(`/api/movie/${id}`)
+          return data.value
+        });
+    
+        const bondMovieResponses = await Promise.all(bondMoviePromises)
+        this.bondMovies = bondMovieResponses as any
         this.highlightsLoading = false
-      })
+      } catch (error) {
+        console.log("oops", error);
+      }
     },
     async filterMovies(locale: string) {
       this.isFiltering = true
