@@ -23,7 +23,7 @@
       >
         <MovieHighlightItem
           v-for="movie in movies"
-          :key="movie.id"
+          :key="movie._id"
           :movie="movie"
           :shownScore="shownScore"
           :scores="
@@ -85,7 +85,7 @@ import placeholderScores from "~/assets/triggerscores.json"
 const store = useStore()
 
 const props = defineProps({
-  movies: Array,
+  movies: Array<any>,
   shownScore: String,
   title: String,
   subTitle: String,

@@ -139,12 +139,16 @@ const mostDislikedMovie = computed(() =>
 const mostCommentedMovie = computed(() =>
   store.triggerscores.length > 0
     ? store.triggerscores.reduce(function (a: any, b: any) {
-        let filteredArrayA = a.comments.filter((comment: string) => {
-          return comment.length > 3;
-        });
-        let filteredArrayB = b.comments.filter((comment: string) => {
-          return comment.length > 3;
-        });
+        let filteredArrayA = 
+        a.comments ? 
+        a.comments.filter((comment: string) => {
+          return comment.length > 3 }) : []
+        
+        let filteredArrayB = 
+        b.comments ?
+        b.comments.filter((comment: string) => {
+          return comment.length > 3
+        }) : []
         return filteredArrayA.length > filteredArrayB.length ? a : b;
       })
     : undefined

@@ -34,7 +34,7 @@
           class="font-semibold text-xl text-white py-6 px-4 lg:rounded-t"
           id="rating"
         >
-          {{ t("rating.submitFor") }}<br />"{{ title }}"
+          {{ t("rating.submitFor") }}<br />"{{ movie.title ?? movie.original_title }}"
         </h2>
         <hr class="border-gray-800 hidden md:block max-w-lg ml-4" />
         <label class="px-4 my-3 mt-6 block text-lg font-semibold">{{

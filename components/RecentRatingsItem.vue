@@ -16,16 +16,16 @@
             {{ scoreTotal !== -1 ? scoreTotal : "-" }}
           </p>
         </div>
-        <div class="w-9/12">
+        <div class="w-9/12 overflow-hidden whitespace-nowrap custom-headline">
           <NuxtLink
             v-if="movie.title.length > 0"
             tag="h3"
             :to="pathToNavigate(movie.id)"
-            class="text-base font-semibold h-6 overflow-hidden whitespace-nowrap custom-headline cursor-pointer"
+            class="text-base font-semibold h-6 cursor-pointer"
           >
             {{ movie.title }}
           </NuxtLink>
-          <NuxtLink v-else class="text-base font-semibold overflow-hidden cursor-pointer"
+          <NuxtLink v-else class="text-base font-semibold h-6 cursor-pointer"
           :to="pathToNavigate(movie.id)"
           tag="h3">
             {{ movie.original_title }}
