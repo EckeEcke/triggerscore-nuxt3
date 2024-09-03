@@ -1,6 +1,6 @@
 <template>
   <header
-    class="w-full h-auto bg-red-950 bg-opacity-95 z-30 shadow-md flex flex-col fixed top-0"
+    class="w-screen h-auto bg-red-950 bg-opacity-95 z-30 shadow-md flex flex-col fixed top-0"
   >
     <section
       class="container mx-auto h-full p-4 xl:w-10/12 flex justify-between"
