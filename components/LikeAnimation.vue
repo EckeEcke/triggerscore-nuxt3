@@ -13,13 +13,13 @@
 
 <script setup lang="ts">
 import likeAnimation from "../assets/images/like-animation.json"
-import { ref } from "vue";
+import { ref } from "vue"
 
 const likeClicked = ref(false)
 
 const props = defineProps({
   dislikeClicked: Boolean,
-});
+})
 
 const emit = defineEmits(["likeClicked"])
 const anim = ref()

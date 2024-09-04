@@ -193,6 +193,7 @@ import statsPlaceholder from "~/assets/stats.json"
 const { t } = useI18n()
 
 const placeholder = statsPlaceholder
+const store = useStore()
 
 const totalRatings = computed(
   () => store.stats.totalRatings ?? placeholder.totalRatings
@@ -225,6 +226,4 @@ const averageCringe = computed(
 const averageOthers = computed(
   () => store.stats.averageScoreOthers ?? placeholder.averageScoreOthers
 )
-
-const store = useStore();
 </script>

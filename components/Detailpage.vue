@@ -223,7 +223,7 @@
                     />
                   </a>
                   <a
-                    v-if="onAmazon"
+                    v-if="onPrime"
                     href="https://www.amazon.de/primevideo"
                     target="_blank"
                     class="self-center -mx-2"
@@ -331,118 +331,122 @@
 </template>
 
 <script setup lang="ts">
-import { useI18n } from "vue-i18n";
-import { useStore } from "../stores/store";
-import { ref, computed, watch } from "vue";
-import { useRouter, useRoute } from "vue-router";
-import { Movie, emptyMovie } from "~/types/movie";
+import { useI18n } from "vue-i18n"
+import { useStore } from "../stores/store"
+import { ref, computed, watch } from "vue"
+import { useRouter, useRoute } from "vue-router"
+import { Movie, emptyMovie } from "~/types/movie"
 
-const store = useStore();
-const router = useRouter();
-const route = useRoute();
-const { t, locale } = useI18n();
+const store = useStore()
+const router = useRouter()
+const route = useRoute()
+const { t, locale } = useI18n()
 
-const movie: any = computed(() => store.selectedMovie);
-const backdrop = `url(https://image.tmdb.org/t/p/original/${movie.value.backdrop_path})`;
-const onNetflix = computed(() => store.selectedMovieOnNetflix);
-const onAmazon = computed(() => store.selectedMovieOnPrime);
-const onDisney = computed(() => store.selectedMovieOnDisney);
-const onSky = computed(() => store.selectedMovieOnSky);
-const releaseDate = parseInt(movie.value.release_date.substring(0, 4));
-const score: any = computed(() => store.selectedMovieScore);
+const movie: any = computed(() => store.selectedMovie)
+const backdrop = `url(https://image.tmdb.org/t/p/original/${movie.value.backdrop_path})`
+const onNetflix = ref(false)
+const onPrime = ref(false)
+const onDisney = ref(false)
+const onSky = ref(false)
+const releaseDate = parseInt(movie.value.release_date.substring(0, 4))
+const score: any = computed(() => store.selectedMovieScore)
 const showMoreComments = ref(false)
 
 const title = computed(() =>
   movie.value !== emptyMovie ? movie.value.title : "Movie on Triggerscore"
-);
+)
 const poster = computed(
   () => `https://image.tmdb.org/t/p/original/${movie.value.poster_path}`
-);
-const genres = computed(() => movie.value.genres.map((genre: any) => genre.name));
-const triggerscores = computed(() => store.triggerscores);
-const scoreAvailable = computed(() => store.selectedMovieScore !== undefined);
+)
+const genres = computed(() => movie.value.genres.map((genre: any) => genre.name))
+const scoreAvailable = computed(() => store.selectedMovieScore !== undefined)
 const totalRatings = computed(() => {
   return store.triggerscores.length > 0
     ? store.triggerscores.filter(
         (movieFromStore) => movieFromStore.movie_id === movie.value.id
       )
-    : [];
-});
+    : []
+})
 
 const imdbURL = computed(
   () => `https://www.imdb.com/title/${movie.value.imdb_id}`
-);
+)
+
 const tmdbURL = computed(
   () => `https://www.themoviedb.org/movie/${movie.value.id}`
-);
+)
+
 const comments = computed(() =>
   score.value
     ? score.value.comments.filter((comment: string) => comment.length > 3)
     : null
-);
+)
 
 function pushToContact(comment: string) {
-  const truncatedComment = comment.substring(0, Math.min(20, comment.length));
+  const truncatedComment = comment.substring(0, Math.min(20, comment.length))
   router.push({
     path: "/contact",
     query: { id: route.params.id, comment: truncatedComment },
-  });
+  })
 }
 
-watch(locale, () => {
-  const regionProvider = computed(() => {
+const regionProvider = computed(() => {
     if (locale.value === "en") {
-      return "GB";
+      return "GB"
     }
-    return locale.value.toUpperCase();
-  });
-  const loadMovie = async () => {
-    try {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/movie/${route.params.id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${locale.value}`
-      );
-      const loadedMovie = await response.json();
-      store.selectedMovie = loadedMovie;
-      console.log(loadedMovie);
-    } catch (error) {
-      console.log("Oops, an error occurred while loading the movie:", error);
-    }
-  };
+    return locale.value.toUpperCase()
+  })
 
-  const loadProviders = async () => {
+const loadProviders = async () => {
     try {
       const response = await fetch(
         `https://api.themoviedb.org/3/movie/${route.params.id}/watch/providers?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c`
-      );
-      const providers = await response.json();
+      )
+      const providers = await response.json()
+      console.log(providers)
       const regionProviders =
-        providers.results[regionProvider.value]?.flatrate || [];
-      store.selectedMovieOnNetflix = regionProviders.some(
+        providers.results[regionProvider.value]?.flatrate || []
+      onNetflix.value = regionProviders.some(
         (provider: any) => provider.provider_name === "Netflix"
-      );
-      store.selectedMovieOnPrime = regionProviders.some(
+      )
+      onPrime.value = regionProviders.some(
         (provider: any) => provider.provider_name === "Amazon Prime Video"
-      );
-      store.selectedMovieOnDisney = regionProviders.some(
+      )
+      onDisney.value = regionProviders.some(
         (provider: any) => provider.provider_name === "Disney Plus"
-      );
-      store.selectedMovieOnSky = regionProviders.some(
+      )
+      onSky.value = regionProviders.some(
         (provider: any) => provider.provider_name === "WOW"
-      );
+      )
     } catch (error) {
       console.log(
         "Oops, an error occurred while loading the providers:",
         error
-      );
+      )
     }
-  };
+  }
 
-  loadMovie();
-  loadProviders();
-});
+loadProviders()
 
-store.setTriggerscores(locale.value);
-store.filterMovies(locale.value);
+watch(locale, () => {
+  const loadMovie = async () => {
+    try {
+      const response = await fetch(
+        `https://api.themoviedb.org/3/movie/${route.params.id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${locale.value}`
+      )
+      const loadedMovie = await response.json()
+      store.selectedMovie = loadedMovie
+    } catch (error) {
+      console.log("Oops, an error occurred while loading the movie:", error)
+    }
+  }
+
+  loadMovie()
+  loadProviders()
+})
+
+store.setTriggerscores(locale.value)
+store.filterMovies(locale.value)
 </script>
 
 <style lang="css" scoped>

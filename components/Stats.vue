@@ -92,50 +92,54 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "~/stores/store";
-import { useI18n } from "vue-i18n";
+import { useStore } from "~/stores/store"
+import { useI18n } from "vue-i18n"
 
-const store = useStore();
-store.setStats();
+const store = useStore()
+store.setStats()
 
-const { t } = useI18n();
+const { t } = useI18n()
 
 const lowestScoreMovie: ComputedRef<any> = computed(() =>
   store.triggerscores.length > 0
     ? store.triggerscores.reduce(function (a: any, b: any) {
-        return a.rating_total < b.rating_total ? a : b;
+        return a.rating_total < b.rating_total ? a : b
       })
     : undefined
-);
+)
 
 const highestScoreMovie: ComputedRef<any> = computed(() =>
   store.triggerscores.length > 0
     ? store.triggerscores.reduce(function (a: any, b: any) {
-        return a.rating_total > b.rating_total ? a : b;
+        return a.rating_total > b.rating_total ? a : b
       })
     : undefined
-);
+)
+
 const mostRatedMovie = computed(() =>
   store.triggerscores.length > 0
     ? store.triggerscores.reduce(function (a: any, b: any) {
-        return a.ratings > b.ratings ? a : b;
+        return a.ratings > b.ratings ? a : b
       })
     : undefined
-);
+)
+
 const mostLikedMovie = computed(() =>
   store.triggerscores.length > 0
     ? store.triggerscores.reduce(function (a: any, b: any) {
-        return a.likes > b.likes ? a : b;
+        return a.likes > b.likes ? a : b
       })
     : undefined
-);
+)
+
 const mostDislikedMovie = computed(() =>
   store.triggerscores.length > 0
     ? store.triggerscores.reduce(function (a: any, b: any) {
-        return a.dislikes > b.dislikes ? a : b;
+        return a.dislikes > b.dislikes ? a : b
       })
     : undefined
-);
+)
+
 const mostCommentedMovie = computed(() =>
   store.triggerscores.length > 0
     ? store.triggerscores.reduce(function (a: any, b: any) {
@@ -149,50 +153,56 @@ const mostCommentedMovie = computed(() =>
         b.comments.filter((comment: string) => {
           return comment.length > 3
         }) : []
-        return filteredArrayA.length > filteredArrayB.length ? a : b;
+        return filteredArrayA.length > filteredArrayB.length ? a : b
       })
     : undefined
-);
+)
+
 const movie = computed(() => {
   if (lowestScoreMovie.value) {
     return store.movies.filter(
       (movie: any) => movie.id == lowestScoreMovie.value!.movie_id
-    );
-  } else return {};
-});
+    )
+  } else return {}
+})
+
 const movieHighest = computed(() => {
   if (highestScoreMovie.value) {
     return store.movies.filter(
       (movie) => movie.id == highestScoreMovie.value.movie_id
-    );
-  } else return {};
-});
+    )
+  } else return {}
+})
+
 const mostRated = computed(() => {
   if (mostRatedMovie.value) {
     return store.movies.filter(
       (movie) => movie.id == mostRatedMovie.value.movie_id
-    );
-  } else return {};
-});
+    )
+  } else return {}
+})
+
 const mostCommented = computed(() => {
   if (mostCommentedMovie.value) {
     return store.movies.filter(
       (movie) => movie.id == mostCommentedMovie.value.movie_id
-    );
-  } else return {};
-});
+    )
+  } else return {}
+})
+
 const mostLiked = computed(() => {
   if (mostLikedMovie.value) {
     return store.movies.filter(
       (movie) => movie.id == mostLikedMovie.value.movie_id
-    );
-  } else return {};
-});
+    )
+  } else return {}
+})
+
 const mostDisliked = computed(() => {
   if (mostDislikedMovie.value) {
     return store.movies.filter(
       (movie) => movie.id == mostDislikedMovie.value.movie_id
-    );
-  } else return {};
-});
+    )
+  } else return {}
+})
 </script>

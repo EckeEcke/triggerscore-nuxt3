@@ -22,8 +22,8 @@
         style="scroll-snap-type: x mandatory"
       >
         <MovieHighlightItem
-          v-for="movie in movies"
-          :key="movie._id"
+          v-for="(movie, index) in movies"
+          :key="index"
           :movie="movie"
           :shownScore="shownScore"
           :scores="

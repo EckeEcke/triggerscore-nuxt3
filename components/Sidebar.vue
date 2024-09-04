@@ -213,11 +213,11 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "~/stores/store";
-import { useI18n } from "vue-i18n";
+import { useStore } from "~/stores/store"
+import { useI18n } from "vue-i18n"
 
-const store = useStore();
-const { locale } = useI18n();
+const store = useStore()
+const { locale } = useI18n()
 
 const sortingOption = computed(() => store.sortingOption)
 const filterMin = computed(() => store.filterMoviesByYearMin)
@@ -258,14 +258,14 @@ watch(
   (currentValue, oldValue) => {
     store.filterMovies(locale.value)
   }
-);
+)
 
 watch(
   () => filterMin,
   (currentValue, oldValue) => {
     store.filterMovies(locale.value)
   }
-);
+)
 
 watch(
   () => filterMax,

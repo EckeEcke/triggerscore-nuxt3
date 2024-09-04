@@ -269,14 +269,6 @@ function submitRating(event: Event) {
     dislike: disliked.value,
     title: movie.value.title,
     original_title: movie.value.original_title,
-    runtime: movie.value.runtime,
-    vote_average: movie.value.vote_average,
-    tagline: movie.value.tagline,
-    overview: movie.value.overview,
-    imdb_id: movie.value.imdb_id,
-    backdrop_path: movie.value.backdrop_path,
-    poster_path: movie.value.poster_path,
-    release_date: movie.value.release_date,
   }
 
   fetch("https://triggerscore-backend2.onrender.com/post", {

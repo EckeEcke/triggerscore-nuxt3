@@ -186,7 +186,7 @@ watch(
   (currentValue, oldValue) => {
     store.filterMovies(locale.value)
   }
-);
+)
 
 watch(
   () => filteredMovies.value,

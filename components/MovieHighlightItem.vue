@@ -77,7 +77,7 @@ const props = defineProps({
   scores: Object,
   shownScore: String,
   loadItem: Boolean,
-});
+})
 
 const localePath = useLocalePath()
 const pathToNavigate = computed(() => localePath(`/movie/${props.movie!.id}`))
@@ -94,14 +94,17 @@ const overview = computed(() =>
 )
 const scoreAvailable = computed(() => props.scores !== undefined)
 const displayedScore = computed(() => {
-  if (props.shownScore == "rating_sexism") {
-    return "Sexism"
-  } else if (props.shownScore == "rating_racism") {
-    return "Racism"
-  } else if (props.shownScore == "rating_others") {
-    return "Others"
-  } else if (props.shownScore == "rating_cringe") {
-    return "Cringe"
-  } else return ""
+  switch (props.shownScore) {
+    case "rating_sexism":
+      return "Sexism"
+    case "rating_racism":
+      return "Racism"
+    case "rating_others":
+      return "Others"
+    case "rating_cringe":
+      return "Cringe"
+    default:
+      return ""
+  }
 })
 </script>

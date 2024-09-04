@@ -148,7 +148,7 @@ if (route.query.comment) {
     route.query.id +
     " - '" +
     route.query.comment +
-    "...'";
+    "...'"
 }
 
 const submitted = ref(false)

@@ -8,5 +8,6 @@
 
 <script setup>
 import LottieAnimation from "../assets/images/success-animation.json"
+
 const animation = LottieAnimation
 </script>

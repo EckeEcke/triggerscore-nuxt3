@@ -56,7 +56,7 @@ function sortByTsDesc(array: any[], key: string): any {
     if (triggerscoreX < triggerscoreY) {
       return 1
     }
-  };
+  }
 }
 
 function sortByTsAsc(array: any[], key: any): any {
@@ -97,10 +97,6 @@ export const useStore = defineStore({
         disney: [],
         sky: [],
       },
-      selectedMovieOnNetflix: false,
-      selectedMovieOnPrime: false,
-      selectedMovieOnDisney: false,
-      selectedMovieOnSky: false,
       selectedMovieScore: undefined,
       recentRatings: [],
       recentComments: [],

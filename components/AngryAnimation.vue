@@ -7,6 +7,7 @@
 </template>
 
 <script setup>
-import AngryJSON from "../assets/images/angry-animation.json";
-const angryJSON = AngryJSON;
+import AngryJSON from "../assets/images/angry-animation.json"
+
+const angryJSON = AngryJSON
 </script>

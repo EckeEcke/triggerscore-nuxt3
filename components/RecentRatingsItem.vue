@@ -115,8 +115,8 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "~/stores/store";
-import placeholderRatings from "~/assets/recentRatings.json";
+import { useStore } from "~/stores/store"
+import placeholderRatings from "~/assets/recentRatings.json"
 
 const { locale } = useI18n()
 const store = useStore()
