@@ -403,7 +403,6 @@ const loadProviders = async () => {
         `https://api.themoviedb.org/3/movie/${route.params.id}/watch/providers?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c`
       )
       const providers = await response.json()
-      console.log(providers)
       const regionProviders =
         providers.results[regionProvider.value]?.flatrate || []
       onNetflix.value = regionProviders.some(
