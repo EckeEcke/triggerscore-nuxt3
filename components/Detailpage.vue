@@ -399,10 +399,10 @@ const regionProvider = computed(() => {
 
 const loadProviders = async () => {
     try {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/movie/${route.params.id}/watch/providers?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c`
+      const { data } = await useFetch(
+      `/api/providers/${route.params.id}`
       )
-      const providers = await response.json()
+      const providers = data.value as any
       const regionProviders =
         providers.results[regionProvider.value]?.flatrate || []
       onNetflix.value = regionProviders.some(
@@ -430,10 +430,10 @@ loadProviders()
 watch(locale, () => {
   const loadMovie = async () => {
     try {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/movie/${route.params.id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${locale.value}`
+      const { data } = await useFetch(
+      `/api/movie/${route.params.id}`
       )
-      const loadedMovie = await response.json()
+      const loadedMovie = data.value as any
       store.selectedMovie = loadedMovie
     } catch (error) {
       console.log("Oops, an error occurred while loading the movie:", error)
