@@ -79,7 +79,9 @@ const props = defineProps({
   loadItem: Boolean,
 });
 
-const pathToNavigate = computed(() => `${locale.value}/movie/${props.movie!.id}`)
+const localePath = useLocalePath()
+const pathToNavigate = computed(() => localePath(`/movie/${props.movie!.id}`))
+
 
 const loadItem2 = true // replace when intersection observer is fixed
 const poster = computed(
