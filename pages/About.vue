@@ -37,6 +37,10 @@
         {{ t("about.paragraph2") }}
       </p>
     </section>
+    <div class="flex items-center gap-4 mt-8">
+      <img @click="toGithub()" class="h-8 cursor-pointer" src="../assets/images/github-logo.svg" />
+      <a class="text-white underline cursor-pointer hover:font-bold" href="https://github.com/EckeEcke/triggerscore-nuxt3" target="_blank">Triggerscore Github</a>
+    </div>
   </div>
 </template>
 
@@ -44,4 +48,6 @@
 import { useI18n } from "vue-i18n"
 
 const { t } = useI18n()
+
+const toGithub = () => navigateTo("https://github.com/EckeEcke/triggerscore-nuxt3", { external: true })
 </script>

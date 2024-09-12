@@ -69,11 +69,11 @@
             class="w-10 lg:w-16 mx-auto"
             src="../assets/images/node-logo.svg"
         /></a>
-        <a href="https://www.mysql.com" target="blank"
+        <a href="https://www.mongodb.com/" target="blank"
           ><img
-            alt="Logo MySQL"
+            alt="Logo MongoDB"
             class="w-10 lg:w-16 mx-auto"
-            src="../assets/images/mysql-logo.svg"
+            src="../assets/images/mongodb-logo.svg"
         /></a>
       </div>
     </section>
