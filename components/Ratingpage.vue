@@ -271,7 +271,7 @@ function submitRating(event: Event) {
     original_title: movie.value.original_title,
   }
 
-  fetch("https://triggerscore-backend2.onrender.com/post", {
+  fetch("/.netlify/functions/postData", {
     method: "post",
     headers: {
       "Content-Type": "application/json",

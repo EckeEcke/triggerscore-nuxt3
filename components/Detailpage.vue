@@ -284,6 +284,11 @@
                   </a>
                 </div>
               </div>
+              <div v-if="hasTrailer">
+                <iframe width="420" height="315"
+                    :src="trailerLink">
+                </iframe>
+              </div>
               <div class="hidden md:block">
                 <ShareMovie :movie="movie" />
               </div>
@@ -367,6 +372,8 @@ const totalRatings = computed(() => {
       )
     : []
 })
+
+const hasTrailer = movie.value.video
 
 const imdbURL = computed(
   () => `https://www.imdb.com/title/${movie.value.imdb_id}`

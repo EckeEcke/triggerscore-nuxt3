@@ -3,8 +3,6 @@ import placeholderTriggerscores from "~/assets/triggerscores.json"
 import placeholderBondMovies from "~/assets/bondMovies.json"
 import { Movie } from "~/types/movie"
 
-const url = "https://triggerscore-backend2.onrender.com/"
-
 function sortAtoZ(x: Movie, y: Movie): 1 | -1 | 0 {
   const titleX = x.title ? x.title : x.original_title
   const titleY = y.title ? y.title : y.original_title
@@ -136,7 +134,7 @@ export const useStore = defineStore({
       if (process.client && localStorage.getItem("store")) {
         this.moviesLoading = false
       } //also loads movies for now
-      const scores = await fetch(url)
+      const scores = await fetch('/.netlify/functions/fetchScores')
       const triggerscores = await scores.json()
       this.triggerscores = triggerscores
       const uniqueMovieIds = [...new Set(triggerscores.map((movie: any) => movie.movie_id))]
@@ -155,7 +153,10 @@ export const useStore = defineStore({
       })
     },
     async setRecentRatings(locale: string) {
-      const data = await fetch(`${url}recentratings`)
+      const data = await fetch('/.netlify/functions/fetchRecentRatings') 
+      if (!data.ok) { 
+        throw new Error('Network response was not ok')
+      }
       const ratings = await data.json()
       this.recentScores = ratings
       const recentRatings = Promise.all(
@@ -170,12 +171,12 @@ export const useStore = defineStore({
       recentRatings.then((res: any) => (this.recentRatings = res))
     },
     async setRecentComments() {
-      const data = await fetch(`${url}recentcomments`)
+      const data = await fetch('/.netlify/functions/fetchRecentComments')
       const comments = await data.json()
       this.recentComments = comments
     },
     async setTop10Sexism(locale: string) {
-      const data = await fetch(`${url}top10-sexism`)
+      const data = await fetch('/.netlify/functions/fetchTop10Sexism')
       const top10 = await data.json()
       const loadedTop10 = Promise.all(
         top10.map((entry: any) =>
@@ -189,7 +190,7 @@ export const useStore = defineStore({
       loadedTop10.then((res: any) => (this.top10Sexism = res))
     },
     async setTop10Racism(locale: string) {
-      const scores = await fetch(`${url}top10-racism`)
+      const scores = await fetch('/.netlify/functions/fetchTop10Racism')
       const top10 = await scores.json()
       const loadedTop10 = Promise.all(
         top10.map((entry: any) =>
@@ -203,7 +204,7 @@ export const useStore = defineStore({
       loadedTop10.then((res: any) => (this.top10Racism = res))
     },
     async setTop10Others(locale: string) {
-      const scores = await fetch(`${url}top10-others`)
+      const scores = await fetch('/.netlify/functions/fetchTop10Others')
       const top10 = await scores.json()
       const loadedTop10 = Promise.all(
         top10.map((entry: any) =>
@@ -217,7 +218,7 @@ export const useStore = defineStore({
       loadedTop10.then((res: any) => (this.top10Others = res))
     },
     async setTop10Cringe(locale: string) {
-      const scores = await fetch(`${url}top10-cringe`)
+      const scores = await fetch('/.netlify/functions/fetchTop10Cringe')
       const top10 = await scores.json()
       const loadedTop10 = Promise.all(
         top10.map((entry: any) =>
@@ -231,7 +232,7 @@ export const useStore = defineStore({
       loadedTop10.then((res: any) => (this.top10Cringe = res))
     },
     async setStats() {
-      const response = await fetch(`${url}stats`)
+      const response = await fetch('/.netlify/functions/fetchStats')
       const stats = await response.json()
       this.stats = stats
     },
@@ -300,7 +301,7 @@ export const useStore = defineStore({
       this.searchError = payload
     },
     async setBondMovies(locale: string) {
-      const data = await fetch(`${url}highlights/${locale}`)
+      const data = await fetch(`/.netlify/functions/fetchBondHighlights/${locale}`)
       const bondMovieData = await data.json()
       this.bondMovies = bondMovieData
       this.highlightsLoading = false
@@ -423,7 +424,7 @@ export const useStore = defineStore({
       this.filteredMovies = clonedArray
     },
     async loadProviderData(locale: string) {
-      const data = await fetch(`${url}providers/${locale}`)
+      const data = await fetch(`/.netlify/functions/fetchProviders/${locale}`)
       const providerData = await data.json()
       this.providerData = providerData
     },

@@ -31,4 +31,12 @@ export default defineNuxtConfig({
     runtimeConfig: {
         apiKey: process.env.TMDB_API_KEY,
     },
+    nitro: {
+        devProxy: {
+            '/.netlify/functions/': {
+                target: 'http://localhost:8888',
+                changeOrigin: true, 
+            }
+        }
+    }
 })
