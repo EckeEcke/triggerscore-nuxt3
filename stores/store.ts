@@ -300,8 +300,8 @@ export const useStore = defineStore({
     setSearchError(payload: any) {
       this.searchError = payload
     },
-    async setBondMovies(locale: string) {
-      const data = await fetch(`/.netlify/functions/fetchBondHighlights/${locale}`)
+    async setBondMovies() {
+      const data = await fetch(`/api/bondMovies`)
       const bondMovieData = await data.json()
       this.bondMovies = bondMovieData
       this.highlightsLoading = false
