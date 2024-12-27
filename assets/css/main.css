@@ -33,15 +33,15 @@
 
 @font-face {
   font-family: Lato;
-  src: url("./assets/Lato-Regular.ttf");
+  src: url("/fonts/Lato-Regular.ttf");
 }
 @font-face {
   font-family: Avenir;
-  src: url("./assets/Avenir.otf");
+  src: url("/fonts/Avenir.otf");
 }
 @font-face {
   font-family: AvenirLight;
-  src: url("./assets/AvenirLight.otf");
+  src: url("/fonts/AvenirLight.otf");
 }
 #__nuxt {
   font-family: AvenirLight, Lato, Helvetica, Arial, sans-serif;
