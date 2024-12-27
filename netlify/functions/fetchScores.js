@@ -2,6 +2,7 @@ import { connectToDatabase } from './dbClient.js'
 import { calculateScores } from './calculateScores.js'
 
 export const handler = async (event) => {
+  console.log(event)
   try {
     const database = await connectToDatabase()
     const scores = await database.collection('scores').find().toArray()
