@@ -284,8 +284,8 @@
                   </a>
                 </div>
               </div>
-              <div v-if="trailerUrl">
-                <iframe width="420" height="315"
+              <div v-if="trailerUrl" class="iframe-container mb-8">
+                <iframe frameborder="0"
                     :src="trailerUrl">
                 </iframe>
               </div>
@@ -374,7 +374,7 @@ const totalRatings = computed(() => {
 })
 
 const trailer = computed(() => movie.value.videos?.results?.[0])
-const trailerUrl = computed(() => trailer.value?.site === 'YouTube' ? `https://www.youtube.com/watch?v=${trailer.value.key}` : undefined)
+const trailerUrl = computed(() => trailer.value?.site === 'YouTube' ? `https://www.youtube-nocookie.com/embed/${trailer.value.key}` : undefined)
 
 const imdbURL = computed(
   () => `https://www.imdb.com/title/${movie.value.imdb_id}`
@@ -459,5 +459,21 @@ store.filterMovies(locale.value)
 <style lang="css" scoped>
 .detailpage {
   min-height: calc(100vh-5rem);
+}
+
+.iframe-container { 
+  position: relative; 
+  width: 100%; 
+  padding-bottom: 56.25%; /* Default 16:9 aspect ratio, adjust if needed */ 
+  height: 0; 
+} 
+  
+.iframe-container iframe { 
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 100%; 
+  border: 0
 }
 </style>
