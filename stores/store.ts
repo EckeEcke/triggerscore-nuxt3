@@ -131,11 +131,10 @@ export const useStore = defineStore({
   },
   actions: {
     async setTriggerscores(locale: string) {
-      /*
       if (process.client && localStorage.getItem("store")) {
         this.moviesLoading = false
       } //also loads movies for now
-      const scores = await fetch('/.netlify/functions/fetchScores')
+      const scores = await fetch('https://www.triggerscore.de/.netlify/functions/fetchScores')
       const triggerscores = await scores.json()
       this.triggerscores = triggerscores
       const uniqueMovieIds = [...new Set(triggerscores.map((movie: any) => movie.movie_id))]
@@ -152,7 +151,6 @@ export const useStore = defineStore({
         this.movies = res
         this.moviesLoading = false
       })
-        */
     },
     async setRecentRatings(locale: string) {
       const data = await fetch('/.netlify/functions/fetchRecentRatings') 
