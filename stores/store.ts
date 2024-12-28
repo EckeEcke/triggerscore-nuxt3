@@ -301,7 +301,7 @@ export const useStore = defineStore({
       this.searchError = payload
     },
     async setBondMovies() {
-      const data = await fetch(`/api/bondMovies`)
+      const data = await fetch(`https://triggerscore.de/api/bondMovies`)
       const bondMovieData = await data.json()
       this.bondMovies = bondMovieData
       this.highlightsLoading = false
