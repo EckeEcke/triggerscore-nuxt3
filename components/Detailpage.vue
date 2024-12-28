@@ -37,7 +37,7 @@
       <LoadingAnimation v-if="false" />
       <div
         v-else
-        class="radial-background flex flex-col lg:flex-row lg:rounded-b px-0 sm:px-4 md:px-0"
+        class="radial-background flex flex-col lg:flex-row lg:rounded-b px-0 sm:px-4 md:px-0 sm:rounded-t"
       >
         <div
           class="flex flex-col w-full text-white rounded-t lg:rounded justify-start lg:mr-6 md:p-4"
@@ -47,7 +47,7 @@
               :src="poster"
               :key="locale"
               alt="movie poster"
-              class="w-1/2 lg:w-76 h-auto object-contain self-start rounded self-center"
+              class="w-1/2 lg:w-76 h-auto object-contain self-start rounded self-center detailpage-box-shadow"
             />
             <div
               v-if="scoreAvailable"
@@ -284,7 +284,7 @@
                   </a>
                 </div>
               </div>
-              <div v-if="trailerUrl" class="iframe-container mb-8">
+              <div v-if="trailerUrl" class="iframe-container mb-8 detailpage-box-shadow">
                 <iframe 
                     frameborder="0"
                     :src="trailerUrl"
@@ -334,7 +334,7 @@
           <ShareMovie :movie="movie" align-center />
         </div>
       </div>
-      <div class="sm:px-4 radial-background">
+      <div class="sm:px-4 radial-background sm:rounded-b">
         <MovieHighlightsContainer
           v-if="similarMovies.body"
           class="xl:w-full bg-transparent"
@@ -489,6 +489,10 @@ onMounted(() => {
 <style lang="css" scoped>
 .detailpage {
   min-height: calc(100vh-5rem);
+}
+
+.detailpage-box-shadow {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 }
 
 .iframe-container { 
