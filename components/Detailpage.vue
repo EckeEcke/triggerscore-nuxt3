@@ -37,7 +37,7 @@
       <LoadingAnimation v-if="false" />
       <div
         v-else
-        class="radial-background flex flex-col lg:flex-row lg:rounded-b px-0 sm:px-4 md:px-0 sm:rounded-t"
+        class="radial-background flex flex-col lg:flex-row px-0 sm:px-4 md:px-0 sm:rounded-t"
       >
         <div
           class="flex flex-col w-full text-white rounded-t lg:rounded justify-start lg:mr-6 md:p-4"
