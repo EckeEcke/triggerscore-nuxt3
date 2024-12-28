@@ -92,7 +92,7 @@
   "about": {
     "headline": "Triggerscore - une nouvelle façon de regarder de vieux films",
     "paragraph1": "L'idée de Triggerscore est née de mon plaisir coupable nouvellement découvert : zapper Netflix pour les vieux films (surtout des années 90) et analyser à quel point ces vieux films déclencheraient les téléspectateurs aujourd'hui. Triggerscore sert de portail, où les utilisateurs peuvent trouver et soumettre des évaluations Triggerscore.",
-    "paragraph2": "Triggerscore est un projet solo. L'idée, la conception, le design ainsi que le développement du front et du backend sont tous réalisés par moi-même. Le frontend est basé sur le framework JavaScript Nuxt3 utilisant Pinia-Store pour la gestion des états et le framework CSS Tailwind pour les styles. L'interface de mon application est hébergée sur Netlify. Pour le backend, j'utilise une base de données MongoDB, hébergée sur AWS, et un serveur NodeJS fonctionnant sur Render.com. Mon application backend reçoit des évaluations de mon interface et les enregistre dans ma base de données. Il lit et sert également les notes de ma base de données et calcule les scores. De plus, mon backend fournit des Top 10 et des statistiques. En tant que base de données de films, j'utilise l'API TMDB et l'API JustWatch pour les fournisseurs de streaming disponibles."
+    "paragraph2": "Triggerscore est un projet solo. De l'idée, en passant par la conceptualisation et le design, jusqu'au développement du front-end et du back-end de cette application. Le front-end est basé sur le framework JavaScript Nuxt 3 avec Pinia-Store pour la gestion de l'état et le framework CSS Tailwind pour les styles. Mon front-end est hébergé sur Netlify. Pour le back-end, j'utilise des fonctions serverless et une base de données MongoDB. Mes fonctions back-end transfèrent les évaluations dans ma base de données d'évaluations, les envoient au front-end et calculent les scores. En outre, le back-end compile les Top 10 et les statistiques. Pour la base de données de films, j'utilise l'API de TMDB. J'obtiens des informations sur les fournisseurs de streaming via l'API de JustWatch."
   },
   "faq": {
     "headline": "FAQs",
@@ -104,9 +104,7 @@
     "question3": "Des données personnelles sont-elles enregistrées lorsque je soumets une évaluation?",
     "answer3": "Non, dans la base de données de classement, seuls le classement soumis et un identifiant de film sont enregistrés.",
     "question4": "D'où viennent toutes les données du film?",
-    "answer4": "Triggerscore utilise l'API TMDB. De plus, l'application utilise l'API JustWatch pour recevoir des informations sur la disponibilité des films sur différents fournisseurs de streaming. Le Triggerscore lui-même n'est fourni que par et pour Triggerscore.",
-    "question5": "Pourquoi le chargement de la page prend-il parfois autant de temps?",
-    "answer5": "Mon backend fonctionne sur un fournisseur gratuit. Pour économiser les ressources, les services backend sont mis en veille après une utilisation sans utilisation. Ainsi, lorsque la page prend un peu plus de temps à se charger, dans la plupart des cas, cela est dû au fait que le backend doit d'abord se «réveiller»."
+    "answer4": "Triggerscore utilise l'API TMDB. De plus, l'application utilise l'API JustWatch pour recevoir des informations sur la disponibilité des films sur différents fournisseurs de streaming. Le Triggerscore lui-même n'est fourni que par et pour Triggerscore."
   },
   "contact": {
     "sendFeedback": "Envoyer des commentaires",
