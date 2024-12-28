@@ -131,6 +131,7 @@ export const useStore = defineStore({
   },
   actions: {
     async setTriggerscores(locale: string) {
+      /*
       if (process.client && localStorage.getItem("store")) {
         this.moviesLoading = false
       } //also loads movies for now
@@ -151,6 +152,7 @@ export const useStore = defineStore({
         this.movies = res
         this.moviesLoading = false
       })
+        */
     },
     async setRecentRatings(locale: string) {
       const data = await fetch('/.netlify/functions/fetchRecentRatings') 
