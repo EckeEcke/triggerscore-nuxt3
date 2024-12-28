@@ -284,9 +284,9 @@
                   </a>
                 </div>
               </div>
-              <div v-if="hasTrailer">
+              <div v-if="trailerUrl">
                 <iframe width="420" height="315"
-                    :src="trailerLink">
+                    :src="trailerUrl">
                 </iframe>
               </div>
               <div class="hidden md:block">
@@ -373,7 +373,8 @@ const totalRatings = computed(() => {
     : []
 })
 
-const hasTrailer = movie.value.video
+const trailer = computed(() => movie.value.videos?.results?.[0])
+const trailerUrl = computed(() => trailer.value.site === 'YouTube' ? `https://www.youtube.com/watch?v=${trailer.value.key}` : undefined)
 
 const imdbURL = computed(
   () => `https://www.imdb.com/title/${movie.value.imdb_id}`
