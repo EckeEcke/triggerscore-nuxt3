@@ -4,6 +4,7 @@ import { calculateScores } from './calculateScores.js'
 export const handler = async (event) => {
     try {
         const { id } = event.pathParameters || {}
+        console.log("id: ", id)
         if (!id) { 
             return { 
                 statusCode: 400, 
