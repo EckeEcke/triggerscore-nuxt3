@@ -5,6 +5,8 @@ export const handler = async (event) => {
     try {
         const { id } = event.pathParameters || {}
         console.log("id: ", id)
+        console.log(event)
+        console.log(event.pathParameters)
         if (!id) { 
             return { 
                 statusCode: 400, 
