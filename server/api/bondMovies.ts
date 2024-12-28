@@ -6,6 +6,7 @@ const bondMovieIDs = [
 ]
 
 export default defineEventHandler(async (event) => {
+    console.log(event)
     const { apiKey } = useRuntimeConfig()
     const { locale } = getQuery(event)
     const movieDataPromises = bondMovieIDs.map(id => 
