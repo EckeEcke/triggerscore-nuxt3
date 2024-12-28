@@ -9,7 +9,8 @@ const limiter = new Bottleneck({
 
 export const handler = async (event) => {
     try {
-        const { locale } = event.pathParameters
+        const url = new URL(event.rawUrl) 
+        const locale = url.searchParams.get('locale')
         const streamingProviders = ['netflix', 'prime', 'disney', 'sky']
         const database = await connectToDatabase()
         const scores = await database.collection('scores')

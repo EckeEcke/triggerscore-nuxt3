@@ -3,7 +3,8 @@ import { connectToDatabase } from './dbClient.js'
 
 export const handler = async (event) => {
     try {
-        const { locale } = event.pathParameters
+        const url = new URL(event.rawUrl) 
+        const locale = url.searchParams.get('locale')
         const database = await connectToDatabase()
         const scores = database.collection('scores')
         const movieIds = await scores.distinct('movie_id')

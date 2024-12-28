@@ -137,17 +137,9 @@ export const useStore = defineStore({
       const scores = await fetch('https://www.triggerscore.de/.netlify/functions/fetchScores')
       const triggerscores = await scores.json()
       this.triggerscores = triggerscores
-      const uniqueMovieIds = [...new Set(triggerscores.map((movie: any) => movie.movie_id))]
-      const loadedMovies = Promise.all(
-        uniqueMovieIds.map((movie_id: any) =>
-          fetch(
-            `https://api.themoviedb.org/3/movie/${movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${locale}`
-          )
-            .then((res) => res.json())
-            .catch(() => console.log("oopsy"))
-        )
-      )
-      loadedMovies.then((res: any) => {
+      const loadedMovies = await fetch(`https://www.triggerscore.de/.netlify/functions/fetchMovies?locale=${locale}`)
+      const movies = await loadedMovies.json()
+      movies.then((res: any) => {
         this.movies = res
         this.moviesLoading = false
       })
@@ -424,7 +416,7 @@ export const useStore = defineStore({
       this.filteredMovies = clonedArray
     },
     async loadProviderData(locale: string) {
-      const data = await fetch(`https://www.triggerscore.de/.netlify/functions/fetchProviders/${locale}`)
+      const data = await fetch(`https://www.triggerscore.de/.netlify/functions/fetchProviders?locale=${locale}`)
       const providerData = await data.json()
       this.providerData = providerData
     },
