@@ -26,7 +26,7 @@ const regionProvider = computed(() => {
 async function loadMovie() {
   try {
     const { data } = await useFetch(
-      `/api/movie/${id}`
+      `/api/movie/${id}?locale=${locale}`
     )
     const loadedMovie = data.value as any
     store.selectedMovie = loadedMovie
