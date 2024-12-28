@@ -153,7 +153,7 @@ export const useStore = defineStore({
       })
     },
     async setRecentRatings(locale: string) {
-      const data = await fetch('/.netlify/functions/fetchRecentRatings') 
+      const data = await fetch('https//triggerscore.de/.netlify/functions/fetchRecentRatings') 
       if (!data.ok) { 
         throw new Error('Network response was not ok')
       }
@@ -171,12 +171,12 @@ export const useStore = defineStore({
       recentRatings.then((res: any) => (this.recentRatings = res))
     },
     async setRecentComments() {
-      const data = await fetch('/.netlify/functions/fetchRecentComments')
+      const data = await fetch('https//triggerscore.de/.netlify/functions/fetchRecentComments')
       const comments = await data.json()
       this.recentComments = comments
     },
     async setTop10Sexism(locale: string) {
-      const data = await fetch('/.netlify/functions/fetchTop10Sexism')
+      const data = await fetch('https//triggerscore.de/.netlify/functions/fetchTop10Sexism')
       const top10 = await data.json()
       const loadedTop10 = Promise.all(
         top10.map((entry: any) =>
@@ -190,7 +190,7 @@ export const useStore = defineStore({
       loadedTop10.then((res: any) => (this.top10Sexism = res))
     },
     async setTop10Racism(locale: string) {
-      const scores = await fetch('/.netlify/functions/fetchTop10Racism')
+      const scores = await fetch('https//triggerscore.de/.netlify/functions/fetchTop10Racism')
       const top10 = await scores.json()
       const loadedTop10 = Promise.all(
         top10.map((entry: any) =>
@@ -204,7 +204,7 @@ export const useStore = defineStore({
       loadedTop10.then((res: any) => (this.top10Racism = res))
     },
     async setTop10Others(locale: string) {
-      const scores = await fetch('/.netlify/functions/fetchTop10Others')
+      const scores = await fetch('https//triggerscore.de/.netlify/functions/fetchTop10Others')
       const top10 = await scores.json()
       const loadedTop10 = Promise.all(
         top10.map((entry: any) =>
@@ -218,7 +218,7 @@ export const useStore = defineStore({
       loadedTop10.then((res: any) => (this.top10Others = res))
     },
     async setTop10Cringe(locale: string) {
-      const scores = await fetch('/.netlify/functions/fetchTop10Cringe')
+      const scores = await fetch('https//triggerscore.de/.netlify/functions/fetchTop10Cringe')
       const top10 = await scores.json()
       const loadedTop10 = Promise.all(
         top10.map((entry: any) =>
@@ -232,7 +232,7 @@ export const useStore = defineStore({
       loadedTop10.then((res: any) => (this.top10Cringe = res))
     },
     async setStats() {
-      const response = await fetch('/.netlify/functions/fetchStats')
+      const response = await fetch('https//triggerscore.de/.netlify/functions/fetchStats')
       const stats = await response.json()
       this.stats = stats
     },
@@ -424,7 +424,7 @@ export const useStore = defineStore({
       this.filteredMovies = clonedArray
     },
     async loadProviderData(locale: string) {
-      const data = await fetch(`/.netlify/functions/fetchProviders/${locale}`)
+      const data = await fetch(`https//triggerscore.de/.netlify/functions/fetchProviders/${locale}`)
       const providerData = await data.json()
       this.providerData = providerData
     },

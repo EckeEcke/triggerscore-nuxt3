@@ -271,7 +271,7 @@ function submitRating(event: Event) {
     original_title: movie.value.original_title,
   }
 
-  fetch("/.netlify/functions/postData", {
+  fetch("https//triggerscore.de/.netlify/functions/postData", {
     method: "post",
     headers: {
       "Content-Type": "application/json",
