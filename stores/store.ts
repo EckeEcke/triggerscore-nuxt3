@@ -292,7 +292,7 @@ export const useStore = defineStore({
       this.searchError = payload
     },
     async setBondMovies(locale: string) {
-      const data = await fetch(`/api/bondMovies?locale=${locale}`)
+      const data = await fetch(`https://www.triggerscore.de/api/bondMovies?locale=${locale}`)
       const bondMovieData = await data.json()
       this.bondMovies = bondMovieData
       this.highlightsLoading = false
