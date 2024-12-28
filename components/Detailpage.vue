@@ -37,10 +37,10 @@
       <LoadingAnimation v-if="false" />
       <div
         v-else
-        class="flex flex-col lg:flex-row lg:rounded-b px-0 sm:px-4 md:px-0"
+        class="radial-background flex flex-col lg:flex-row lg:rounded-b px-0 sm:px-4 md:px-0"
       >
         <div
-          class="flex flex-col w-full radial-background text-white rounded-t lg:rounded justify-start lg:mr-6 md:p-4"
+          class="flex flex-col w-full text-white rounded-t lg:rounded justify-start lg:mr-6 md:p-4"
         >
           <div class="flex justify-between w-full sm:rounded-t p-4 pr-0">
             <img
@@ -331,6 +331,16 @@
           <ShareMovie :movie="movie" align-center />
         </div>
       </div>
+      <div class="p-4 radial-background">
+        <MovieHighlightsContainer
+          class="xl:w-full bg-transparent"
+          :movies="similarMovies"
+          shownScore="rating_total"
+          :title="t('highlights.headline1')"
+          :subTitle="t('highlights.copy1')"
+          moreSpacing
+        />
+      </div>
     </div>
   </section>
 </template>
@@ -356,6 +366,8 @@ const onSky = ref(false)
 const releaseDate = parseInt(movie.value.release_date.substring(0, 4))
 const score: any = computed(() => store.selectedMovieScore)
 const showMoreComments = ref(false)
+const similarMovies = ref([]) 
+const { apiKey } = useRuntimeConfig()
 
 const title = computed(() =>
   movie.value !== emptyMovie ? movie.value.title : "Movie on Triggerscore"
@@ -397,6 +409,21 @@ function pushToContact(comment: string) {
     query: { id: route.params.id, comment: truncatedComment },
   })
 }
+
+const fetchSimilarMovies = async () => { 
+  try { 
+    const response = await fetch(`https://api.themoviedb.org/3/movie/${movie.value.id}/similar?api_key=${apiKey}&language=${locale.value}&page=1`) 
+    if (!response.ok) { 
+      throw new Error(`Error fetching similar movies: ${response.statusText}`) 
+    } 
+    const data = await response.json() 
+    similarMovies.value = data.results 
+  } catch (error) {
+    console.error("Error fetching similar movies:", error) 
+  } 
+}
+
+
 
 const regionProvider = computed(() => {
     if (locale.value === "en") {
@@ -454,6 +481,10 @@ watch(locale, () => {
 
 store.setTriggerscores(locale.value)
 store.filterMovies(locale.value)
+
+onMounted(() => {
+  fetchSimilarMovies()
+})
 </script>
 
 <style lang="css" scoped>

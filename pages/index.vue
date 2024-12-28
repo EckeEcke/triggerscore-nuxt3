@@ -20,8 +20,8 @@
     <MovieHighlightsContainer
       :movies="store.bondMovies"
       shownScore="rating_total"
-      :title="$t('highlights.headline1')"
-      :subTitle="$t('highlights.copy1')"
+      :title="t('highlights.headline1')"
+      :subTitle="t('highlights.copy1')"
       moreSpacing
     />
     <section class="mb-12 px-0 sm:px-4 container mx-auto xl:w-10/12">
@@ -37,7 +37,7 @@
         <h2
           class="text-white text-2xl sm:text-4xl text-left font-semibold mb-2 uppercase"
         >
-          {{ $t("general.newest") }}
+          {{ t("general.newest") }}
           <span
             class="text-2xl sm:text-4xl self-center font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200 cursor-pointer"
           >
@@ -48,7 +48,7 @@
           </span>
         </h2>
         <p class="text-base md:text-lg text-white font-semibold text-left">
-          {{ $t("general.recentRatings") }}
+          {{ t("general.recentRatings") }}
         </p>
       </div>
       <div
@@ -67,7 +67,7 @@
         </div>
         <div class="text-left text-white px-4 sm:px-0 col-span-2 lg:col-span-1">
           <h3 class="text-2xl font-semibold my-8">
-            {{ $t("general.recentComments") }}
+            {{ t("general.recentComments") }}
           </h3>
           <RecentComments />
         </div>
@@ -96,10 +96,10 @@
                   class="text-white"
                 />RE
               </span>
-              {{ $t("general.top10") }}
+              {{ t("general.top10") }}
             </h2>
             <p class="text-base md:text-lg text-white font-semibold">
-              {{ $t("general.top10Copy") }}
+              {{ t("general.top10Copy") }}
             </p>
           </div>
         </div>
@@ -107,28 +107,28 @@
       <MovieHighlightsContainer
         :movies="store.top10Sexism"
         shownScore="rating_sexism"
-        :title="$t('highlights.headline2')"
-        :subTitle="$t('highlights.copy2')"
+        :title="t('highlights.headline2')"
+        :subTitle="t('highlights.copy2')"
       />
       <MovieHighlightsContainer
         :movies="store.top10Racism"
         shownScore="rating_racism"
-        :title="$t('highlights.headline3')"
-        :subTitle="$t('highlights.copy3')"
+        :title="t('highlights.headline3')"
+        :subTitle="t('highlights.copy3')"
         showBorder
       />
       <MovieHighlightsContainer
         :movies="store.top10Others"
         shownScore="rating_others"
-        :title="$t('highlights.headline4')"
-        :subTitle="$t('highlights.copy4')"
+        :title="t('highlights.headline4')"
+        :subTitle="t('highlights.copy4')"
         showBorder
       />
       <MovieHighlightsContainer
         :movies="store.top10Cringe"
         shownScore="rating_cringe"
-        :title="$t('highlights.headline5')"
-        :subTitle="$t('highlights.copy5')"
+        :title="t('highlights.headline5')"
+        :subTitle="t('highlights.copy5')"
         showBorder
       />
     </section>
@@ -140,13 +140,13 @@
   <section class="container xl:w-10/12 mx-auto px-4 my-12 sm:my-24">
     <div class="bg-opacity-90 py-16">
       <h2 class="text-white text-xl font-semibold my-4">
-        {{ $t("general.discoverMoreMovies") }}
+        {{ t("general.discoverMoreMovies") }}
       </h2>
       <div class="py-8">
         <NuxtLink
           :to="localePath('/all')"
           class="bg-yellow-500 transition hover:bg-yellow-600 p-3 rounded-lg text-white font-semibold uppercase my-4"
-          >{{ $t("header.allMovies") }}</NuxtLink
+          >{{ t("header.allMovies") }}</NuxtLink
         >
       </div>
     </div>
@@ -158,7 +158,7 @@
 <script setup lang="ts">
 import { useStore } from "~/stores/store"
 
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 const localePath = useLocalePath()
 const store = useStore()
 store.setTriggerscores(locale.value)

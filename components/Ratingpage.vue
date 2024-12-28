@@ -1,5 +1,5 @@
 <template>
-  <div class="lg:flex lg:justify-center w-full radial-background md:pt-4">
+  <div class="lg:flex lg:justify-center w-full md:pt-4">
     <div
       :class="{ 'bg-opacity-0 w-full': submitted }"
       class="text-white md:rounded-b lg:rounded-t md:px-4"

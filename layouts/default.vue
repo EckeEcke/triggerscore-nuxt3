@@ -12,11 +12,6 @@ import { useI18n } from "vue-i18n"
 
 const { locale } = useI18n()
 
-useHead({
-  script: [
-    { src: "//static.getclicky.com/js", async: false, "data-id": "101434680" },
-  ],
-})
 </script>
 
 <style>
