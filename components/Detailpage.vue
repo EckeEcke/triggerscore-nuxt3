@@ -374,7 +374,7 @@ const totalRatings = computed(() => {
 })
 
 const trailer = computed(() => movie.value.videos?.results?.[0])
-const trailerUrl = computed(() => trailer.value.site === 'YouTube' ? `https://www.youtube.com/watch?v=${trailer.value.key}` : undefined)
+const trailerUrl = computed(() => trailer.value?.site === 'YouTube' ? `https://www.youtube.com/watch?v=${trailer.value.key}` : undefined)
 
 const imdbURL = computed(
   () => `https://www.imdb.com/title/${movie.value.imdb_id}`

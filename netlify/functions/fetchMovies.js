@@ -22,14 +22,25 @@ export const handler = async (event) => {
     const movies = movieDataResponses.map(response => response)
 
     return {
-      statusCode: 200,
-      body: JSON.stringify(movies)
+        statusCode: 200,
+        body: JSON.stringify(movies),
+        headers: { 
+            'Access-Control-Allow-Origin': '*', 
+            'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', 
+            'Access-Control-Allow-Headers': 'Content-Type', 
+            'Access-Control-Allow-Credentials': 'true', 
+        }, 
     }
   } catch (error) {
-    console.error(error)
     return {
-      statusCode: 500,
-      body: JSON.stringify({ message: 'Internal Server Error' })
+        statusCode: 500,
+        body: JSON.stringify({ message: 'Internal Server Error' }),
+        headers: { 
+            'Access-Control-Allow-Origin': '*', 
+            'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', 
+            'Access-Control-Allow-Headers': 'Content-Type', 
+            'Access-Control-Allow-Credentials': 'true', 
+        }, 
     }
   }
 }
