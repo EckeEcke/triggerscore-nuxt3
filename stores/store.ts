@@ -1,3 +1,4 @@
+import { MovieListitem } from './../.nuxt/components.d';
 import { defineStore } from "pinia"
 import placeholderTriggerscores from "~/assets/triggerscores.json"
 import placeholderBondMovies from "~/assets/bondMovies.json"
@@ -139,10 +140,8 @@ export const useStore = defineStore({
       this.triggerscores = triggerscores
       const loadedMovies = await fetch(`https://www.triggerscore.de/.netlify/functions/fetchMovies?locale=${locale}`)
       const movies = await loadedMovies.json()
-      movies.then((res: any) => {
-        this.movies = res
-        this.moviesLoading = false
-      })
+      this.movies = movies
+      this.moviesLoading = false
     },
     async setRecentRatings(locale: string) {
       const data = await fetch('https://www.triggerscore.de/.netlify/functions/fetchRecentRatings') 
