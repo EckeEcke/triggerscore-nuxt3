@@ -340,7 +340,7 @@ import { useI18n } from "vue-i18n"
 import { useStore } from "../stores/store"
 import { ref, computed, watch } from "vue"
 import { useRouter, useRoute } from "vue-router"
-import { Movie, emptyMovie } from "~/types/movie"
+import { emptyMovie } from "~/types/movie"
 
 const store = useStore()
 const router = useRouter()

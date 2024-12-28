@@ -39,7 +39,7 @@ async function loadMovie() {
 async function loadTriggerscore() {
   try {
     const response = await fetch(
-      `https://www.triggerscore.de/.netlify/functions/fetchMovieById/${id}`
+      `https://www.triggerscore.de/.netlify/functions/fetchMovieById?id=${id}`
     )
     const scores = await response.json()
     store.selectedMovieScore = scores[0]

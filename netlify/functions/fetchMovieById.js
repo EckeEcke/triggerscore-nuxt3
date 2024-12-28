@@ -3,7 +3,8 @@ import { calculateScores } from './calculateScores.js'
 
 export const handler = async (event) => {
     try {
-        const { id } = event.pathParameters || {}
+        const url = new URL(event.rawUrl) 
+        const id = url.searchParams.get('id')
         console.log("id: ", id)
         console.log(event)
         console.log(event.pathParameters)
