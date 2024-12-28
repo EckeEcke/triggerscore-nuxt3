@@ -156,5 +156,9 @@
             "list2": "Comentarios o comportamientos sexistas",
             "list3": "Otras formas de discriminación, como el body shaming o el abelismo"
         }
+    },
+    "similar": {
+        "headline": "Descubrir más",
+        "copy": "Películas similares a {0}"
     }
 }

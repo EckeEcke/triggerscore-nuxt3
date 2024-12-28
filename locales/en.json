@@ -156,5 +156,9 @@
       "list2": "Sexist remarks or behavior",
       "list3": "Other forms of discrimination such as body shaming or ableism"
     }
+  },
+  "similar": {
+    "headline": "Discover more",
+    "copy": "Similar movies to {0}"
   }
 }

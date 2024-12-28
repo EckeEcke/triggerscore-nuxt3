@@ -156,5 +156,9 @@
       "list2": "Sexistische Äußerungen oder Verhaltensweisen",
       "list3": "Sonstige Diskriminierungen wie Bodyshaming oder Ableism"
     }
+  },
+  "similar": {
+    "headline": "Mehr entdecken",
+    "copy": "Ähnliche Filme wie {0}"
   }
 }

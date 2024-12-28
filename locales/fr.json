@@ -156,5 +156,9 @@
       "list2": "Propos ou comportements sexistes",
       "list3": "Autres formes de discrimination telles que la honte corporelle ou le capacitisme"
     }
+  },
+  "similar": {
+      "headline": "Découvrir plus",
+      "copy": "Films similaires à {0}"
   }
 }

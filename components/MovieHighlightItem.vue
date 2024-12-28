@@ -59,8 +59,10 @@
           <span class="self-center">{{
             movie.release_date.substring(0, 4)
           }}</span>
-          <span class="mx-2">|</span>
-          <span>{{ movie.runtime }} {{ t("general.minutes") }}</span>
+          <template v-if="movie.runtime">
+            <span class="mx-2">|</span>
+            <span>{{ movie.runtime }} {{ t("general.minutes") }}</span>
+          </template>
         </p>
       </article>
     </div>
@@ -70,7 +72,7 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n"
 
-const { t, locale } = useI18n()
+const { t } = useI18n()
 
 const props = defineProps({
   movie: Object,

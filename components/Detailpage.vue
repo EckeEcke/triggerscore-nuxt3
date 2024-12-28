@@ -285,8 +285,11 @@
                 </div>
               </div>
               <div v-if="trailerUrl" class="iframe-container mb-8">
-                <iframe frameborder="0"
-                    :src="trailerUrl">
+                <iframe 
+                    frameborder="0"
+                    :src="trailerUrl"
+                    allow="fullscreen"
+                >
                 </iframe>
               </div>
               <div class="hidden md:block">
@@ -327,17 +330,18 @@
         </div>
         <Ratingpage />
         <hr class="border-gray-800 md:hidden" />
-        <div class="md:hidden py-12 px-2 radial-background">
+        <div class="md:hidden py-12 px-2">
           <ShareMovie :movie="movie" align-center />
         </div>
       </div>
-      <div class="p-4 radial-background">
+      <div class="sm:px-4 radial-background">
         <MovieHighlightsContainer
+          v-if="similarMovies.body"
           class="xl:w-full bg-transparent"
-          :movies="similarMovies"
+          :movies="similarMovies.body"
           shownScore="rating_total"
-          :title="t('highlights.headline1')"
-          :subTitle="t('highlights.copy1')"
+          :title="t('similar.headline')"
+          :subTitle="t('similar.copy', [movie.title ?? movie.original_title])"
           moreSpacing
         />
       </div>
@@ -366,8 +370,7 @@ const onSky = ref(false)
 const releaseDate = parseInt(movie.value.release_date.substring(0, 4))
 const score: any = computed(() => store.selectedMovieScore)
 const showMoreComments = ref(false)
-const similarMovies = ref([]) 
-const { apiKey } = useRuntimeConfig()
+const similarMovies: any = ref({}) 
 
 const title = computed(() =>
   movie.value !== emptyMovie ? movie.value.title : "Movie on Triggerscore"
@@ -411,16 +414,12 @@ function pushToContact(comment: string) {
 }
 
 const fetchSimilarMovies = async () => { 
-  try { 
-    const response = await fetch(`https://api.themoviedb.org/3/movie/${movie.value.id}/similar?api_key=${apiKey}&language=${locale.value}&page=1`) 
-    if (!response.ok) { 
-      throw new Error(`Error fetching similar movies: ${response.statusText}`) 
-    } 
-    const data = await response.json() 
-    similarMovies.value = data.results 
-  } catch (error) {
-    console.error("Error fetching similar movies:", error) 
+  const response = await fetch(`/api/fetchSimilarMovies?movie_id=${route.params.id}&locale=${locale}`) 
+  if (!response.ok) { 
+    throw new Error(`Error fetching similar movies: ${response.statusText}`) 
   } 
+  const data = await response.json() 
+  similarMovies.value = data
 }
 
 
