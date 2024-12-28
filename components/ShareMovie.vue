@@ -90,7 +90,7 @@ const props = defineProps({
 const copied = ref(false)
 const route = useRoute()
 const currentURL = computed(
-  () => `https://triggerscore.de/${locale.value}/movie/${route.params.id}`
+  () => `https://www.triggerscore.de/${locale.value}/movie/${route.params.id}`
 )
 
 function copyLink() {
