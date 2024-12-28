@@ -35,7 +35,7 @@
               <font-awesome-icon :icon="['fas', 'search']" class="text-lg" />
             </button>
             <input
-              type="text"
+              type="search"
               id="search"
               v-model="store.searchInput"
               v-on:keyup.enter="searchMovie"
