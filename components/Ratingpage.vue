@@ -37,7 +37,7 @@
           {{ t("rating.submitFor") }}<br />"{{ movie.title ?? movie.original_title }}"
         </h2>
         <hr class="border-gray-800 hidden md:block max-w-lg ml-4" />
-        <label class="px-4 my-3 mt-6 block text-lg font-semibold">{{
+        <label class="px-4 my-2 mt-6 block text-lg font-semibold">{{
           t("categories.sexism")
         }}</label>
         <p class="px-4 mb-4 max-w-lg">{{ t("rating.descSexism") }}</p>
@@ -71,12 +71,12 @@
         </div>
 
         <hr class="border-transparent" />
-        <label class="px-4 my-3 block text-lg font-semibold">{{
+        <label class="px-4 my-2 block text-lg font-semibold">{{
           t("categories.racism")
         }}</label>
         <p class="px-4 mb-4 max-w-lg">{{ t("rating.descRacism") }}</p>
         <div
-          class="max-w-full rating hide-scrollbar flex w-fit sm:justify-end ml-3 overflow-y-scroll sm:overflow-hidden mb-5"
+          class="max-w-full rating hide-scrollbar flex w-fit sm:justify-end ml-3 overflow-y-scroll sm:overflow-hidden mb-4"
         >
           <button
             v-for="(n, i) in 11"
@@ -104,12 +104,12 @@
           </button>
         </div>
         <hr class="border-transparent" />
-        <label class="px-4 my-3 block text-lg font-semibold">{{
+        <label class="px-4 my-2 block text-lg font-semibold">{{
           t("categories.others")
         }}</label>
         <p class="px-4 mb-4 max-w-lg">{{ t("rating.descOthers") }}</p>
         <div
-          class="max-w-full rating hide-scrollbar flex w-fit sm:justify-end ml-3 overflow-y-scroll sm:overflow-hidden mb-5"
+          class="max-w-full rating hide-scrollbar flex w-fit sm:justify-end ml-3 overflow-y-scroll sm:overflow-hidden mb-4"
         >
           <button
             v-for="(n, i) in 11"
@@ -138,12 +138,12 @@
         </div>
 
         <hr class="border-transparent" />
-        <label class="px-4 my-3 block text-lg font-semibold">{{
+        <label class="px-4 my-2 block text-lg font-semibold">{{
           t("categories.cringe")
         }}</label>
         <p class="px-4 mb-4 max-w-lg">{{ t("rating.descCringe") }}</p>
         <div
-          class="max-w-full rating hide-scrollbar flex w-fit sm:justify-end ml-3 overflow-y-scroll sm:overflow-hidden mb-5"
+          class="max-w-full rating hide-scrollbar flex w-fit sm:justify-end ml-3 overflow-y-scroll sm:overflow-hidden mb-4"
         >
           <button
             v-for="(n, i) in 11"
@@ -174,7 +174,7 @@
         <p class="my-4 text-lg font-semibold px-4 max-w-lg">
           {{ t("rating.leaveComment") }} (optional)
         </p>
-        <div class="w-full px-4">
+        <div class="w-full px-4 mb-4">
           <textarea
             rows="3"
             class="w-full max-w-lg bg-gray-950 p-2 resize-none rounded-lg"
@@ -192,7 +192,7 @@
             {{ t("rating.didYouLike") }} (optional)
           </p>
           <div
-            class="flex justify-center md:justify-center gap-4 mx-4 my-4 max-w-lg"
+            class="flex justify-center md:justify-center gap-4 mx-4 mt-4 max-w-lg"
           >
             <LikeAnimation
               :dislikeClicked="disliked"

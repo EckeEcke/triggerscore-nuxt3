@@ -27,7 +27,7 @@
 }
 
 .radial-background {
-  background: radial-gradient(rgba(5, 5, 15, 0.8), rgba(5, 5, 20, 0.7));
+  background: radial-gradient(rgba(5, 5, 15, 0.99), rgba(5, 5, 20, 0.9));
   backdrop-filter: blur(4px);
 }
 

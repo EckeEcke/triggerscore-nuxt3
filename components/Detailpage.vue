@@ -47,7 +47,7 @@
               :src="poster"
               :key="locale"
               alt="movie poster"
-              class="w-1/2 lg:w-76 h-auto object-contain self-start rounded self-center detailpage-box-shadow"
+              class="w-1/2 lg:w-76 h-auto object-contain rounded self-center detailpage-box-shadow"
             />
             <div
               v-if="scoreAvailable"
@@ -208,7 +208,7 @@
               <article class="my-4 text-sm md:text-md">
                 {{ movie.overview }}
               </article>
-              <div class="flex justify-between my-4 mb-8 align-end">
+              <div class="flex justify-between my-4 mb-4 align-end">
                 <div class="streaming-services flex gap-4 w-full">
                   <a
                     v-if="onNetflix"
@@ -284,7 +284,7 @@
                   </a>
                 </div>
               </div>
-              <div v-if="trailerUrl" class="iframe-container mb-8 detailpage-box-shadow">
+              <div v-if="trailerUrl" class="iframe-container mt-4 mb-8 detailpage-box-shadow">
                 <iframe 
                     frameborder="0"
                     :src="trailerUrl"
@@ -292,13 +292,10 @@
                 >
                 </iframe>
               </div>
-              <div class="hidden md:block">
-                <ShareMovie :movie="movie" />
-              </div>
             </div>
           </div>
           <div v-if="comments && comments.length > 0" class="px-4 mb-12 mt-4">
-            <h2 class="text-white font-semibold text-lg text-left mb-6">
+            <h2 class="text-white font-semibold text-lg text-left mb-4">
               {{ t("general.comments") }}
             </h2>
             <div class="grid sm:grid-cols-2 gap-2">
@@ -327,10 +324,13 @@
               <font-awesome-icon :icon="['fas', showMoreComments ? 'caret-up' : 'caret-down']" />
             </p>
           </div>
+          <div class="hidden md:block px-4 sm:mb-4">
+            <ShareMovie :movie="movie" />
+          </div>
         </div>
         <Ratingpage />
         <hr class="border-gray-800 md:hidden" />
-        <div class="px-4 md:hidden py-12 px-2">
+        <div class="px-4 md:hidden py-12 mb-4">
           <ShareMovie :movie="movie" />
         </div>
       </div>
