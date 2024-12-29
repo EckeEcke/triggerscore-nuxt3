@@ -1,11 +1,11 @@
 <template>
   <h3
-    class="pb-0 text-white font-semibold text-lg self-center mb-4"
+    class="pb-0 text-white text-left font-semibold text-lg mb-4"
     target="_blank"
   >
     {{ t("rating.share") }}
   </h3>
-  <div class="flex gap-6" :class="alignCenter ? 'justify-center' : ''">
+  <div class="flex gap-6">
     <a
       :href="
         'whatsapp://send?text=' +
@@ -84,7 +84,6 @@ const { t, locale } = useI18n()
 
 const props = defineProps({
   movie: {},
-  alignCenter: Boolean,
 })
 
 const copied = ref(false)

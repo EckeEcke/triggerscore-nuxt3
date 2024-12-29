@@ -330,10 +330,11 @@
         </div>
         <Ratingpage />
         <hr class="border-gray-800 md:hidden" />
-        <div class="md:hidden py-12 px-2">
-          <ShareMovie :movie="movie" align-center />
+        <div class="px-4 md:hidden py-12 px-2">
+          <ShareMovie :movie="movie" />
         </div>
       </div>
+      <hr class="border-gray-800" />
       <div class="sm:px-4 radial-background sm:rounded-b">
         <MovieHighlightsContainer
           v-if="similarMovies.body"
