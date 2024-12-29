@@ -44,7 +44,7 @@
       class="flex justify-around w-full mt-4 xl:mt-2"
     >
       <span>{{ minScore }}</span>
-      <span>{{ $t("filter.to") }}</span>
+      <span>{{ t("filter.to") }}</span>
       <span>{{ maxScore }}</span>
     </div>
   </div>
@@ -52,8 +52,9 @@
 
 <script setup lang="ts">
 import { useStore } from "~/stores/store"
+import { useI18n } from "vue-i18n"
 
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 const store = useStore()
 const min = ref(0)
 const max = ref(10)

@@ -31,15 +31,15 @@
       <div class="container px-4 xl:w-10/12 mx-auto flex flex-col mt-8 mb-4">
         <div class="text-left lg:hidden">
           <h2 class="text-2xl md:text-3xl font-semibold mb-2 text-yellow-500">
-            {{ $t("index.headline") }}
+            {{ t("index.headline") }}
           </h2>
           <p class="text-sm text-white">
-            {{ $t("index.intro1")
+            {{ t("index.intro1")
             }}<span
               class="text-yellow-500 transition hover:text-yellow-600 font-semibold cursor-pointer"
               @click="focusSearch"
-              >{{ $t("index.search") }}</span
-            >{{ $t("index.intro2") }}
+              >{{ t("index.search") }}</span
+            >{{ t("index.intro2") }}
           </p>
         </div>
         <div class="ml-auto mt-4 -mr-2 sm:mr-0 lg:hidden">
@@ -74,13 +74,13 @@
         v-if="!isLoading && filteredMovies.length == 0 && !isFiltering"
       >
         <p class="text-white text-xl font-semibold animate-bounce mb-4">
-          {{ $t("search.noResults") }}
+          {{ t("search.noResults") }}
         </p>
         <button
           class="font-semibold bg-yellow-500 p-3 shadow text-white uppercase rounded-lg"
           @click="resetFilter"
         >
-          {{ $t("filter.resetFilter") }}
+          {{ t("filter.resetFilter") }}
         </button>
       </div>
     </div>
@@ -130,9 +130,10 @@
 
 <script setup lang="ts">
 import { useStore } from "~/stores/store"
+import { useI18n } from "vue-i18n"
 
 const store = useStore()
-const {locale } = useI18n()
+const {locale, t } = useI18n()
 const showMenu = ref(false)
 const start = ref(0)
 const end = ref(24)

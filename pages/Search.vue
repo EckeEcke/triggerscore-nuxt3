@@ -116,9 +116,11 @@ async function searchMore() {
 if (store.searchTerm == "") {
   navigateTo(localePath('/'))
 }
+
 </script>
 
 <style scoped>
+
 main {
   min-height: calc(100vh - 20rem);
 }

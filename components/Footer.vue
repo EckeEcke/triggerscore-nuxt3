@@ -21,19 +21,19 @@
           <NuxtLink
             :to="localePath('/about')"
             class="border-r border-white px-4 lg:pl-0 uppercase"
-            >{{ $t("header.about") }}</NuxtLink
+            >{{ t("header.about") }}</NuxtLink
           >
           <NuxtLink :to="localePath('/faq')" class="border-r border-white px-4 uppercase">{{
-            $t("header.faq")
+            t("header.faq")
           }}</NuxtLink>
           <NuxtLink :to="localePath('/contact')" class="px-4 uppercase">{{
-            $t("header.contact")
+            t("header.contact")
           }}</NuxtLink>
         </div>
         <article
           class="mx-auto text-white w-64 max-w-full text-center lg:text-left text-xs"
         >
-          {{ $t("general.slogan") }}
+          {{ t("general.slogan") }}
         </article>
       </div>
       <div
@@ -81,5 +81,8 @@
 </template>
 
 <script setup lang="ts">
+import { useI18n } from "vue-i18n"
+
 const localePath = useLocalePath()
-</script>
+const { t } = useI18n()
+ </script>

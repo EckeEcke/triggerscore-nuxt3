@@ -27,35 +27,41 @@
         }"
       >
         <h2 class="font-semibold text-4xl mb-2 uppercase">
-          {{ $t("faq.headline") }}
+          {{ t("faq.headline") }}
         </h2>
       </div>
-      <p class="font-semibold text-2xl">{{ $t("faq.subheadline") }}</p>
+      <p class="font-semibold text-2xl">{{ t("faq.subheadline") }}</p>
       <hr class="my-6" />
       <section class="mt-4 leading-7">
         <p class="mb-2">
-          <b>{{ $t("faq.question1") }}</b>
+          <b>{{ t("faq.question1") }}</b>
         </p>
-        <p>{{ $t("faq.answer1") }}</p>
+        <p>{{ t("faq.answer1") }}</p>
       </section>
       <section class="mt-4 leading-7">
         <p class="mb-2">
-          <b>{{ $t("faq.question2") }}</b>
+          <b>{{ t("faq.question2") }}</b>
         </p>
-        <p>{{ $t("faq.answer2") }}</p>
+        <p>{{ t("faq.answer2") }}</p>
       </section>
       <section class="mt-4 leading-7">
         <p class="mb-2">
-          <b>{{ $t("faq.question3") }}</b>
+          <b>{{ t("faq.question3") }}</b>
         </p>
-        <p>{{ $t("faq.answer3") }}</p>
+        <p>{{ t("faq.answer3") }}</p>
       </section>
       <section class="mt-4 leading-7">
         <p class="mb-2">
-          <b>{{ $t("faq.question4") }}</b>
+          <b>{{ t("faq.question4") }}</b>
         </p>
-        <p>{{ $t("faq.answer4") }}</p>
+        <p>{{ t("faq.answer4") }}</p>
       </section>
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { useI18n } from "vue-i18n"
+
+const { t } = useI18n()
+</script>

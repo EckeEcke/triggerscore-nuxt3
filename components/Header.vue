@@ -26,7 +26,7 @@
           :to="localePath('/all')"
           tag="a"
           class="animated-link text-white font-semibold self-center mr-6 md:mr-10 hidden md:block hover:text-yellow-500 uppercase"
-          >{{ $t("header.allMovies") }}</NuxtLink
+          >{{ t("header.allMovies") }}</NuxtLink
         >
         <NuxtLink
           :to="localePath('/stats')"
@@ -38,7 +38,7 @@
           :to="localePath('/about')"
           tag="a"
           class="animated-link text-white font-semibold self-center mr-6 md:mr-10 hidden md:block hover:text-yellow-500 uppercase"
-          >{{ $t("header.about") }}</NuxtLink
+          >{{ t("header.about") }}</NuxtLink
         >
         <LanguageSelect />
         <font-awesome-icon
@@ -102,7 +102,7 @@
             tag="a"
             class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase"
             ><div class="py-6" @click="showNav = false">
-              {{ $t("header.home") }}
+              {{ t("header.home") }}
             </div></NuxtLink
           >
           <NuxtLink
@@ -110,7 +110,7 @@
             tag="a"
             class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase"
             ><div class="py-6" @click="showNav = false">
-              {{ $t("header.allMovies") }}
+              {{ t("header.allMovies") }}
             </div></NuxtLink
           >
           <NuxtLink
@@ -124,7 +124,7 @@
             tag="a"
             class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase"
             ><div class="py-6" @click="showNav = false">
-              {{ $t("header.about") }}
+              {{ t("header.about") }}
             </div></NuxtLink
           >
           <NuxtLink
@@ -132,7 +132,7 @@
             tag="a"
             class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase"
             ><div class="py-6" @click="showNav = false">
-              {{ $t("header.faq") }}
+              {{ t("header.faq") }}
             </div></NuxtLink
           >
           <NuxtLink
@@ -140,7 +140,7 @@
             tag="a"
             class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase"
             ><div class="py-6" @click="showNav = false">
-              {{ $t("header.contact") }}
+              {{ t("header.contact") }}
             </div></NuxtLink
           >
         </nav>
@@ -187,7 +187,7 @@
                   @input="resetSearchResults"
                   class="lg:text-xl px-4 w-full outline-none transition"
                   ref="searchHeader"
-                  :placeholder="$t('header.searchPlaceholder')"
+                  :placeholder="t('header.searchPlaceholder')"
                 />
                 <div
                   class="bg-white rounded-r-xl h-full w-8 flex justify-center"
@@ -209,7 +209,9 @@
 
 <script setup lang="ts">
 import { useStore } from "../stores/store"
+import { useI18n } from "vue-i18n"
 
+const { t } = useI18n()
 const showSearch = ref(false)
 const showMenu = ref(false)
 const showNav = ref(false)

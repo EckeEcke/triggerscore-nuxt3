@@ -3,17 +3,17 @@
     <div class="container hidden lg:block sm:px-4 xl:w-10/12 mx-auto">
       <div class="text-left pt-4 lg:pt-0 pb-5">
         <h2 class="text-2xl md:text-3xl font-semibold mb-2 text-white">
-          {{ $t("index.headline") }}
+          {{ t("index.headline") }}
         </h2>
         <p class="text-sm text-white">
-          {{ $t("index.intro1") }}
+          {{ t("index.intro1") }}
           <span
             class="text-yellow-500 transition hover:text-yellow-600 font-semibold cursor-pointer"
             @click="focusSearch"
           >
-            {{ $t("index.search") }}
+            {{ t("index.search") }}
           </span>
-          {{ $t("index.intro2") }}
+          {{ t("index.intro2") }}
         </p>
       </div>
       <div class="px-0 py-4 rounded-b text-white">
@@ -21,7 +21,7 @@
           <div class="flex">
             <div class="w-52 mr-4">
               <h2 class="font-semibold text-left mb-2">
-                {{ $t("filter.sort") }}
+                {{ t("filter.sort") }}
               </h2>
               <div class="flex w-full my-3 border border-gray-200 rounded">
                 <select
@@ -29,29 +29,29 @@
                   class="w-full h-8 md:h-10 bg-white rounded p-2 outline-none text-sm md:text-base text-black"
                 >
                   <option class="py-1" value="a-z">
-                    {{ $t("filter.AtoZ") }}
+                    {{ t("filter.AtoZ") }}
                   </option>
                   <option class="py-1" value="z-a">
-                    {{ $t("filter.ZtoA") }}
+                    {{ t("filter.ZtoA") }}
                   </option>
                   <option class="py-1" value="date-desc">
-                    {{ $t("filter.yearDesc") }}
+                    {{ t("filter.yearDesc") }}
                   </option>
                   <option class="py-1" value="date-asc">
-                    {{ $t("filter.yearAsc") }}
+                    {{ t("filter.yearAsc") }}
                   </option>
                   <option class="py-1" value="ts-desc">
-                    {{ $t("filter.scoreDesc") }}
+                    {{ t("filter.scoreDesc") }}
                   </option>
                   <option class="py-1" value="ts-asc">
-                    {{ $t("filter.scoreAsc") }}
+                    {{ t("filter.scoreAsc") }}
                   </option>
                 </select>
               </div>
             </div>
             <div class="w-52">
               <h2 class="font-semibold text-left mb-2">
-                {{ $t("filter.chooseScore") }}
+                {{ t("filter.chooseScore") }}
               </h2>
               <div class="flex w-full my-3 border border-gray-200 rounded">
                 <select
@@ -59,19 +59,19 @@
                   class="w-full h-8 md:h-10 bg-white rounded p-2 outline-none text-sm md:text-base text-black"
                 >
                   <option class="py-1" value="rating_total">
-                    {{ $t("categories.totalScore") }}
+                    {{ t("categories.totalScore") }}
                   </option>
                   <option class="py-1" value="rating_sexism">
-                    {{ $t("categories.sexism") }}
+                    {{ t("categories.sexism") }}
                   </option>
                   <option class="py-1" value="rating_racism">
-                    {{ $t("categories.racism") }}
+                    {{ t("categories.racism") }}
                   </option>
                   <option class="py-1" value="rating_others">
-                    {{ $t("categories.others") }}
+                    {{ t("categories.others") }}
                   </option>
                   <option class="py-1" value="rating_cringe">
-                    {{ $t("categories.cringe") }}
+                    {{ t("categories.cringe") }}
                   </option>
                 </select>
               </div>
@@ -79,13 +79,13 @@
           </div>
           <div class="flex h-24 flex-col">
             <h2 class="font-semibold text-left mt-2 mb-7">
-              {{ $t("filter.filterByScore") }}
+              {{ t("filter.filterByScore") }}
             </h2>
             <Rangeslider />
           </div>
           <div class="">
             <h2 class="font-semibold text-left">
-              {{ $t("filter.filterByRelease") }}
+              {{ t("filter.filterByRelease") }}
             </h2>
             <div class="flex">
               <div class="w-1/2 mr-2 flex flex-col my-3">
@@ -96,7 +96,7 @@
                   class="border border-gray-200 rounded w-20 p-2 text-center h-10 text-black"
                   min="1900"
                   max="2010"
-                  :placeholder="$t('filter.from')"
+                  :placeholder="t('filter.from')"
                   @input="scrollToTop"
                 />
               </div>
@@ -108,14 +108,14 @@
                   class="border border-gray-200 rounded w-20 p-2 text-center h-10 text-black"
                   min="1900"
                   max="2010"
-                  :placeholder="$t('filter.to')"
+                  :placeholder="t('filter.to')"
                   @input="scrollToTop"
                 />
               </div>
             </div>
           </div>
         </div>
-        <hr class="my-4" />
+        <hr class="my-4 border-gray-800" />
         <div class="flex justify-between items-center">
           <div class="gap-4">
             <div class="flex items-center -mb-3">
@@ -204,13 +204,13 @@
             </div>
           </div>
           <div class="font-semibold p-3 ml-auto mr-4">
-            {{ results }} {{ $t("filter.results") }}
+            {{ results }} {{ t("filter.results") }}
           </div>
           <button
             class="font-semibold p-3 w-auto text-white uppercase"
             @click="resetFilter"
           >
-            {{ $t("filter.resetFilter") }}
+            {{ t("filter.resetFilter") }}
           </button>
         </div>
       </div>

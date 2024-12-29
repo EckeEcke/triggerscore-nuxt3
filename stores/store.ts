@@ -1,8 +1,7 @@
-import { MovieListitem } from './../.nuxt/components.d';
 import { defineStore } from "pinia"
 import placeholderTriggerscores from "~/assets/triggerscores.json"
 import placeholderBondMovies from "~/assets/bondMovies.json"
-import { Movie } from "~/types/movie"
+import type { Movie } from "~/types/movie"
 
 function sortAtoZ(x: Movie, y: Movie): 1 | -1 | 0 {
   const titleX = x.title ? x.title : x.original_title
@@ -29,7 +28,7 @@ function sortZtoA(x: Movie, y: Movie) {
 }
 
 function sortByDateDesc(x: Movie, y: Movie) {
-  return Number(new Date(y.release_date)) - Number(new Date(x.release_date))
+  return Number(new Date(y.release_date as any)) - Number(new Date(x.release_date as any))
 }
 
 function sortByDateAsc(

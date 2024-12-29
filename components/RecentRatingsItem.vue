@@ -33,7 +33,7 @@
           <div class="text-xs pt-1">
             <span>{{ movie.release_date.substring(0, 4) }}</span>
             <span class="mx-2">|</span>
-            <span>{{ movie.runtime }} {{ $t("general.minutes") }}</span>
+            <span>{{ movie.runtime }} {{ t("general.minutes") }}</span>
           </div>
         </div>
       </div>
@@ -89,24 +89,24 @@
         <div class="text-xs mb-1 py-1 hidden md:block">
           <span>{{ movie.release_date.substring(0, 4) }}</span>
           <span class="mx-2">|</span>
-          <span>{{ movie.runtime }} {{ $t("general.minutes") }}</span>
+          <span>{{ movie.runtime }} {{ t("general.minutes") }}</span>
         </div>
         <div class="grid grid-cols-2 text-sm max-w-xs mt-auto">
           <RecentRatingsItemScoreDisplay
             :score="scores?.rating_sexism"
-            :name="$t('categories.sexism')"
+            :name="t('categories.sexism')"
           />
           <RecentRatingsItemScoreDisplay
             :score="scores?.rating_racism"
-            :name="$t('categories.racism')"
+            :name="t('categories.racism')"
           />
           <RecentRatingsItemScoreDisplay
             :score="scores?.rating_others"
-            :name="$t('categories.others')"
+            :name="t('categories.others')"
           />
           <RecentRatingsItemScoreDisplay
             :score="scores?.rating_cringe"
-            :name="$t('categories.cringe')"
+            :name="t('categories.cringe')"
           />
         </div>
       </article>
@@ -117,8 +117,9 @@
 <script setup lang="ts">
 import { useStore } from "~/stores/store"
 import placeholderRatings from "~/assets/recentRatings.json"
+import { useI18n } from "vue-i18n"
 
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 const store = useStore()
 const props = defineProps({
   movie: {

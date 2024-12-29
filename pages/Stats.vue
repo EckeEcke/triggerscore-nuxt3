@@ -22,10 +22,10 @@
               class="text-white"
             />RE
           </span>
-          {{ $t("general.stats") }}
+          {{ t("general.stats") }}
         </h2>
         <p class="text-base md:text-lg text-white font-semibold">
-          {{ $t("general.statsCopy") }}
+          {{ t("general.statsCopy") }}
         </p>
       </div>
     </div>
@@ -37,8 +37,9 @@
 
 <script setup lang="ts">
 import { useStore } from "~/stores/store"
+import { useI18n } from "vue-i18n"
 
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 const isLoading = computed(
   () =>
     store.highlightsLoading ||

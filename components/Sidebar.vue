@@ -18,7 +18,7 @@
                 />
               </p>
               <h2 class="font-semibold text-left mb-2">
-                {{ $t("filter.sort") }}
+                {{ t("filter.sort") }}
               </h2>
               <div class="flex w-full my-3 border border-gray-200 rounded">
                 <select
@@ -28,22 +28,22 @@
                   <option class="py-1" value="a-z">A-Z</option>
                   <option class="py-1" value="z-a">Z-A</option>
                   <option class="py-1" value="date-desc">
-                    {{ $t("filter.yearDesc") }}
+                    {{ t("filter.yearDesc") }}
                   </option>
                   <option class="py-1" value="date-asc">
-                    {{ $t("filter.yearAsc") }}
+                    {{ t("filter.yearAsc") }}
                   </option>
                   <option class="py-1" value="ts-desc">
-                    {{ $t("filter.scoreDesc") }}
+                    {{ t("filter.scoreDesc") }}
                   </option>
                   <option class="py-1" value="ts-asc">
-                    {{ $t("filter.scoreAsc") }}
+                    {{ t("filter.scoreAsc") }}
                   </option>
                 </select>
               </div>
               <hr class="my-4 border-gray-800" />
               <h2 class="font-semibold text-left mb-2">
-                {{ $t("filter.displayedScore") }}
+                {{ t("filter.displayedScore") }}
               </h2>
               <div class="flex w-full my-3 border border-gray-200 rounded">
                 <select
@@ -51,32 +51,32 @@
                   class="w-full h-8 md:h-10 bg-white rounded p-2 outline-none text-sm md:text-base text-black"
                 >
                   <option class="py-1" value="rating_total">
-                    {{ $t("categories.totalScore") }}
+                    {{ t("categories.totalScore") }}
                   </option>
                   <option class="py-1" value="rating_sexism">
-                    {{ $t("categories.sexism") }}
+                    {{ t("categories.sexism") }}
                   </option>
                   <option class="py-1" value="rating_racism">
-                    {{ $t("categories.racism") }}
+                    {{ t("categories.racism") }}
                   </option>
                   <option class="py-1" value="rating_others">
-                    {{ $t("categories.others") }}
+                    {{ t("categories.others") }}
                   </option>
                   <option class="py-1" value="rating_cringe">
-                    {{ $t("categories.cringe") }}
+                    {{ t("categories.cringe") }}
                   </option>
                 </select>
               </div>
               <hr class="my-4 border-gray-800" />
               <div class="mb-6">
                 <h2 class="font-semibold text-left mb-6">
-                  {{ $t("filter.filterByScore") }}
+                  {{ t("filter.filterByScore") }}
                 </h2>
                 <Rangeslider class="px-3" />
               </div>
               <hr class="my-4 border-gray-800" />
               <h2 class="font-semibold text-left mb-2">
-                {{ $t("filter.filterByProvider") }}
+                {{ t("filter.filterByProvider") }}
               </h2>
               <div class="form-check text-left mb-2 h-8">
                 <input
@@ -153,7 +153,7 @@
               <hr class="my-4 border-gray-800" />
               <div class="flex flex-col my-4">
                 <h2 class="font-semibold text-left mb-2">
-                  {{ $t("filter.filterByRelease") }}
+                  {{ t("filter.filterByRelease") }}
                 </h2>
                 <div class="flex">
                   <div class="w-1/2 mr-2 flex flex-col">
@@ -164,7 +164,7 @@
                       class="border border-gray-200 rounded w-24 p-2 text-center text-black"
                       min="1900"
                       max="2010"
-                      :placeholder="$t('filter.from')"
+                      :placeholder="t('filter.from')"
                       @input="scrollToTop"
                     />
                   </div>
@@ -176,7 +176,7 @@
                       class="border border-gray-200 rounded w-24 p-2 text-center text-black"
                       min="1900"
                       max="2010"
-                      :placeholder="$t('filter.to')"
+                      :placeholder="t('filter.to')"
                       @input="scrollToTop"
                     />
                   </div>
@@ -196,14 +196,14 @@
               "
             />
             <div class="text-sm my-5 font-semibold">
-              {{ results }} {{ $t("filter.results") }}
+              {{ results }} {{ t("filter.results") }}
             </div>
             <hr class="my-4 border-gray-800" />
             <button
               class="font-semibold bg-yellow-500 py-3 w-full shadow text-white uppercase rounded-lg"
               @click="resetFilter"
             >
-              {{ $t("filter.resetFilter") }}
+              {{ t("filter.resetFilter") }}
             </button>
           </div>
         </div>
@@ -217,7 +217,7 @@ import { useStore } from "~/stores/store"
 import { useI18n } from "vue-i18n"
 
 const store = useStore()
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 
 const sortingOption = computed(() => store.sortingOption)
 const filterMin = computed(() => store.filterMoviesByYearMin)
