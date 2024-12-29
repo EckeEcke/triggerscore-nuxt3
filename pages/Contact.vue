@@ -24,10 +24,15 @@
         name="contact"
         class="w-full p-8 bg-gradient-to-r from-gray-950 to-gray-800 rounded text-gray-900"
         method="post"
+        netlify
         data-netlify="true"
         data-netlify-honeypot="bot-field"
         @submit.prevent="handleSubmit"
       >
+        <div class="hidden">
+          <label>Don't fill this out if you're human:</label> 
+          <input name="bot-field" /> 
+        </div>
         <input type="hidden" name="form-name" value="contact" />
         <div class="flex flex-col gap-1 mb-4">
           <label class="font-semibold mb-2 text-white">{{
