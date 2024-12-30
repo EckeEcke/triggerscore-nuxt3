@@ -158,18 +158,16 @@ if (route.query.comment) {
 
 const submitted = ref(false)
 
-function encode(data: any) {
-  return Object.keys(data)
-    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
-    .join("&")
-}
-async function handleSubmit() {
+async function handleSubmit(e: any) {
+  const form = e.target
+  const formData = new FormData(form)
+  console.log(form.value)
   await useFetch("/", {
     method: "POST",
-    body: encode({
-      "form-name": "contact",
-      ...form,
-    }),
+    headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    body: new URLSearchParams(formData).toString(),
   })
     .then(() => (submitted.value = true))
     .catch((error: any) => console.log(error))

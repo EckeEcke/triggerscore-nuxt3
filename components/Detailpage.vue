@@ -415,7 +415,7 @@ function pushToContact(comment: string) {
 }
 
 const fetchSimilarMovies = async () => { 
-  const response = await fetch(`/api/fetchSimilarMovies?movie_id=${route.params.id}&locale=${locale}`) 
+  const response = await fetch(`/api/fetchSimilarMovies?movie_id=${route.params.id}&locale=${locale.value}`) 
   if (!response.ok) { 
     throw new Error(`Error fetching similar movies: ${response.statusText}`) 
   } 
@@ -475,6 +475,7 @@ watch(locale, () => {
     }
   }
 
+  fetchSimilarMovies()
   loadMovie()
   loadProviders()
 })
