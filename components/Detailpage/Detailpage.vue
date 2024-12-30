@@ -11,26 +11,26 @@
         <Title>{{ title }}</Title>
         <Meta charset="UTF-8" />
         <Meta
-          name="keywords"
+          :name="'keywords'"
           :content="'Triggerscore, triggering movies' + title"
         />
         <Meta
-          name="description"
+          :name="'description'"
           :content="'triggerscore rating for ' + title"
         />
         <Meta name="author" content="Christian Eckardt" />
         <Meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <Meta property="og:title" :content="JSON.stringify(title)" />
+        <Meta :property="'og:title'" :content="JSON.stringify(title)" />
         <Meta
           property="og:description"
           content="Triggerscore - rating old movies based on how much users today get triggered"
         />
-        <Meta property="og:image" :content="ogImage" />
+        <Meta :property="'og:image'" :content="ogImage" />
         <Meta
-          property="og:url"
+          :property="'og:url'"
           :content="`https://www.triggerscore.de/movie/${route.params.id}`"
         />
-        <Meta property="og:type" content="website" />
+        <Meta property="og:type" content="video.movie" />
       </client-only>
     </Head>
     <div class="container mx-auto sm:pt-6 sm:pb-12 xl:w-10/12 md:px-4">
