@@ -475,7 +475,6 @@ watch(locale, () => {
     }
   }
 
-  fetchSimilarMovies()
   loadMovie()
   loadProviders()
 })
