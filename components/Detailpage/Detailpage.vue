@@ -26,6 +26,8 @@
           content="Triggerscore - rating old movies based on how much users today get triggered"
         />
         <Meta :property="'og:image'" :content="ogImage" />
+        <Meta :property="'og:image:url'" :content="ogImage" />
+        <Meta :property="'og:image:secure_url'" :content="ogImage" />
         <Meta
           :property="'og:url'"
           :content="`https://www.triggerscore.de/movie/${route.params.id}`"
