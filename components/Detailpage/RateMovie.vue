@@ -229,6 +229,9 @@
 </template>
 
 <script setup lang="ts">
+import DislikeAnimation from "./DislikeAnimation.vue"
+import LikeAnimation from "./LikeAnimation.vue"
+import ThankyouAnimation from "./ThankyouAnimation.vue"
 import { useI18n } from "vue-i18n"
 import { useStore } from "~/stores/store"
 

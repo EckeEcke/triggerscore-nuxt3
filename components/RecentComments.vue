@@ -81,7 +81,6 @@
 <script setup lang="ts">
 import { useStore } from "~/stores/store"
 
-const { locale } = useI18n()
 const store = useStore()
 const container: Ref<any> = ref(null)
 const touchstartX = ref(0)
@@ -93,7 +92,8 @@ const commentTotalRating = (commentId: number, limitTop: number, limitBottom: nu
       wantedMovie.rating_total < limitTop &&
       wantedMovie.rating_total >= limitBottom
 }
-const pathToNavigate = (id: string) => `${locale.value}/movie/${id}`
+const localePath = useLocalePath()
+const pathToNavigate = (id: string) => localePath(`/movie/${id}`)
 const toggleBool = ref(false)
 let intervalId: any = undefined
 

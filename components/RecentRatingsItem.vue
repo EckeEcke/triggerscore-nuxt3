@@ -133,7 +133,8 @@ const props = defineProps({
   },
 })
 
-const pathToNavigate = (id: string) => `${locale.value}/movie/${id}`
+const localePath = useLocalePath()
+const pathToNavigate = (id: string) => localePath(`/movie/${id}`)
 const poster2 = computed(
   () =>
     `https://image.tmdb.org/t/p/original/${

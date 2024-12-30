@@ -21,7 +21,7 @@
       <img
         class="w-10"
         alt="Logo WhatsApp"
-        src="../assets/images/WhatsApp.svg"
+        src="~/assets/images/WhatsApp.svg"
       />
     </a>
     <a
@@ -31,7 +31,7 @@
       <img
         alt="Logo Reddit"
         class="w-10"
-        src="../assets/images/reddit-logo.svg"
+        src="~/assets/images/reddit-logo.svg"
       />
     </a>
     <a
@@ -41,7 +41,7 @@
       <img
         alt="Logo Facebook"
         class="w-10"
-        src="../assets/images/facebook-logo.svg"
+        src="~/assets/images/facebook-logo.svg"
       />
     </a>
     <a

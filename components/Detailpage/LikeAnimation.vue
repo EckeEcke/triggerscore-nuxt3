@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import likeAnimation from "../assets/images/like-animation.json"
+import likeAnimation from "../../assets/images/like-animation.json"
 import { ref } from "vue"
 
 const likeClicked = ref(false)

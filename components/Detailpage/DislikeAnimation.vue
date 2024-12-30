@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import DislikeAnimation from "../assets/images/dislike-animation.json"
+import DislikeAnimation from "../../assets/images/dislike-animation.json"
 
 const dislikeAnimation = DislikeAnimation
 const dislikeClicked = ref(false)
