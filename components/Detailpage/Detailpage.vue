@@ -168,7 +168,7 @@ const similarMovies: any = ref({})
 const title = computed(() =>
   movie.value !== emptyMovie ? movie.value.title : "Movie on Triggerscore"
 )
-const poster = computed(() => `https://www.triggerscore.de/api/poster?poster_path=${movie.value.poster_path}`)
+const poster = `https://www.triggerscore.de/api/poster?poster_path=${movie.value.poster_path}`
 const genres = computed(() => movie.value.genres.map((genre: any) => genre.name))
 
 const totalRatings = computed(() => {
