@@ -25,7 +25,7 @@
           property="og:description"
           content="Triggerscore - rating old movies based on how much users today get triggered"
         />
-        <Meta property="og:image" :content="poster" />
+        <Meta property="og:image" :content="ogImage" />
         <Meta
           property="og:url"
           :content="`https://www.triggerscore.de/movie/${route.params.id}`"
@@ -169,6 +169,7 @@ const title = computed(() =>
   movie.value !== emptyMovie ? movie.value.title : "Movie on Triggerscore"
 )
 const poster = `https://www.triggerscore.de/api/poster?poster_path=${movie.value.poster_path}`
+const ogImage = `https://www.triggerscore.de/api/og-image?poster_path=${movie.value.poster_path}`
 const genres = computed(() => movie.value.genres.map((genre: any) => genre.name))
 
 const totalRatings = computed(() => {
