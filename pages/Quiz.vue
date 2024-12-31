@@ -8,9 +8,9 @@
         class="text-white"
     />RE QUIZ
     </div>
-    <div class="flex bg-gray-500 text-white justify-between p-4 my-4 rounded-lg">
+    <div class="flex bg-gray-400 text-white font-extrabold justify-between p-4 my-4 rounded-lg">
       <div>
-        PUNKTE: {{ score }}
+        DEINE PUNKTE: {{ score }}
       </div>
       <div>
         DIESE RUNDE: {{ currentPoints }}
@@ -25,12 +25,12 @@
         </div>
       </div>
       <div class="grid grid-cols-2 gap-4">
-        <button v-for="(title, index) in movieTitlesForQuiz" class="bg-yellow-500 transition hover:bg-yellow-600 p-3 rounded-lg text-white font-semibold uppercase" @click="checkForRightAnswer(index)">
+        <button v-for="(title, index) in movieTitlesForQuiz" :key="index" :class="buttonClass(index)" @click="checkForRightAnswer(index)">
         {{ title }}
         </button>
       </div>
     </div>
-    <div v-else>
+    <div v-else class="mt-8">
       <button class="bg-yellow-500 transition hover:bg-yellow-600 p-3 rounded-lg text-white font-semibold uppercase" @click="startGame">
         Start Game
       </button>
@@ -47,6 +47,7 @@ const movies = computed(() => store.movies)
 const gameRunning = ref(false)
 
 const correctIndex = ref(-1)
+const selectedAnswer = ref<number | null>(null)
 const displayedKeywords = ref<string[]>([])
 const previousMovies = ref<number[]>([])
 const intervalKeywords = ref<number | null>(null)
@@ -75,19 +76,31 @@ const movieTitlesForQuiz = computed(() => moviesForQuiz.value.map(movie => movie
 const keywordsForMovies = computed(() => moviesForQuiz.value.map(movie => movie.keywords.keywords.map(keyword => keyword.name)))
 
 const checkForRightAnswer = (indexOfAnswerGiven: Number) => {
+  if (selectedAnswer.value) return
   clearInterval(intervalKeywords.value)
+  clearInterval(intervalPoints.value)
+  selectedAnswer.value = indexOfAnswerGiven
   if (indexOfAnswerGiven === correctIndex.value) {
     console.log('Correct!')
     score.value += currentPoints.value
   } else console.log('Wrong!')
-  previousMovies.value.push(...moviesForQuiz.value.map(movie => movie.id))
-  previousMovies.value.push(...moviesForQuiz.value.map(movie => movie.id))
   if (round.value < 10) {
     round.value++
-    startNewRound()
+    setTimeout(() => {
+      selectedAnswer.value = null
+      previousMovies.value.push(...moviesForQuiz.value.map(movie => movie.id))
+      startNewRound()
+    }, 3000)
   } else {
     console.log('Game Over! Final Score:', score.value)
   }
+}
+
+const buttonClass = (index: number) => {
+  if (selectedAnswer.value === null) return 'bg-yellow-500 transition hover:bg-yellow-600 p-3 rounded-lg text-white font-semibold uppercase'
+  if (index === correctIndex.value) return 'bg-green-500 p-3 rounded-lg text-white font-semibold uppercase'
+  if (index === selectedAnswer.value) return 'bg-red-950 p-3 rounded-lg text-white font-semibold uppercase'
+  return 'bg-yellow-500 p-3 rounded-lg text-white font-semibold uppercase'
 }
 
 const setRandomCorrectIndex = () => correctIndex.value = Math.floor(Math.random() * 4)
@@ -115,6 +128,7 @@ const startGame = () => {
 }
 
 const startNewRound = () => {
+  clearInterval(intervalKeywords.value)
   clearInterval(intervalPoints.value)
   currentPoints.value = 1000
   setRandomCorrectIndex()
