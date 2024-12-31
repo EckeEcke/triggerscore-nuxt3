@@ -5,10 +5,10 @@ export const countLikesAndDislikes = (data) => {
     }
     data.forEach(entry => {
         if (entry.liked == 1 || entry.liked === true) {
-        likes.likes += 1
+        likesAndDislikes.likes += 1
         }
         if (entry.disliked == 1 || entry.disliked === true) {
-        likes.dislikes += 1
+        likesAndDislikes.dislikes += 1
         }
     })
     return likesAndDislikes
