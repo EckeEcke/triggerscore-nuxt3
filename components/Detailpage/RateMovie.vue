@@ -4,6 +4,17 @@
       :class="{ 'bg-opacity-0 w-full': submitted }"
       class="text-white md:rounded-b lg:rounded-t md:px-4"
     >
+    <Teleport to="#__nuxt">
+      <div 
+        v-if="submitted && showConfirmationModal" 
+        class="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-40 overflow-none"
+      >
+        <ThankyouAnimation
+          @complete="showConfirmationModal = false"
+          key="animation"
+        />
+      </div>
+    </Teleport>
       <div
         v-if="submitted"
         class="bg-green-550 text-white text-center text-2xl px-6 py-16 rounded-b lg:rounded h-72 lg:sticky lg:bottom-0"
@@ -244,6 +255,7 @@ const submitted = ref(false)
 const liked = ref(false)
 const disliked = ref(false)
 const animCompleted = ref(false)
+const showConfirmationModal = ref(true)
 
 const { t } = useI18n()
 const router = useRouter()
