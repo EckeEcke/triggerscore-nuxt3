@@ -14,9 +14,9 @@
     <Meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </Head>
   
+  <Searchbox showTitle />
   <LoadingAnimation v-show="isLoading" />
   <template v-if="!isLoading">
-    <Searchbox showTitle />
     <MovieHighlightsContainer
       :movies="store.bondMovies"
       shownScore="rating_total"
