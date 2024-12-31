@@ -1,17 +1,17 @@
 export const countLikesAndDislikes = (data) => {
-    let likes = {
+    let likesAndDislikes = {
         likes: 0,
         dislikes: 0
     }
     data.forEach(entry => {
-        if (entry.liked == 1) {
+        if (entry.liked == 1 || entry.liked === true) {
         likes.likes += 1
         }
-        if (entry.disliked == 1) {
+        if (entry.disliked == 1 || entry.disliked === true) {
         likes.dislikes += 1
         }
     })
-    return likes
+    return likesAndDislikes
 }
   
 export const handler = async (event) => {
