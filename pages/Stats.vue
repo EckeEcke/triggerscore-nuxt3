@@ -15,12 +15,13 @@
           class="text-2xl sm:text-4xl font-semibold mb-2 text-white uppercase"
         >
           <span
+            aria-hidden="true"
             class="self-center font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200 cursor-pointer"
           >
             TRIGGERSC<font-awesome-icon
               :icon="['fas', 'angry']"
               class="text-white"
-            />RE
+            /><span class="sr-only">O</span>RE
           </span>
           {{ t("general.stats") }}
         </h2>

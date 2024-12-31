@@ -67,7 +67,13 @@ export const handler = async (event) => {
     console.error(err)
     return {
       statusCode: 500,
-      body: JSON.stringify({ message: err.message })
+      body: JSON.stringify({ message: err.message }),
+      headers: { 
+        'Access-Control-Allow-Origin': '*', 
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', 
+        'Access-Control-Allow-Headers': 'Content-Type', 
+        'Access-Control-Allow-Credentials': 'true', 
+    }, 
     }
   }
 }

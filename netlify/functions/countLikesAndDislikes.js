@@ -19,7 +19,13 @@ export const handler = async (event) => {
     const likes = countLikesAndDislikes(data)
     return {
         statusCode: 200,
-        body: JSON.stringify(likes)
+        body: JSON.stringify(likes),
+        headers: { 
+            'Access-Control-Allow-Origin': '*', 
+            'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', 
+            'Access-Control-Allow-Headers': 'Content-Type', 
+            'Access-Control-Allow-Credentials': 'true', 
+        }, 
     }
 }
   

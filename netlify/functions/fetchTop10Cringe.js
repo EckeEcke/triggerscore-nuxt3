@@ -8,13 +8,25 @@ export const handler = async (event) => {
         const ratingsSortedByCringe = calculateScores(ratings).sort((a, b) => b.rating_cringe - a.rating_cringe)
         const top10 = ratingsSortedByCringe.slice(0, 10)
         return {
-        statusCode: 200,
-        body: JSON.stringify(top10)
+            statusCode: 200,
+            body: JSON.stringify(top10),
+            headers: { 
+                'Access-Control-Allow-Origin': '*', 
+                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', 
+                'Access-Control-Allow-Headers': 'Content-Type', 
+                'Access-Control-Allow-Credentials': 'true', 
+            }, 
         }
     } catch (err) {
         return {
-        statusCode: 500,
-        body: JSON.stringify({ message: err.message })
+            statusCode: 500,
+            body: JSON.stringify({ message: err.message }),
+            headers: { 
+                'Access-Control-Allow-Origin': '*', 
+                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', 
+                'Access-Control-Allow-Headers': 'Content-Type', 
+                'Access-Control-Allow-Credentials': 'true', 
+            }, 
         }
     }
 }

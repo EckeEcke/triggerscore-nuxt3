@@ -60,7 +60,13 @@ export const handler = async (event) => {
     const scores = calculateScores(data)
     return {
         statusCode: 200,
-        body: JSON.stringify(scores)
+        body: JSON.stringify(scores),
+        headers: { 
+            'Access-Control-Allow-Origin': '*', 
+            'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', 
+            'Access-Control-Allow-Headers': 'Content-Type', 
+            'Access-Control-Allow-Credentials': 'true', 
+        }, 
     }
 }
   
