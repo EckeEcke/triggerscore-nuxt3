@@ -9,7 +9,7 @@ export const handler = async (event) => {
     const movieIds = await scores.distinct('movie_id')
     
     const movieDataPromises = movieIds.map(id => 
-      fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.API_KEY}&language=${locale}&append_to_response=videos`)
+      fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.API_KEY}&language=${locale}&append_to_response=videos,keywords`)
         .then(response => {
           if (!response.ok) {
             throw new Error(`Error fetching movie data: ${response.statusText}`)
