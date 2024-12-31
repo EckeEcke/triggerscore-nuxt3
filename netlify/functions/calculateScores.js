@@ -23,8 +23,8 @@ export const calculateScores = (data) => {
             entry.rating_total = entryTotal
             entry.ratings = 1
             entry.comments = [entry.comment]
-            entry.likes = entry.liked === 1 ? 1 : 0
-            entry.dislikes = entry.disliked === 1 ? 1 : 0
+            entry.likes = entry.liked === 1 || entry.liked === true ? 1 : 0
+            entry.dislikes = entry.disliked === 1 || entry.disliked === true ? 1 : 0
             scores.push(entry)
         } else {
             scores[index].ratings += 1

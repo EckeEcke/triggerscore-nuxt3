@@ -5,9 +5,6 @@ export const handler = async (event) => {
     try {
         const url = new URL(event.rawUrl) 
         const id = url.searchParams.get('id')
-        console.log("id: ", id)
-        console.log(event)
-        console.log(event.pathParameters)
         if (!id) { 
             return { 
                 statusCode: 400, 
