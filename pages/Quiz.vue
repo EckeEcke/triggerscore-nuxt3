@@ -17,6 +17,9 @@
       </div>
     </div>
     <div v-if="gameRunning">
+      <div class="text-white font-extrabold mb-4">
+      ROUND {{  round }} / 10
+      </div>
       <div class="min-h mb-8">
         <div class=" flex flex-wrap gap-2">
           <span v-for="keyword in displayedKeywords" class="bg-gray-400 text-white p-2 rounded text-xs md:text-base">
@@ -92,7 +95,7 @@ const checkForRightAnswer = (indexOfAnswerGiven: Number) => {
       startNewRound()
     }, 3000)
   } else {
-    console.log('Game Over! Final Score:', score.value)
+    alert('Game Over! Final Score: ' + score.value)
   }
 }
 
