@@ -33,10 +33,10 @@ export const calculateScores = (data) => {
             scores[index].rating_others += entry.rating_others
             scores[index].rating_cringe += entry.rating_cringe
             scores[index].rating_total += entryTotal
-            if (entry.liked === 1) {
+            if (entry.liked === 1 || entry.liked === true) {
             scores[index].likes += 1
             }
-            if (entry.disliked === 1) {
+            if (entry.disliked === 1 || entry.disliked === true) {
             scores[index].dislikes += 1
             }
             scores[index].comments.push(entry.comment)
