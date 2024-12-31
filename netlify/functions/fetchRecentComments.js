@@ -10,8 +10,14 @@ export const handler = async (event) => {
         ]
         }).sort({ createdAt: -1 }).limit(8).toArray()
         return {
-        statusCode: 200,
-        body: JSON.stringify(ratings)
+            statusCode: 200,
+            body: JSON.stringify(ratings),
+            headers: { 
+                'Access-Control-Allow-Origin': '*', 
+                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', 
+                'Access-Control-Allow-Headers': 'Content-Type', 
+                'Access-Control-Allow-Credentials': 'true', 
+            }, 
         }
     } catch (err) {
         return {
