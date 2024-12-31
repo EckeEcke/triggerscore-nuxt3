@@ -42,13 +42,13 @@
             <hr class="mb-4 w-36 border-yellow-500" />
             <div class="flex justify-between gap-2">
                 <p class="italic text-sm">"{{ comment.comment }}"</p>
-                <div v-if="comment.liked === 1">
+                <div v-if="comment.liked === 1 || comment.liked === true">
                 <font-awesome-icon
                     :icon="['fas', 'thumbs-up']"
                     class="text-green-500 text-xl"
                 />
                 </div>
-                <div v-if="comment.disliked === 1">
+                <div v-if="comment.disliked === 1 || comment.disliked === true">
                 <font-awesome-icon
                     :icon="['fas', 'thumbs-down']"
                     class="text-red-500 text-xl"
