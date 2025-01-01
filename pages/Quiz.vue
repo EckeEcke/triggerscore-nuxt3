@@ -50,7 +50,7 @@
           enter-to-class="opacity-100"
           enter-active-class="transition duration-300"
         >
-          <span v-for="keyword in displayedKeywords" :key="keyword" class="bg-gray-400 text-white p-2 rounded text-xs md:text-base transition-opacity duration-500 ease-in-out opacity-0">
+          <span v-for="keyword in displayedKeywords" :key="keyword" class="bg-gray-400 text-white font-extrabold p-2 rounded text-sm md:text-base transition-opacity duration-500 ease-in-out opacity-0">
             {{ keyword }}
           </span>
         </transition-group>
