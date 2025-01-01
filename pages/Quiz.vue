@@ -72,7 +72,7 @@
       <p class="text-white my-8 text-lg text-wrap-balance">
         {{ t("quiz.description") }}
       </p>
-      <button class="bg-yellow-500 transition hover:bg-yellow-600 p-3 rounded-lg text-white font-semibold uppercase" @click="startGame">
+      <button v-if="moviesForQuiz.length > 0" class="bg-yellow-500 transition hover:bg-yellow-600 p-3 rounded-lg text-white font-semibold uppercase" @click="startGame">
         {{ t("quiz.startGame") }}
       </button>
     </div>
