@@ -17,10 +17,14 @@
     <div
     class="text-2xl self-center font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200"
     >
-    TRIGGERSC<font-awesome-icon
+    <h1 aria-label="TRIGGERSCORE QUIZ">
+      TRIGGERSC<font-awesome-icon
+        aria-hidden="true"
         :icon="['fas', 'angry']"
         class="text-white"
-    />RE QUIZ
+      /><span class="sr-only">O</span>RE QUIZ
+    </h1>
+    
     </div>
     <div v-if="gameRunning" class="grid grid-cols-2 bg-gradient-to-r from-gray-950 to-gray-800 text-white text-lg font-extrabold p-4 my-8 rounded-lg">
       <div class="pr-4 border-r border-white">
