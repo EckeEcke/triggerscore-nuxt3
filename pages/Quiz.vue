@@ -1,5 +1,19 @@
 <template>
   <section class="container xl:w-10/12 mx-auto px-4 my-12 sm:my-24 max-w-800px">
+    <Head>
+      <Title>Triggerscore Quiz - Movie guessing based on keywords</Title>
+      <Meta charset="UTF-8" />
+      <Meta
+        name="keywords"
+        content="triggering movies, quiz, movie game"
+      />
+      <Meta
+        name="desription"
+        content="Play Movie Quiz on Triggerscore"
+      />
+      <Meta name="author" content="Christian Eckardt" />
+      <Meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </Head>
     <div
     class="text-2xl self-center font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200"
     >
