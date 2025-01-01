@@ -88,7 +88,7 @@
         </button>
       </transition-group>
     </div>
-    <div v-else class="mt-8 p-8 text-left rounded-lg bg-gradient-to-r from-gray-950 to-gray-800">
+    <div v-else class="mt-8 p-8 text-center text-balance rounded-lg bg-gradient-to-r from-gray-950 to-gray-800">
       <h2 class="text-white text-2xl font-semibold mb-4">{{ t("quiz.tagline") }}</h2>
       <hr class="my-6">
       <p class="text-white mb-8 text-lg text-wrap-balance font-semibold">
