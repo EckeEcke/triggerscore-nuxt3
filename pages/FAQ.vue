@@ -10,7 +10,7 @@
         content="triggering movies, frequently asked questions, FAQ"
       />
       <Meta
-        name="desription"
+        name="description"
         content="Frequently asked questions about Triggerscore"
       />
       <Meta name="author" content="Christian Eckardt" />

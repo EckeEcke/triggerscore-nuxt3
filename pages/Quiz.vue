@@ -8,7 +8,7 @@
         content="triggering movies, quiz, movie game"
       />
       <Meta
-        name="desription"
+        name="description"
         content="Play Movie Quiz on Triggerscore"
       />
       <Meta name="author" content="Christian Eckardt" />
