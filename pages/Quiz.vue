@@ -100,9 +100,10 @@
 <script lang="ts" setup>
 import { useStore } from "~/stores/store"
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 const store = useStore()
+store.setTriggerscores(locale.value)
 const movies = computed(() => store.movies)
 
 const gameRunning = ref(false)
@@ -192,9 +193,9 @@ const startNewRound = () => {
   selectedAnswer.value = null
   clearInterval(intervalKeywords.value)
   clearInterval(intervalPoints.value)
-  currentPoints.value = 1000
   setRandomCorrectIndex()
   displayKeywords()
+  currentPoints.value = 1000
   intervalPoints.value = setInterval(() => {
     if (currentPoints.value > 0) {
       currentPoints.value -= 100
