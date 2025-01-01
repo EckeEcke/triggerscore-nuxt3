@@ -165,11 +165,20 @@
     "yourScore": "Votre score",
     "currentScore": "Ce tour",
     "round": "Tour",
+    "lastRound": "Dernier Tour !",
     "question": "Quel film est recherché?",
     "description": "Devinez le film recherché à l'aide de mots-clés. Toutes les trois secondes, vous obtiendrez un autre mot-clé. Plus vous devinez rapidement le bon film, plus vous obtenez de points.",
     "startGame": "Commencer le quiz",
     "finalScore": "Score: ",
-    "playAgain": "Rejouer"
-  }
-  
+    "playAgain": "Rejouer",
+    "correctGuesses": "Vous avez deviné {correctGuesses} films sur 10 correctement !",
+    "congratulations": "Félicitations ! Vous êtes un ",
+    "titles": {
+      "worldClassCineast": "Cinéaste de Classe Mondiale",
+      "cineast": "Cinéaste",
+      "movieExpert": "Expert en Cinéma",
+      "movieFan": "Fan de Cinéma",
+      "movieBeginner": "Débutant en Cinéma"
+    }
+  } 
 }

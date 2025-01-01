@@ -165,11 +165,21 @@
         "yourScore": "Tu puntuación",
         "currentScore": "Esta ronda",
         "round": "Ronda",
+        "lastRound": "¡Última Ronda!",
         "question": "¿Qué película se está buscando?",
         "description": "Adivina la película que se busca con la ayuda de palabras clave. Cada tres segundos recibirás otra palabra clave. Cuanto más rápido adivines la película correcta, más puntos obtendrás.",
         "startGame": "Iniciar quiz",
         "finalScore": "Puntuación: ",
-        "playAgain": "Jugar de nuevo"
+        "playAgain": "Jugar de nuevo",
+        "correctGuesses": "¡Has adivinado {correctGuesses} de 10 películas correctamente!",
+        "congratulations": "¡Felicidades! Eres un ",
+        "titles": {
+            "worldClassCineast": "Cineasta de Clase Mundial",
+            "cineast": "Cineasta",
+            "movieExpert": "Experto en Cine",
+            "movieFan": "Fanático del Cine",
+            "movieBeginner": "Principiante en Cine"
+        }
     }
       
 }

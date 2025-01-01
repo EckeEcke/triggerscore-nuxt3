@@ -165,10 +165,20 @@
     "yourScore": "Dein Score",
     "currentScore": "Diese Runde",
     "round": "Runde",
+    "lastRound": "Letzte Runde!",
     "question": "Welcher Film wird gesucht?",
     "description": "Errate den gesuchten Film mithilfe von Stichworten. Alle drei Sekunden bekommst du ein weiteres Stichwort. Umso schneller du den richtigen Film errätst, desto mehr Punkte bekommst du.",
     "startGame": "Quiz starten",
     "finalScore": "Punktestand: ",
-    "playAgain": "Nochmal spielen"
+    "playAgain": "Nochmal spielen",
+    "correctGuesses": "Du hast {correctGuesses} von 10 Filmen richtig erraten!",
+    "congratulations": "Glückwunsch! Du bist ein ",
+    "titles": {
+      "worldClassCineast": "Weltklasse Cineast",
+      "cineast": "Cineast",
+      "movieExpert": "Filmexperte",
+      "movieFan": "Filmfan",
+      "movieBeginner": "Filmanfänger"
+    }
   }
 }

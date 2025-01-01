@@ -15,7 +15,7 @@
       <Meta name="viewport" content="width=device-width, initial-scale=1.0" />
     </Head>
     <div
-    class="text-2xl self-center font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200"
+    class="text-3xl self-center font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200"
     >
     <h1 aria-label="TRIGGERSCORE QUIZ">
       TRIGGERSC<font-awesome-icon
@@ -26,7 +26,7 @@
     </h1>
     
     </div>
-    <div v-if="gameRunning" class="grid grid-cols-2 bg-gradient-to-r from-gray-950 to-gray-800 text-white text-lg font-extrabold p-4 my-8 rounded-lg">
+    <div v-if="gameRunning" class="grid grid-cols-2 bg-gradient-to-r from-gray-950 to-gray-800 text-white text-xl font-semibold p-4 my-8 rounded-lg">
       <div class="pr-4 border-r border-white">
         {{ t("quiz.yourScore") }}
         <br> 
@@ -54,11 +54,13 @@
           mode="out-in"
         >
           <span :key="currentPoints">{{ currentPoints }}</span>
-        </transition>      </div>
+        </transition>      
+      </div>
     </div>
     <div v-if="gameRunning">
-      <div class="text-xl text-white font-extrabold my-8">
-        {{ t("quiz.round") }} {{  round }} / 10
+      <div class="text-2xl text-white font-semibold my-8">
+        <span v-if="round === 10">{{  t("quiz.lastRound") }}</span>
+        <span v-else>{{ t("quiz.round") }} {{  round }}</span>
       </div>
       <div class="min-h mb-8">
         <transition-group
@@ -68,12 +70,12 @@
           enter-to-class="opacity-100"
           enter-active-class="transition duration-300"
         >
-          <span v-for="keyword in displayedKeywords" :key="keyword" class="bg-gray-400 text-white font-extrabold p-2 rounded text-sm md:text-base transition-opacity duration-500 ease-in-out opacity-0">
+          <span v-for="keyword in displayedKeywords" :key="keyword" class="bg-gray-400 text-white font-semibold p-2 rounded text-sm md:text-base transition-opacity duration-500 ease-in-out opacity-0">
             {{ keyword }}
           </span>
         </transition-group>
       </div>
-      <h2 class="text-xl text-white my-8 font-extrabold">{{ t("quiz.question") }}</h2>
+      <h2 class="text-2xl text-white my-8 font-semibold">{{ t("quiz.question") }}</h2>
       <transition-group
           tag="div"
           class="grid grid-cols-2 gap-4"
@@ -86,11 +88,11 @@
         </button>
       </transition-group>
     </div>
-    <div v-else class="mt-8">
-      <p class="text-white my-8 text-lg text-wrap-balance">
+    <div v-else class="mt-8 p-8 rounded-lg bg-gradient-to-r from-gray-950 to-gray-800">
+      <p class="text-white mb-8 text-lg text-wrap-balance font-semibold">
         {{ t("quiz.description") }}
       </p>
-      <button v-if="moviesForQuiz.length > 0" class="bg-yellow-500 transition hover:bg-yellow-600 p-3 rounded-lg text-white font-semibold uppercase" @click="startGame">
+      <button v-if="moviesForQuiz.length > 0" class="bg-yellow-500 transition hover:bg-yellow-600 p-3 rounded-lg text-white font-semibold" @click="startGame">
         {{ t("quiz.startGame") }}
       </button>
     </div>
@@ -103,12 +105,20 @@
       leave-to-class="transform opacity-0"
     >
       <div v-if="showModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-        <div class="bg-gradient-to-r from-gray-950 to-gray-800 text-white text-xl font-extrabold p-8 rounded-lg shadow-lg text-center">
-          <h2 class="text-2xl font-bold mb-4">Game Over!</h2>
-          <p class="mb-4">{{ t("quiz.finalScore") }}{{ score }}</p>
-          <button class="bg-yellow-500 transition hover:bg-yellow-600 p-3 rounded-lg text-white font-semibold text-lg uppercase mt-8" @click="playAgain">
-            {{ t("quiz.playAgain") }}
-          </button>
+        <div class="bg-gradient-to-r from-gray-950 to-gray-800 text-white text-xl font-semibold p-8 mx-4 rounded-lg shadow-lg text-center">
+          <h2 class="text-2xl font-bold mb-8">Game Over!</h2>
+          <p>{{ t("quiz.finalScore") }}{{ score }}</p>
+          <p class="mb-8">{{ t("quiz.correctGuesses", { correctGuesses: correctGuesses }) }}</p>
+          <p>{{ t("quiz.congratulations") }}</p>
+          <p class="mb-8 shiny-text text-3xl">{{  getPlayerTitle(score) }}</p>
+          <div class="flex flex-col gap-4 mt-8">
+            <button class="bg-yellow-500 transition hover:bg-yellow-600 p-3 rounded-lg text-white font-semibold text-lg" @click="playAgain">
+              {{ t("quiz.playAgain") }}
+            </button>
+            <button class="bg-gray-500 transition hover:bg-yellow-600 p-3 rounded-lg text-white font-semibold text-lg" @click="navigateTo(localePath('/'))">
+              {{ t("general.back") }}
+            </button>
+          </div>
         </div>
       </div>
     </transition>
@@ -121,6 +131,8 @@ import { useStore } from "~/stores/store"
 const { t, locale } = useI18n()
 
 const store = useStore()
+const localePath = useLocalePath()
+
 store.setTriggerscores(locale.value)
 const movies = computed(() => store.movies)
 
@@ -133,6 +145,7 @@ const displayedKeywords = ref<string[]>([])
 const previousMovies = ref<number[]>([])
 const intervalKeywords = ref<number | null>(null)
 const intervalPoints = ref<number | null>(null)
+const correctGuesses = ref(0)
 
 const round = ref(1)
 const score = ref(0)
@@ -163,6 +176,7 @@ const checkForRightAnswer = (indexOfAnswerGiven: Number) => {
   selectedAnswer.value = indexOfAnswerGiven
   if (indexOfAnswerGiven === correctIndex.value) {
     console.log('Correct!')
+    correctGuesses.value++
     score.value += currentPoints.value
   } else console.log('Wrong!')
   if (round.value < 10) {
@@ -177,10 +191,10 @@ const checkForRightAnswer = (indexOfAnswerGiven: Number) => {
 }
 
 const buttonClass = (index: number) => {
-  if (selectedAnswer.value === null) return 'bg-yellow-500 transition hover:bg-yellow-600 p-3 rounded-lg text-white font-semibold uppercase'
-  if (index === correctIndex.value) return 'bg-green-500 p-3 rounded-lg text-white font-semibold uppercase'
-  if (index === selectedAnswer.value) return 'bg-red-950 p-3 rounded-lg text-white font-semibold uppercase'
-  return 'bg-yellow-500 p-3 rounded-lg text-white font-semibold uppercase'
+  if (selectedAnswer.value === null) return 'bg-yellow-500 transition hover:bg-yellow-600 p-3 rounded-lg text-white font-semibold'
+  if (index === correctIndex.value) return 'bg-green-500 p-3 rounded-lg text-white font-semibold'
+  if (index === selectedAnswer.value) return 'bg-red-950 p-3 rounded-lg text-white font-semibold'
+  return 'bg-yellow-500 p-3 rounded-lg text-white font-semibold'
 }
 
 const setRandomCorrectIndex = () => correctIndex.value = Math.floor(Math.random() * 4)
@@ -221,6 +235,14 @@ const startNewRound = () => {
       clearInterval(intervalPoints.value)
     }
   }, 4000)
+}
+
+const getPlayerTitle = (score: number) => {
+  if (score > 9000) return t("quiz.titles.worldClassCineast")
+  if (score > 8000) return t("quiz.titles.cineast")
+  if (score > 7000) return t("quiz.titles.movieExpert")
+  if (score > 6000) return t("quiz.titles.movieFan")
+  return t("quiz.titles.movieBeginner")
 }
 
 const playAgain = () => {
