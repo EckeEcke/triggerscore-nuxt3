@@ -8,12 +8,16 @@
         class="text-white"
     />RE QUIZ
     </div>
-    <div v-if="gameRunning" class="grid grid-cols-2 bg-gray-400 text-white font-extrabold p-4 my-8 rounded-lg">
+    <div v-if="gameRunning" class="grid grid-cols-2 bg-gradient-to-r from-gray-950 to-gray-800 text-white font-extrabold p-4 my-8 rounded-lg">
       <div class="pr-4 border-r border-white">
-        DEINE PUNKTE: {{ score }}
+        DEINE PUNKTE
+        <br> 
+        {{ score }}
       </div>
       <div class="pl-4">
-        DIESE RUNDE: {{ currentPoints }}
+        DIESE RUNDE
+        <br>
+        {{ currentPoints }}
       </div>
     </div>
     <div v-if="gameRunning">
@@ -34,13 +38,22 @@
         </transition-group>
       </div>
       <h2 class="text-xl text-white my-8 font-extrabold">Welcher Film wird gesucht?</h2>
-      <div class="grid grid-cols-2 gap-4">
-        <button v-for="(title, index) in movieTitlesForQuiz" :key="index" :class="buttonClass(index)" @click="checkForRightAnswer(index)">
-        {{ title }}
+      <transition-group
+          tag="div"
+          class="grid grid-cols-2 gap-4"
+          enter-from-class="opacity-0"
+          enter-to-class="opacity-100"
+          enter-active-class="transition duration-1000"
+        >
+        <button v-for="(title, index) in movieTitlesForQuiz" :key="title" :class="buttonClass(index)" @click="checkForRightAnswer(index)">
+          {{ title }}
         </button>
-      </div>
+      </transition-group>
     </div>
     <div v-else class="mt-8">
+      <p class="text-white my-8 text-lg text-wrap-balance">
+        Guess the movie based on keywords. Every 3 seconds you get an additional keyword. The faster you guess the right movie, the more points you get. 
+      </p>
       <button class="bg-yellow-500 transition hover:bg-yellow-600 p-3 rounded-lg text-white font-semibold uppercase" @click="startGame">
         Start Game
       </button>

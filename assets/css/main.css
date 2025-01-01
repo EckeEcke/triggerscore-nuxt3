@@ -31,6 +31,10 @@
   backdrop-filter: blur(4px);
 }
 
+.text-wrap-balance {
+  text-wrap: balance;
+}
+
 @font-face {
   font-family: Lato;
   src: url("/fonts/Lato-Regular.ttf");

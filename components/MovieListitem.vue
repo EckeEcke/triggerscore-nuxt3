@@ -2,7 +2,7 @@
   <NuxtLink
     :to="pathToNavigate"
     tag="div"
-    class="movie-highlight-item transition-300 w-full h-44 bg-transparent sm:bg-gradient-to-r from-gray-950 to-gray-800 md:hover:from-gray-900 text-white sm:border border-t border-b sm:border-r-0 border-gray-950 border-opacity- md:border-0 shadow-md flex relative md:rounded container-xl cursor-pointer"
+    class="movie-highlight-item transition-300 w-full h-44 bg-transparent sm:bg-gradient-to-r from-gray-950 to-gray-800 md:hover:from-gray-900 text-white sm:border border-t border-b sm:border-r-0 border-gray-950 md:border-0 shadow-md flex relative md:rounded container-xl cursor-pointer"
   >
     <div class="h-full w-44 md:rounded-l overflow-hidden" load="lazy">
       <div
