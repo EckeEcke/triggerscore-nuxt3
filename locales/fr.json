@@ -160,5 +160,16 @@
   "similar": {
       "headline": "Découvrir plus",
       "copy": "Films similaires à {0}"
+  },
+  "quiz": {
+    "yourScore": "Votre score",
+    "currentScore": "Ce tour",
+    "round": "Tour",
+    "question": "Quel film est recherché?",
+    "description": "Devinez le film recherché à l'aide de mots-clés. Toutes les trois secondes, vous obtiendrez un autre mot-clé. Plus vous devinez rapidement le bon film, plus vous obtenez de points.",
+    "startGame": "Commencer le quiz",
+    "finalScore": "Score: ",
+    "playAgain": "Rejouer"
   }
+  
 }

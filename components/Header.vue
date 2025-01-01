@@ -17,12 +17,6 @@
       </div>
       <div class="flex sm:text-sm">
         <NuxtLink
-          :to="localePath('/')"
-          tag="a"
-          class="animated-link text-white font-semibold self-center mr-6 md:mr-10 hidden md:block hover:text-yellow-500 uppercase"
-          >HOME</NuxtLink
-        >
-        <NuxtLink
           :to="localePath('/all')"
           tag="a"
           class="animated-link text-white font-semibold self-center mr-6 md:mr-10 hidden md:block hover:text-yellow-500 uppercase"
@@ -33,6 +27,12 @@
           tag="a"
           class="animated-link text-white font-semibold self-center mr-6 md:mr-10 hidden md:block hover:text-yellow-500 uppercase"
           >STATS</NuxtLink
+        >
+        <NuxtLink
+          :to="localePath('/quiz')"
+          tag="a"
+          class="animated-link text-white font-semibold self-center mr-6 md:mr-10 hidden md:block hover:text-yellow-500 uppercase"
+          >QUIZ</NuxtLink
         >
         <NuxtLink
           :to="localePath('/about')"
@@ -118,6 +118,14 @@
             tag="a"
             class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase"
             ><div class="py-6" @click="showNav = false">Stats</div></NuxtLink
+          >
+          <NuxtLink
+            :to="localePath('/quiz')"
+            tag="a"
+            class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase"
+            ><div class="py-6" @click="showNav = false">
+              Quiz
+            </div></NuxtLink
           >
           <NuxtLink
             :to="localePath('/about')"

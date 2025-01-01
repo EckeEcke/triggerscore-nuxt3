@@ -160,5 +160,15 @@
   "similar": {
     "headline": "Discover more",
     "copy": "Similar movies to {0}"
+  },
+  "quiz": { 
+    "yourScore": "Your Score", 
+    "currentScore": "This Round", 
+    "round": "Round", 
+    "question": "Which movie is being searched for?", 
+    "description": "Guess the movie being searched for with the help of keywords. Every three seconds, you'll get another keyword. The faster you guess the correct movie, the more points you'll get.", 
+    "startGame": "Start Quiz", 
+    "finalScore": "Score: ", 
+    "playAgain": "Play Again" 
   }
 }
