@@ -1,5 +1,5 @@
 <template>
-  <section class="container xl:w-10/12 mx-auto px-4 my-12 sm:my-24">
+  <section class="container xl:w-10/12 mx-auto px-4 my-12 sm:my-24 max-w-800px">
     <div
     class="text-2xl self-center font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200"
     >
@@ -8,25 +8,32 @@
         class="text-white"
     />RE QUIZ
     </div>
-    <div class="flex bg-gray-400 text-white font-extrabold justify-between p-4 my-4 rounded-lg">
-      <div>
+    <div v-if="gameRunning" class="grid grid-cols-2 bg-gray-400 text-white font-extrabold p-4 my-8 rounded-lg">
+      <div class="pr-4 border-r border-white">
         DEINE PUNKTE: {{ score }}
       </div>
-      <div>
+      <div class="pl-4">
         DIESE RUNDE: {{ currentPoints }}
       </div>
     </div>
     <div v-if="gameRunning">
-      <div class="text-white font-extrabold mb-4">
+      <div class="text-xl text-white font-extrabold my-8">
       ROUND {{  round }} / 10
       </div>
       <div class="min-h mb-8">
-        <div class=" flex flex-wrap gap-2">
-          <span v-for="keyword in displayedKeywords" class="bg-gray-400 text-white p-2 rounded text-xs md:text-base">
+        <transition-group
+          tag="div"
+          class="flex flex-wrap gap-2"
+          enter-from-class="opacity-0"
+          enter-to-class="opacity-100"
+          enter-active-class="transition duration-300"
+        >
+          <span v-for="keyword in displayedKeywords" :key="keyword" class="bg-gray-400 text-white p-2 rounded text-xs md:text-base transition-opacity duration-500 ease-in-out opacity-0">
             {{ keyword }}
           </span>
-        </div>
+        </transition-group>
       </div>
+      <h2 class="text-xl text-white my-8 font-extrabold">Welcher Film wird gesucht?</h2>
       <div class="grid grid-cols-2 gap-4">
         <button v-for="(title, index) in movieTitlesForQuiz" :key="index" :class="buttonClass(index)" @click="checkForRightAnswer(index)">
         {{ title }}
@@ -142,7 +149,7 @@ const startNewRound = () => {
     } else {
       clearInterval(intervalPoints.value)
     }
-  }, 3000)
+  }, 4000)
 }
 </script>
 
@@ -150,6 +157,10 @@ const startNewRound = () => {
 
 .min-h {
   min-height: 10rem;
+}
+
+.max-w-800px {
+  max-width: 800px;
 }
 
 </style>
