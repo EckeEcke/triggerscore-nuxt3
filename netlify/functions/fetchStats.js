@@ -13,6 +13,20 @@ function countComments(data){
 }
 
 export const handler = async (event) => {
+    const origin = event.headers.origin
+    const headers = {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Credentials': 'true',
+    }
+
+    if (allowedOrigins.includes(origin)) {
+        headers['Access-Control-Allow-Origin'] = origin
+    } else {
+        headers['Access-Control-Allow-Origin'] = 'null'
+    }
+
     try {
         const database = await connectToDatabase()
         const ratings = await database.collection('scores').find().toArray()
@@ -40,14 +54,14 @@ export const handler = async (event) => {
         const averageScoreCringe = Math.floor(allScoresCringe / totalMovies * 10) / 10
 
         const stats = {
-        totalRatings,
+            totalRatings,
         averageScoreTotal,
         averageScoreSexism,
         averageScoreRacism,
         averageScoreOthers,
         averageScoreCringe,
         amountMovies: totalMovies,
-        amountComments,
+            amountComments,
         amountLikes: amountLikes.likes,
         amountDislikes: amountLikes.dislikes
         }
@@ -55,23 +69,13 @@ export const handler = async (event) => {
         return {
             statusCode: 200,
             body: JSON.stringify(stats),
-            headers: { 
-                'Access-Control-Allow-Origin': '*', 
-                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', 
-                'Access-Control-Allow-Headers': 'Content-Type', 
-                'Access-Control-Allow-Credentials': 'true', 
-            }, 
+            headers,
         }
     } catch (err) {
         return {
             statusCode: 500,
             body: JSON.stringify({ message: err.message }),
-            headers: { 
-                'Access-Control-Allow-Origin': '*', 
-                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', 
-                'Access-Control-Allow-Headers': 'Content-Type', 
-                'Access-Control-Allow-Credentials': 'true', 
-            }, 
+            headers,
         }
     }
 }

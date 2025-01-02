@@ -1,4 +1,5 @@
 import { connectToDatabase } from './dbClient.js'
+import { calculateScores } from './calculateScores.js'
 
 const devAllowedOrigins = ['http://localhost:3000', 'http://localhost:3001']
 const prodAllowedOrigins = ['https://www.triggerscore.de']
@@ -22,16 +23,27 @@ export const handler = async (event) => {
 
   try {
     const database = await connectToDatabase()
-    const ratings = await database.collection('scores').find({
-      $and: [
-        { comment: { $ne: null } },
-        { comment: { $ne: '' } }
-      ]
-    }).sort({ createdAt: -1 }).limit(8).toArray()
+    const scores = await database.collection('scores').find().toArray()
+    const calculatedScores = calculateScores(scores)
+
+    const top10Sexism = calculatedScores.sort((a, b) => b.rating_sexism - a.rating_sexism).slice(0, 10)
+    const top10Racism = calculatedScores.sort((a, b) => b.rating_racism - a.rating_racism).slice(0, 10)
+    const top10Others = calculatedScores.sort((a, b) => b.rating_others - a.rating_others).slice(0, 10)
+    const top10Cringe = calculatedScores.sort((a, b) => b.rating_cringe - a.rating_cringe).slice(0, 10)
+
+    const response = {
+      scores: calculatedScores,
+      top10s: {
+        sexism: top10Sexism,
+        racism: top10Racism,
+        others: top10Others,
+        cringe: top10Cringe,
+      }
+    }
 
     return {
       statusCode: 200,
-      body: JSON.stringify(ratings),
+      body: JSON.stringify(response),
       headers,
     }
   } catch (err) {

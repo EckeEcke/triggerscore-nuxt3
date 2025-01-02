@@ -1,46 +1,38 @@
-import { connectToDatabase } from './dbClient.js'
-import { calculateScores } from './calculateScores.js'
+const devAllowedOrigins = ['http://localhost:3000', 'http://localhost:3001']
+const prodAllowedOrigins = ['https://www.triggerscore.de']
+
+const allowedOrigins = process.env.NODE_ENV === 'development' ? devAllowedOrigins : prodAllowedOrigins
 
 export const handler = async (event) => {
-    try {
-        const url = new URL(event.rawUrl) 
-        const id = url.searchParams.get('id')
-        if (!id) { 
-            return { 
-                statusCode: 400, 
-                body: JSON.stringify({ message: 'Movie ID is required' }), 
-                headers: { 
-                    'Access-Control-Allow-Origin': '*', 
-                    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', 
-                    'Access-Control-Allow-Headers': 'Content-Type', 
-                    'Access-Control-Allow-Credentials': 'true', 
-                }, 
-            } 
-        }
+    const origin = event.headers.origin
+    const headers = {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Credentials': 'true',
+    }
 
-        const database = await connectToDatabase()
-        const ratings = await database.collection('scores').find({ movie_id: parseInt(id) }).toArray()
-        const calculatedScores = calculateScores(ratings)
+    if (allowedOrigins.includes(origin)) {
+        headers['Access-Control-Allow-Origin'] = origin
+    } else {
+        headers['Access-Control-Allow-Origin'] = 'null'
+    }
+
+    try {
+        const movieId = event.queryStringParameters.id
+        const response = await fetch(`https://api.example.com/movies/${movieId}`)
+        const movie = await response.json()
+
         return {
             statusCode: 200,
-            body: JSON.stringify(calculatedScores),
-            headers: { 
-                'Access-Control-Allow-Origin': '*', 
-                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', 
-                'Access-Control-Allow-Headers': 'Content-Type', 
-                'Access-Control-Allow-Credentials': 'true', 
-            },
+            body: JSON.stringify(movie),
+            headers,
         }
-    } catch (err) {
+    } catch (error) {
         return {
             statusCode: 500,
-            body: JSON.stringify({ message: err.message }),
-            headers: { 
-                'Access-Control-Allow-Origin': '*', 
-                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', 
-                'Access-Control-Allow-Headers': 'Content-Type', 
-                'Access-Control-Allow-Credentials': 'true', 
-            },
+            body: JSON.stringify({ error: error.message }),
+            headers,
         }
     }
 }

@@ -1,10 +1,7 @@
-import Bottleneck from 'bottleneck'
-import { connectToDatabase } from './dbClient.js'
+const devAllowedOrigins = ['http://localhost:3000', 'http://localhost:3001']
+const prodAllowedOrigins = ['https://www.triggerscore.de']
 
-const limiter = new Bottleneck({
-  minTime: 10, // Minimum time between requests
-  maxConcurrent: 10 // Maximum number of concurrent requests
-})
+const allowedOrigins = process.env.NODE_ENV === 'development' ? devAllowedOrigins : prodAllowedOrigins
 
 export const handler = async (event) => {
   try {
@@ -58,22 +55,18 @@ export const handler = async (event) => {
       disney,
       sky
     }
-    
+
     return {
       statusCode: 200,
-      body: JSON.stringify(finalProviderInfo)
+      body: JSON.stringify(finalProviderInfo),
+      headers,
     }
   } catch (err) {
     console.error(err)
     return {
       statusCode: 500,
       body: JSON.stringify({ message: err.message }),
-      headers: { 
-        'Access-Control-Allow-Origin': '*', 
-        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', 
-        'Access-Control-Allow-Headers': 'Content-Type', 
-        'Access-Control-Allow-Credentials': 'true', 
-    }, 
+      headers,
     }
   }
 }

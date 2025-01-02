@@ -1,16 +1,30 @@
 import { connectToDatabase } from './dbClient.js'
 import { calculateTotal } from './calculateScores.js'
 
+const devAllowedOrigins = ['http://localhost:3000', 'http://localhost:3001']
+const prodAllowedOrigins = ['https://www.triggerscore.de']
+
+const allowedOrigins = process.env.NODE_ENV === 'development' ? devAllowedOrigins : prodAllowedOrigins
+
 export const handler = async (event) => {
+    const origin = event.headers.origin
+    const headers = {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Credentials': 'true',
+    }
+
+    if (allowedOrigins.includes(origin)) {
+        headers['Access-Control-Allow-Origin'] = origin
+    } else {
+        headers['Access-Control-Allow-Origin'] = 'null'
+    }
+
     if (event.httpMethod === 'OPTIONS') {
         return {
             statusCode: 200,
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-                'Access-Control-Allow-Headers': 'Content-Type',
-                'Access-Control-Allow-Credentials': 'true',
-            },
+            headers,
         }
     }
 
@@ -20,12 +34,7 @@ export const handler = async (event) => {
         return {
             statusCode: 400,
             body: JSON.stringify({ message: "Movie ID is required" }),
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-                'Access-Control-Allow-Headers': 'Content-Type',
-                'Access-Control-Allow-Credentials': 'true',
-            },
+            headers,
         }
     }
 
@@ -48,36 +57,19 @@ export const handler = async (event) => {
             title: body.title,
             original_title: body.original_title,
             runtime: body.runtime,
-            vote_average: body.vote_average,
-            tagline: body.tagline,
-            overview: body.overview,
-            imdb_id: body.imdb_id,
-            backdrop_path: body.backdrop_path,
-            poster_path: body.poster_path,
-            release_date: body.release_date,
-            createdAt: new Date()
         })
+
         return {
             statusCode: 200,
             body: JSON.stringify({ message: "Received request", result }),
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-                'Access-Control-Allow-Headers': 'Content-Type',
-                'Access-Control-Allow-Credentials': 'true',
-            },
+            headers,
         }
     } catch (err) {
         console.error(err)
         return {
             statusCode: 500,
             body: JSON.stringify({ message: "Error inserting data" }),
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-                'Access-Control-Allow-Headers': 'Content-Type',
-                'Access-Control-Allow-Credentials': 'true',
-            },
+            headers,
         }
     }
 }
