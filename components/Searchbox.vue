@@ -37,7 +37,7 @@
             <input
               type="search"
               id="search"
-              v-model="store.searchInput"
+              v-model="searchInput"
               v-on:keyup.enter="searchMovie"
               @input="resetSearchResults"
               class="px-4 py-4 w-full rounded-r-xl outline-none transition scroll-my-4 lg:text-xl opacity-80 focus:opacity-100"
@@ -63,14 +63,17 @@ const { t } = useI18n()
 const localePath = useLocalePath()
 
 const store = useStore()
+const searchInput = ref("")
 
 async function searchMovie() {
-  if (store.searchInput.length > 0) {
+  store.resetSearch()
+  if (searchInput.value.length > 0) {
+    store.searchInput = searchInput.value
     await store.setSearchResults()
     navigateTo(localePath("/search"))
   }
 }
 function resetSearchResults() {
-  store.resetSearch()
+  
 }
 </script>

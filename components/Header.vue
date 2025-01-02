@@ -190,7 +190,7 @@
                 </button>
                 <input
                   type="text"
-                  v-model="store.searchInput"
+                  v-model="searchInput"
                   v-on:keyup.enter="searchMovie"
                   @input="resetSearchResults"
                   class="lg:text-xl px-4 w-full outline-none transition"
@@ -228,9 +228,11 @@ const store = useStore();
 const localePath = useLocalePath()
 
 const searchHeader = ref()
+const searchInput = ref("")
 
 function searchMovie() {
-  if (store.searchInput.length > 0) {
+  if (searchInput.value.length > 0) {
+    store.searchInput = searchInput.value
     store.setSearchResults()
     showSearch.value = false
     navigateTo(localePath("/search"))
