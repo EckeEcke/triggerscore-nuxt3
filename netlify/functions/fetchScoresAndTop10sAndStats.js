@@ -58,11 +58,11 @@ export const handler = async (event) => {
       amountComments,
       amountLikes: amountLikes.likes,
       amountDislikes: amountLikes.dislikes,
-      averageTotal: allScoresTotal / totalMovies,
-      averageSexism: allScoresSexism / totalMovies,
-      averageRacism: allScoresRacism / totalMovies,
-      averageOthers: allScoresOthers / totalMovies,
-      averageCringe: allScoresCringe / totalMovies,
+      averageTotal: Math.round((allScoresTotal / totalMovies) * 10) / 10,
+      averageSexism: Math.round((allScoresSexism / totalMovies) * 10) / 10,
+      averageRacism: Math.round((allScoresRacism / totalMovies) * 10) / 10,
+      averageOthers: Math.round((allScoresOthers / totalMovies) * 10) / 10,
+      averageCringe: Math.round((allScoresCringe / totalMovies) * 10) / 10,
     }
 
     const response = {
