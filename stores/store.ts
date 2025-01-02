@@ -137,7 +137,6 @@ export const useStore = defineStore({
       const response = await fetch('https://www.triggerscore.de/.netlify/functions/fetchScoresAndTop10s')
       const scoresAndTop10s = await response.json()
       this.triggerscores = scoresAndTop10s.scores
-      console.log(scoresAndTop10s.top10s.cringe.map(movie => movie.movie_id))
       this.setTop10Cringe(locale, scoresAndTop10s.top10s.cringe.map(movie => movie.movie_id))
       this.setTop10Others(locale, scoresAndTop10s.top10s.others.map(movie => movie.movie_id))
       this.setTop10Racism(locale, scoresAndTop10s.top10s.racism.map(movie => movie.movie_id))
@@ -172,6 +171,7 @@ export const useStore = defineStore({
       this.recentComments = comments
     },
     async setTop10Sexism(locale: string, movieIds: Number[]) {
+      if (!movieIds) return
       const loadedTop10 = Promise.all(
         movieIds.map((id) =>
           fetch(
@@ -184,6 +184,7 @@ export const useStore = defineStore({
       loadedTop10.then((res: any) => (this.top10Sexism = res))
     },
     async setTop10Racism(locale: string, movieIds: Number[]) {
+      if (!movieIds) return
       const loadedTop10 = Promise.all(
         movieIds.map((id) =>
           fetch(
@@ -196,6 +197,7 @@ export const useStore = defineStore({
       loadedTop10.then((res: any) => (this.top10Racism = res))
     },
     async setTop10Others(locale: string, movieIds: Number[]) {
+      if (!movieIds) return
       const loadedTop10 = Promise.all(
         movieIds.map((id) =>
           fetch(
@@ -208,6 +210,7 @@ export const useStore = defineStore({
       loadedTop10.then((res: any) => (this.top10Others = res))
     },
     async setTop10Cringe(locale: string, movieIds: Number[]) {
+      if (!movieIds) return
       const loadedTop10 = Promise.all(
         movieIds.map((id) =>
           fetch(
