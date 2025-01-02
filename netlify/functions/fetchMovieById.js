@@ -19,13 +19,23 @@ export const handler = async (event) => {
     }
 
     try {
-        const movieId = event.queryStringParameters.id
-        const response = await fetch(`https://api.example.com/movies/${movieId}`)
-        const movie = await response.json()
+        const url = new URL(event.rawUrl) 
+        const id = url.searchParams.get('id')
+        if (!id) { 
+            return { 
+                statusCode: 400, 
+                body: JSON.stringify({ message: 'Movie ID is required' }), 
+                headers,
+            } 
+        }
+
+        const database = await connectToDatabase()
+        const ratings = await database.collection('scores').find({ movie_id: parseInt(id) }).toArray()
+        const calculatedScores = calculateScores(ratings)
 
         return {
             statusCode: 200,
-            body: JSON.stringify(movie),
+            body: JSON.stringify(calculatedScores),
             headers,
         }
     } catch (error) {

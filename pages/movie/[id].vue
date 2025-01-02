@@ -24,7 +24,7 @@ const regionProvider = computed(() => {
 })
 
 async function loadMovie() {
-  const existingMovie = store.movies.find(movie => movie.movie_id === id)
+  const existingMovie = store.movies.find(movie => movie.id.toString() === id)
   if (existingMovie) {
     store.selectedMovie = existingMovie
     return Promise.resolve()
@@ -43,6 +43,13 @@ async function loadMovie() {
 }
 
 async function loadTriggerscore() {
+  const existingScore = store.triggerscores.find(
+    score => score.movie_id.toString() === id
+  )
+  if (existingScore) {
+    store.selectedMovieScore = existingScore
+    return Promise.resolve()
+  }
   try {
     const response = await fetch(
       `https://www.triggerscore.de/.netlify/functions/fetchMovieById?id=${id}`
