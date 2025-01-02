@@ -30,7 +30,7 @@
             <button
               class="flex items-center justify-center px-3 w-16 rounded-l-xl bg-yellow-500 transition hover:bg-yellow-600 text-white"
               @click="searchMovie"
-              :disabled="store.searchInput.length == 0"
+              :disabled="searchInput.length == 0"
             >
               <font-awesome-icon :icon="['fas', 'search']" class="text-lg" />
             </button>

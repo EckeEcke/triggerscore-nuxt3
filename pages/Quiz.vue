@@ -195,7 +195,7 @@ const checkForRightAnswer = (indexOfAnswerGiven: Number) => {
 const buttonClass = (index: number) => {
   if (selectedAnswer.value === null) return 'bg-yellow-500 transition hover:bg-yellow-600 p-3 rounded-lg text-white font-semibold'
   if (index === correctIndex.value) return 'bg-green-500 p-3 rounded-lg text-white font-semibold'
-  if (index === selectedAnswer.value) return 'bg-red-950 p-3 rounded-lg text-white font-semibold'
+  if (index === selectedAnswer.value) return 'bg-red-700 p-3 rounded-lg text-white font-semibold'
   return 'bg-yellow-500 p-3 rounded-lg text-white font-semibold'
 }
 
