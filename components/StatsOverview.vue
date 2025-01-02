@@ -212,18 +212,18 @@ const amountDislikes = computed(
 )
 
 const averageTotal = computed(
-  () => store.stats?.averageScoreTotal ?? placeholder.averageScoreTotal
+  () => store.stats?.averageTotal ?? placeholder.averageScoreTotal
 )
 const averageSexism = computed(
-  () => store.stats?.averageScoreSexism ?? placeholder.averageScoreSexism
+  () => store.stats?.averageSexism ?? placeholder.averageScoreSexism
 )
 const averageRacism = computed(
-  () => store.stats?.averageScoreRacism ?? placeholder.averageScoreRacism
+  () => store.stats?.averageRacism ?? placeholder.averageScoreRacism
 )
 const averageCringe = computed(
-  () => store.stats?.averageScoreCringe ?? placeholder.averageScoreCringe
+  () => store.stats?.averageCringe ?? placeholder.averageScoreCringe
 )
 const averageOthers = computed(
-  () => store.stats?.averageScoreOthers ?? placeholder.averageScoreOthers
+  () => store.stats?.averageOthers ?? placeholder.averageScoreOthers
 )
 </script>
