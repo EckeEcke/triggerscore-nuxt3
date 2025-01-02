@@ -27,7 +27,7 @@ async function loadMovie() {
   const existingMovie = store.movies.find(movie => movie.movie_id === id)
   if (existingMovie) {
     store.selectedMovie = existingMovie
-    return
+    return Promise.resolve()
   }
 
   try {
