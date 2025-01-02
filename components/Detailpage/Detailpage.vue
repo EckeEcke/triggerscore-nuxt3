@@ -214,9 +214,6 @@ watch(locale, () => {
   loadMovie()
 })
 
-store.setTriggerscores(locale.value)
-store.filterMovies(locale.value)
-
 onMounted(() => {
   fetchSimilarMovies()
 })

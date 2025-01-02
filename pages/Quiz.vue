@@ -130,12 +130,11 @@
 <script lang="ts" setup>
 import { useStore } from "~/stores/store"
 
-const { t, locale } = useI18n()
+const { t } = useI18n()
 
 const store = useStore()
 const localePath = useLocalePath()
 
-store.setTriggerscores(locale.value)
 const movies = computed(() => store.movies)
 
 const gameRunning = ref(false)

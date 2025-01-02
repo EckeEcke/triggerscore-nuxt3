@@ -9,8 +9,20 @@
 
 <script setup lang="ts">
 import { useI18n } from "vue-i18n"
+import { useStore } from "~/stores/store"
 
 const { locale } = useI18n()
+const store = useStore()
+
+store.setTriggerscores(locale.value)
+store.setRecentRatings(locale.value)
+store.setBondMovies(locale.value)
+store.setRecentComments()
+
+store.setTop10Racism(locale.value)
+store.setTop10Sexism(locale.value)
+store.setTop10Others(locale.value)
+store.setTop10Cringe(locale.value)
 
 </script>
 

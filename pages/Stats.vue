@@ -50,12 +50,5 @@ const isLoading = computed(
 )
 
 const store = useStore()
-store.setTriggerscores(locale.value)
-store.setBondMovies(locale.value)
-store.setRecentRatings(locale.value)
-store.setTop10Racism(locale.value)
-store.setTop10Sexism(locale.value)
-store.setTop10Others(locale.value)
-store.setTop10Cringe(locale.value)
-store.setRecentComments()
+
 </script>
