@@ -10,6 +10,7 @@ export const handler = async (event) => {
   const origin = event.headers.origin
   const userAgent = event.headers['user-agent']
   const ip = event.headers['x-forwarded-for'] || event.connection.remoteAddress
+  if (!event.headers['user-agent']) console.log('no ip')
 
   const headers = {
     'Content-Type': 'application/json',

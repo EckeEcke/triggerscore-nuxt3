@@ -1,9 +1,10 @@
 const rateLimitMap = new Map()
 const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000 // 15 minutes
-const RATE_LIMIT_MAX_REQUESTS = 100
+const RATE_LIMIT_MAX_REQUESTS = 50
 
 export const rateLimit = (ip, userAgent) => {
   console.log(`User-Agent: ${userAgent}`)
+  console.log(`IP: ${ip}`)
 
   const currentTime = Date.now()
   const requestLog = rateLimitMap.get(ip) || []
