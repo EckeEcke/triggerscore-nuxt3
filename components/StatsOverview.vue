@@ -196,34 +196,34 @@ const placeholder = statsPlaceholder
 const store = useStore()
 
 const totalRatings = computed(
-  () => store.stats.totalRatings ?? placeholder.totalRatings
+  () => store.stats?.totalRatings ?? placeholder.totalRatings
 )
 const amountMovies = computed(
-  () => store.stats.amountMovies ?? placeholder.amountMovies
+  () => store.stats?.amountMovies ?? placeholder.amountMovies
 )
 const amountComments = computed(
-  () => store.stats.amountComments ?? placeholder.amountComments
+  () => store.stats?.amountComments ?? placeholder.amountComments
 )
 const amountLikes = computed(
-  () => store.stats.amountLikes ?? placeholder.amountLikes
+  () => store.stats?.amountLikes ?? placeholder.amountLikes
 )
 const amountDislikes = computed(
-  () => store.stats.amountDislikes ?? placeholder.amountDislikes
+  () => store.stats?.amountDislikes ?? placeholder.amountDislikes
 )
 
 const averageTotal = computed(
-  () => store.stats.averageScoreTotal ?? placeholder.averageScoreTotal
+  () => store.stats?.averageScoreTotal ?? placeholder.averageScoreTotal
 )
 const averageSexism = computed(
-  () => store.stats.averageScoreSexism ?? placeholder.averageScoreSexism
+  () => store.stats?.averageScoreSexism ?? placeholder.averageScoreSexism
 )
 const averageRacism = computed(
-  () => store.stats.averageScoreRacism ?? placeholder.averageScoreRacism
+  () => store.stats?.averageScoreRacism ?? placeholder.averageScoreRacism
 )
 const averageCringe = computed(
-  () => store.stats.averageScoreCringe ?? placeholder.averageScoreCringe
+  () => store.stats?.averageScoreCringe ?? placeholder.averageScoreCringe
 )
 const averageOthers = computed(
-  () => store.stats.averageScoreOthers ?? placeholder.averageScoreOthers
+  () => store.stats?.averageScoreOthers ?? placeholder.averageScoreOthers
 )
 </script>

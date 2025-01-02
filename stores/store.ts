@@ -123,7 +123,7 @@ export const useStore = defineStore({
       top10Racism: [],
       top10Others: [],
       top10Cringe: [],
-      stats: [],
+      stats: undefined,
       minScore: 0,
       maxScore: 10,
       isFiltering: false,

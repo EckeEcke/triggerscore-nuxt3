@@ -7,7 +7,7 @@ const countComments = (scores) => {
     return count + (score.comment ? 1 : 0)
   }, 0)
 }
-const devAllowedOrigins = ['http://localhost:3000', 'http://localhost:3001']
+const devAllowedOrigins = ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:8888']
 const prodAllowedOrigins = ['https://www.triggerscore.de']
 
 const allowedOrigins = process.env.NODE_ENV === 'development' ? devAllowedOrigins : prodAllowedOrigins
