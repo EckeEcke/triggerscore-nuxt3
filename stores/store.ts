@@ -134,14 +134,14 @@ export const useStore = defineStore({
       if (process.client && localStorage.getItem("store")) {
         this.moviesLoading = false
       } //also loads movies for now
-      const response = await fetch('https://www.triggerscore.de/.netlify/functions/fetchScoresAndTop10s')
+      const response = await fetch('https://www.triggerscore.de/.netlify/functions/fetchScoresAndTop10sAndStats')
       const scoresAndTop10s = await response.json()
       this.triggerscores = scoresAndTop10s.scores
       this.setTop10Cringe(locale, scoresAndTop10s.top10s.cringe.map(movie => movie.movie_id))
       this.setTop10Others(locale, scoresAndTop10s.top10s.others.map(movie => movie.movie_id))
       this.setTop10Racism(locale, scoresAndTop10s.top10s.racism.map(movie => movie.movie_id))
       this.setTop10Sexism(locale, scoresAndTop10s.top10s.sexism.map(movie => movie.movie_id))
-
+      this.setStats(scoresAndTop10s.stats)
       const loadedMovies = await fetch(`https://www.triggerscore.de/.netlify/functions/fetchMovies?locale=${locale}`)
       const movies = await loadedMovies.json()
       this.movies = movies
@@ -222,9 +222,7 @@ export const useStore = defineStore({
       )
       loadedTop10.then((res: any) => (this.top10Cringe = res))
     },
-    async setStats() {
-      const response = await fetch('https://www.triggerscore.de/.netlify/functions/fetchStats')
-      const stats = await response.json()
+    async setStats(stats: any) {
       this.stats = stats
     },
     setSearchInput(state: any, payload: any) {
