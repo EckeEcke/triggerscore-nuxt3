@@ -1,4 +1,5 @@
 import { connectToDatabase } from './dbClient.js'
+import { rateLimit } from './rateLimit.js'
 import { calculateScores } from './calculateScores.js'
 import { countLikesAndDislikes } from './countLikesAndDislikes.js'
 
@@ -13,19 +14,22 @@ const prodAllowedOrigins = ['https://www.triggerscore.de']
 const allowedOrigins = process.env.NODE_ENV === 'development' ? devAllowedOrigins : prodAllowedOrigins
 
 export const handler = async (event) => {
-  const origin = event.headers.origin
-  const headers = {
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Access-Control-Allow-Credentials': 'true',
-  }
+    const origin = event.headers.origin
+    const userAgent = event.headers['user-agent']
+    const ip = event.headers['x-forwarded-for'] || event.connection.remoteAddress
 
-  if (allowedOrigins.includes(origin)) {
-    headers['Access-Control-Allow-Origin'] = origin
-  } else {
-    headers['Access-Control-Allow-Origin'] = 'null'
-  }
+    const headers = {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Credentials': 'true',
+    }
+
+    if (allowedOrigins.includes(origin)) {
+        headers['Access-Control-Allow-Origin'] = origin
+    } else {
+        headers['Access-Control-Allow-Origin'] = 'null'
+    }
 
   try {
     const database = await connectToDatabase()
@@ -76,16 +80,16 @@ export const handler = async (event) => {
       }
     }
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify(response),
-      headers,
+        return {
+            statusCode: 200,
+            body: JSON.stringify(response),
+            headers,
+        }
+    } catch (err) {
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ message: err.message }),
+            headers,
+        }
     }
-  } catch (err) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ message: err.message }),
-      headers,
-    }
-  }
 }

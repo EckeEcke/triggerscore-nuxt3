@@ -1,4 +1,5 @@
 import { connectToDatabase } from './dbClient.js'
+import { rateLimit } from './rateLimit.js'
 
 const devAllowedOrigins = ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:8888']
 const prodAllowedOrigins = ['https://www.triggerscore.de']
@@ -7,6 +8,9 @@ const allowedOrigins = process.env.NODE_ENV === 'development' ? devAllowedOrigin
 
 export const handler = async (event) => {
   const origin = event.headers.origin
+  const userAgent = event.headers['user-agent']
+  const ip = event.headers['x-forwarded-for'] || event.connection.remoteAddress
+
   const headers = {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
@@ -18,6 +22,14 @@ export const handler = async (event) => {
     headers['Access-Control-Allow-Origin'] = origin
   } else {
     headers['Access-Control-Allow-Origin'] = 'null'
+  }
+
+  const rateLimitResponse = rateLimit(ip, userAgent)
+  if (rateLimitResponse) {
+    return {
+      ...rateLimitResponse,
+      headers,
+    }
   }
 
   try {

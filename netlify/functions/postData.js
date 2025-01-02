@@ -1,5 +1,6 @@
 import { connectToDatabase } from './dbClient.js'
 import { calculateTotal } from './calculateScores.js'
+import { rateLimit } from './rateLimit.js'
 
 const devAllowedOrigins = ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:8888']
 const prodAllowedOrigins = ['https://www.triggerscore.de']
@@ -8,6 +9,9 @@ const allowedOrigins = process.env.NODE_ENV === 'development' ? devAllowedOrigin
 
 export const handler = async (event) => {
     const origin = event.headers.origin
+    const userAgent = event.headers['user-agent']
+    const ip = event.headers['x-forwarded-for'] || event.connection.remoteAddress
+
     const headers = {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
@@ -28,17 +32,26 @@ export const handler = async (event) => {
         }
     }
 
-    const body = JSON.parse(event.body)
-    if (!body.movieID) {
-        console.log("No movie defined in request body...")
+    const rateLimitResponse = rateLimit(ip, userAgent)
+    if (rateLimitResponse) {
         return {
-            statusCode: 400,
-            body: JSON.stringify({ message: "Movie ID is required" }),
+            statusCode: 429,
             headers,
+            body: JSON.stringify({ message: 'Too many requests, please try again later.' }),
         }
     }
 
     try {
+        const body = JSON.parse(event.body)
+        if (!body.movieID) {
+            console.log("No movie defined in request body...")
+            return {
+                statusCode: 400,
+                body: JSON.stringify({ message: "Movie ID is required" }),
+                headers,
+            }
+        }
+
         const database = await connectToDatabase()
         const result = await database.collection('scores').insertOne({
             movie_id: body.movieID,
