@@ -70,7 +70,7 @@
           enter-to-class="opacity-100"
           enter-active-class="transition duration-300"
         >
-          <span v-for="keyword in displayedKeywords" :key="keyword" class="bg-gray-400 text-white font-semibold p-2 rounded text-sm md:text-base transition-opacity duration-500 ease-in-out opacity-0">
+          <span v-for="keyword in displayedKeywords" :key="keyword" class="bg-gray-500 text-white font-semibold p-2 rounded text-sm md:text-lg transition-opacity duration-500 ease-in-out opacity-0">
             {{ keyword }}
           </span>
         </transition-group>
@@ -89,12 +89,12 @@
       </transition-group>
     </div>
     <div v-else class="mt-8 p-8 text-center text-balance rounded-lg bg-gradient-to-r from-gray-950 to-gray-800">
-      <h2 class="text-white text-2xl font-semibold mb-4">{{ t("quiz.tagline") }}</h2>
+      <h2 class="text-white text-xl font-semibold mb-4">{{ t("quiz.tagline") }}</h2>
       <hr class="my-6">
-      <p class="text-white mb-8 text-lg text-wrap-balance font-semibold">
+      <p class="text-white mb-8 text-lg text-wrap-balance">
         {{ t("quiz.description") }}
       </p>
-      <button v-if="moviesForQuiz.length > 0" class="bg-yellow-500 transition hover:bg-yellow-600 p-3 rounded-lg text-white font-semibold" @click="startGame">
+      <button v-if="moviesForQuiz.length > 0" class="bg-yellow-500 transition hover:bg-yellow-600 p-3 rounded-lg text-white text-lg font-semibold" @click="startGame">
         {{ t("quiz.startGame") }}
       </button>
     </div>
