@@ -127,6 +127,7 @@ export const useStore = defineStore({
       minScore: 0,
       maxScore: 10,
       isFiltering: false,
+      isMaintenanceMode: true,
     }
   },
   actions: {

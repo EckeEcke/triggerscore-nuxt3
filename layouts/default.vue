@@ -1,9 +1,17 @@
 <template>
   <Html :lang="locale"></Html>
   <div class="bg-gray-900 min-h-screen flex flex-col pt-14">
-    <Header />
-    <slot />
-    <Footer />
+    <template v-if="isMaintained">
+      <div class="fixed top-1/2 -translate-y-1/2 flex flex-col justify-center gap-8 w-full text-white text-xl font-semibold items-center">
+        <MaintenanceAnimation />
+        Currenty under maintenance
+      </div>
+    </template>   
+    <template v-else>
+      <Header />
+      <slot />
+      <Footer />
+    </template> 
   </div>
 </template>
 
@@ -14,15 +22,14 @@ import { useStore } from "~/stores/store"
 const { locale } = useI18n()
 const store = useStore()
 
-store.setTriggerscores(locale.value)
-store.setRecentRatings(locale.value)
-store.setBondMovies(locale.value)
-store.setRecentComments()
+const isMaintained = store.isMaintenanceMode
 
-store.setTop10Racism(locale.value)
-store.setTop10Sexism(locale.value)
-store.setTop10Others(locale.value)
-store.setTop10Cringe(locale.value)
+if (!isMaintained){
+  store.setTriggerscores(locale.value)
+  store.setRecentRatings(locale.value)
+  store.setBondMovies(locale.value)
+  store.setRecentComments()
+}
 
 </script>
 
