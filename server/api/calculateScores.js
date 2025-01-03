@@ -3,7 +3,7 @@ const prodAllowedOrigins = ['https://www.triggerscore.de']
 
 const allowedOrigins = process.env.NODE_ENV === 'development' ? devAllowedOrigins : prodAllowedOrigins
 
-const calculateTotal = (score) => {
+export const calculateTotal = (score) => {
     const racism = score.rating_racism
     const sexism = score.rating_sexism
     const others = score.rating_others
@@ -12,7 +12,7 @@ const calculateTotal = (score) => {
     return parseFloat(total.toFixed(1))
 }
 
-const calculateScores = (data) => {
+export const calculateScores = (data) => {
     let scores = []
     let comments = 0
     let likes = 0
