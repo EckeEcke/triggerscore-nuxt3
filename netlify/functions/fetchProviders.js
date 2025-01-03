@@ -1,6 +1,7 @@
 import { connectToDatabase } from './dbClient.js'
 import { rateLimit } from './rateLimit.js'
 import Bottleneck from 'bottleneck'
+import fetch from 'node-fetch'
 
 const devAllowedOrigins = ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:8888']
 const prodAllowedOrigins = ['https://www.triggerscore.de']
@@ -8,8 +9,8 @@ const prodAllowedOrigins = ['https://www.triggerscore.de']
 const allowedOrigins = process.env.NODE_ENV === 'development' ? devAllowedOrigins : prodAllowedOrigins
 
 const limiter = new Bottleneck({
-  minTime: 100,
-  maxConcurrent: 10,
+  minTime: 200,
+  maxConcurrent: 30,
 })
 
 export const handler = async (event) => {
@@ -41,7 +42,7 @@ export const handler = async (event) => {
 
   try {
     const url = new URL(event.rawUrl)
-    const locale = url.searchParams.get('locale')
+    const locale = url.searchParams.get('locale') || 'de'
     const database = await connectToDatabase()
     const scores = await database.collection('scores')
     const movieIds = await scores.distinct('movie_id')
