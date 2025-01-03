@@ -140,17 +140,14 @@ export const useStore = defineStore({
       this.setTop10Racism(locale, scoresAndTop10s.top10s.racism.map(movie => movie.movie_id))
       this.setTop10Sexism(locale, scoresAndTop10s.top10s.sexism.map(movie => movie.movie_id))
       this.setStats(scoresAndTop10s.stats)
+      this.setRecentRatings(locale, scoresAndTop10s.recentRatings)
+      this.setRecentComments(scoresAndTop10s.recentComments)
       const loadedMovies = await fetch(`https://www.triggerscore.de/.netlify/functions/fetchMovies?locale=${locale}`)
       const movies = await loadedMovies.json()
       this.movies = movies
       this.moviesLoading = false
     },
-    async setRecentRatings(locale: string) {
-      const data = await fetch('https://www.triggerscore.de/.netlify/functions/fetchRecentRatings') 
-      if (!data.ok) { 
-        throw new Error('Network response was not ok')
-      }
-      const ratings = await data.json()
+    async setRecentRatings(locale: string, ratings: any) {
       this.recentScores = ratings
       const recentRatings = Promise.all(
         ratings.map((entry: any) =>
@@ -163,9 +160,7 @@ export const useStore = defineStore({
       )
       recentRatings.then((res: any) => (this.recentRatings = res))
     },
-    async setRecentComments() {
-      const data = await fetch('https://www.triggerscore.de/.netlify/functions/fetchRecentComments')
-      const comments = await data.json()
+    async setRecentComments(comments: any) {
       this.recentComments = comments
     },
     async setTop10Sexism(locale: string, movieIds: Number[]) {

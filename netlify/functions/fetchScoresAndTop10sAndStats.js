@@ -8,28 +8,46 @@ const countComments = (scores) => {
     return count + (score.comment ? 1 : 0)
   }, 0)
 }
+
 const devAllowedOrigins = ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:8888']
 const prodAllowedOrigins = ['https://www.triggerscore.de']
 
 const allowedOrigins = process.env.NODE_ENV === 'development' ? devAllowedOrigins : prodAllowedOrigins
 
 export const handler = async (event) => {
-    const origin = event.headers.origin
-    const userAgent = event.headers['user-agent']
-    const ip = event.headers['x-forwarded-for'] || event.connection.remoteAddress
+  console.log(event.headers)
+  const origin = event.headers.origin
+  const userAgent = event.headers['user-agent']
+  const ip = event.headers['x-forwarded-for'] || event.connection.remoteAddress
 
-    const headers = {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Allow-Credentials': 'true',
-    }
+  const headers = {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Credentials': 'true',
+  }
 
-    if (allowedOrigins.includes(origin)) {
-        headers['Access-Control-Allow-Origin'] = origin
-    } else {
-        headers['Access-Control-Allow-Origin'] = 'null'
+  if (allowedOrigins.includes(origin)) {
+    headers['Access-Control-Allow-Origin'] = origin
+  } else {
+    headers['Access-Control-Allow-Origin'] = 'null'
+  }
+
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers,
     }
+  }
+
+  const rateLimitResponse = rateLimit(ip, userAgent)
+  if (rateLimitResponse) {
+    return {
+      statusCode: 429,
+      headers,
+      body: JSON.stringify({ message: 'Too many requests, please try again later.' }),
+    }
+  }
 
   try {
     const database = await connectToDatabase()
@@ -69,6 +87,15 @@ export const handler = async (event) => {
       averageCringe: Math.round((allScoresCringe / totalMovies) * 10) / 10,
     }
 
+    const recentComments = await database.collection('scores').find({
+      $and: [
+        { comment: { $ne: null } },
+        { comment: { $ne: '' } }
+      ]
+    }).sort({ createdAt: -1 }).limit(8).toArray()
+
+    const recentRatings = await database.collection('scores').find().sort({ createdAt: -1 }).limit(6).toArray()
+
     const response = {
       scores: calculatedScores,
       stats,
@@ -77,19 +104,21 @@ export const handler = async (event) => {
         racism: top10Racism,
         others: top10Others,
         cringe: top10Cringe,
-      }
+      },
+      recentComments,
+      recentRatings,
     }
 
-        return {
-            statusCode: 200,
-            body: JSON.stringify(response),
-            headers,
-        }
-    } catch (err) {
-        return {
-            statusCode: 500,
-            body: JSON.stringify({ message: err.message }),
-            headers,
-        }
+    return {
+      statusCode: 200,
+      body: JSON.stringify(response),
+      headers,
     }
+  } catch (err) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ message: err.message }),
+      headers,
+    }
+  }
 }
