@@ -132,9 +132,6 @@ export const useStore = defineStore({
   },
   actions: {
     async setTriggerscores(locale: string) {
-      if (process.client && localStorage.getItem("store")) {
-        this.moviesLoading = false
-      } //also loads movies for now
       const response = await fetch('https://www.triggerscore.de/.netlify/functions/fetchScoresAndTop10sAndStats')
       const scoresAndTop10s = await response.json()
       this.triggerscores = scoresAndTop10s.scores
@@ -454,8 +451,5 @@ export const useStore = defineStore({
     getStats: (state) => state.stats,
     getIsFiltering: (state) => state.isFiltering,
     getSelectedMovie: (state) => state.selectedMovie,
-  },
-  persist: {
-    storage: persistedState.localStorage,
   },
 })

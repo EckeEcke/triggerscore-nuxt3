@@ -20,7 +20,7 @@ export default defineNuxtConfig({
         autoprefixer: {},
         },
     },
-    modules: ['@pinia/nuxt', '@pinia-plugin-persistedstate/nuxt', '@nuxtjs/robots', '@nuxtjs/i18n'],
+    modules: ['@pinia/nuxt', '@nuxtjs/robots', '@nuxtjs/i18n'],
     i18n: {
         locales: i18nLocales,
         defaultLocale: 'de',

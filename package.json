@@ -20,7 +20,6 @@
     "@fortawesome/vue-fontawesome": "^3.0.3",
     "@nuxtjs/i18n": "^8.0.0-rc.7",
     "@nuxtjs/robots": "^3.0.0",
-    "@pinia-plugin-persistedstate/nuxt": "^1.1.1",
     "@pinia/nuxt": "^0.4.6",
     "bottleneck": "^2.19.5",
     "dotenv": "^16.4.7",
