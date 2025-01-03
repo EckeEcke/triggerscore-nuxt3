@@ -1,10 +1,7 @@
 <template>
   <section
     class="detailpage w-full bg-center bg-cover bg-fixed"
-    :style="{
-      backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), ${backdrop}`,
-      minHeight: 'calc(100vh - 20rem)',
-    }"
+    :style="backgroundImageStyle"
   >
     <Head>
       <client-only>
@@ -161,7 +158,7 @@ const route = useRoute()
 const { t, locale } = useI18n()
 
 const movie: any = computed(() => store.selectedMovie)
-const backdrop = `url(https://image.tmdb.org/t/p/original/${movie.value.backdrop_path})`
+// const backdrop = `url(https://image.tmdb.org/t/p/original/${movie.value.backdrop_path})`
 const releaseDate = parseInt(movie.value.release_date.substring(0, 4))
 const score: any = computed(() => store.selectedMovieScore)
 
@@ -173,6 +170,14 @@ const title = computed(() =>
 const poster = `https://www.triggerscore.de/api/poster?poster_path=${movie.value.poster_path}`
 const ogImage = `https://www.triggerscore.de/api/og-image?poster_path=${movie.value.poster_path}`
 const genres = computed(() => movie.value.genres.map((genre: any) => genre.name))
+
+const backgroundImageStyle = computed(() => {
+    return {
+      // backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), ${backdrop.value}`,
+      // minHeight: 'calc(100vh - 20rem)',
+      // move back in if backdrop is wished
+    }
+})
 
 const totalRatings = computed(() => {
   return store.triggerscores.length > 0
