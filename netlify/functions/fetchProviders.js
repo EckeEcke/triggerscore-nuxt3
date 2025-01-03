@@ -9,8 +9,8 @@ const prodAllowedOrigins = ['https://www.triggerscore.de']
 const allowedOrigins = process.env.NODE_ENV === 'development' ? devAllowedOrigins : prodAllowedOrigins
 
 const limiter = new Bottleneck({
-  minTime: 200,
-  maxConcurrent: 30,
+  minTime: 40,
+  maxConcurrent: 50,
 })
 
 export const handler = async (event) => {
@@ -29,6 +29,13 @@ export const handler = async (event) => {
     headers['Access-Control-Allow-Origin'] = origin
   } else {
     headers['Access-Control-Allow-Origin'] = 'null'
+  }
+
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers,
+    }
   }
 
   const rateLimitResponse = rateLimit(ip, userAgent)
@@ -53,6 +60,8 @@ export const handler = async (event) => {
     const sky = []
     
     const providerRegion = locale.toUpperCase() === 'EN' ? 'GB' : locale.toUpperCase()
+
+    console.log(`Fetching provider data for ${movieIds.length} movies`)
 
     const providerDataPromises = movieIds.map(id => 
       limiter.schedule(() => 

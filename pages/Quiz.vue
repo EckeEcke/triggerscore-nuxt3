@@ -89,7 +89,7 @@
         </button>
       </transition-group>
     </div>
-    <div v-else class="mt-8 p-8 text-center text-balance rounded-lg bg-gradient-to-r from-gray-950 to-gray-800">
+    <div v-else class="mt-8 p-8 text-center text-balance">
       <h2 class="text-white text-xl font-semibold mb-4">{{ t("quiz.tagline") }}</h2>
       <hr class="my-6">
       <div class="flex flex-col gap-8 items-center align-center justify-center mb-8">
@@ -98,7 +98,7 @@
           {{ t("quiz.description") }}
         </p>
       </div>
-      <button v-if="moviesForQuiz.length > 0" class="bg-yellow-500 transition hover:bg-yellow-600 p-3 rounded-lg text-white text-lg font-semibold" @click="startGame">
+      <button v-if="moviesForQuiz.length > 0" class="bg-yellow-600 transition hover:bg-yellow-700 p-3 rounded-lg text-white text-lg font-semibold" @click="startGame">
         {{ t("quiz.startGame") }}
       </button>
     </div>
@@ -118,10 +118,10 @@
           <p>{{ t("quiz.congratulations") }}</p>
           <p class="mb-8 shiny-text text-3xl">{{  getPlayerTitle(score) }}</p>
           <div class="flex flex-col gap-4 mt-8">
-            <button class="bg-yellow-500 transition hover:bg-yellow-600 p-3 rounded-lg text-white font-semibold text-lg" @click="playAgain">
+            <button class="bg-yellow-600 transition hover:bg-yellow-700 p-3 rounded-lg text-white font-semibold text-lg" @click="playAgain">
               {{ t("quiz.playAgain") }}
             </button>
-            <button class="bg-gray-500 transition hover:bg-yellow-600 p-3 rounded-lg text-white font-semibold text-lg" @click="navigateTo(localePath('/'))">
+            <button class="bg-gray-500 transition hover:bg-yellow-700 p-3 rounded-lg text-white font-semibold text-lg" @click="navigateTo(localePath('/'))">
               {{ t("general.back") }}
             </button>
           </div>
@@ -221,10 +221,10 @@ const checkForRightAnswer = (indexOfAnswerGiven: Number) => {
 }
 
 const buttonClass = (index: number) => {
-  if (selectedAnswer.value === null) return 'bg-yellow-500 transition hover:bg-yellow-600 p-3 rounded-lg text-white font-semibold'
+  if (selectedAnswer.value === null) return 'bg-yellow-600 transition hover:bg-yellow-700 p-3 rounded-lg text-white font-semibold'
   if (index === correctIndex.value) return 'bg-green-500 p-3 transition rounded-lg text-white font-semibold hop'
   if (index === selectedAnswer.value) return 'bg-red-700 p-3 transition rounded-lg text-white font-semibold drop'
-  return 'bg-yellow-500 p-3 rounded-lg text-white font-semibold'
+  return 'bg-yellow-600 p-3 rounded-lg text-white font-semibold'
 }
 
 const setRandomCorrectIndex = () => correctIndex.value = Math.floor(Math.random() * 4)
@@ -267,10 +267,10 @@ const startNewRound = () => {
 }
 
 const getPlayerTitle = (score: number) => {
-  if (score > 9000) return t("quiz.titles.worldClassCineast")
-  if (score > 8000) return t("quiz.titles.cineast")
-  if (score > 7000) return t("quiz.titles.movieExpert")
-  if (score > 6000) return t("quiz.titles.movieFan")
+  if (score > 8500) return t("quiz.titles.worldClassCineast")
+  if (score > 7500) return t("quiz.titles.cineast")
+  if (score > 6500) return t("quiz.titles.movieExpert")
+  if (score > 5500) return t("quiz.titles.movieFan")
   return t("quiz.titles.movieBeginner")
 }
 

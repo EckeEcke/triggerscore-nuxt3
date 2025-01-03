@@ -14,14 +14,7 @@ const id = route.params.id
 const isLoading = ref(true)
 const store = useStore()
 const { locale } = useI18n()
-store.loadProviderData(locale.value)
 store.loadingSelectedMovie = true
-const regionProvider = computed(() => {
-  if (locale.value === "en") {
-    return "GB"
-  }
-  return locale.value.toUpperCase()
-})
 
 async function loadMovie() {
   const existingMovie = store.movies.find(movie => movie.id.toString() === id)

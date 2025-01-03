@@ -144,7 +144,7 @@ store.resetFilter()
 const totalPages = computed(() => Math.ceil(filteredMovies.value.length / 24))
 const isLoading = computed(
   () =>
-    store.highlightsLoading ||
+    // store.highlightsLoading ||
     store.moviesLoading ||
     store.triggerscores.length == 0
 )

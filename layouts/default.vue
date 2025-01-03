@@ -26,9 +26,8 @@ const isMaintained = store.isMaintenanceMode
 
 if (!isMaintained){
   store.setTriggerscores(locale.value)
-  store.setRecentRatings(locale.value)
   store.setBondMovies(locale.value)
-  store.setRecentComments()
+  store.loadProviderData(locale.value)
 }
 
 </script>
