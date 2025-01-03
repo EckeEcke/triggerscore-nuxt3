@@ -32,6 +32,9 @@ export default defineNuxtConfig({
     runtimeConfig: {
         apiKey: process.env.TMDB_API_KEY,
     },
+    nitro: {
+        preset: "vercel"
+    }
     /*
     nitro: {
         devProxy: {

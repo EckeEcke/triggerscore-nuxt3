@@ -1,0 +1,13 @@
+{
+    "functions": {
+      "server/api/*.js": {
+        "runtime": "node20"
+      }
+    },
+    "builds": [
+      {
+        "src": "server/api/*.js",
+        "use": "@vercel/node"
+      }
+    ]
+  }
