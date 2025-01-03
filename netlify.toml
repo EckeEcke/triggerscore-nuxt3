@@ -1,7 +1,6 @@
-# outcommented for maintenance
-# [build] 
-# publish = "dist" 
-# functions = "netlify/functions"
+[build] 
+publish = "dist" 
+functions = "netlify/functions"
 
-# [functions] 
-# directory = "netlify/functions"
+[functions] 
+directory = "netlify/functions"

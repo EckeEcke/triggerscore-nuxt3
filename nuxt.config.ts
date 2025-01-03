@@ -1,7 +1,7 @@
 const i18nLocales = ['de', 'en', 'es', 'fr', 'us']
 
 export default defineNuxtConfig({
-    ssr: false, // delete when maintenance is over
+    // ssr: false, // delete when maintenance is over
     app: {
         head: {
             link: [{ rel: 'icon', type: 'image/png', href: '/favicon.ico' }]
