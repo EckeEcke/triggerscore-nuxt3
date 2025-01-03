@@ -133,10 +133,26 @@ const loadProviders = async () => {
   }
 }
 
-loadProviders()
+const providerData = computed(() => store.providerData)
+
+const checkProviders = () => {
+  const movieId = parseInt(route.params.id)
+  onNetflix.value = providerData.value.netflix.includes(movieId)
+  onPrime.value = providerData.value.prime.includes(movieId)
+  onDisney.value = providerData.value.disney.includes(movieId)
+  onSky.value = providerData.value.sky.includes(movieId)
+
+  if (!onNetflix.value && !onPrime.value && !onDisney.value && !onSky.value) {
+    loadProviders()
+  }
+}
 
 watch(locale, () => {
   loadProviders()
+})
+
+onMounted(() => {
+  checkProviders()
 })
 
 </script>
