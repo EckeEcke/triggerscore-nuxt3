@@ -1,10 +1,16 @@
 import { connectToDatabase } from './dbClient.js'
 import { rateLimit } from './rateLimit.js'
+import Bottleneck from 'bottleneck'
 
 const devAllowedOrigins = ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:8888']
 const prodAllowedOrigins = ['https://www.triggerscore.de']
 
 const allowedOrigins = process.env.NODE_ENV === 'development' ? devAllowedOrigins : prodAllowedOrigins
+
+const limiter = new Bottleneck({
+  minTime: 100,
+  maxConcurrent: 10,
+})
 
 export const handler = async (event) => {
   const origin = event.headers.origin
