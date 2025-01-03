@@ -138,10 +138,7 @@ const showMenu = ref(false)
 const start = ref(0)
 const end = ref(24)
 
-store.setTriggerscores(locale.value)
 store.filterMovies(locale.value)
-store.setRecentRatings(locale.value)
-store.setBondMovies(locale.value)
 store.resetFilter()
 
 const totalPages = computed(() => Math.ceil(filteredMovies.value.length / 24))
