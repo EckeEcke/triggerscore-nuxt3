@@ -96,7 +96,6 @@ import { useStore } from "~/stores/store"
 import { useI18n } from "vue-i18n"
 
 const store = useStore()
-store.setStats()
 
 const { t } = useI18n()
 
