@@ -31,6 +31,15 @@ export const handler = async (event) => {
         headers['Access-Control-Allow-Origin'] = 'null'
     }
 
+    const rateLimitResponse = rateLimit(ip, userAgent)
+    if (rateLimitResponse) {
+        return {
+            statusCode: 429,
+            headers,
+            body: JSON.stringify({ message: 'Too many requests, please try again later.' }),
+        }
+    }
+
   try {
     const database = await connectToDatabase()
     const scores = await database.collection('scores').find().toArray()

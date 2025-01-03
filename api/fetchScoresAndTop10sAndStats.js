@@ -31,6 +31,15 @@ export default async (req, res) => {
         headers['Access-Control-Allow-Origin'] = 'null'
     }
 
+    const rateLimitResponse = rateLimit(ip, userAgent)
+    if (rateLimitResponse) {
+        return {
+            statusCode: 429,
+            headers,
+            body: JSON.stringify({ message: 'Too many requests, please try again later.' }),
+        }
+    }
+
   try {
     const database = await connectToDatabase()
     const scores = await database.collection('scores').find().toArray()
@@ -69,15 +78,26 @@ export default async (req, res) => {
       averageCringe: Math.round((allScoresCringe / totalMovies) * 10) / 10,
     }
 
+    const recentComments = await database.collection('scores').find({
+        $and: [
+            { comment: { $ne: null } },
+            { comment: { $ne: '' } }
+        ]
+    }).sort({ createdAt: -1 }).limit(8).toArray()
+  
+    const recentRatings = await database.collection('scores').find().sort({ createdAt: -1 }).limit(6).toArray()
+
     const response = {
-      scores: calculatedScores,
-      stats,
-      top10s: {
+    scores: calculatedScores,
+    stats,
+    top10s: {
         sexism: top10Sexism,
         racism: top10Racism,
         others: top10Others,
         cringe: top10Cringe,
-      }
+    },
+    recentComments,
+    recentRatings
     }
 
     res.status(200).json(response)
