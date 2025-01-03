@@ -3,6 +3,10 @@ import placeholderTriggerscores from "~/assets/triggerscores.json"
 import placeholderBondMovies from "~/assets/bondMovies.json"
 import type { Movie } from "~/types/movie"
 
+const apiBaseUrl = process.env.NODE_ENV === 'development'
+  ? 'http://localhost:8888/.netlify/functions'
+  : 'https://www.triggerscore.de/.netlify/functions'
+
 function sortAtoZ(x: Movie, y: Movie): 1 | -1 | 0 {
   const titleX = x.title ? x.title : x.original_title
   const titleY = y.title ? y.title : y.original_title
@@ -132,7 +136,7 @@ export const useStore = defineStore({
   },
   actions: {
     async setTriggerscores(locale: string) {
-      const response = await fetch('https://www.triggerscore.de/.netlify/functions/fetchScoresAndTop10sAndStats')
+      const response = await fetch(`${apiBaseUrl}/fetchScoresAndTop10sAndStats`)
       const scoresAndTop10s = await response.json()
       this.triggerscores = scoresAndTop10s.scores
       this.setTop10Cringe(locale, scoresAndTop10s.top10s.cringe.map(movie => movie.movie_id))
@@ -142,13 +146,14 @@ export const useStore = defineStore({
       this.setStats(scoresAndTop10s.stats)
       this.setRecentRatings(locale, scoresAndTop10s.recentRatings)
       this.setRecentComments(scoresAndTop10s.recentComments)
-      const loadedMovies = await fetch(`https://www.triggerscore.de/.netlify/functions/fetchMovies?locale=${locale}`)
+      const loadedMovies = await fetch(`${apiBaseUrl}/fetchMovies?locale=${locale}`)
       const movies = await loadedMovies.json()
       this.movies = movies
       this.moviesLoading = false
     },
     async setRecentRatings(locale: string, ratings: any) {
       this.recentScores = ratings
+      if (!ratings) return
       const recentRatings = Promise.all(
         ratings.map((entry: any) =>
           fetch(
@@ -283,7 +288,7 @@ export const useStore = defineStore({
       this.searchError = payload
     },
     async setBondMovies(locale: string) {
-      const data = await fetch(`https://www.triggerscore.de/api/bondMovies?locale=${locale}`)
+      const data = await fetch(`/api/bondMovies?locale=${locale}`)
       const bondMovieData = await data.json()
       this.bondMovies = bondMovieData
       this.highlightsLoading = false
@@ -406,7 +411,7 @@ export const useStore = defineStore({
       this.filteredMovies = clonedArray
     },
     async loadProviderData(locale: string) {
-      const data = await fetch(`https://www.triggerscore.de/.netlify/functions/fetchProviders?locale=${locale}`)
+      const data = await fetch(`${apiBaseUrl}/fetchProviders?locale=${locale}`)
       const providerData = await data.json()
       this.providerData = providerData
     },

@@ -82,6 +82,7 @@
           enter-from-class="opacity-0"
           enter-to-class="opacity-100"
           enter-active-class="transition duration-1000"
+          mode="out-in"
         >
         <button v-for="(title, index) in movieTitlesForQuiz" :key="title" :class="buttonClass(index)" @click="checkForRightAnswer(index)">
           {{ title }}
@@ -109,8 +110,8 @@
       leave-from-class="opacity-100"
       leave-to-class="transform opacity-0"
     >
-      <div v-if="showModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-        <div class="bg-gradient-to-r from-gray-950 to-gray-800 text-white text-xl font-semibold p-8 mx-4 rounded-lg shadow-lg text-center">
+      <div v-if="showModal" class="fixed inset-0 flex items-center justify-center bg-gray-900">
+        <div class="text-white text-xl font-semibold p-8 mx-4 rounded-lg shadow-lg text-center">
           <h2 class="text-3xl font-semibold mb-8">Game Over!</h2>
           <p>{{ t("quiz.finalScore") }}{{ score }}</p>
           <p class="mb-8">{{ t("quiz.correctGuesses", { correctGuesses: correctGuesses }) }}</p>
@@ -124,6 +125,21 @@
               {{ t("general.back") }}
             </button>
           </div>
+        </div>
+      </div>
+    </transition>
+    <transition
+      enter-active-class="transition duration-500 ease-out"
+      enter-from-class="transform opacity-0"
+      enter-to-class="opacity-100"
+      leave-active-class="transition duration-200 ease-in"
+      leave-from-class="opacity-100"
+      leave-to-class="transform opacity-0"
+    >
+      <div v-if="showRoundModal" class="fixed inset-0 flex items-center justify-center bg-gradient-to-r bg-gray-900">
+        <div class="shiny-text uppercase text-5xl font-semibold p-8 mx-4 rounded-lg shadow-lg text-center">
+          <span v-if="round === 10">{{  t("quiz.lastRound") }}</span>
+        <span v-else>{{ t("quiz.round") }} {{  round }}</span>
         </div>
       </div>
     </transition>
@@ -142,6 +158,7 @@ const movies = computed(() => store.movies)
 
 const gameRunning = ref(false)
 const showModal = ref(false)
+const showRoundModal = ref(false)
 
 const correctIndex = ref(-1)
 const selectedAnswer = ref<number | null>(null)
@@ -179,25 +196,34 @@ const checkForRightAnswer = (indexOfAnswerGiven: Number) => {
   clearInterval(intervalPoints.value)
   selectedAnswer.value = indexOfAnswerGiven
   if (indexOfAnswerGiven === correctIndex.value) {
-    console.log('Correct!')
     correctGuesses.value++
     score.value += currentPoints.value
-  } else console.log('Wrong!')
+  }
+  
   if (round.value < 10) {
     setTimeout(() => {
-      previousMovies.value.push(...moviesForQuiz.value.map(movie => movie.id))
-      startNewRound()
       round.value++
-    }, 3000)
+      showRoundModal.value = true
+      selectedAnswer.value = null
+      setTimeout(() => {
+        displayedKeywords.value = []
+        previousMovies.value.push(...moviesForQuiz.value.map(movie => movie.id))
+        setTimeout(() => {
+          showRoundModal.value = false
+          startNewRound()
+        }, 2000)
+      }, 400)
+    }, 1900)
+    
   } else {
-    showModal.value = true
+    setTimeout(() => { showModal.value = true }, 1900)
   }
 }
 
 const buttonClass = (index: number) => {
   if (selectedAnswer.value === null) return 'bg-yellow-500 transition hover:bg-yellow-600 p-3 rounded-lg text-white font-semibold'
-  if (index === correctIndex.value) return 'bg-green-500 p-3 rounded-lg text-white font-semibold'
-  if (index === selectedAnswer.value) return 'bg-red-700 p-3 rounded-lg text-white font-semibold'
+  if (index === correctIndex.value) return 'bg-green-500 p-3 transition rounded-lg text-white font-semibold hop'
+  if (index === selectedAnswer.value) return 'bg-red-700 p-3 transition rounded-lg text-white font-semibold drop'
   return 'bg-yellow-500 p-3 rounded-lg text-white font-semibold'
 }
 
@@ -226,10 +252,9 @@ const startGame = () => {
 }
 
 const startNewRound = () => {
-  selectedAnswer.value = null
+  setRandomCorrectIndex()
   clearInterval(intervalKeywords.value)
   clearInterval(intervalPoints.value)
-  setRandomCorrectIndex()
   displayKeywords()
   currentPoints.value = 1000
   intervalPoints.value = setInterval(() => {
@@ -266,6 +291,45 @@ const playAgain = () => {
 
 .quiz-image {
   max-width: 15rem;
+}
+
+.hop {
+  animation: hop 1s ease-in-out;
+  animation-delay: 0.8s;
+}
+
+.drop {
+  animation: drop 1s ease-in-out;
+}
+
+@keyframes hop {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  30% {
+    transform: translateY(-10px) scale(1.1);
+  }
+  50% {
+    transform: translateY(0) scale(1);
+  }
+  70% {
+    transform: translateY(-5px) scale(1.05);
+  }
+  100% {
+    transform: translateY() scale(1);
+  }
+}
+
+@keyframes drop {
+  0% {
+    transform: translate(0) scale(1);
+  }
+  30% {
+    transform: translateY(5px) scale(0.9);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
 }
 
 </style>
