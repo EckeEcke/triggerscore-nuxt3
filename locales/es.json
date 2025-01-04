@@ -173,6 +173,7 @@
         "playAgain": "Jugar de nuevo",
         "correctGuesses": "¡Has adivinado {correctGuesses} de 10 películas correctamente!",
         "congratulations": "¡Felicidades! Eres un ",
+        "testYourMovieKnowledge": "Pon a prueba tus conocimientos de cine",
         "titles": {
             "worldClassCineast": "Cineasta de Clase Mundial",
             "cineast": "Cineasta",

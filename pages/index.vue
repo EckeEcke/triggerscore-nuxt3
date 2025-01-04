@@ -133,10 +133,15 @@
       />
     </section>
     <section
-    class="rounded p-4 py-8 sm:p-12 my-4 container xl:w-10/12 mx-auto bg-gradient-to-r from-gray-950 to-gray-80 text-white text-left"
-  >
-    <DefinitionTriggered />
-  </section>
+      class="rounded p-4 py-8 sm:p-12 my-4 container xl:w-10/12 mx-auto bg-gradient-to-r from-gray-950 to-gray-80 text-white text-left"
+    > 
+      <DefinitionTriggered />
+    </section>
+    <section
+      class="mb-4 mt-32 container xl:w-10/12 mx-auto"
+    > 
+      <QuizDisturber />
+    </section>
   <section class="container xl:w-10/12 mx-auto px-4 my-12 sm:my-24">
     <div class="bg-opacity-90 py-16">
       <h2 class="text-white text-xl font-semibold my-4">
@@ -156,6 +161,7 @@
 </template>
 
 <script setup lang="ts">
+import QuizDisturber from "~/components/QuizDisturber.vue";
 import { useStore } from "~/stores/store"
 
 const { t } = useI18n()

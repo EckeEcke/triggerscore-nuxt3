@@ -173,6 +173,7 @@
     "playAgain": "Play Again",
     "correctGuesses": "You guessed {correctGuesses} out of 10 movies correctly!",
     "congratulations": "Congratulations! You are a ",
+    "testYourMovieKnowledge": "Test your movie knowledge",
     "titles": {
       "worldClassCineast": "World Class Cineast",
       "cineast": "Cineast",
