@@ -23,16 +23,16 @@
           >{{ t("header.allMovies") }}</NuxtLink
         >
         <NuxtLink
-          :to="localePath('/stats')"
-          tag="a"
-          class="animated-link text-white font-semibold self-center mr-6 md:mr-10 hidden md:block hover:text-yellow-500 uppercase"
-          >STATS</NuxtLink
-        >
-        <NuxtLink
           :to="localePath('/quiz')"
           tag="a"
           class="animated-link text-white font-semibold self-center mr-6 md:mr-10 hidden md:block hover:text-yellow-500 uppercase"
           >QUIZ</NuxtLink
+        >
+        <NuxtLink
+          :to="localePath('/stats')"
+          tag="a"
+          class="animated-link text-white font-semibold self-center mr-6 md:mr-10 hidden md:block hover:text-yellow-500 uppercase"
+          >STATS</NuxtLink
         >
         <NuxtLink
           :to="localePath('/about')"
@@ -84,11 +84,11 @@
               @click="showNav = false"
             />
           </div>
-          <div class="">
+          <div class="mb-6">
             <NuxtLink
               :to="localePath('/')"
               tag="div"
-              class="text-2xl md:text-2xl self-center font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200 cursor-pointer pb-12"
+              class="text-2xl md:text-2xl self-center font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200 cursor-pointer"
               @click="showNav = false"
             >
               TRIGGERSC<font-awesome-icon
@@ -114,18 +114,18 @@
             </div></NuxtLink
           >
           <NuxtLink
-            :to="localePath('/stats')"
-            tag="a"
-            class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase"
-            ><div class="py-6" @click="showNav = false">Stats</div></NuxtLink
-          >
-          <NuxtLink
             :to="localePath('/quiz')"
             tag="a"
             class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase"
             ><div class="py-6" @click="showNav = false">
               Quiz
             </div></NuxtLink
+          >
+          <NuxtLink
+            :to="localePath('/stats')"
+            tag="a"
+            class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase"
+            ><div class="py-6" @click="showNav = false">Stats</div></NuxtLink
           >
           <NuxtLink
             :to="localePath('/about')"

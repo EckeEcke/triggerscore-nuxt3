@@ -247,8 +247,12 @@ const displayKeywords = () => {
 }
 
 const startGame = () => {
-  gameRunning.value = true
-  startNewRound()
+  showRoundModal.value = true
+  setTimeout(() => {
+    showRoundModal.value = false
+    gameRunning.value = true
+    startNewRound()
+  }, 2000)
 }
 
 const startNewRound = () => {
@@ -276,7 +280,19 @@ const getPlayerTitle = (score: number) => {
 }
 
 const playAgain = () => {
-  window.location.reload()
+    gameRunning.value = false
+  	showModal.value = false
+    showRoundModal.value = false
+    correctIndex.value = -1
+    selectedAnswer.value = null
+    displayedKeywords.value = []
+    previousMovies.value = []
+    intervalKeywords.value = null
+    intervalPoints.value = null
+    correctGuesses.value = 0
+    round.value = 1
+    score.value = 0
+    currentPoints.value = 1000
 }
 </script>
 
