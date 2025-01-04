@@ -98,7 +98,7 @@
           {{ t("quiz.description") }}
         </p>
       </div>
-      <button v-if="moviesForQuiz.length > 0" class="bg-yellow-600 transition hover:bg-yellow-700 p-3 rounded-lg text-white text-lg font-semibold" @click="startGame">
+      <button v-if="moviesForQuiz.length > 0" class="bg-yellow-600 transition hover:bg-yellow-700 p-3 rounded-lg text-white text-lg font-semibold uppercase" @click="startGame">
         {{ t("quiz.startGame") }}
       </button>
     </div>
@@ -118,10 +118,10 @@
           <p>{{ t("quiz.congratulations") }}</p>
           <p class="mb-8 shiny-text text-3xl">{{  getPlayerTitle(score) }}</p>
           <div class="flex flex-col gap-4 mt-8">
-            <button class="bg-yellow-600 transition hover:bg-yellow-700 p-3 rounded-lg text-white font-semibold text-lg" @click="playAgain">
+            <button class="bg-yellow-600 transition hover:bg-yellow-700 p-3 rounded-lg text-white font-semibold text-lg uppercase" @click="playAgain">
               {{ t("quiz.playAgain") }}
             </button>
-            <button class="bg-gray-500 transition hover:bg-yellow-700 p-3 rounded-lg text-white font-semibold text-lg" @click="navigateTo(localePath('/'))">
+            <button class="bg-gray-500 transition hover:bg-yellow-700 p-3 rounded-lg text-white font-semibold text-lg uppercase" @click="navigateTo(localePath('/'))">
               {{ t("general.back") }}
             </button>
           </div>
@@ -257,13 +257,14 @@ const startNewRound = () => {
   clearInterval(intervalPoints.value)
   displayKeywords()
   currentPoints.value = 1000
-  intervalPoints.value = setInterval(() => {
-    if (currentPoints.value > 0) {
-      currentPoints.value -= 100
-    } else {
-      clearInterval(intervalPoints.value)
-    }
-  }, 4000)
+  setTimeout(() => {
+      intervalPoints.value = setInterval(() => {
+        if (currentPoints.value > 0) {
+          currentPoints.value -= 50
+        } else {
+          clearInterval(intervalPoints.value)
+        }
+      }, 2000)}, 4000)
 }
 
 const getPlayerTitle = (score: number) => {
