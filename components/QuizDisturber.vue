@@ -18,6 +18,16 @@
     <div class="mx-auto">
       <img src="/images/quiz-image.png" alt="quiz illustration" />
     </div>
+    <transition
+          enter-active-class="duration-500 ease-out"
+          enter-from-class="opacity-0"
+          enter-to-class="opacity-100"
+          leave-active-class="duration-500 ease-in"
+          leave-from-class="opacity-100"
+          leave-to-class="opacity-0"
+        >
+          <ClickAnimation v-if="showAnimation" class="animation" />
+        </transition>
   </NuxtLink>
   </div>
   
@@ -27,6 +37,25 @@
 import { useI18n } from "vue-i18n"
 
 const { t } = useI18n()
+
+const showAnimation = ref(false)
+let interval: ReturnType<typeof setInterval> | undefined = undefined
+
+const toggleAnimation = () => {
+  showAnimation.value = !showAnimation.value
+}
+
+interval = setInterval(() => {
+    toggleAnimation()
+    setTimeout(toggleAnimation, 1500)
+  }, 7000)
+
+onUnmounted(() => {
+  if (interval) {
+    clearInterval(interval)
+  }
+})
+
 </script>
 
 <style scoped>
@@ -42,5 +71,12 @@ img {
 
 p {
   text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
+}
+
+.animation {
+  position: absolute;
+  top: 70%;
+  left: 70%;
+  transform: translate(-50%, -50%) rotate(-45deg);
 }
 </style>
