@@ -1,5 +1,7 @@
 <template>
-  <section class="container xl:w-10/12 mx-auto px-4 my-12 sm:my-24 max-w-800px">
+  <section
+    :class="isFullscreen ? 'my-0 center-big-screen' : 'my-12'"
+    class="container xl:w-10/12 mx-auto px-4 max-w-800px">
     <Head>
       <Title>Triggerscore Quiz - Movie guessing based on keywords</Title>
       <Meta charset="UTF-8" />
@@ -15,18 +17,19 @@
       <Meta name="viewport" content="width=device-width, initial-scale=1.0" />
     </Head>
     <div
-    class="text-3xl self-center font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200"
+      v-if="!gameRunning"
+      :class="isFullscreen ? 'mt-8' : 'mt-0'"
+      class="text-3xl self-center font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200"
     >
-    <h1 aria-label="TRIGGERSCORE QUIZ">
-      TRIGGERSC<font-awesome-icon
-        aria-hidden="true"
-        :icon="['fas', 'angry']"
-        class="text-white"
-      /><span class="sr-only">O</span>RE QUIZ
-    </h1>
-    
+      <h1 aria-label="TRIGGERSCORE QUIZ">
+        TRIGGERSC<font-awesome-icon
+          aria-hidden="true"
+          :icon="['fas', 'angry']"
+          class="text-white"
+        /><span class="sr-only">O</span>RE QUIZ
+      </h1> 
     </div>
-    <div v-if="gameRunning" class="grid grid-cols-2 bg-gradient-to-r from-gray-950 to-gray-800 text-white text-xl font-semibold p-4 my-8 rounded-lg">
+    <div v-if="gameRunning" class="grid grid-cols-2 bg-gradient-to-r from-gray-950 to-gray-800 text-white text-xl font-semibold p-4 my-8 rounded-lg" :class="isFullscreen ? 'my-8 md:mt-36' : 'my-8'">
       <div class="pr-4 border-r border-white">
         {{ t("quiz.yourScore") }}
         <br> 
@@ -58,11 +61,10 @@
       </div>
     </div>
     <div v-if="gameRunning">
-      <div class="text-2xl text-white font-semibold my-8">
-        <span v-if="round === 10">{{  t("quiz.lastRound") }}</span>
-        <span v-else>{{ t("quiz.round") }} {{  round }}</span>
+      <div v-if="playMode === 'poster'" class="image-wrapper" style="display: flex; justify-content: center">
+        <img :src="poster" :style="posterStyle" />
       </div>
-      <div class="min-h mb-8">
+      <div v-if="playMode === 'keywords'" class="keywords-wrapper mb-8">
         <transition-group
           tag="div"
           class="flex flex-wrap gap-2"
@@ -78,7 +80,7 @@
       <h2 class="text-2xl text-white my-8 font-semibold">{{ t("quiz.question") }}</h2>
       <transition-group
           tag="div"
-          class="grid grid-cols-2 gap-4"
+          class="grid grid-cols-2 gap-4 mb-2"
           enter-from-class="opacity-0"
           enter-to-class="opacity-100"
           enter-active-class="transition duration-1000"
@@ -89,18 +91,30 @@
         </button>
       </transition-group>
     </div>
-    <div v-else class="mt-8 p-8 text-center text-balance">
-      <h2 class="text-white text-xl font-semibold mb-4">{{ t("quiz.tagline") }}</h2>
-      <hr class="my-6">
+    <div v-else class="p-8 text-center text-balance">
+      <h2 class="text-white text-xl font-semibold mb-8">{{ t("quiz.tagline") }}</h2>
       <div class="flex flex-col gap-8 items-center align-center justify-center mb-8">
         <img class="quiz-image max-w-16 hidden md:block" src="/images/quiz-image-komprimiert.png" />
         <p class="text-white text-lg text-wrap-balance">
           {{ t("quiz.description") }}
         </p>
       </div>
-      <button v-if="moviesForQuiz.length > 0" class="bg-yellow-600 transition hover:bg-yellow-700 p-3 rounded-lg text-white text-lg font-semibold uppercase" @click="startGame">
-        {{ t("quiz.startGame") }}
-      </button>
+      <div class="flex flex-col gap-4 mx-auto" style="width: 260px;">
+        <div>
+          <button v-if="moviesForQuiz.length > 0" class="bg-yellow-600 transition hover:bg-yellow-700 p-3 rounded-lg text-white text-lg font-semibold uppercase w-full" @click="startGame">
+            {{ t("quiz.startGame") }}
+          </button>
+        </div>
+        <div class="fullscreen-button text-white">
+          <button @click="toggleFullscreen" class="bg-gray-600 hover:bg-yellow-700 p-3 rounded-lg text-white text-lg font-semibold uppercase w-full">
+            Fullscreen an/aus <font-awesome-icon
+              aria-hidden="true"
+              :icon="['fas', 'expand']"
+              class="text-white"
+            />
+          </button>
+        </div>
+      </div>  
     </div>
     <transition
       enter-active-class="transition duration-500 ease-out"
@@ -121,7 +135,7 @@
             <button class="bg-yellow-600 transition hover:bg-yellow-700 p-3 rounded-lg text-white font-semibold text-lg uppercase" @click="playAgain">
               {{ t("quiz.playAgain") }}
             </button>
-            <button class="bg-gray-500 transition hover:bg-yellow-700 p-3 rounded-lg text-white font-semibold text-lg uppercase" @click="navigateTo(localePath('/'))">
+            <button class="bg-gray-500 transition hover:bg-yellow-700 p-3 rounded-lg text-white font-semibold text-lg uppercase" @click="goBack">
               {{ t("general.back") }}
             </button>
           </div>
@@ -166,6 +180,10 @@ const displayedKeywords = ref<string[]>([])
 const previousMovies = ref<number[]>([])
 const intervalKeywords = ref<number | null>(null)
 const intervalPoints = ref<number | null>(null)
+const intervalPosterBlur = ref<number | null>(null)
+const playMode = ref('keywords')
+const isFullscreen = computed(() => store.isFullscreen)
+
 const correctGuesses = ref(0)
 
 const round = ref(1)
@@ -187,11 +205,35 @@ const moviesForQuiz = computed(() => {
   return selectedMovies
 })
 
+const poster = computed(
+  () => `https://image.tmdb.org/t/p/original/${moviesForQuiz.value[correctIndex.value].poster_path}`
+)
+
+const posterBlurLevels = [2, 1.5, 1.25, 1, 0.75, 0.5, 0.2, 0.1, 0]
+const posterBlurIndex = ref(0)
+const posterStyle = ref(`filter:blur(${posterBlurLevels[posterBlurIndex.value]}rem)`)
+
+const updatePosterBlur = () => {
+  if (posterBlurIndex.value < posterBlurLevels.length - 1) {
+    posterBlurIndex.value += 1
+    posterStyle.value = `filter:blur(${posterBlurLevels[posterBlurIndex.value]}rem)`
+  } else {
+    clearInterval(intervalPosterBlur.value)
+  }
+}
+
+const resetPosterBlur = () => {
+  posterBlurIndex.value = 0
+  posterStyle.value = `filter:blur(${posterBlurLevels[posterBlurIndex.value]}rem)`
+}
 const movieTitlesForQuiz = computed(() => moviesForQuiz.value.map(movie => movie.title || movie.original_title))
 const keywordsForMovies = computed(() => moviesForQuiz.value.map(movie => movie.keywords.keywords.map(keyword => keyword.name)))
 
 const checkForRightAnswer = (indexOfAnswerGiven: Number) => {
   if (selectedAnswer.value !== null) return
+  clearInterval(intervalPosterBlur.value)
+  posterBlurIndex.value = posterBlurLevels.length - 1
+  posterStyle.value = `filter:blur(${posterBlurLevels[posterBlurIndex.value]}rem)`
   clearInterval(intervalKeywords.value)
   clearInterval(intervalPoints.value)
   selectedAnswer.value = indexOfAnswerGiven
@@ -257,9 +299,12 @@ const startGame = () => {
 
 const startNewRound = () => {
   setRandomCorrectIndex()
+  playMode.value = round.value % 2 === 0 ? 'poster' : 'keywords'
   clearInterval(intervalKeywords.value)
   clearInterval(intervalPoints.value)
+  resetPosterBlur()
   displayKeywords()
+  intervalPosterBlur.value = setInterval(() => updatePosterBlur(), 3000)
   currentPoints.value = 1000
   setTimeout(() => {
       intervalPoints.value = setInterval(() => {
@@ -294,12 +339,32 @@ const playAgain = () => {
     score.value = 0
     currentPoints.value = 1000
 }
+
+const toggleFullscreen = () => {
+  const elem = document.documentElement
+  if (!document.fullscreenElement) {
+      elem.requestFullscreen()
+      store.isFullscreen = true
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen()
+      store.isFullscreen = false
+    }
+  }
+}
+
+const goBack = () => {
+  if (document.exitFullscreen) {
+    document.exitFullscreen()
+    store.isFullscreen = false
+  }
+  navigateTo(localePath('/'))
+}
 </script>
 
 <style>
-
-.min-h {
-  min-height: 10rem;
+.keywords-wrapper {
+  min-height: 30vh;
 }
 
 .max-w-800px {
@@ -317,6 +382,30 @@ const playAgain = () => {
 
 .drop {
   animation: drop 1s ease-in-out;
+}
+
+.image-wrapper, .image-wrapper img {
+  max-height: 30vh;
+  width: auto;
+}
+
+@media screen and (min-width: 450px) {
+  .image-wrapper, .image-wrapper img {
+    max-height: 35vh;
+  }
+
+  .keywords-wrapper {
+    min-height: 35vh;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .center-big-screen {
+    position: absolute;
+    top: 50vh;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
 
 @keyframes hop {

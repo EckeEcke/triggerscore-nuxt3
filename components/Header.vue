@@ -1,6 +1,7 @@
 <template>
   <header
     class="w-screen h-auto bg-red-950 bg-opacity-95 z-30 shadow-md flex flex-col fixed top-0"
+    :class="isFixed ? 'fixed' : 'absolute'"
   >
     <section
       class="container mx-auto h-full p-4 xl:w-10/12 flex justify-between"
@@ -218,6 +219,13 @@
 <script setup lang="ts">
 import { useStore } from "../stores/store"
 import { useI18n } from "vue-i18n"
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+
+const isFixed = computed(() => {
+return route.path !== '/Quiz'
+})
 
 const { t } = useI18n()
 const showSearch = ref(false)

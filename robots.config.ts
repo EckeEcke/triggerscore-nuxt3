@@ -4,5 +4,5 @@ export default [
     { Disallow: '/search' },
     { BlankLine: true },
 
-    { Sitemap: (req) => `https://${req.headers.host}/sitemap.xml` }
+    // { Sitemap: 'https://www.triggerscore.de/sitemap.xml' }
 ]

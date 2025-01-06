@@ -132,6 +132,7 @@ export const useStore = defineStore({
       maxScore: 10,
       isFiltering: false,
       isMaintenanceMode: false,
+      isFullscreen: false,
     }
   },
   actions: {
