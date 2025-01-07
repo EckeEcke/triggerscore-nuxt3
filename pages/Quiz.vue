@@ -194,7 +194,8 @@ const currentPoints = ref(1000)
 const moviesForQuiz = computed(() => {
   const availableMovies = movies.value.filter(movie => 
     !previousMovies.value.includes(movie.id) && 
-    movie.keywords.keywords.length >= 4
+    movie.keywords.keywords.length >= 4 &&
+    movie.vote_count > 500
   )
 
   const selectedMovies = []
@@ -368,11 +369,11 @@ const goBack = () => {
 }
 
 .max-w-800px {
-  max-width: 800px;
+  max-width: 600px;
 }
 
 .quiz-image {
-  max-width: 15rem;
+  max-width: 25rem;
 }
 
 .hop {
