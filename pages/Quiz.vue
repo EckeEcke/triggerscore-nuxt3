@@ -121,6 +121,13 @@
               class="text-white"
             />
           </button>
+          <button v-else disabled class="opacity-80 bg-yellow-600 transition hover:bg-yellow-700 p-3 rounded-lg text-white text-lg font-semibold uppercase w-full" @click="startGame">
+            <font-awesome-icon
+              aria-hidden="true"
+              :icon="['fas', 'spinner']"
+              class="text-white animate-spin"
+            />
+          </button>
         </div>
         <div class="fullscreen-button text-white">
           <button @click="toggleFullscreen" class="bg-gray-600 hover:bg-yellow-700 p-3 rounded-lg text-white text-lg font-semibold uppercase w-full">
