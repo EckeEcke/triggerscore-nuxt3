@@ -7,7 +7,7 @@
       <Meta charset="UTF-8" />
       <Meta
         name="keywords"
-        content="triggering movies, quiz, movie game"
+        content="triggering movies, quiz, movie game, movie quiz"
       />
       <Meta
         name="description"
@@ -15,6 +15,19 @@
       />
       <Meta name="author" content="Christian Eckardt" />
       <Meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <Meta :property="'og:title'" :content="JSON.stringify(title)" />
+        <Meta
+          property="og:description"
+          content="Triggerscore Quiz - Movie guessing based on keywords"
+        />
+        <Meta property="og:image" content="https://www.triggerscore.de/images/quiz-image-komprimiert.png" />
+        <Meta property="og:image:url" content="https://www.triggerscore.de/images/quiz-image-komprimiert.png" />
+        <Meta property="og:image:secure_url" content="https://www.triggerscore.de/images/quiz-image-komprimiert.png" />
+        <Meta
+          property="og:url"
+          content="https://www.triggerscore.de/Quiz"
+        />
+        <Meta property="og:type" content="game" />
     </Head>
     <div
       v-if="!gameRunning"

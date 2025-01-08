@@ -29,7 +29,7 @@
           :property="'og:url'"
           :content="`https://www.triggerscore.de/movie/${route.params.id}`"
         />
-        <Meta property="og:type" content="video.movie" />
+        <Meta property="og:type" content="website" />
       </client-only>
     </Head>
     <div class="container mx-auto sm:pt-6 sm:pb-12 xl:w-10/12 md:px-4">
