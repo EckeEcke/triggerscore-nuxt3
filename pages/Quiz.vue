@@ -29,10 +29,8 @@
         /><span class="sr-only">O</span>RE QUIZ
       </h1> 
     </div>
-    <div v-if="gameRunning" class="grid grid-cols-2 bg-gradient-to-r from-gray-950 to-gray-800 text-white text-xl font-semibold p-4 my-8 rounded-lg" :class="isFullscreen ? 'my-8 md:mt-36' : 'my-8'">
+    <div v-if="gameRunning" class="score-board grid grid-cols-2 bg-gradient-to-r from-gray-950 to-gray-800 text-white text-xl font-semibold p-4 my-8 rounded-xl" :class="isFullscreen ? 'my-8 md:mt-36' : 'my-8'">
       <div class="pr-4 border-r border-white">
-        {{ t("quiz.yourScore") }}
-        <br> 
         <transition 
           enter-active-class="duration-500 ease-out"
           enter-from-class="transform opacity-0"
@@ -42,12 +40,13 @@
           leave-to-class="transform opacity-0"
           mode="out-in"
         >
-          <span :key="score">{{ score }}</span>
+          <span :key="score">
+            <font-awesome-icon :icon="['fas', 'user']" class="text-white mr-2" />
+            {{ score }}
+          </span>
         </transition>
       </div>
-      <div class="pl-4">
-        {{ t("quiz.currentScore") }}
-        <br>
+      <div class="pl-4" :class="currentPointsClass">
         <transition enter-active-class="duration-300 ease-out"
           enter-from-class="transform opacity-0"
           enter-to-class="opacity-100"
@@ -56,7 +55,7 @@
           leave-to-class="transform opacity-0"
           mode="out-in"
         >
-          <span :key="currentPoints">{{ currentPoints }}</span>
+          <span :key="currentPoints"><font-awesome-icon :icon="['fas', 'clock']" class="text-white mr-2" /> {{ currentPoints }}</span>
         </transition>      
       </div>
     </div>
@@ -65,6 +64,7 @@
         <img :src="poster" :style="posterStyle" />
       </div>
       <div v-if="playMode === 'keywords'" class="keywords-wrapper mb-8">
+      <h2 class="text-center font-semibold text-2xl mb-4 text-white">Keywords</h2>
         <transition-group
           tag="div"
           class="flex flex-wrap gap-2"
@@ -102,7 +102,11 @@
       <div class="flex flex-col gap-4 mx-auto" style="width: 260px;">
         <div>
           <button v-if="moviesForQuiz.length > 0" class="bg-yellow-600 transition hover:bg-yellow-700 p-3 rounded-lg text-white text-lg font-semibold uppercase w-full" @click="startGame">
-            {{ t("quiz.startGame") }}
+            {{ t("quiz.startGame") }} <font-awesome-icon
+              aria-hidden="true"
+              :icon="['fas', 'circle-question']"
+              class="text-white"
+            />
           </button>
         </div>
         <div class="fullscreen-button text-white">
@@ -270,6 +274,16 @@ const buttonClass = (index: number) => {
   return 'bg-yellow-600 p-3 rounded-lg text-white font-semibold'
 }
 
+const currentPointsClass = computed(() => {
+  if (currentPoints.value < 400) {
+    return 'text-red-500'
+  } else if (currentPoints.value >= 400 && currentPoints.value <= 600) {
+    return 'text-yellow-500'
+  } else {
+    return ''
+  }
+})
+
 const setRandomCorrectIndex = () => correctIndex.value = Math.floor(Math.random() * 4)
 
 const displayKeywords = () => {
@@ -364,6 +378,10 @@ const goBack = () => {
 </script>
 
 <style>
+.score-board {
+  border: 4px solid orange;
+}
+
 .keywords-wrapper {
   min-height: 30vh;
 }
@@ -373,7 +391,8 @@ const goBack = () => {
 }
 
 .quiz-image {
-  max-width: 25rem;
+  width: 600px;
+  max-width: 100%;
 }
 
 .hop {
