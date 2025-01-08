@@ -230,13 +230,12 @@ export const useStore = defineStore({
     setSearchTerm(payload: any) {
       this.searchTerm = payload
     },
-    async setSearchResults() {
+    async setSearchResults(locale: string) {
       this.searchResults = []
       this.searchError = false
       this.searchTerm = this.searchInput
-      const adjustedLocale = "en"
       const fetchedSearchResults = fetch(
-        `https://api.themoviedb.org/3/search/movie?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${adjustedLocale}&include_adult=false&page=1&query=${this.searchTerm}`
+        `https://api.themoviedb.org/3/search/movie?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${locale}&include_adult=false&page=1&query=${this.searchTerm}`
       )
         .then((res) => res.json())
         .catch((error) => console.log(error))

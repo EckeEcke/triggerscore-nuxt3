@@ -227,7 +227,7 @@ const isFixed = computed(() => {
 return route.path !== '/Quiz'
 })
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const showSearch = ref(false)
 const showMenu = ref(false)
 const showNav = ref(false)
@@ -241,7 +241,7 @@ const searchInput = ref("")
 function searchMovie() {
   if (searchInput.value.length > 0) {
     store.searchInput = searchInput.value
-    store.setSearchResults()
+    store.setSearchResults(locale.value)
     showSearch.value = false
     navigateTo(localePath("/search"))
   }

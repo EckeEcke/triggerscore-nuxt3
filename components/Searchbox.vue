@@ -57,9 +57,9 @@ import { useI18n } from "vue-i18n"
 
 const props = defineProps({
   showTitle: Boolean,
-});
+})
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const localePath = useLocalePath()
 
 const store = useStore()
@@ -69,7 +69,7 @@ async function searchMovie() {
   store.resetSearch()
   if (searchInput.value.length > 0) {
     store.searchInput = searchInput.value
-    await store.setSearchResults()
+    await store.setSearchResults(locale.value)
     navigateTo(localePath("/search"))
   }
 }
