@@ -20,7 +20,8 @@
     "showMore": "Mehr anzeigen",
     "showLess": "Weniger anzeigen",
     "comments": "Kommentare",
-    "recentComments": "Neueste Kommentare"
+    "recentComments": "Neueste Kommentare",
+    "copiedToClipBoard": "Kopiert in Zwischenablage"
   },
   "header": {
     "home": "Home",
@@ -181,6 +182,7 @@
       "movieFan": "Filmfan",
       "movieBeginner": "Filmanfänger"
     },
-    "tagline": "Cineast oder Filmanfänger? Stelle deine Filmkenntnisse unter Beweis im Triggerscore Quiz"
+    "tagline": "Cineast oder Filmanfänger? Stelle deine Filmkenntnisse unter Beweis im Triggerscore Quiz",
+    "share": "Quiz teilen"
   }
 }

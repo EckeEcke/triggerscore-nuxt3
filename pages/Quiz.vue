@@ -163,6 +163,7 @@
               {{ t("general.back") }}
             </button>
           </div>
+          <ShareQuiz />
         </div>
       </div>
     </transition>
@@ -219,13 +220,15 @@ const moviesForQuiz = computed(() => {
   const availableMovies = movies.value.filter(movie => 
     !previousMovies.value.includes(movie.id) && 
     movie.keywords.keywords.length >= 4 &&
-    movie.vote_count > 500
+    movie.vote_count > 500 &&
+    movie.poster_path !== null
   )
 
   const selectedMovies = []
   while (selectedMovies.length < 4 && availableMovies.length > 0) {
     const randomIndex = Math.floor(Math.random() * availableMovies.length)
     selectedMovies.push(availableMovies.splice(randomIndex, 1)[0])
+    console.log(selectedMovies)
   }
   return selectedMovies
 })

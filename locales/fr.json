@@ -20,7 +20,8 @@
     "showMore": "Montre plus",
     "showLess": "Montre moins",
     "comments": "Commentaires",
-    "recentComments": "Commentaires les plus récents"
+    "recentComments": "Commentaires les plus récents",
+    "copiedToClipBoard": "Copié dans le presse-papiers"
   },
   "header": {
     "home": "Home",
@@ -181,6 +182,7 @@
       "movieFan": "Fan de Cinéma",
       "movieBeginner": "Débutant en Cinéma"
     },
-    "tagline": "Cinéaste ou Débutant en Cinéma ? Testez vos connaissances cinématographiques dans le Triggerscore Quiz"
+    "tagline": "Cinéaste ou Débutant en Cinéma ? Testez vos connaissances cinématographiques dans le Triggerscore Quiz",
+    "share": "Partager le quiz"
   } 
 }

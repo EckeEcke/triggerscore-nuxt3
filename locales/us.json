@@ -20,7 +20,8 @@
     "showMore": "Show more",
     "showLess": "Show less",
     "comments": "Comments",
-    "recentComments": "Newest comments"
+    "recentComments": "Newest comments",
+    "copiedToClipBoard": "Copied to clipboard"
   },
   "header": {
     "home": "Home",
@@ -181,6 +182,7 @@
       "movieFan": "Movie Fan",
       "movieBeginner": "Movie Beginner"
     },
-    "tagline": "Cineast or Movie Beginner? Test your movie knowledge in the Triggerscore Quiz"
+    "tagline": "Cineast or Movie Beginner? Test your movie knowledge in the Triggerscore Quiz",
+    "share": "Share Quiz"
   }
 }

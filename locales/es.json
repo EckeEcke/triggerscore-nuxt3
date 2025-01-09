@@ -20,7 +20,8 @@
         "showMore": "Ver más",
         "showLess": "Ver menos",
         "comments": "Comentarios",
-        "recentComments": "Comentarios recientes"
+        "recentComments": "Comentarios recientes",
+        "copiedToClipBoard": "Copiado al portapapeles"
     },
     "header": {
         "home": "Inicio",
@@ -181,7 +182,8 @@
             "movieFan": "Fanático del Cine",
             "movieBeginner": "Principiante en Cine"
         },
-        "tagline": "¿Cineasta o Principiante en Cine? Pon a prueba tus conocimientos de cine en el Triggerscore Quiz"
+        "tagline": "¿Cineasta o Principiante en Cine? Pon a prueba tus conocimientos de cine en el Triggerscore Quiz",
+        "copiedToClipBoard": "Copiado al portapapeles"
     }
       
 }
