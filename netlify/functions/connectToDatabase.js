@@ -5,8 +5,8 @@ const prodAllowedOrigins = ['https://www.triggerscore.de']
 
 const allowedOrigins = process.env.NODE_ENV === 'development' ? devAllowedOrigins : prodAllowedOrigins
 
-export const handler = async () => {
-  const origin = event.headers.origin
+export const handler = async (event) => {
+  const origin = event.headers?.origin || ''
   const headers = {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
