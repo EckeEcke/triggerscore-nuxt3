@@ -12,7 +12,7 @@
           tag="h1"
           class="leading-none text-xl md:leading-6 md:text-2xl self-center font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200 cursor-pointer"
         >
-          TRIGGERSC<angry-animation />RE
+          TRIGGERSC<AngryAnimation />RE
           <!--<font-awesome-icon :icon="['fas', 'angry']" class="text-white" />-->
         </NuxtLink>
       </div>
@@ -216,43 +216,46 @@
   </header>
 </template>
 
-<script setup lang="ts">
-import { useStore } from "../stores/store"
-import { useI18n } from "vue-i18n"
+<script setup lang='ts'>
+import { useStore } from '~/stores/store'
+import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
+import AngryAnimation from '~/components/animations/AngryAnimation.vue'
 
 const route = useRoute()
+const localePath = useLocalePath()
+const { t, locale } = useI18n()
+const store = useStore()
 
 const isFixed = computed(() => {
 return route.path !== '/Quiz'
 })
 
-const { t, locale } = useI18n()
 const showSearch = ref(false)
 const showMenu = ref(false)
 const showNav = ref(false)
 
-const store = useStore();
-const localePath = useLocalePath()
-
 const searchHeader = ref()
-const searchInput = ref("")
+const searchInput = ref('')
 
-function searchMovie() {
+const searchMovie = () => {
   if (searchInput.value.length > 0) {
     store.searchInput = searchInput.value
     store.setSearchResults(locale.value)
     showSearch.value = false
-    navigateTo(localePath("/search"))
+    navigateTo(localePath('/search'))
   }
 }
-function resetSearchResults() {
-  store.resetSearch
+
+const resetSearchResults = () => {
+  store.resetSearch()
 }
-function focusSearch() {
+
+const focusSearch = () => {
   searchHeader.value.focus()
 }
-function openSearch() {
+
+const openSearch = () => {
   showSearch.value = !showSearch.value
   showMenu.value = false
   showNav.value = false

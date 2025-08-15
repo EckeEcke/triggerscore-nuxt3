@@ -80,8 +80,8 @@
   </footer>
 </template>
 
-<script setup lang="ts">
-import { useI18n } from "vue-i18n"
+<script setup lang='ts'>
+import { useI18n } from 'vue-i18n'
 
 const localePath = useLocalePath()
 const { t } = useI18n()

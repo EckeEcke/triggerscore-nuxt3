@@ -1,4 +1,4 @@
-import { connectToDatabase } from "./dbClient.js"
+import { connectToDatabase } from './dbClient.js'
 
 const devAllowedOrigins = ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:8888']
 const prodAllowedOrigins = ['https://www.triggerscore.de']

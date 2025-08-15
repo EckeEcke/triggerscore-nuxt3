@@ -78,7 +78,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useStore } from "../../stores/store"
+import { useStore } from "~/stores/store"
 
 const { t, locale } = useI18n()
 const route = useRoute()
@@ -133,10 +133,10 @@ const loadProviders = async () => {
   }
 }
 
-const providerData = computed(() => store.providerData)
+const providerData: any = computed(() => store.providerData)
 
 const checkProviders = () => {
-  const movieId = parseInt(route.params.id)
+  const movieId: number = parseInt(route.params.id as string)
   onNetflix.value = providerData.value.netflix.includes(movieId)
   onPrime.value = providerData.value.prime.includes(movieId)
   onDisney.value = providerData.value.disney.includes(movieId)

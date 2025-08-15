@@ -2,7 +2,6 @@
   <div class="mt-8">
     <h3
     class="pb-0 text-white text-center font-semibold text-lg my-4"
-    target="_blank"
   >
     {{ t("quiz.share") }}
   </h3>
@@ -73,15 +72,15 @@
   </div>
 </template>
 
-<script lang="ts" setup>
-import { useI18n } from "vue-i18n"
+<script setup lang='ts'>
+import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 
 const copied = ref(false)
 const currentURL = window.location.href
 
-function copyLink() {
+const copyLink = () => {
   navigator.clipboard.writeText(currentURL)
   copied.value = true
   setTimeout(() => (copied.value = false), 1000)

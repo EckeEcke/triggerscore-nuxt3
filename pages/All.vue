@@ -128,9 +128,10 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { useStore } from "~/stores/store"
-import { useI18n } from "vue-i18n"
+<script setup lang='ts'>
+import { useStore } from '~/stores/store'
+import { useI18n } from 'vue-i18n'
+import LoadingAnimation from '~/components/animations/LoadingAnimation.vue'
 
 const store = useStore()
 const {locale, t } = useI18n()
@@ -159,36 +160,36 @@ const movies = computed(() => store.movies)
 const isFiltering = computed(() => store.isFiltering)
 const currentPage = computed(() => Math.floor(start.value / 24) + 1)
 
-function handleMenu() {
+const handleMenu = () => {
   showMenu.value = !showMenu.value
 }
 
-function focusSearch() {
-  const search = document.getElementById("search")
+const focusSearch = () => {
+  const search = document.getElementById('search')
   search!.scrollIntoView()
   search!.focus()
 }
 
-function resetFilter() {
+const resetFilter = () => {
   store.resetFilter()
   store.filterMovies(locale.value)
 }
 
-function setPage(startValue: any, endValue: any) {
+const setPage = (startValue: any, endValue: any) => {
   start.value = startValue
   end.value = endValue
 }
 
 watch(
   () => movies.value,
-  (currentValue, oldValue) => {
+  () => {
     store.filterMovies(locale.value)
   }
 )
 
 watch(
   () => filteredMovies.value,
-  (currentValue, oldValue) => {
+  () => {
     if (end.value > filteredMovies.value.length) {
       end.value = filteredMovies.value.length;
       start.value = end.value - 24;

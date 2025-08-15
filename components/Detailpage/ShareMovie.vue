@@ -1,7 +1,6 @@
 <template>
   <h3
     class="pb-0 text-white text-left font-semibold text-lg mb-4"
-    target="_blank"
   >
     {{ t("rating.share") }}
   </h3>
@@ -77,13 +76,16 @@
   </div>
 </template>
 
-<script lang="ts" setup>
-import { useI18n } from "vue-i18n"
+<script setup lang='ts'>
+import { useI18n } from 'vue-i18n'
 
 const { t, locale } = useI18n()
 
 const props = defineProps({
-  movie: {},
+  movie: {
+    type: Object,
+    default: {}
+  },
 })
 
 const copied = ref(false)
@@ -92,7 +94,7 @@ const currentURL = computed(
   () => `https://www.triggerscore.de/${locale.value}/movie/${route.params.id}`
 )
 
-function copyLink() {
+const copyLink = () => {
   navigator.clipboard.writeText(currentURL.value)
   copied.value = true
   setTimeout(() => (copied.value = false), 1000)

@@ -41,7 +41,7 @@
         </p>
         <button
           class="bg-yellow-500 transition hover:bg-yellow-600 p-3 mt-3 rounded font-semibold text-white uppercase"
-          @click="navigateTo(localePath('/'))"
+          @click="resetSearch"
         >
           <font-awesome-icon
             :icon="['fas', 'arrow-circle-left']"
@@ -83,9 +83,10 @@
   </main>
 </template>
 
-<script setup lang="ts">
-import { useStore } from "~/stores/store"
-import { useI18n } from "vue-i18n"
+<script setup lang='ts'>
+import { useStore } from '~/stores/store'
+import { useI18n } from 'vue-i18n'
+import NoResultsAnimation from '~/components/animations/NoResultsAnimation.vue'
 
 const { t, locale } = useI18n()
 
@@ -95,12 +96,12 @@ const page = ref(2)
 const hideLoadMore = ref(false)
 const loadingMore = ref(false)
 
-function resetSearch() {
-  store.resetSearch
+const resetSearch = () => {
+  store.resetSearch()
   navigateTo(localePath('/'))
 }
 
-async function searchMore() {
+const searchMore = async () => {
   loadingMore.value = true
   const lengthBeforeLoad = store.searchResults.length.valueOf()
   await store.searchMore(page.value, locale.value)
@@ -113,7 +114,7 @@ async function searchMore() {
   }, 2000)
 }
 
-if (store.searchTerm == "") {
+if (store.searchTerm == '') {
   navigateTo(localePath('/'))
 }
 

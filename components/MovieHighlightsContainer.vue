@@ -1,6 +1,5 @@
 <template>
   <div
-    ref="swiper"
     v-if="triggerscores.length > 0 && movies && movies?.length > 0"
     class="highlight-container w-full bg-gray-900 bg-opacity-95 px-4 mb-0 container mx-auto xl:w-10/12"
     :class="{ 'pt-4 pb-8': moreSpacing }"
@@ -16,7 +15,6 @@
     </div>
     <div class="relative group">
       <div
-        :id="containerId"
         ref="swiper"
         class="hide-scrollbar flex flex-none flex-row overflow-x-scroll py-4 px-0 -mr-4 md:mr-0"
         style="scroll-snap-type: x mandatory"
@@ -78,13 +76,13 @@
     </div>
   </div>
 </template>
-<script setup lang="ts">
-import { useStore } from "~/stores/store"
-import placeholderScores from "~/assets/triggerscores.json"
+<script setup lang='ts'>
+import { useStore } from '~/stores/store'
+import placeholderScores from '~/assets/triggerscores.json'
 
 const store = useStore()
 
-const props = defineProps({
+defineProps({
   movies: Array<any>,
   shownScore: String,
   title: String,
@@ -95,38 +93,35 @@ const props = defineProps({
 
 const scrolled = ref(false)
 const swiper: Ref<any> = ref()
-const containerId = computed(
-  () => "highlight-container-" + props.shownScore?.toString()
-)
 
 const triggerscores = computed(() => store.triggerscores ?? placeholderScores)
 
-onMounted(() => {
-  if (swiper.value) swiper.value.addEventListener("scroll", handleScroll)
-})
-onBeforeUnmount(() => {
-  if (swiper.value) swiper.value.removeEventListener("scroll", handleScroll)
-})
-
-function handleScroll() {
-  scrolled.value = true
-  if (swiper.value && swiper.value.scrollLeft == 0) {
-    scrolled.value = false
-  }
+const handleScroll = () => {
+  scrolled.value = !(swiper.value && swiper.value.scrollLeft === 0)
 }
-function scrollHighlightContainer(direction: string) {
-  const highlight = document.getElementById(containerId.value)
-  if (direction == "left") {
-    highlight?.scrollBy({
+
+const scrollHighlightContainer = (direction: string) => {
+  if (!swiper.value) return
+  if (direction == 'left') {
+    swiper.value.scrollBy({
       top: 0,
       left: -window.innerWidth / 2,
-      behavior: "smooth",
+      behavior: 'smooth',
     })
   } else
-    highlight?.scrollBy({
+    swiper.value.scrollBy({
       top: 0,
       left: window.innerWidth / 2,
-      behavior: "smooth",
+      behavior: 'smooth',
     })
 }
+
+onMounted(() => {
+  if (swiper.value) swiper.value.addEventListener('scroll', handleScroll)
+})
+
+onBeforeUnmount(() => {
+  if (swiper.value) swiper.value.removeEventListener('scroll', handleScroll)
+})
+
 </script>

@@ -185,10 +185,10 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { useStore } from "~/stores/store"
-import { useI18n } from "vue-i18n"
-import statsPlaceholder from "~/assets/stats.json"
+<script setup lang='ts'>
+import { useStore } from '~/stores/store'
+import { useI18n } from 'vue-i18n'
+import statsPlaceholder from '~/assets/stats.json'
 
 const { t } = useI18n()
 

@@ -9,8 +9,8 @@
   </div>
 </template>
 
-<script lang="ts" setup>
-import { useStore } from "../../stores/store"
+<script setup lang='ts'>
+import { useStore } from '~/stores/store'
 
 const store = useStore()
 
@@ -37,6 +37,6 @@ const trailerURL = computed(() => trailer.value?.site === 'YouTube' ? `https://w
 }
 
 .detailpage-box-shadow {
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0 50px 100px -20px, rgba(0, 0, 0, 0.3) 0 30px 60px -30px;
 }
 </style>

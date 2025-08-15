@@ -78,8 +78,8 @@
           </div>
 </template>
 
-<script setup lang="ts">
-import { useStore } from "~/stores/store"
+<script setup lang='ts'>
+import { useStore } from '~/stores/store'
 
 const store = useStore()
 const container: Ref<any> = ref(null)

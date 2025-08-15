@@ -15,19 +15,19 @@
       />
       <Meta name="author" content="Christian Eckardt" />
       <Meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <Meta :property="'og:title'" :content="JSON.stringify(title)" />
-        <Meta
-          property="og:description"
-          content="Triggerscore Quiz - Movie guessing based on keywords"
-        />
-        <Meta property="og:image" content="https://www.triggerscore.de/images/quiz-image-komprimiert.png" />
-        <Meta property="og:image:url" content="https://www.triggerscore.de/images/quiz-image-komprimiert.png" />
-        <Meta property="og:image:secure_url" content="https://www.triggerscore.de/images/quiz-image-komprimiert.png" />
-        <Meta
-          property="og:url"
-          content="https://www.triggerscore.de/Quiz"
-        />
-        <Meta property="og:type" content="game" />
+      <Meta :property="'og:title'" content="Triggerscore Quiz" />
+      <Meta
+        property="og:description"
+        content="Triggerscore Quiz - Movie guessing based on keywords"
+      />
+      <Meta property="og:image" content="https://www.triggerscore.de/images/quiz-image-komprimiert.png" />
+      <Meta property="og:image:url" content="https://www.triggerscore.de/images/quiz-image-komprimiert.png" />
+      <Meta property="og:image:secure_url" content="https://www.triggerscore.de/images/quiz-image-komprimiert.png" />
+      <Meta
+        property="og:url"
+        content="https://www.triggerscore.de/Quiz"
+      />
+      <Meta property="og:type" content="game" />
     </Head>
     <div
       v-if="!gameRunning"
@@ -74,7 +74,7 @@
     </div>
     <div v-if="gameRunning">
       <div v-if="playMode === 'poster'" class="image-wrapper" style="display: flex; justify-content: center">
-        <img :src="poster" :style="posterStyle" />
+        <img :src="poster" :style="posterStyle" alt="movie poster" />
       </div>
       <div v-if="playMode === 'keywords'" class="keywords-wrapper mb-8">
       <h2 class="text-center font-semibold text-2xl mb-4 text-white">Keywords</h2>
@@ -107,7 +107,7 @@
     <div v-else class="p-8 text-center text-balance">
       <h2 class="text-white text-xl font-semibold mb-8">{{ t("quiz.tagline") }}</h2>
       <div class="flex flex-col gap-8 items-center align-center justify-center mb-8">
-        <img class="quiz-image max-w-16 hidden md:block" src="/images/quiz-image-komprimiert.png" />
+        <img class="quiz-image max-w-16 hidden md:block" src="/images/quiz-image-komprimiert.png" alt="" />
         <p class="text-white text-lg text-wrap-balance">
           {{ t("quiz.description") }}
         </p>
@@ -185,8 +185,8 @@
   </section>
 </template>
 
-<script lang="ts" setup>
-import { useStore } from "~/stores/store"
+<script setup lang='ts'>
+import { useStore } from '~/stores/store'
 
 const { t } = useI18n()
 
@@ -203,9 +203,9 @@ const correctIndex = ref(-1)
 const selectedAnswer = ref<number | null>(null)
 const displayedKeywords = ref<string[]>([])
 const previousMovies = ref<number[]>([])
-const intervalKeywords = ref<number | null>(null)
-const intervalPoints = ref<number | null>(null)
-const intervalPosterBlur = ref<number | null>(null)
+const intervalKeywords = ref<any>(null)
+const intervalPoints = ref<any>(null)
+const intervalPosterBlur = ref<any>(null)
 const playMode = ref('keywords')
 const isFullscreen = computed(() => store.isFullscreen)
 
@@ -247,6 +247,7 @@ const updatePosterBlur = () => {
     posterStyle.value = `filter:blur(${posterBlurLevels[posterBlurIndex.value]}rem)`
   } else {
     clearInterval(intervalPosterBlur.value)
+    intervalPosterBlur.value = null
   }
 }
 
@@ -255,15 +256,18 @@ const resetPosterBlur = () => {
   posterStyle.value = `filter:blur(${posterBlurLevels[posterBlurIndex.value]}rem)`
 }
 const movieTitlesForQuiz = computed(() => moviesForQuiz.value.map(movie => movie.title || movie.original_title))
-const keywordsForMovies = computed(() => moviesForQuiz.value.map(movie => movie.keywords.keywords.map(keyword => keyword.name)))
+const keywordsForMovies = computed(() => moviesForQuiz.value.map(movie => movie.keywords.keywords.map((keyword: any) => keyword.name)))
 
-const checkForRightAnswer = (indexOfAnswerGiven: Number) => {
+const checkForRightAnswer = (indexOfAnswerGiven: number) => {
   if (selectedAnswer.value !== null) return
   clearInterval(intervalPosterBlur.value)
+  intervalPosterBlur.value = null
   posterBlurIndex.value = posterBlurLevels.length - 1
   posterStyle.value = `filter:blur(${posterBlurLevels[posterBlurIndex.value]}rem)`
   clearInterval(intervalKeywords.value)
+  intervalKeywords.value = null
   clearInterval(intervalPoints.value)
+  intervalPoints.value = null
   selectedAnswer.value = indexOfAnswerGiven
   if (indexOfAnswerGiven === correctIndex.value) {
     correctGuesses.value++
@@ -355,11 +359,11 @@ const startNewRound = () => {
 }
 
 const getPlayerTitle = (score: number) => {
-  if (score > 8500) return t("quiz.titles.worldClassCineast")
-  if (score > 7500) return t("quiz.titles.cineast")
-  if (score > 6500) return t("quiz.titles.movieExpert")
-  if (score > 5500) return t("quiz.titles.movieFan")
-  return t("quiz.titles.movieBeginner")
+  if (score > 8500) return t('quiz.titles.worldClassCineast')
+  if (score > 7500) return t('quiz.titles.cineast')
+  if (score > 6500) return t('quiz.titles.movieExpert')
+  if (score > 5500) return t('quiz.titles.movieFan')
+  return t('quiz.titles.movieBeginner')
 }
 
 const playAgain = () => {
@@ -400,7 +404,7 @@ const goBack = () => {
 }
 </script>
 
-<style>
+<style scoped>
 .score-board {
   border: 4px solid orange;
 }
@@ -465,7 +469,7 @@ const goBack = () => {
     transform: translateY(-5px) scale(1.05);
   }
   100% {
-    transform: translateY() scale(1);
+    transform: translateY(0) scale(1);
   }
 }
 

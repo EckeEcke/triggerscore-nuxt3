@@ -39,7 +39,6 @@
               id="search"
               v-model="searchInput"
               v-on:keyup.enter="searchMovie"
-              @input="resetSearchResults"
               class="px-4 py-4 w-full rounded-r-xl outline-none transition scroll-my-4 lg:text-xl opacity-80 focus:opacity-100"
               style="scroll-margin-top: 10rem"
               :placeholder="t('header.searchPlaceholder')"
@@ -51,11 +50,11 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { useStore } from "~/stores/store"
-import { useI18n } from "vue-i18n"
+<script setup lang='ts'>
+import { useStore } from '~/stores/store'
+import { useI18n } from 'vue-i18n'
 
-const props = defineProps({
+defineProps({
   showTitle: Boolean,
 })
 
@@ -63,17 +62,15 @@ const { t, locale } = useI18n()
 const localePath = useLocalePath()
 
 const store = useStore()
-const searchInput = ref("")
+const searchInput = ref('')
 
-async function searchMovie() {
+const searchMovie = async () => {
   store.resetSearch()
   if (searchInput.value.length > 0) {
     store.searchInput = searchInput.value
     await store.setSearchResults(locale.value)
-    navigateTo(localePath("/search"))
+    navigateTo(localePath('/search'))
   }
 }
-function resetSearchResults() {
-  
-}
+
 </script>

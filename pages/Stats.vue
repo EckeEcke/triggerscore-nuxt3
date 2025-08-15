@@ -37,9 +37,10 @@
   </section>
 </template>
 
-<script setup lang="ts">
-import { useStore } from "~/stores/store"
-import { useI18n } from "vue-i18n"
+<script setup lang='ts'>
+import { useStore } from '~/stores/store'
+import { useI18n } from 'vue-i18n'
+import LoadingAnimation from '~/components/animations/LoadingAnimation.vue'
 
 const { locale, t } = useI18n()
 const isLoading = computed(

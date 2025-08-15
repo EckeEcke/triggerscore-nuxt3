@@ -31,7 +31,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang='ts' setup>
 
 const { t } = useI18n()
 const router = useRouter()
@@ -43,10 +43,10 @@ const props = defineProps<{
 
 const showMoreComments = ref(false)
 
-function pushToContact(comment: string) {
+const pushToContact = (comment: string) => {
   const truncatedComment = comment.substring(0, Math.min(20, comment.length))
   router.push({
-    path: "/contact",
+    path: '/contact',
     query: { id: route.params.id, comment: truncatedComment },
   })
 }

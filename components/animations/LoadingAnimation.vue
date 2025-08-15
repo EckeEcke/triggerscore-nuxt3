@@ -14,8 +14,8 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import loadingJSON from "../assets/images/loading-animation3.json"
+<script setup lang='ts'>
+import loadingJSON from '../../assets/images/loading-animation3.json'
 
 const { t } = useI18n()
 </script>

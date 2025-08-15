@@ -212,9 +212,9 @@
   </Teleport>
 </template>
 
-<script setup lang="ts">
-import { useStore } from "~/stores/store"
-import { useI18n } from "vue-i18n"
+<script setup lang='ts'>
+import { useStore } from '~/stores/store'
+import { useI18n } from 'vue-i18n'
 
 const store = useStore()
 const { locale, t } = useI18n()
@@ -225,70 +225,72 @@ const filterMax = computed(() => store.filterMoviesByYearMax)
 const results = computed(() => store.filteredMovies.length)
 const shownScore = computed(() => store.shownScore)
 
+const resetFilter = () => {
+  store.resetFilter()
+  store.filterMovies(locale.value)
+}
+
+const scrollToTop = () => {
+  window.scrollTo(0, 0)
+}
+
+
 watch(
   () => store.filterMoviesByNetflix,
-  (currentValue, oldValue) => {
+  () => {
     store.filterMovies(locale.value)
   }
 )
 
 watch(
   () => store.filterMoviesByPrime,
-  (currentValue, oldValue) => {
+  () => {
     store.filterMovies(locale.value)
   }
 )
 
 watch(
   () => store.filterMoviesByDisney,
-  (currentValue, oldValue) => {
+  () => {
     store.filterMovies(locale.value)
   }
 )
 
 watch(
   () => store.filterMoviesBySky,
-  (currentValue, oldValue) => {
+  () => {
     store.filterMovies(locale.value)
   }
 )
 
 watch(
   () => sortingOption,
-  (currentValue, oldValue) => {
+  () => {
     store.filterMovies(locale.value)
   }
 )
 
 watch(
   () => filterMin,
-  (currentValue, oldValue) => {
+  () => {
     store.filterMovies(locale.value)
   }
 )
 
 watch(
   () => filterMax,
-  (currentValue, oldValue) => {
+  () => {
     store.filterMovies(locale.value)
   }
 )
 
 watch(
   () => shownScore,
-  (currentValue, oldValue) => {
+  () => {
     store.filterMovies(locale.value)
   }
 )
 
-function resetFilter() {
-  store.resetFilter()
-  store.filterMovies(locale.value)
-}
-
-function scrollToTop() {
-  window.scrollTo(0, 0)
-}
 </script>
 
 <style>

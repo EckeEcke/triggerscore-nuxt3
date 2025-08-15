@@ -11,8 +11,8 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import DislikeAnimation from "../../assets/images/dislike-animation.json"
+<script setup lang='ts'>
+import DislikeAnimation from '../../assets/images/dislike-animation.json'
 
 const dislikeAnimation = DislikeAnimation
 const dislikeClicked = ref(false)
@@ -23,11 +23,11 @@ const props = defineProps({
 
 const anim: Ref<any> = ref(null)
 
-const emit = defineEmits(["dislikeClicked"])
+const emit = defineEmits(['dislikeClicked'])
 
-function runAnimation() {
+const runAnimation = () => {
   dislikeClicked.value = !dislikeClicked.value
-  emit("dislikeClicked", dislikeClicked.value)
+  emit('dislikeClicked', dislikeClicked.value)
   if (dislikeClicked.value) {
     anim.value!.stop()
     anim.value!.play()
@@ -37,7 +37,7 @@ function runAnimation() {
 }
 watch(
   () => props.likeClicked,
-  (currentValue, oldValue) => {
+  (currentValue) => {
     if (currentValue && dislikeClicked.value === true) {
       runAnimation()
     }

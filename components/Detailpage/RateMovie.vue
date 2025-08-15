@@ -239,18 +239,18 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import DislikeAnimation from "./DislikeAnimation.vue"
-import LikeAnimation from "./LikeAnimation.vue"
-import ThankyouAnimation from "./ThankyouAnimation.vue"
-import { useI18n } from "vue-i18n"
-import { useStore } from "~/stores/store"
+<script setup lang='ts'>
+import DislikeAnimation from '~/components/animations/DislikeAnimation.vue'
+import LikeAnimation from '~/components/animations/LikeAnimation.vue'
+import ThankyouAnimation from '~/components/animations/ThankyouAnimation.vue'
+import { useI18n } from 'vue-i18n'
+import { useStore } from '~/stores/store'
 
 const ratingSexism: Ref<null | number> = ref(null)
 const ratingRacism: Ref<null | number> = ref(null)
 const ratingOthers: Ref<null | number> = ref(null)
 const ratingCringe: Ref<null | number> = ref(null)
-const comment = ref("")
+const comment = ref('')
 const submitted = ref(false)
 const liked = ref(false)
 const disliked = ref(false)
@@ -263,14 +263,7 @@ const store = useStore()
 
 const movie: ComputedRef<any> = computed(() => store.selectedMovie)
 
-function scrollRatings() {
-  const ratings = document.getElementsByClassName("rating") // for fixing issues with flex-end and overflow-hidden
-  for (let i = 0; i < ratings.length; i++) {
-    ratings[i].scrollLeft -= 500
-  }
-}
-
-function submitRating(event: Event) {
+const submitRating = (event: Event) => {
   event.preventDefault()
   submitted.value = true
   const data = {
@@ -286,11 +279,11 @@ function submitRating(event: Event) {
     original_title: movie.value.original_title,
   }
 
-  fetch("https://www.triggerscore.de/.netlify/functions/postData", {
-    method: "post",
+  fetch('https://www.triggerscore.de/.netlify/functions/postData', {
+    method: 'post',
     headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
     },
     body: JSON.stringify(data),
   })
@@ -311,7 +304,12 @@ function handleDislike(value: boolean) {
   }
 }
 
-onMounted(() => scrollRatings())
+onMounted(() => {
+  const ratings = document.getElementsByClassName('rating') // for fixing issues with flex-end and overflow-hidden
+  for (let i = 0; i < ratings.length; i++) {
+    ratings[i].scrollLeft -= 500
+  }
+})
 </script>
 
 <style>

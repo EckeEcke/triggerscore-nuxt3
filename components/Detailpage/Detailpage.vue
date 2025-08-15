@@ -1,6 +1,6 @@
 <template>
   <section
-    class="detailpage w-full bg-center bg-cover bg-fixed"
+    class="detail-page w-full bg-center bg-cover bg-fixed"
     :style="backgroundImageStyle"
   >
     <Head>
@@ -46,7 +46,7 @@
               :src="poster"
               :key="locale"
               alt="movie poster"
-              class="w-1/2 lg:w-76 h-auto object-contain rounded self-center detailpage-box-shadow"
+              class="w-1/2 lg:w-76 h-auto object-contain rounded self-center detail-page-box-shadow"
             />
             <MovieScore />
           </div>
@@ -129,7 +129,7 @@
         <MovieHighlightsContainer
           v-if="similarMovies.body"
           class="xl:w-full bg-transparent"
-          :movies="similarMovies.body"
+          :movies="similarMovies.body.slice(0,10)"
           shownScore="rating_total"
           :title="t('similar.headline')"
           :subTitle="t('similar.copy', [movie.title ?? movie.original_title])"
@@ -140,18 +140,19 @@
   </section>
 </template>
 
-<script setup lang="ts">
-import { useI18n } from "vue-i18n"
-import { useStore } from "../../stores/store"
-import { ref, computed, watch } from "vue"
-import { useRoute } from "vue-router"
-import { emptyMovie } from "~/types/movie"
-import RateMovie from "./RateMovie.vue"
-import MovieComments from "./MovieComments.vue"
-import MovieIcons from "./MovieIcons.vue"
-import MovieScore from "./MovieScore.vue"
-import MovieTrailer from "./MovieTrailer.vue"
-import ShareMovie from "./ShareMovie.vue"
+<script setup lang='ts'>
+import { useI18n } from 'vue-i18n'
+import { useStore } from '~/stores/store'
+import { ref, computed, watch } from 'vue'
+import { useRoute } from 'vue-router'
+import { emptyMovie } from '~/types/movie'
+import RateMovie from './RateMovie.vue'
+import MovieComments from './MovieComments.vue'
+import MovieIcons from './MovieIcons.vue'
+import MovieScore from './MovieScore.vue'
+import MovieTrailer from './MovieTrailer.vue'
+import ShareMovie from './ShareMovie.vue'
+import LoadingAnimation from '~/components/animations/LoadingAnimation.vue'
 
 const store = useStore()
 const route = useRoute()
@@ -165,7 +166,7 @@ const score: any = computed(() => store.selectedMovieScore)
 const similarMovies: any = ref({}) 
 
 const title = computed(() =>
-  movie.value !== emptyMovie ? movie.value.title : "Movie on Triggerscore"
+  movie.value !== emptyMovie ? movie.value.title : 'Movie on Triggerscore'
 )
 const poster = `https://www.triggerscore.de/api/poster?poster_path=${movie.value.poster_path}`
 const ogImage = `https://www.triggerscore.de/api/og-image?poster_path=${movie.value.poster_path}`
@@ -198,8 +199,8 @@ const fetchSimilarMovies = async () => {
   if (!response.ok) { 
     throw new Error(`Error fetching similar movies: ${response.statusText}`) 
   } 
-  const data = await response.json() 
-  similarMovies.value = data
+
+  similarMovies.value = await response.json()
 }
 
 
@@ -209,10 +210,9 @@ watch(locale, () => {
       const { data } = await useFetch(
       `/api/movie/${route.params.id}`
       )
-      const loadedMovie = data.value as any
-      store.selectedMovie = loadedMovie
+      store.selectedMovie = data.value as any
     } catch (error) {
-      console.log("Oops, an error occurred while loading the movie:", error)
+      console.log('Oops, an error occurred while loading the movie: ', error)
     }
   }
 
@@ -224,13 +224,13 @@ onMounted(() => {
 })
 </script>
 
-<style lang="css" scoped>
-.detailpage {
-  min-height: calc(100vh-5rem);
+<style scoped>
+.detail-page {
+  min-height: calc(100vh - 5rem);
 }
 
-.detailpage-box-shadow {
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+.detail-page-box-shadow {
+  box-shadow: rgba(50, 50, 93, 0.25) 0 50px 100px -20px, rgba(0, 0, 0, 0.3) 0 30px 60px -30px;
 }
 
 </style>

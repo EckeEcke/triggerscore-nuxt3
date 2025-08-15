@@ -67,9 +67,9 @@
   </NuxtLink>
 </template>
 
-<script setup lang="ts">
-import { useStore } from "~/stores/store"
-import { useI18n } from "vue-i18n"
+<script setup lang='ts'>
+import { useStore } from '~/stores/store'
+import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 
@@ -87,32 +87,33 @@ const props = defineProps({
 const store = useStore()
 const pathToNavigate = computed(() => `movie/${props.movie.id}`)
 
-
 const poster = computed(
   () => `https://image.tmdb.org/t/p/original/${props.movie.poster_path}`
-);
+)
+
 const overview = computed(() =>
   props.movie.overview.length > 100
-    ? props.movie.overview.substring(0, 110) + "..."
+    ? props.movie.overview.substring(0, 110) + '...'
     : props.movie.overview
 )
 
 const scoreAvailable = computed(() => props.scores !== undefined)
 
 const displayedScore = computed(() => {
-  if (store.shownScore == "rating_sexism") {
-    return "Sexism"
-  } else if (store.shownScore == "rating_racism") {
-    return "Racism"
-  } else if (store.shownScore == "rating_others") {
-    return "Others"
-  } else if (store.shownScore == "rating_cringe") {
-    return "Cringe"
-  } else return ""
+  if (store.shownScore == 'rating_sexism') {
+    return 'Sexism'
+  } else if (store.shownScore === 'rating_racism') {
+    return 'Racism'
+  } else if (store.shownScore === 'rating_others') {
+    return 'Others'
+  } else if (store.shownScore === 'rating_cringe') {
+    return 'Cringe'
+  } else return ''
 })
+
 const score = computed(() => {
   if (store.shownScore && scoreAvailable.value) {
     return props.scores[store.shownScore]
-  } else return props.scores["rating_total"]
+  } else return props.scores['rating_total']
 })
 </script>

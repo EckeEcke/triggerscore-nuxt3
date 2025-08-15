@@ -36,7 +36,7 @@
       <div>
         <h2
           class="font-semibold mt-4 h-14 flex items-center pr-2 w-40"
-          v-html="t('stats.mostRatings', [mostRatedMovie.ratings])"
+          v-html="t('stats.mostRatings', [mostRatedMovie?.ratings])"
         ></h2>
         <MovieHighlightItem
           :scores="mostRatedMovie"
@@ -50,7 +50,7 @@
           class="font-semibold mt-4 h-14 flex items-center pr-2 w-40"
           v-html="
             t('stats.mostComments', [
-              mostCommentedMovie.comments.filter((comment) => {
+              mostCommentedMovie?.comments.filter((comment) => {
                 return comment.length > 3;
               }).length,
             ])
@@ -66,7 +66,7 @@
       <div>
         <h2
           class="font-semibold mt-4 h-14 flex items-center pr-2 w-40"
-          v-html="t('stats.mostLiked', [mostLikedMovie.likes])"
+          v-html="t('stats.mostLiked', [mostLikedMovie?.likes])"
         ></h2>
         <MovieHighlightItem
           :scores="mostLikedMovie"
@@ -78,7 +78,7 @@
       <div>
         <h2
           class="font-semibold mt-4 h-14 flex items-center pr-2 w-40"
-          v-html="t('stats.mostDisliked', [mostDislikedMovie.dislikes])"
+          v-html="t('stats.mostDisliked', [mostDislikedMovie?.dislikes])"
         ></h2>
         <MovieHighlightItem
           :scores="mostDislikedMovie"
@@ -91,9 +91,9 @@
   </section>
 </template>
 
-<script setup lang="ts">
-import { useStore } from "~/stores/store"
-import { useI18n } from "vue-i18n"
+<script setup lang='ts'>
+import { useStore } from '~/stores/store'
+import { useI18n } from 'vue-i18n'
 
 const store = useStore()
 
@@ -162,7 +162,7 @@ const movie = computed(() => {
     return store.movies.filter(
       (movie: any) => movie.id == lowestScoreMovie.value!.movie_id
     )
-  } else return {}
+  } else return []
 })
 
 const movieHighest = computed(() => {
@@ -170,38 +170,38 @@ const movieHighest = computed(() => {
     return store.movies.filter(
       (movie) => movie.id == highestScoreMovie.value.movie_id
     )
-  } else return {}
+  } else return []
 })
 
 const mostRated = computed(() => {
   if (mostRatedMovie.value) {
     return store.movies.filter(
-      (movie) => movie.id == mostRatedMovie.value.movie_id
+      (movie) => movie.id == mostRatedMovie.value?.movie_id
     )
-  } else return {}
+  } else return []
 })
 
 const mostCommented = computed(() => {
   if (mostCommentedMovie.value) {
     return store.movies.filter(
-      (movie) => movie.id == mostCommentedMovie.value.movie_id
+      (movie) => movie.id == mostCommentedMovie.value?.movie_id
     )
-  } else return {}
+  } else return []
 })
 
 const mostLiked = computed(() => {
   if (mostLikedMovie.value) {
     return store.movies.filter(
-      (movie) => movie.id == mostLikedMovie.value.movie_id
+      (movie) => movie.id == mostLikedMovie.value?.movie_id
     )
-  } else return {}
+  } else return []
 })
 
 const mostDisliked = computed(() => {
   if (mostDislikedMovie.value) {
     return store.movies.filter(
-      (movie) => movie.id == mostDislikedMovie.value.movie_id
+      (movie) => movie.id == mostDislikedMovie.value?.movie_id
     )
-  } else return {}
+  } else return []
 })
 </script>

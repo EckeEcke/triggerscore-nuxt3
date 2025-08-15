@@ -133,23 +133,23 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { useI18n } from "vue-i18n"
-import { ref } from "vue"
+<script setup lang='ts'>
+import { useI18n } from 'vue-i18n'
+import { ref } from 'vue'
+import SuccessAnimation from '~/components/animations/SuccessAnimation.vue'
 
 const route = useRoute()
-
 const { t } = useI18n()
 
 const form = ref({
-  name: "",
-  mail: "",
-  message: "",
+  name: '',
+  mail: '',
+  message: '',
 })
 
 if (route.query.comment) {
   form.value.message =
-    t("contact.report") +
+    t('contact.report') +
     route.query.id +
     " - '" +
     route.query.comment +
@@ -158,16 +158,15 @@ if (route.query.comment) {
 
 const submitted = ref(false)
 
-async function handleSubmit(e: any) {
+const handleSubmit = async (e: any) => {
   const form = e.target
   const formData = new FormData(form)
-  console.log(form.value)
-  await useFetch("/", {
-    method: "POST",
+  await useFetch('/', {
+    method: 'POST',
     headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
-    body: new URLSearchParams(formData).toString(),
+    body: formData.toString()
   })
     .then(() => (submitted.value = true))
     .catch((error: any) => console.log(error))

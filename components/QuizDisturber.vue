@@ -33,10 +33,13 @@
   
 </template>
 
-<script setup lang="ts">
-import { useI18n } from "vue-i18n"
+<script setup lang='ts'>
+import { useI18n } from 'vue-i18n'
+import ClickAnimation from './animations/ClickAnimation.vue'
 
 const { t } = useI18n()
+
+const localePath = useLocalePath()
 
 const showAnimation = ref(false)
 let interval: ReturnType<typeof setInterval> | undefined = undefined

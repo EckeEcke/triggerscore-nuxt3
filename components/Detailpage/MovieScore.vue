@@ -4,14 +4,6 @@
     class="w-full flex flex-col mx-2 self-center rounded-tr"
 >
     <div
-    class="text-base md:text-2xl lg:text-lg self-center font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200"
-    >
-    TRIGGERSC<font-awesome-icon
-        :icon="['fas', 'angry']"
-        class="text-white"
-    />RE
-    </div>
-    <div
     class="mx-auto bg-opacity-90 w-12 sm:w-20 md:w-24 lg:w-20 h-12 sm:h-20 md:h-24 lg:h-20 border border-gray-900 p-2 text-3xl rounded-lg flex justify-center my-3"
     :class="{
         'bg-red-700': score.rating_total >= 7,
@@ -104,7 +96,7 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "../../stores/store"
+import { useStore } from "~/stores/store"
 
 const { t } = useI18n()
 const store = useStore()

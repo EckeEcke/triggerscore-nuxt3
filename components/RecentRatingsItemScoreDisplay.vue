@@ -16,8 +16,8 @@
   </div>
 </template>
 
-<script setup lang="ts">
-const props = defineProps({
+<script setup lang='ts'>
+defineProps({
   score: {
     type: Number,
     required: true,

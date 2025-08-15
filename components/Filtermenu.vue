@@ -218,9 +218,9 @@
   </client-only>
 </template>
 
-<script setup lang="ts">
-import { useStore } from "~/stores/store"
-import { useI18n } from "vue-i18n"
+<script setup lang='ts'>
+import { useStore } from '~/stores/store'
+import { useI18n } from 'vue-i18n'
 
 const store = useStore()
 const { t, locale } = useI18n()
@@ -230,72 +230,76 @@ const disneyFilter = computed(() => store.filterMoviesByDisney)
 const skyFilter = computed(() => store.filterMoviesBySky)
 const results = computed(() => store.filteredMovies.length)
 
+const resetFilter = () => {
+  store.resetFilter();
+  store.filterMovies(locale.value)
+}
+
+const focusSearch = () => {
+  if (!process.client) return
+  const search = document.getElementById('search')
+  search!.scrollIntoView({ block: 'start' })
+  search!.focus()
+}
+
+const scrollToTop = () => {
+  window.scrollTo(0, 0)
+}
+
 watch(
   () => store.filterMoviesByNetflix,
-  (currentValue, oldValue) => {
+  () => {
     store.filterMovies(locale.value)
   }
 )
 
 watch(
   () => store.filterMoviesByPrime,
-  (currentValue, oldValue) => {
+  () => {
     store.filterMovies(locale.value)
   }
 )
 
 watch(
   () => store.filterMoviesByDisney,
-  (currentValue, oldValue) => {
+  () => {
     store.filterMovies(locale.value)
   }
 )
 
 watch(
   () => store.filterMoviesBySky,
-  (currentValue, oldValue) => {
+  () => {
     store.filterMovies(locale.value)
   }
 )
 
 watch(
   () => store.sortingOption,
-  (currentValue, oldValue) => {
+  () => {
     store.filterMovies(locale.value)
   }
 )
 
 watch(
   () => store.filterMoviesByYearMin,
-  (currentValue, oldValue) => {
+  () => {
     store.filterMovies(locale.value)
   }
 )
 
 watch(
   () => store.filterMoviesByYearMax,
-  (currentValue, oldValue) => {
+  () => {
     store.filterMovies(locale.value)
   }
 )
 
 watch(
   () => store.shownScore,
-  (currentValue, oldValue) => {
+  () => {
     store.filterMovies(locale.value)
   }
 )
 
-function resetFilter() {
-  store.resetFilter();
-  store.filterMovies(locale.value)
-}
-function focusSearch() {
-  const search = document.getElementById("search")
-  search!.scrollIntoView({ block: "start" })
-  search!.focus()
-}
-function scrollToTop() {
-  window.scrollTo(0, 0)
-}
 </script>

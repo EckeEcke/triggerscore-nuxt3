@@ -6,6 +6,6 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import newJSON from "../assets/images/new-animation.json"
+<script setup lang='ts'>
+import newJSON from '../../assets/images/new-animation.json'
 </script>

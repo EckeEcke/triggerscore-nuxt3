@@ -206,7 +206,11 @@ export const emptyMovie: Movie = {
             type: "string",
             example: "http://www.foxmovies.com/movies/fight-club"
         },
-        id: -1,
+        id: {
+            type: "number",
+            example: 550,
+            default: 0
+        },
         imdb_id: {
             type: "string",
             example: "tt0137523"
@@ -258,23 +262,23 @@ export const emptyMovie: Movie = {
             }
         },
         production_countries: {
-            type: Array<string>,
+            type: [],
             items: {
                 type: Object,
                 properties: {
                     iso_3166_1: {
-                        type: String,
+                        type: "string",
                         example: "US"
                     },
                     name: {
-                        type: String,
+                        type: "string",
                         example: "United States of America"
                     }
                 }
             }
         },
         release_date: {
-            type: String,
+            type: "string",
             example: "1999-10-15"
         },
         revenue: {

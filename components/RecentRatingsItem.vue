@@ -114,13 +114,15 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { useStore } from "~/stores/store"
-import placeholderRatings from "~/assets/recentRatings.json"
-import { useI18n } from "vue-i18n"
+<script setup lang='ts'>
+import { useStore } from '~/stores/store'
+import placeholderRatings from '~/assets/recentRatings.json'
+import { useI18n } from 'vue-i18n'
+import NewAnimation from '~/components/animations/NewAnimation.vue'
 
 const { locale, t } = useI18n()
 const store = useStore()
+
 const props = defineProps({
   movie: {
     type: Object,

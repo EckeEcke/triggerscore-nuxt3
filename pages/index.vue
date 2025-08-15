@@ -160,9 +160,10 @@
   
 </template>
 
-<script setup lang="ts">
-import QuizDisturber from "~/components/QuizDisturber.vue";
-import { useStore } from "~/stores/store"
+<script setup lang='ts'>
+import QuizDisturber from '~/components/QuizDisturber.vue'
+import { useStore } from '~/stores/store'
+import LoadingAnimation from '~/components/animations/LoadingAnimation.vue'
 
 const { t } = useI18n()
 const localePath = useLocalePath()
@@ -178,7 +179,7 @@ const isLoading = computed(
 )
 </script>
 
-<style lang="css" scoped>
+<style scoped>
 @media (min-width: 768px) {
   .recent-ratings {
     grid-auto-rows: min(10rem, 100%);

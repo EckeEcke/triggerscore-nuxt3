@@ -15,19 +15,13 @@
       </div>
       <div
         class="absolute right-2 mx-auto mt-2 h-12 w-12 text-white rounded-lg bg-opacity-90"
-        :class="{
-          'bg-gray-200': !scoreAvailable,
-          'bg-red-700': scoreAvailable && scores[shownScore] >= 7,
-          'bg-yellow-500':
-            scoreAvailable && scores[shownScore] < 7 && scores[shownScore] >= 4,
-          'bg-green-600': scoreAvailable && scores[shownScore] < 4,
-        }"
+        :class="getScoreBackground"
       >
         <div class="relative w-full h-full font-semibold">
           <span
             v-if="scoreAvailable"
             class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-            >{{ scores[shownScore] }}</span
+            >{{ score }}</span
           >
           <span
             v-else
@@ -69,15 +63,18 @@
   </NuxtLink>
 </template>
 
-<script setup lang="ts">
-import { useI18n } from "vue-i18n"
+<script setup lang='ts'>
+import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 
 const props = defineProps({
   movie: Object,
   scores: Object,
-  shownScore: String,
+  shownScore: {
+    type: String,
+    default: 'rating_total',
+  },
   loadItem: Boolean,
 })
 
@@ -91,22 +88,37 @@ const poster = computed(
 )
 const overview = computed(() =>
   props.movie!.overview.length > 100
-    ? props.movie!.overview.substring(0, 100) + "..."
+    ? props.movie!.overview.substring(0, 100) + '...'
     : props.movie!.overview
 )
+
+const score = computed(() => {
+  return props.scores?.[props.shownScore] || '-'
+})
+
 const scoreAvailable = computed(() => props.scores !== undefined)
+
 const displayedScore = computed(() => {
   switch (props.shownScore) {
-    case "rating_sexism":
-      return "Sexism"
-    case "rating_racism":
-      return "Racism"
-    case "rating_others":
-      return "Others"
-    case "rating_cringe":
-      return "Cringe"
+    case 'rating_sexism':
+      return 'Sexism'
+    case 'rating_racism':
+      return 'Racism'
+    case 'rating_others':
+      return 'Others'
+    case 'rating_cringe':
+      return 'Cringe'
     default:
-      return ""
+      return ''
   }
+})
+
+const getScoreBackground = computed(() => {
+  if (!scoreAvailable.value) return 'bg-gray-200'
+  if (!props.shownScore || !props.scores?.[props.shownScore]) return 'bg-gray-200'
+  if (props.scores[props.shownScore] >= 7) return 'bg-red-700'
+  if (props.scores[props.shownScore] < 7 && props.scores[props.shownScore] >= 4) return 'bg-yellow-500'
+  if (props.scores[props.shownScore] < 4) return 'bg-green-600'
+  return 'bg-gray-200'
 })
 </script>

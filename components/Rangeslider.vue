@@ -50,12 +50,13 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { useStore } from "~/stores/store"
-import { useI18n } from "vue-i18n"
+<script setup lang='ts'>
+import { useStore } from '~/stores/store'
+import { useI18n } from 'vue-i18n'
 
 const { locale, t } = useI18n()
 const store = useStore()
+
 const min = ref(0)
 const max = ref(10)
 const minthumb = ref(0)
@@ -65,24 +66,24 @@ const minScore = computed(() => store.minScore)
 
 const maxScore = computed(() => store.maxScore)
 
-function mintrigger() {
+const mintrigger = () => {
   if (minScore.value >= maxScore.value) {
-    store.minScore = parseInt(maxScore.value) - 1
+    store.minScore = maxScore.value - 1
   }
   if (minScore.value == 10) {
     store.minScore = 0
   }
   minthumb.value =
-    ((parseInt(minScore.value) - min.value) / (max.value - min.value)) * 100
+    (minScore.value - min.value) / (max.value - min.value) * 100
   store.filterMovies(locale.value)
 }
 
-function maxtrigger() {
+const maxtrigger = () => {
   if (maxScore.value >= max.value) {
     store.maxScore = 10
   }
-  if (parseInt(maxScore.value) <= parseInt(minScore.value)) {
-    store.maxScore = parseInt(minScore.value) + 1
+  if (maxScore.value <= minScore.value) {
+    store.maxScore = minScore.value + 1
   }
   maxthumb.value =
     100 - ((maxScore.value - min.value) / (max.value - min.value)) * 100
@@ -94,7 +95,7 @@ onMounted(() => {
   maxtrigger()
   watch(
     () => store.minScore,
-    (currentValue, oldValue) => {
+    (currentValue) => {
       if (currentValue == 0) {
         mintrigger()
         store.filterMovies(locale.value)
@@ -104,7 +105,7 @@ onMounted(() => {
 
   watch(
     () => store.maxScore,
-    (currentValue, oldValue) => {
+    (currentValue) => {
       if (currentValue == 10) {
         maxtrigger()
         store.filterMovies(locale.value)

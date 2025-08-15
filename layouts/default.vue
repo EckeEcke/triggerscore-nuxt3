@@ -15,9 +15,10 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { useI18n } from "vue-i18n"
-import { useStore } from "~/stores/store"
+<script setup lang='ts'>
+import { useI18n } from 'vue-i18n'
+import { useStore } from '~/stores/store'
+import MaintenanceAnimation from '~/components/animations/MaintenanceAnimation.vue'
 
 const { locale } = useI18n()
 const store = useStore()
@@ -33,12 +34,8 @@ if (!isMaintained){
 const isFullscreen = computed(() => store.isFullscreen)
 
 const checkFullscreen = () => {
-    store.isFullscreen = !!(
-    document.fullscreenElement ||
-    document.webkitFullscreenElement ||
-    document.mozFullScreenElement ||
-    document.msFullscreenElement
-  )
+    if (!process.client || !document) return
+    store.isFullscreen = !!document.fullscreenElement
 }
 
 const onFullscreenChange = () => {

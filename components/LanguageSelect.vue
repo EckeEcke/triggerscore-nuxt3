@@ -65,49 +65,49 @@
         tag="li"
         class="flex gap-2 cursor-pointer hover:text-yellow-500"
       >
-        <img class="w-6 self-center h-3" src="../assets/images/usa.svg" />US
+        <img class="w-6 self-center h-3" src="../assets/images/usa.svg" alt="flag US" />US
       </NuxtLink>
       <NuxtLink
         :to="switchLocalePath('en')"
         tag="li"
         class="flex gap-2 cursor-pointer hover:text-yellow-500"
       >
-        <img class="w-6 self-center h-3" src="../assets/images/uk.svg" />EN
+        <img class="w-6 self-center h-3" src="../assets/images/uk.svg" alt="flag UK" />EN
       </NuxtLink>
       <NuxtLink
         :to="switchLocalePath('de')"
         tag="li"
         class="flex gap-2 cursor-pointer hover:text-yellow-500"
       >
-        <img class="w-6 self-center h-3" src="../assets/images/germany.svg" />DE
+        <img class="w-6 self-center h-3" src="../assets/images/germany.svg" alt="flag Germany" />DE
       </NuxtLink>
       <NuxtLink
         :to="switchLocalePath('fr')"
         tag="li"
         class="flex gap-2 cursor-pointer hover:text-yellow-500"
       >
-        <img class="w-6 self-center h-3" src="../assets/images/france.svg" />FR
+        <img class="w-6 self-center h-3" src="../assets/images/france.svg" alt="flag France" />FR
       </NuxtLink>
       <NuxtLink
         :to="switchLocalePath('es')"
         tag="li"
         class="flex gap-2 cursor-pointer hover:text-yellow-500"
       >
-        <img class="w-6 self-center h-3" src="../assets/images/spain.svg" />ES
+        <img class="w-6 self-center h-3" src="../assets/images/spain.svg" alt="flag Spain" />ES
       </NuxtLink>
     </ul>
   </div>
 </template>
 
-<script setup lang="ts">
-import { useI18n } from "vue-i18n"
+<script setup lang='ts'>
+import { useI18n } from 'vue-i18n'
 
 const { locale } = useI18n()
 const switchLocalePath = useSwitchLocalePath()
 
 const showSelection = ref(false)
 
-function hideSelection() {
+const hideSelection = () => {
   showSelection.value = false
 }
 </script>

@@ -6,8 +6,8 @@
     </div>
   </template>
   
-  <script setup>
-  import LottieAnimation from "../assets/images/click-animation.json"
+  <script setup lang="ts">
+  import LottieAnimation from '../../assets/images/click-animation.json'
   
   const animation = LottieAnimation
   </script>

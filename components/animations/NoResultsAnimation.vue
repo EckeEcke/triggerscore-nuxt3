@@ -6,6 +6,6 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import noResultsJSON from "../assets/images/noresults-animation.json"
+<script setup lang='ts'>
+import noResultsJSON from '../../assets/images/noresults-animation.json'
 </script>

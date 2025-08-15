@@ -3,10 +3,11 @@
   <Detailpage v-if="!isLoading" />
 </template>
 
-<script setup lang="ts">
+<script setup lang='ts'>
 import { ref } from 'vue'
-import { useStore } from "~/stores/store"
+import { useStore } from '~/stores/store'
 import { useRoute } from 'vue-router'
+import LoadingAnimation from '~/components/animations/LoadingAnimation.vue'
 
 const route = useRoute()
 const id = route.params.id
@@ -16,7 +17,7 @@ const store = useStore()
 const { locale } = useI18n()
 store.loadingSelectedMovie = true
 
-async function loadMovie() {
+const loadMovie = async () => {
   const existingMovie = store.movies.find(movie => movie.id.toString() === id)
   if (existingMovie) {
     store.selectedMovie = existingMovie
@@ -27,15 +28,14 @@ async function loadMovie() {
     const { data } = await useFetch(
       `/api/movie/${id}?locale=${locale.value}`
     )
-    const loadedMovie = data.value as any
-    store.selectedMovie = loadedMovie
+    store.selectedMovie = data.value as any
   } catch (error) {
     Promise.reject()
-    console.log("Oops, an error occurred while loading the movie:", error)
+    console.log('Oops, an error occurred while loading the movie: ', error)
   }
 }
 
-async function loadTriggerscore() {
+const loadTriggerscore = async () => {
   const existingScore = store.triggerscores.find(
     score => score.movie_id.toString() === id
   )
@@ -51,7 +51,7 @@ async function loadTriggerscore() {
     store.selectedMovieScore = scores[0]
   } catch (error) {
     console.log(
-      "Oops, an error occurred while loading the Triggerscore:",
+      'Oops, an error occurred while loading the Triggerscore: ',
       error
     )
   }
@@ -67,7 +67,7 @@ try {
   // Handle any errors that occurred during the async functions
   store.loadingSelectedMovie = false
   clearError()
-  await navigateTo("/")
-  console.error("Oops, an error occurred while loading data:", error)
+  await navigateTo('/')
+  console.error('Oops, an error occurred while loading data: ', error)
 }
 </script>

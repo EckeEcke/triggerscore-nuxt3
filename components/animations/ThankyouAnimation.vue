@@ -12,11 +12,12 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import thankYouAnimation from "../../assets/images/thankyou-animation.json"
+<script setup lang='ts'>
+import thankYouAnimation from '../../assets/images/thankyou-animation.json'
 
-const emit = defineEmits(["complete"])
-function complete() {
-  emit("complete")
+const emit = defineEmits(['complete'])
+
+const complete = () => {
+  emit('complete')
 }
 </script>

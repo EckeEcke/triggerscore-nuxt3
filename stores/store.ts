@@ -1,13 +1,13 @@
-import { defineStore } from "pinia"
-import placeholderTriggerscores from "~/assets/triggerscores.json"
-import placeholderBondMovies from "~/assets/bondMovies.json"
-import type { Movie } from "~/types/movie"
+import { defineStore } from 'pinia'
+import placeholderTriggerscores from '~/assets/triggerscores.json'
+import placeholderBondMovies from '~/assets/bondMovies.json'
+import type { Movie } from '~/types/movie'
 
 const apiBaseUrl = process.env.NODE_ENV === 'development'
   ? 'http://localhost:8888/.netlify/functions'
   : 'https://www.triggerscore.de/.netlify/functions'
 
-function sortAtoZ(x: Movie, y: Movie): 1 | -1 | 0 {
+const sortAtoZ = (x: Movie, y: Movie): 1 | -1 | 0 => {
   const titleX = x.title ? x.title : x.original_title
   const titleY = y.title ? y.title : y.original_title
   if (titleX < titleY) {
@@ -19,7 +19,7 @@ function sortAtoZ(x: Movie, y: Movie): 1 | -1 | 0 {
   return 0
 }
 
-function sortZtoA(x: Movie, y: Movie) {
+const sortZtoA = (x: Movie, y: Movie) => {
   const titleX = x.title ? x.title : x.original_title
   const titleY = y.title ? y.title : y.original_title
   if (titleX > titleY) {
@@ -31,38 +31,33 @@ function sortZtoA(x: Movie, y: Movie) {
   return 0
 }
 
-function sortByDateDesc(x: Movie, y: Movie) {
-  return Number(new Date(y.release_date as any)) - Number(new Date(x.release_date as any))
-}
+const sortByDateDesc = (x: Movie, y: Movie) => Number(new Date(y.release_date as any)) - Number(new Date(x.release_date as any))
 
-function sortByDateAsc(
+const sortByDateAsc =(
   x: { release_date: number },
   y: { release_date: number }
-) {
-  return Number(new Date(x.release_date)) - Number(new Date(y.release_date))
+) => Number(new Date(x.release_date)) - Number(new Date(y.release_date))
+
+const sortByTsDesc = (array: any[], key: string): any =>
+    (x: { id: number }, y: { id: number }) => {
+        const triggerscoreX =
+          array[
+            array.map((score: { movie_id: number }) => score.movie_id).indexOf(x.id)
+          ][key]
+        const triggerscoreY =
+          array[
+            array.map((score: { movie_id: number }) => score.movie_id).indexOf(y.id)
+          ][key]
+        if (triggerscoreX > triggerscoreY) {
+          return -1
+        }
+        if (triggerscoreX < triggerscoreY) {
+          return 1
+        }
 }
 
-function sortByTsDesc(array: any[], key: string): any {
-  return function (x: { id: number }, y: { id: number }) {
-    const triggerscoreX =
-      array[
-        array.map((score: { movie_id: number }) => score.movie_id).indexOf(x.id)
-      ][key]
-    const triggerscoreY =
-      array[
-        array.map((score: { movie_id: number }) => score.movie_id).indexOf(y.id)
-      ][key]
-    if (triggerscoreX > triggerscoreY) {
-      return -1
-    }
-    if (triggerscoreX < triggerscoreY) {
-      return 1
-    }
-  }
-}
-
-function sortByTsAsc(array: any[], key: any): any {
-  return function (x: { id: string }, y: { id: string }): any {
+const sortByTsAsc = (array: any[], key: any): any =>
+  (x: { id: string }, y: { id: string }): any => {
     const triggerscoreX =
       array[array.map((score: any) => score.movie_id).indexOf(x.id)][key]
     const triggerscoreY =
@@ -75,22 +70,21 @@ function sortByTsAsc(array: any[], key: any): any {
     if (triggerscoreX > triggerscoreY) {
       return 1
     }
-  }
 }
 
-function adjustLocale(locale: string) {
-  if (locale == "us") {
-    return "en"
+const adjustLocale = (locale: string) => {
+  if (locale == 'us') {
+    return 'en'
   }
   return locale
 }
 
 export const useStore = defineStore({
-  id: "store",
+  id: 'store',
   state: () => {
     return {
       triggerscores: placeholderTriggerscores,
-      movies: [],
+      movies: [] as any[],
       selectedMovie: undefined,
       loadingSelectedMovie: false,
       providerData: {
@@ -99,14 +93,14 @@ export const useStore = defineStore({
         disney: [],
         sky: [],
       },
-      selectedMovieScore: undefined,
+      selectedMovieScore: undefined as any,
       recentRatings: [],
-      recentComments: [],
+      recentComments: [] as Array<any>,
       recentScores: [],
       filteredMovies: [] as any[],
-      searchInput: "",
-      searchTerm: "",
-      searchResults: [],
+      searchInput: '',
+      searchTerm: '',
+      searchResults: [] as any[],
       searchError: false,
       bondMovies: placeholderBondMovies,
       bondMovieIDs: [
@@ -119,15 +113,15 @@ export const useStore = defineStore({
       filterMoviesByPrime: false,
       filterMoviesByDisney: false,
       filterMoviesBySky: false,
-      sortingOption: "a-z",
+      sortingOption: 'a-z',
       highlightsLoading: true,
       moviesLoading: true,
-      shownScore: "rating_total",
+      shownScore: 'rating_total',
       top10Sexism: [],
       top10Racism: [],
       top10Others: [],
       top10Cringe: [],
-      stats: undefined,
+      stats: undefined as any,
       minScore: 0,
       maxScore: 10,
       isFiltering: false,
@@ -140,10 +134,10 @@ export const useStore = defineStore({
       const response = await fetch(`${apiBaseUrl}/fetchScoresAndTop10sAndStats`)
       const scoresAndTop10s = await response.json()
       this.triggerscores = scoresAndTop10s.scores
-      this.setTop10Cringe(locale, scoresAndTop10s.top10s.cringe.map(movie => movie.movie_id))
-      this.setTop10Others(locale, scoresAndTop10s.top10s.others.map(movie => movie.movie_id))
-      this.setTop10Racism(locale, scoresAndTop10s.top10s.racism.map(movie => movie.movie_id))
-      this.setTop10Sexism(locale, scoresAndTop10s.top10s.sexism.map(movie => movie.movie_id))
+      this.setTop10Cringe(locale, scoresAndTop10s.top10s.cringe.map((movie: any) => movie.movie_id))
+      this.setTop10Others(locale, scoresAndTop10s.top10s.others.map((movie: any) => movie.movie_id))
+      this.setTop10Racism(locale, scoresAndTop10s.top10s.racism.map((movie: any) => movie.movie_id))
+      this.setTop10Sexism(locale, scoresAndTop10s.top10s.sexism.map((movie: any) => movie.movie_id))
       this.setStats(scoresAndTop10s.stats)
       this.setRecentRatings(locale, scoresAndTop10s.recentRatings)
       this.setRecentComments(scoresAndTop10s.recentComments)
@@ -161,12 +155,12 @@ export const useStore = defineStore({
             `https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${locale}`
           )
             .then((res) => res.json())
-            .catch(() => console.log("oopsy"))
+            .catch(() => console.log('oopsy'))
         )
       )
       recentRatings.then((res: any) => (this.recentRatings = res))
     },
-    async setRecentComments(comments: any) {
+    async setRecentComments(comments: Array<object>) {
       this.recentComments = comments
     },
     async setTop10Sexism(locale: string, movieIds: Number[]) {
@@ -177,7 +171,7 @@ export const useStore = defineStore({
             `https://api.themoviedb.org/3/movie/${id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${locale}`
           )
             .then((res) => res.json())
-            .catch(() => console.log("oopsy"))
+            .catch(() => console.log('oopsy'))
         )
       )
       loadedTop10.then((res: any) => (this.top10Sexism = res))
@@ -190,7 +184,7 @@ export const useStore = defineStore({
             `https://api.themoviedb.org/3/movie/${id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${locale}`
           )
             .then((res) => res.json())
-            .catch(() => console.log("oopsy"))
+            .catch(() => console.log('oopsy'))
         )
       )
       loadedTop10.then((res: any) => (this.top10Racism = res))
@@ -203,7 +197,7 @@ export const useStore = defineStore({
             `https://api.themoviedb.org/3/movie/${id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${locale}`
           )
             .then((res) => res.json())
-            .catch(() => console.log("oopsy"))
+            .catch(() => console.log('oopsy'))
         )
       )
       loadedTop10.then((res: any) => (this.top10Others = res))
@@ -216,7 +210,7 @@ export const useStore = defineStore({
             `https://api.themoviedb.org/3/movie/${id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${locale}`
           )
             .then((res) => res.json())
-            .catch(() => console.log("oopsy"))
+            .catch(() => console.log('oopsy'))
         )
       )
       loadedTop10.then((res: any) => (this.top10Cringe = res))
@@ -288,6 +282,7 @@ export const useStore = defineStore({
       this.searchError = payload
     },
     async setBondMovies(locale: string) {
+      // const bondMovieData = placeholderBondMovies
       const data = await fetch(`https://www.triggerscore.de/api/bondMovies?locale=${locale}`)
       const bondMovieData = await data.json()
       this.bondMovies = bondMovieData
@@ -354,22 +349,22 @@ export const useStore = defineStore({
       shownScore: string
     ) {
       let clonedArray = [...array]
-      if (sortingOption == "a-z") {
+      if (sortingOption === 'a-z') {
         clonedArray = clonedArray.sort(sortAtoZ)
       }
-      if (sortingOption == "z-a") {
+      if (sortingOption === 'z-a') {
         clonedArray = clonedArray.sort(sortZtoA)
       }
-      if (sortingOption == "date-desc") {
+      if (sortingOption === 'date-desc') {
         clonedArray = clonedArray.sort(sortByDateDesc)
       }
-      if (sortingOption == "date-asc") {
+      if (sortingOption === 'date-asc') {
         clonedArray = clonedArray.sort(sortByDateAsc)
       }
-      if (sortingOption == "ts-desc") {
+      if (sortingOption === 'ts-desc') {
         clonedArray = clonedArray.sort(sortByTsDesc(triggerscores, shownScore))
       }
-      if (sortingOption == "ts-asc") {
+      if (sortingOption === 'ts-asc') {
         clonedArray = clonedArray.sort(sortByTsAsc(triggerscores, shownScore))
       }
       this.filteredMovies = clonedArray
