@@ -34,10 +34,9 @@
         />
       </div>
       <div>
-        <h2
-          class="font-semibold mt-4 h-14 flex items-center pr-2 w-40"
-          v-html="t('stats.mostRatings', [mostRatedMovie?.ratings])"
-        ></h2>
+        <h2 class="font-semibold mt-4 h-14 flex items-center pr-2 w-40">
+          {{ t('stats.mostRatings', [mostRatedMovie?.ratings]) }}
+        </h2>
         <MovieHighlightItem
           :scores="mostRatedMovie"
           :movie="mostRated[0]"
@@ -46,16 +45,14 @@
         />
       </div>
       <div>
-        <h2
-          class="font-semibold mt-4 h-14 flex items-center pr-2 w-40"
-          v-html="
-            t('stats.mostComments', [
+        <h2 class="font-semibold mt-4 h-14 flex items-center pr-2 w-40">
+          {{ t('stats.mostComments', [
               mostCommentedMovie?.comments.filter((comment) => {
                 return comment.length > 3;
               }).length,
-            ])
-          "
-        ></h2>
+             ])
+          }}
+        </h2>
         <MovieHighlightItem
           :scores="mostCommentedMovie"
           :movie="mostCommented[0]"
@@ -64,10 +61,9 @@
         />
       </div>
       <div>
-        <h2
-          class="font-semibold mt-4 h-14 flex items-center pr-2 w-40"
-          v-html="t('stats.mostLiked', [mostLikedMovie?.likes])"
-        ></h2>
+        <h2 class="font-semibold mt-4 h-14 flex items-center pr-2 w-40">
+          {{ t('stats.mostLiked', [mostLikedMovie?.likes]) }}
+        </h2>
         <MovieHighlightItem
           :scores="mostLikedMovie"
           :movie="mostLiked[0]"
@@ -76,10 +72,9 @@
         />
       </div>
       <div>
-        <h2
-          class="font-semibold mt-4 h-14 flex items-center pr-2 w-40"
-          v-html="t('stats.mostDisliked', [mostDislikedMovie?.dislikes])"
-        ></h2>
+        <h2 class="font-semibold mt-4 h-14 flex items-center pr-2 w-40">
+          {{ t('stats.mostDisliked', [mostDislikedMovie?.dislikes]) }}
+        </h2>
         <MovieHighlightItem
           :scores="mostDislikedMovie"
           :movie="mostDisliked[0]"
@@ -205,3 +200,9 @@ const mostDisliked = computed(() => {
   } else return []
 })
 </script>
+
+<style scoped>
+h2 {
+  white-space: pre-line;
+}
+</style>
