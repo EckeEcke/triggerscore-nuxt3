@@ -48,7 +48,8 @@
           @click="openSearch"
         />
         <span class="md:hidden flex self-center"
-          ><font-awesome-icon
+          >
+          <font-awesome-icon
             :icon="['fas', 'bars']"
             class="text-white text-lg self-center"
             @click="

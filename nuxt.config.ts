@@ -1,4 +1,3 @@
-const i18nLocales = ['de', 'en', 'es', 'fr', 'us']
 import { defineNuxtConfig } from 'nuxt/config'
 
 // @ts-nocheck
@@ -16,8 +15,7 @@ export default defineNuxtConfig({
 
   css: [
       '~/assets/css/main.css',
-      '@fortawesome/fontawesome-svg-core/styles.css',
-      'vue3-lottie/dist/style.css'
+      '@fortawesome/fontawesome-svg-core/styles.css'
   ],
 
   postcss: {
@@ -31,11 +29,16 @@ export default defineNuxtConfig({
 
   // @ts-ignore
   i18n: {
-      locales: i18nLocales,
+      locales: [
+          { code: 'de', name: 'German', file: 'de.json' },
+          { code: 'en', name: 'English UK', file: 'en.json' },
+          { code: 'es', name: 'Spanish', file: 'es.json' },
+          { code: 'fr', name: 'French', file: 'fr.json' },
+          { code: 'us', name: 'English US', file: 'us.json' },
+      ],
       defaultLocale: 'de',
-      strategy: 'prefix_except_default',
+      strategy: 'prefix',
       detectBrowserLanguage: false,
-      vueI18n: "./i18n.config.ts",
   },
 
   runtimeConfig: {

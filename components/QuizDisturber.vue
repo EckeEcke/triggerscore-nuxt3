@@ -1,5 +1,5 @@
 <template>
-  <div class="relative text-center mx-auto text-center" style="max-width: 400px;">
+  <div class="relative text-center mx-auto" style="max-width: 400px;">
     <NuxtLink :to="localePath('/Quiz')" tag="div">
     <div
     class="headline-wrapper absolute w-full text-3xl self-center font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200"

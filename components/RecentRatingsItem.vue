@@ -6,11 +6,7 @@
       <div class="flex items-center gap-2 text-left">
         <div
           class="flex rounded-lg justify-center w-10 h-10 mr-2"
-          :class="{
-            'bg-red-700': scoreTotal >= 7,
-            'bg-yellow-500': scoreTotal < 7 && scoreTotal >= 4,
-            'bg-green-600': scoreTotal < 4,
-          }"
+          :class="scoreBackground"
         >
           <p class="self-center text-white text-lg font-semibold">
             {{ scoreTotal !== -1 ? scoreTotal : "-" }}
@@ -49,11 +45,7 @@
         </NuxtLink>
         <div
           class="flex absolute top-1 right-1 rounded-lg justify-center w-12 h-12 bg-opacity-80 pointer-events-none"
-          :class="{
-            'bg-red-700': scoreTotal >= 7,
-            'bg-yellow-500': scoreTotal < 7 && scoreTotal >= 4,
-            'bg-green-600': scoreTotal < 4,
-          }"
+          :class="scoreBackground"
         >
           <p class="self-center text-white text-xl font-semibold">
             {{ scoreTotal !== -1 ? scoreTotal : "-" }}
@@ -119,8 +111,9 @@ import { useStore } from '~/stores/store'
 import placeholderRatings from '~/assets/recentRatings.json'
 import { useI18n } from 'vue-i18n'
 import NewAnimation from '~/components/animations/NewAnimation.vue'
+import { getScoreBackground } from '~/utils/getScoreBackground'
 
-const { locale, t } = useI18n()
+const { t } = useI18n()
 const store = useStore()
 
 const props = defineProps({
@@ -137,13 +130,16 @@ const props = defineProps({
 
 const localePath = useLocalePath()
 const pathToNavigate = (id: string) => localePath(`/movie/${id}`)
+
 const poster2 = computed(
   () =>
     `https://image.tmdb.org/t/p/original/${
       props.movie.poster_path ?? placeholderRatings[props.id].poster_path
     }`
 )
+
 const scoreAvailable = computed(() => props.scores !== undefined)
+
 const scoreTotal: ComputedRef<number> = computed(() => {
   if (scoreAvailable.value) {
     return (
@@ -163,16 +159,20 @@ const scoreTotal: ComputedRef<number> = computed(() => {
     )
   } else return -1
 })
+
+const scoreBackground = computed(() => getScoreBackground(scoreTotal.value))
+
 const totalRatings = computed(() =>
   store.triggerscores.filter((movie) => movie.movie_id == props.movie.id)
 )
 </script>
 
-<style>
+<style scoped>
 .custom-headline {
   width: calc(100% - 10px);
   text-overflow: ellipsis;
 }
+
 .drop-shadow {
   filter: drop-shadow(0 1px 0px white) drop-shadow(1px 0px 0px white)
     drop-shadow(-1px 0px 0px white) drop-shadow(0 -1px 0px white);

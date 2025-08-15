@@ -4,7 +4,7 @@
     tag="div"
     class="movie-highlight-item transition-300 w-full h-44 bg-transparent sm:bg-gradient-to-r from-gray-950 to-gray-800 md:hover:from-gray-900 text-white sm:border border-t border-b sm:border-r-0 border-gray-950 md:border-0 shadow-md flex relative md:rounded container-xl cursor-pointer"
   >
-    <div class="h-full w-44 md:rounded-l overflow-hidden" load="lazy">
+    <div class="h-full w-44 md:rounded-l overflow-hidden">
       <div
         class="movie-poster w-full h-full bg-cover bg-center"
         :style="{ 'background-image': `url(${poster})` }"
@@ -13,12 +13,7 @@
     <div class="w-full p-3">
       <div
         class="absolute top-2 right-2 h-12 w-12 text-lg text-white rounded-lg font-semibold"
-        :class="{
-          'bg-gray-200': !scoreAvailable,
-          'bg-red-700': scoreAvailable && score >= 7,
-          'bg-yellow-500': scoreAvailable && score < 7 && score >= 4,
-          'bg-green-600': scoreAvailable && score < 4,
-        }"
+        :class="scoreBackground"
       >
         <div class="relative w-full h-full">
           <span
@@ -70,6 +65,7 @@
 <script setup lang='ts'>
 import { useStore } from '~/stores/store'
 import { useI18n } from 'vue-i18n'
+import { getScoreBackground } from '~/utils/getScoreBackground'
 
 const { t } = useI18n()
 
@@ -116,4 +112,6 @@ const score = computed(() => {
     return props.scores[store.shownScore]
   } else return props.scores['rating_total']
 })
+
+const scoreBackground = computed(() => getScoreBackground(score.value))
 </script>

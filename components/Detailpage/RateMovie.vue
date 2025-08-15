@@ -23,7 +23,7 @@
           <div v-if="animCompleted" class="font-bold pt-8" key="text">
             <p>{{ t("rating.thanks") }}</p>
             <button
-              class="text-base bg-yellow-500 transition hover:bg-yellow-600 p-3 mt-6 text-white rounded font-semibold text-white uppercase"
+              class="text-base bg-yellow-500 transition hover:bg-yellow-600 p-3 mt-6 rounded font-semibold text-white uppercase"
               @click="router.go(-1)"
             >
               <font-awesome-icon

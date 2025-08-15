@@ -30,7 +30,7 @@ const loadMovie = async () => {
     )
     store.selectedMovie = data.value as any
   } catch (error) {
-    Promise.reject()
+    await Promise.reject()
     console.log('Oops, an error occurred while loading the movie: ', error)
   }
 }

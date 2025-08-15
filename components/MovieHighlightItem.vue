@@ -15,7 +15,7 @@
       </div>
       <div
         class="absolute right-2 mx-auto mt-2 h-12 w-12 text-white rounded-lg bg-opacity-90"
-        :class="getScoreBackground"
+        :class="scoreBackground"
       >
         <div class="relative w-full h-full font-semibold">
           <span
@@ -65,6 +65,7 @@
 
 <script setup lang='ts'>
 import { useI18n } from 'vue-i18n'
+import { getScoreBackground } from '~/utils/getScoreBackground'
 
 const { t } = useI18n()
 
@@ -85,11 +86,6 @@ const pathToNavigate = computed(() => localePath(`/movie/${props.movie!.id}`))
 const loadItem2 = true // replace when intersection observer is fixed
 const poster = computed(
   () => `https://image.tmdb.org/t/p/original/${props.movie!.poster_path}`
-)
-const overview = computed(() =>
-  props.movie!.overview.length > 100
-    ? props.movie!.overview.substring(0, 100) + '...'
-    : props.movie!.overview
 )
 
 const score = computed(() => {
@@ -113,12 +109,7 @@ const displayedScore = computed(() => {
   }
 })
 
-const getScoreBackground = computed(() => {
-  if (!scoreAvailable.value) return 'bg-gray-200'
-  if (!props.shownScore || !props.scores?.[props.shownScore]) return 'bg-gray-200'
-  if (props.scores[props.shownScore] >= 7) return 'bg-red-700'
-  if (props.scores[props.shownScore] < 7 && props.scores[props.shownScore] >= 4) return 'bg-yellow-500'
-  if (props.scores[props.shownScore] < 4) return 'bg-green-600'
-  return 'bg-gray-200'
+const scoreBackground = computed(() => {
+  return getScoreBackground(props.scores?.[props.shownScore])
 })
 </script>

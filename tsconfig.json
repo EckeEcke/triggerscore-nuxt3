@@ -11,7 +11,8 @@
     "types": [
       "@nuxt/types",
       "@nuxt/schema",
-      "vite/client"
-    ]
+      "vite/client",
+      "./types/components"
+    ],
   }
 }

@@ -114,6 +114,6 @@ const hideSelection = () => {
 
 <style scoped>
 .custom-shadow {
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 6px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 4px 6px;
 }
 </style>

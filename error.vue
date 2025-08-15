@@ -8,12 +8,10 @@
     </div>
   </template>
   
-  <script setup lang="ts">
+  <script setup lang='ts'>
   import { useI18n } from 'vue-i18n'
-  import { useStore } from '~/stores/store'
   import AngryAnimation from '~/components/animations/AngryAnimation.vue'
 
-  const store = useStore()
   const { locale } = useI18n()
 
   await navigateTo('/')

@@ -88,11 +88,7 @@
       <span>{{ t("stats.average") }} Triggerscore</span>
       <div
         class="h-12 w-12 text-white rounded-lg font-semibold text-lg"
-        :class="{
-          'bg-red-700': averageTotal >= 7,
-          'bg-yellow-500': averageTotal < 7 && averageTotal >= 4,
-          'bg-green-600': averageTotal < 4,
-        }"
+        :class="getScoreBackground(averageTotal)"
       >
         <div class="relative w-full h-full">
           <span
@@ -108,11 +104,7 @@
       <span>{{ t("stats.average") }} {{ t("categories.sexism") }}</span>
       <div
         class="h-12 w-12 text-white rounded-lg font-semibold text-lg"
-        :class="{
-          'bg-red-700': averageSexism >= 7,
-          'bg-yellow-500': averageSexism < 7 && averageSexism >= 4,
-          'bg-green-600': averageSexism < 4,
-        }"
+        :class="getScoreBackground(averageSexism)"
       >
         <div class="relative w-full h-full">
           <span
@@ -128,11 +120,7 @@
       <span>{{ t("stats.average") }} {{ t("categories.racism") }}</span>
       <div
         class="h-12 w-12 text-white rounded-lg font-semibold text-lg"
-        :class="{
-          'bg-red-700': averageRacism >= 7,
-          'bg-yellow-500': averageRacism < 7 && averageRacism >= 4,
-          'bg-green-600': averageRacism < 4,
-        }"
+        :class="getScoreBackground(averageRacism)"
       >
         <div class="relative w-full h-full">
           <span
@@ -148,11 +136,7 @@
       <span>{{ t("stats.average") }} {{ t("categories.others") }}</span>
       <div
         class="h-12 w-12 text-white rounded-lg font-semibold text-lg"
-        :class="{
-          'bg-red-700': averageOthers >= 7,
-          'bg-yellow-500': averageOthers < 7 && averageOthers >= 4,
-          'bg-green-600': averageOthers < 4,
-        }"
+        :class="getScoreBackground(averageOthers)"
       >
         <div class="relative w-full h-full">
           <span
@@ -168,11 +152,7 @@
       <span>{{ t("stats.average") }} {{ t("categories.cringe") }}</span>
       <div
         class="h-12 w-12 text-white rounded-lg font-semibold text-lg"
-        :class="{
-          'bg-red-700': averageCringe >= 7,
-          'bg-yellow-500': averageCringe < 7 && averageCringe >= 4,
-          'bg-green-600': averageCringe < 4,
-        }"
+        :class="getScoreBackground(averageCringe)"
       >
         <div class="relative w-full h-full">
           <span
@@ -189,6 +169,7 @@
 import { useStore } from '~/stores/store'
 import { useI18n } from 'vue-i18n'
 import statsPlaceholder from '~/assets/stats.json'
+import { getScoreBackground } from '~/utils/getScoreBackground'
 
 const { t } = useI18n()
 

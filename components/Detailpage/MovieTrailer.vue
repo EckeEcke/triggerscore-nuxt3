@@ -1,7 +1,6 @@
 <template>
   <div v-if="trailerURL" class="iframe-container mt-4 mb-8 detailpage-box-shadow">
-    <iframe 
-        frameborder="0"
+    <iframe
         :src="trailerURL"
         allow="fullscreen"
     >
@@ -20,6 +19,10 @@ const trailerURL = computed(() => trailer.value?.site === 'YouTube' ? `https://w
 </script>
 
 <style>
+iframe {
+  border: 0;
+}
+
 .iframe-container { 
   position: relative; 
   width: 100%; 

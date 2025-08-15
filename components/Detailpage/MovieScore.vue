@@ -5,12 +5,7 @@
 >
     <div
     class="mx-auto bg-opacity-90 w-12 sm:w-20 md:w-24 lg:w-20 h-12 sm:h-20 md:h-24 lg:h-20 border border-gray-900 p-2 text-3xl rounded-lg flex justify-center my-3"
-    :class="{
-        'bg-red-700': score.rating_total >= 7,
-        'bg-yellow-500':
-        score.rating_total < 7 && score.rating_total >= 4,
-        'bg-green-600': score.rating_total < 4,
-    }"
+    :class="getScoreBackground(score.rating_total)"
     >
     <p
         class="self-center text-white text-lg md:text-xl font-semibold"
@@ -24,12 +19,7 @@
     <div class="flex my-2 md:text-lg lg:text-base">
         <div
         class="flex rounded sm:rounded-lg justify-center w-8 h-8 sm:w-12 sm:h-12 lg:w-10 lg:h-10 mr-2"
-        :class="{
-            'bg-red-700': score.rating_sexism >= 7,
-            'bg-yellow-500':
-            score.rating_sexism < 7 && score.rating_sexism >= 4,
-            'bg-green-600': score.rating_sexism < 4,
-        }"
+        :class="getScoreBackground(score.rating_sexism)"
         >
         <div class="self-center">{{ score.rating_sexism }}</div>
         </div>
@@ -38,12 +28,7 @@
     <div class="flex my-2 md:text-lg lg:text-base">
         <div
         class="flex rounded sm:rounded-lg justify-center w-8 h-8 sm:w-12 sm:h-12 lg:w-10 lg:h-10 mr-2"
-        :class="{
-            'bg-red-700': score.rating_racism >= 7,
-            'bg-yellow-500':
-            score.rating_racism < 7 && score.rating_racism >= 4,
-            'bg-green-600': score.rating_racism < 4,
-        }"
+        :class="getScoreBackground(score.rating_racism)"
         >
         <div class="self-center">{{ score.rating_racism }}</div>
         </div>
@@ -52,12 +37,7 @@
     <div class="flex my-2 md:text-lg lg:text-base">
         <div
         class="flex rounded sm:rounded-lg justify-center w-8 h-8 sm:w-12 sm:h-12 lg:w-10 lg:h-10 mr-2"
-        :class="{
-            'bg-red-700': score.rating_others >= 7,
-            'bg-yellow-500':
-            score.rating_others < 7 && score.rating_others >= 4,
-            'bg-green-600': score.rating_others < 4,
-        }"
+        :class="getScoreBackground(score.rating_others)"
         >
         <div class="self-center">{{ score.rating_others }}</div>
         </div>
@@ -66,12 +46,7 @@
     <div class="flex my-2 md:text-lg lg:text-base">
         <div
         class="flex rounded sm:rounded-lg justify-center w-8 h-8 sm:w-12 sm:h-12 lg:w-10 lg:h-10 mr-2"
-        :class="{
-            'bg-red-700': score.rating_cringe >= 7,
-            'bg-yellow-500':
-            score.rating_cringe < 7 && score.rating_cringe >= 4,
-            'bg-green-600': score.rating_cringe < 4,
-        }"
+        :class="getScoreBackground(score.rating_cringe)"
         >
         <div class="self-center">{{ score.rating_cringe }}</div>
         </div>
@@ -95,8 +70,9 @@
 </div>
 </template>
 
-<script setup lang="ts">
-import { useStore } from "~/stores/store"
+<script setup lang='ts'>
+import { useStore } from '~/stores/store'
+import { getScoreBackground } from '~/utils/getScoreBackground'
 
 const { t } = useI18n()
 const store = useStore()
