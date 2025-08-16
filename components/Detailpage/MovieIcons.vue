@@ -77,10 +77,10 @@
   </div>
 </template>
 
-<script lang="ts" setup>
-import { useStore } from "~/stores/store"
+<script lang='ts' setup>
+import { useStore } from '~/stores/store'
 
-const { t, locale } = useI18n()
+const { locale } = useI18n()
 const route = useRoute()
 const store = useStore()
 const movie: any = computed(() => store.selectedMovie)
@@ -99,8 +99,8 @@ const onDisney = ref(false)
 const onSky = ref(false)
 
 const regionProvider = computed(() => {
-  if (locale.value === "en") {
-    return "GB"
+  if (locale.value === 'en') {
+    return 'GB'
   }
   return locale.value.toUpperCase()
 })
@@ -114,20 +114,20 @@ const loadProviders = async () => {
     const regionProviders =
       providers.results[regionProvider.value]?.flatrate || []
     onNetflix.value = regionProviders.some(
-      (provider: any) => provider.provider_name === "Netflix"
+      (provider: any) => provider.provider_name === 'Netflix'
     )
     onPrime.value = regionProviders.some(
-      (provider: any) => provider.provider_name === "Amazon Prime Video"
+      (provider: any) => provider.provider_name === 'Amazon Prime Video'
     )
     onDisney.value = regionProviders.some(
-      (provider: any) => provider.provider_name === "Disney Plus"
+      (provider: any) => provider.provider_name === 'Disney Plus'
     )
     onSky.value = regionProviders.some(
-      (provider: any) => provider.provider_name === "WOW"
+      (provider: any) => provider.provider_name === 'WOW'
     )
   } catch (error) {
     console.log(
-      "Oops, an error occurred while loading the providers:",
+      'Oops, an error occurred while loading the providers:',
       error
     )
   }

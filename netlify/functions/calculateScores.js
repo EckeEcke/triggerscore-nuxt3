@@ -15,8 +15,6 @@ export const calculateTotal = (score) => {
 export const calculateScores = (data) => {
     let scores = []
     let comments = 0
-    let likes = 0
-    let dislikes = 0
     
     data.forEach(entry => {
         if (entry.comment != null && entry.comment.length > 3) {

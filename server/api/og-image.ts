@@ -20,6 +20,7 @@ export default defineEventHandler(async (event) => {
       }
     })
   } catch (error) {
+    console.error(error)
     return sendRedirect(event, url)
   }
 })
