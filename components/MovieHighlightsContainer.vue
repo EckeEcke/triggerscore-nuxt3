@@ -84,12 +84,30 @@ import type { Movie } from '~/types/movie'
 const store = useStore()
 
 defineProps({
-  movies: Array as PropType<Movie[]>,
-  shownScore: String as PropType<ScoreKey>,
-  title: String,
-  subTitle: String,
-  showBorder: Boolean,
-  moreSpacing: Boolean,
+  movies: {
+    type: Array as PropType<Movie[]>,
+    required: true,
+  },
+  shownScore: {
+    type: String as PropType<ScoreKey>,
+    default: 'rating_total',
+  },
+  title: {
+    type: String,
+    default: undefined,
+  },
+  subTitle: {
+    type: String,
+    default: undefined,
+  },
+  showBorder: {
+    type: Boolean,
+    default: false,
+  },
+  moreSpacing: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const scrolled = ref(false)

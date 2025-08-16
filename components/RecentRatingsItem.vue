@@ -108,7 +108,7 @@ v-else class="text-base font-semibold h-6 cursor-pointer"
 </template>
 
 <script setup lang='ts'>
-import { useStore } from '~/stores/store'
+import { type TriggerScore, useStore } from '~/stores/store'
 import placeholderRatings from '~/assets/recentRatings.json'
 import { useI18n } from 'vue-i18n'
 import NewAnimation from '~/components/animations/NewAnimation.vue'
@@ -122,7 +122,10 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-  scores: Object,
+  scores: {
+    type: Object as PropType<TriggerScore>,
+    required: true,
+  },
   id: {
     type: Number,
     required: true,

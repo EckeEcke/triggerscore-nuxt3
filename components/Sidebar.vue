@@ -219,8 +219,7 @@ import { useI18n } from 'vue-i18n'
 const store = useStore()
 const { t } = useI18n()
 
-const emit = defineEmits(['close'])
-
+defineEmits(['close'])
 
 const sortingOption = computed(() => store.sortingOption)
 const filterMin = computed(() => store.filterMoviesByYearMin)
