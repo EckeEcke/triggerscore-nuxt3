@@ -6,7 +6,7 @@ library.add(fas)
 
 config.autoAddCss = false
 
-// @ts-ignore
+// eslint-disable-next-line no-undef
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.component('font-awesome-icon', FontAwesomeIcon, {})
 })

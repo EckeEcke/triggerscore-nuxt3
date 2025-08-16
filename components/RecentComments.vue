@@ -28,16 +28,16 @@
                     }}
                 </div>
                 </div>
-                <NuxtLink
-                :to="pathToNavigate(comment.movie_id.toString())"
-                tag="h4"
-                class="font-semibold cursor-pointer text-sm">
-                {{
-                    store.movies.filter(
-                    (movie) => movie.id === comment.movie_id
-                    )[0].title
-                }}
-                </NuxtLink>
+                <h4
+                    class="font-semibold cursor-pointer text-sm"
+                    @click="navigateTo(localePath(`/movie/${comment.movie_id}`))"
+                >
+                  {{
+                      store.movies.filter(
+                      (movie) => movie.id === comment.movie_id
+                      )[0].title
+                  }}
+                </h4>
             </div>
             <hr class="mb-4 w-36 border-yellow-500" >
             <div class="flex justify-between gap-2">
@@ -93,7 +93,6 @@ const commentTotalRating = (commentId: number, limitTop: number, limitBottom: nu
       wantedMovie.rating_total >= limitBottom
 }
 const localePath = useLocalePath()
-const pathToNavigate = (id: string) => localePath(`/movie/${id}`)
 const toggleBool = ref(false)
 let intervalId: ReturnType<typeof setInterval> | undefined = undefined
 

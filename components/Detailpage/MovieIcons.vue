@@ -112,9 +112,8 @@ const loadProviders = async () => {
     const { data } = await useFetch(
     `/api/providers/${route.params.id}`
     )
-    const providers = data.value as ProviderResponse
-    const regionProviders =
-      providers.results[regionProvider.value]?.flatrate || []
+    const providers = data.value as unknown as ProviderResponse
+    const regionProviders = providers.results[regionProvider.value]?.flatrate || []
     onNetflix.value = regionProviders.some(
       (provider: Provider) => provider.provider_name === 'Netflix'
     )

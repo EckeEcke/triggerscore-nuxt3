@@ -428,7 +428,7 @@ export const useStore = defineStore({
       triggerscores: TriggerScore[],
       shownScore: ScoreKey
   ) {
-          let clonedArray = [...array]
+          const clonedArray = [...array]
 
           switch (sortingOption) {
               case 'a-z':
