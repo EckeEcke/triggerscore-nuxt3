@@ -50,23 +50,23 @@
                 <h2
                   class="text-xl font-semibold md:text-2xl self-center mb-1 sm:mb-2"
                 >
-                  {{ movie.title ?? movie.original_title }}
+                  {{ movie?.title ?? movie?.original_title }}
                 </h2>
               </div>
               <div class="mb-4 text-xs md:text-md text-gray-400">
                 {{ releaseDate }}
                 <span class="mx-2">|</span>
-                <span>{{ movie.runtime }} {{ t("general.minutes") }}</span>
+                <span>{{ movie?.runtime }} {{ t("general.minutes") }}</span>
                 <template v-if="totalRatings.length">
                   <span v-if="totalRatings[0]" class="mx-2">|</span>
                   <span v-if="totalRatings[0]">{{ totalRatings[0].ratings }}
                     {{ t("general.ratings") }}
                   </span>
                 </template>
-                <span v-if="movie.vote_average" class="mx-2">|</span>
-                <span v-if="movie.vote_average">
+                <span v-if="movie?.vote_average" class="mx-2">|</span>
+                <span v-if="movie?.vote_average">
                   <wbr >{{ t("rating.tmdb-rating") }}:
-                  {{ movie.vote_average.toFixed(2) }}
+                  {{ movie?.vote_average.toFixed(2) }}
                 </span>
                 <span v-if="score" class="mx-2 mb-2">|</span>
                 <div v-if="score" class="inline-block mt-2 sm:mt-0">
@@ -83,7 +83,7 @@
                 </div>
               </div>
 
-              <i v-if="movie.tagline && movie.tagline.length > 1" class="text-sm md: text-md">"
+              <i v-if="movie?.tagline && movie?.tagline.length > 1" class="text-sm md: text-md">"
                 {{ movie.tagline }}"
               </i>
               <p class="my-4 flex flex-wrap gap-1">
@@ -95,7 +95,7 @@
                 >
               </p>
               <article class="my-4 text-sm md:text-md">
-                {{ movie.overview }}
+                {{ movie?.overview }}
               </article>
               <MovieIcons />
               <client-only>
@@ -118,12 +118,12 @@
       <hr class="border-gray-800" >
       <div class="sm:px-4 radial-background sm:rounded-b">
         <MovieHighlightsContainer
-          v-if="similarMovies.body"
+          v-if="similarMovies?.body"
           class="xl:w-full bg-transparent"
           :movies="similarMovies.body.slice(0,10)"
           shown-score="rating_total"
           :title="t('similar.headline')"
-          :sub-title="t('similar.copy', [movie.title ?? movie.original_title])"
+          :sub-title="t('similar.copy', [movie?.title ?? movie?.original_title])"
           more-spacing
         />
       </div>
@@ -133,10 +133,10 @@
 
 <script setup lang='ts'>
 import { useI18n } from 'vue-i18n'
-import { useStore } from '~/stores/store'
+import {type TriggerScore, useStore} from '~/stores/store'
 import { ref, computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import { emptyMovie } from '~/types/movie'
+import {emptyMovie, type Movie} from '~/types/movie'
 import RateMovie from './RateMovie.vue'
 import MovieComments from './MovieComments.vue'
 import MovieIcons from './MovieIcons.vue'
@@ -148,19 +148,19 @@ const store = useStore()
 const route = useRoute()
 const { t, locale } = useI18n()
 
-const movie: any = computed(() => store.selectedMovie)
+const movie: ComputedRef<Movie | undefined> = computed(() => store.selectedMovie)
 // const backdrop = `url(https://image.tmdb.org/t/p/original/${movie.value.backdrop_path})`
-const releaseDate = parseInt(movie.value.release_date.substring(0, 4))
-const score: any = computed(() => store.selectedMovieScore)
+const releaseDate = parseInt(movie.value!.release_date.substring(0, 4))
+const score: ComputedRef<TriggerScore | undefined> = computed(() => store.selectedMovieScore)
 
-const similarMovies: any = ref({}) 
+const similarMovies: Ref<{ body: Movie[] } | undefined> = ref(undefined)
 
 const title = computed(() =>
-  movie.value !== emptyMovie ? movie.value.title : 'Movie on Triggerscore'
+  movie.value !== emptyMovie ? movie.value?.title : 'Movie on Triggerscore'
 )
-const poster = `https://www.triggerscore.de/api/poster?poster_path=${movie.value.poster_path}`
-const ogImage = `https://www.triggerscore.de/api/og-image?poster_path=${movie.value.poster_path}`
-const genres = computed(() => movie.value.genres.map((genre: any) => genre.name))
+const poster = `https://www.triggerscore.de/api/poster?poster_path=${movie.value?.poster_path}`
+const ogImage = `https://www.triggerscore.de/api/og-image?poster_path=${movie.value?.poster_path}`
+const genres = computed(() => movie.value?.genres.map((genre: { name: string }) => genre.name))
 
 const backgroundImageStyle = computed(() => {
     return {
@@ -173,15 +173,15 @@ const backgroundImageStyle = computed(() => {
 const totalRatings = computed(() => {
   return store.triggerscores.length > 0
     ? store.triggerscores.filter(
-        (movieFromStore) => movieFromStore.movie_id === movie.value.id
+        (movieFromStore) => movieFromStore.movie_id === movie.value?.id
       )
     : []
 })
 
-const comments = computed(() =>
+const comments: ComputedRef<string[] | undefined> = computed(() =>
   score.value
     ? score.value.comments.filter((comment: string) => comment.length > 3)
-    : null
+    : undefined
 )
 
 const fetchSimilarMovies = async () => { 
@@ -200,7 +200,7 @@ watch(locale, () => {
       const { data } = await useFetch(
       `/api/movie/${route.params.id}`
       )
-      store.selectedMovie = data.value as any
+      store.selectedMovie = data.value as Movie
     } catch (error) {
       console.log('Oops, an error occurred while loading the movie: ', error)
     }

@@ -8,6 +8,7 @@ import { ref } from 'vue'
 import { useStore } from '~/stores/store'
 import { useRoute } from 'vue-router'
 import LoadingAnimation from '~/components/animations/LoadingAnimation.vue'
+import type { Movie } from '~/types/movie'
 
 const route = useRoute()
 const id = route.params.id
@@ -28,7 +29,7 @@ const loadMovie = async () => {
     const { data } = await useFetch(
       `/api/movie/${id}?locale=${locale.value}`
     )
-    store.selectedMovie = data.value as any
+    store.selectedMovie = data.value as Movie
   } catch (error) {
     await Promise.reject()
     console.log('Oops, an error occurred while loading the movie: ', error)
@@ -42,6 +43,8 @@ const loadTriggerscore = async () => {
   if (existingScore) {
     store.selectedMovieScore = existingScore
     return Promise.resolve()
+  } else {
+    store.selectedMovieScore = undefined
   }
   try {
     const response = await fetch(

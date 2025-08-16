@@ -82,7 +82,7 @@
 import { useStore } from '~/stores/store'
 
 const store = useStore()
-const container: Ref<any> = ref(null)
+const container: Ref<HTMLElement | null> = ref(null)
 const touchstartX = ref(0)
 const touchstartY = ref(0)
 const commentTotalRating = (commentId: number, limitTop: number, limitBottom: number) => {
@@ -95,7 +95,7 @@ const commentTotalRating = (commentId: number, limitTop: number, limitBottom: nu
 const localePath = useLocalePath()
 const pathToNavigate = (id: string) => localePath(`/movie/${id}`)
 const toggleBool = ref(false)
-let intervalId: any = undefined
+let intervalId: ReturnType<typeof setInterval> | undefined = undefined
 
 const handleToggle = (value: boolean) => {
   toggleBool.value = value
@@ -105,12 +105,12 @@ const handleToggle = (value: boolean) => {
   }, 10000)
 }
 
-const handleTouchStart = (event: any) => {
+const handleTouchStart = (event: TouchEvent) => {
       touchstartX.value = event.changedTouches[0].screenX
       touchstartY.value = event.changedTouches[0].screenY
 }
 
-const handleTouchEnd = (event: any) => {
+const handleTouchEnd = (event: TouchEvent) => {
     const touchendX = event.changedTouches[0].screenX
     const touchendY = event.changedTouches[0].screenY
     if (!(touchendY <= touchstartY.value + 40 && touchendY >= touchstartY.value - 40)) return

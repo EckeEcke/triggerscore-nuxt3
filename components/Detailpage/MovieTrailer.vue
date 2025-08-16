@@ -6,11 +6,12 @@
 
 <script setup lang='ts'>
 import { useStore } from '~/stores/store'
+import type {Movie} from "~/types/movie";
 
 const store = useStore()
 
-const movie: any = computed(() => store.selectedMovie)
-const trailer = computed(() => movie.value.videos?.results?.[0])
+const movie: ComputedRef<Movie | undefined> = computed(() => store.selectedMovie)
+const trailer = computed(() => movie.value?.videos?.results?.[0])
 const trailerURL = computed(() => trailer.value?.site === 'YouTube' ? `https://www.youtube-nocookie.com/embed/${trailer.value.key}` : undefined)
 </script>
 

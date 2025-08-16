@@ -49,7 +49,7 @@
 import { useStore } from '~/stores/store'
 import { useI18n } from 'vue-i18n'
 
-const { locale, t } = useI18n()
+const { t } = useI18n()
 const store = useStore()
 
 const min = ref(0)
@@ -70,7 +70,7 @@ const mintrigger = () => {
   }
   minthumb.value =
     (minScore.value - min.value) / (max.value - min.value) * 100
-  store.filterMovies(locale.value)
+  store.filterMovies()
 }
 
 const maxtrigger = () => {
@@ -82,7 +82,7 @@ const maxtrigger = () => {
   }
   maxthumb.value =
     100 - ((maxScore.value - min.value) / (max.value - min.value)) * 100
-  store.filterMovies(locale.value)
+  store.filterMovies()
 }
 
 onMounted(() => {
@@ -93,7 +93,7 @@ onMounted(() => {
     (currentValue) => {
       if (currentValue == 0) {
         mintrigger()
-        store.filterMovies(locale.value)
+        store.filterMovies()
       }
     }
   )
@@ -103,7 +103,7 @@ onMounted(() => {
     (currentValue) => {
       if (currentValue == 10) {
         maxtrigger()
-        store.filterMovies(locale.value)
+        store.filterMovies()
       }
     }
   )

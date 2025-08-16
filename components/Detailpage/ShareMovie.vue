@@ -84,7 +84,7 @@ const { t, locale } = useI18n()
 defineProps({
   movie: {
     type: Object,
-    default: {}
+    default: undefined
   },
 })
 

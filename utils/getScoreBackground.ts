@@ -1,4 +1,4 @@
-export const getScoreBackground = (score: any) => {
+export const getScoreBackground = (score: number | undefined) => {
     if (!score && score !== 0) return 'bg-gray-200'
     if (score >= 7) return 'bg-red-700'
     if (score < 7 && score >= 4) return 'bg-yellow-500'

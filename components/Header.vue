@@ -157,63 +157,63 @@
       </transition-group>
     </Teleport>
 
-    <div v-if="showSearch" class="absolute top-0 left-0">
-      <div
-        class="relative h-screen w-screen bg-gray-900 bg-opacity-90 overflow-none backdrop-blur"
-      >
+    <transition
+        enter-active-class="duration-300 ease-out"
+        enter-from-class="opacity-0"
+        enter-to-class="opacity-100"
+        leave-active-class="duration-500 ease-in"
+        leave-from-class="opacity-100"
+        leave-to-class="opacity-0"
+    >
+      <div v-if="showSearch" class="absolute top-0 left-0">
         <div
-          class="absolute top-0 left-0 w-full h-full"
-          @click="showSearch = false"
-        />
-        <transition
-          enter-active-class="duration-300 ease-out"
-          enter-from-class="opacity-0"
-          enter-to-class="opacity-100"
-          leave-active-class="duration-500 ease-in"
-          leave-from-class="opacity-100"
-          leave-to-class="opacity-0"
+          class="relative h-screen w-screen bg-gray-900 bg-opacity-90 overflow-none backdrop-blur"
         >
           <div
-            class="container flex flex-col md:flex-row mx-auto md:px-4 xl:w-10/12 absolute top-1/3 left-1/2 transform -translate-x-1/2 h-32"
-          >
+            class="absolute top-0 left-0 w-full h-full"
+            @click="showSearch = false"
+          />
             <div
-              class="flex mx-auto mt-6 p-4 sm:px-0 h-24 self-center w-full"
-              style="max-width: 40rem"
+              class="container flex flex-col md:flex-row mx-auto md:px-4 xl:w-10/12 absolute top-1/3 left-1/2 transform -translate-x-1/2 h-32"
             >
-              <div class="rounded-lg flex w-full justify-start">
-                <button
-                  class="flex items-center justify-center px-3 w-16 rounded-l-xl bg-yellow-500 text-white"
-                  @click="searchMovie"
-                >
-                  <font-awesome-icon
-                    :icon="['fas', 'search']"
-                    class="text-lg"
-                  />
-                </button>
-                <input
-                  ref="searchHeader"
-                  v-model="searchInput"
-                  type="text"
-                  class="lg:text-xl px-4 w-full outline-none transition"
-                  :placeholder="t('header.searchPlaceholder')"
-                  @keyup.enter="searchMovie"
-                  @input="resetSearchResults"
-                >
-                <div
-                  class="bg-white rounded-r-xl h-full w-8 flex justify-center"
-                >
-                  <font-awesome-icon
-                    :icon="['fas', 'times']"
-                    class="self-center"
-                    @click="showSearch = false"
-                  />
+              <div
+                class="flex mx-auto mt-6 p-4 sm:px-0 h-24 self-center w-full"
+                style="max-width: 40rem"
+              >
+                <div class="rounded-lg flex w-full justify-start">
+                  <button
+                    class="flex items-center justify-center px-3 w-16 rounded-l-xl bg-yellow-500 text-white"
+                    @click="searchMovie"
+                  >
+                    <font-awesome-icon
+                      :icon="['fas', 'search']"
+                      class="text-lg"
+                    />
+                  </button>
+                  <input
+                    ref="searchHeader"
+                    v-model="searchInput"
+                    type="text"
+                    class="lg:text-xl px-4 w-full outline-none transition"
+                    :placeholder="t('header.searchPlaceholder')"
+                    @keyup.enter="searchMovie"
+                    @input="resetSearchResults"
+                  >
+                  <div
+                    class="bg-white rounded-r-xl h-full w-8 flex justify-center"
+                  >
+                    <font-awesome-icon
+                      :icon="['fas', 'times']"
+                      class="self-center"
+                      @click="showSearch = false"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </transition>
+        </div>
       </div>
-    </div>
+    </transition>
   </header>
 </template>
 

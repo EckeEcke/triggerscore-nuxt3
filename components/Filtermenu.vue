@@ -223,7 +223,7 @@ import { useStore } from '~/stores/store'
 import { useI18n } from 'vue-i18n'
 
 const store = useStore()
-const { t, locale } = useI18n()
+const { t } = useI18n()
 const netflixFilter = ref(store.filterMoviesByNetflix)
 const primeFilter = computed(() => store.filterMoviesByPrime)
 const disneyFilter = computed(() => store.filterMoviesByDisney)
@@ -231,8 +231,8 @@ const skyFilter = computed(() => store.filterMoviesBySky)
 const results = computed(() => store.filteredMovies.length)
 
 const resetFilter = () => {
-  store.resetFilter();
-  store.filterMovies(locale.value)
+  store.resetFilter()
+  store.filterMovies()
 }
 
 const focusSearch = () => {
@@ -249,56 +249,56 @@ const scrollToTop = () => {
 watch(
   () => store.filterMoviesByNetflix,
   () => {
-    store.filterMovies(locale.value)
+    store.filterMovies()
   }
 )
 
 watch(
   () => store.filterMoviesByPrime,
   () => {
-    store.filterMovies(locale.value)
+    store.filterMovies()
   }
 )
 
 watch(
   () => store.filterMoviesByDisney,
   () => {
-    store.filterMovies(locale.value)
+    store.filterMovies()
   }
 )
 
 watch(
   () => store.filterMoviesBySky,
   () => {
-    store.filterMovies(locale.value)
+    store.filterMovies()
   }
 )
 
 watch(
   () => store.sortingOption,
   () => {
-    store.filterMovies(locale.value)
+    store.filterMovies()
   }
 )
 
 watch(
   () => store.filterMoviesByYearMin,
   () => {
-    store.filterMovies(locale.value)
+    store.filterMovies()
   }
 )
 
 watch(
   () => store.filterMoviesByYearMax,
   () => {
-    store.filterMovies(locale.value)
+    store.filterMovies()
   }
 )
 
 watch(
   () => store.shownScore,
   () => {
-    store.filterMovies(locale.value)
+    store.filterMovies()
   }
 )
 

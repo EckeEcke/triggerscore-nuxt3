@@ -71,12 +71,12 @@
 </template>
 
 <script setup lang='ts'>
-import { useStore } from '~/stores/store'
+import { type TriggerScore, useStore } from '~/stores/store'
 import { getScoreBackground } from '~/utils/getScoreBackground'
 
 const { t } = useI18n()
 const store = useStore()
 
-const score: any = computed(() => store.selectedMovieScore)
+const score: ComputedRef<TriggerScore | undefined> = computed(() => store.selectedMovieScore)
 
 </script>

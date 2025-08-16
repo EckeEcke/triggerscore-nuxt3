@@ -45,7 +45,7 @@
           id="rating"
           class="font-semibold text-xl text-white py-6 px-4 lg:rounded-t"
         >
-          {{ t("rating.submitFor") }}<br >"{{ movie.title ?? movie.original_title }}"
+          {{ t("rating.submitFor") }}<br >"{{ movie?.title ?? movie?.original_title }}"
         </h2>
         <hr class="border-gray-800 hidden md:block max-w-lg ml-4" >
         <label class="px-4 my-2 mt-6 block text-lg font-semibold">{{
@@ -259,13 +259,13 @@ const { t } = useI18n()
 const router = useRouter()
 const store = useStore()
 
-const movie: ComputedRef<any> = computed(() => store.selectedMovie)
+const movie = computed(() => store.selectedMovie)
 
 const submitRating = (event: Event) => {
   event.preventDefault()
   submitted.value = true
   const data = {
-    movieID: movie.value.id,
+    movieID: movie.value?.id,
     sexism: ratingSexism.value,
     racism: ratingRacism.value,
     others: ratingOthers.value,
@@ -273,8 +273,8 @@ const submitRating = (event: Event) => {
     comment: comment.value,
     like: liked.value,
     dislike: disliked.value,
-    title: movie.value.title,
-    original_title: movie.value.original_title,
+    title: movie.value?.title,
+    original_title: movie.value?.original_title,
   }
 
   fetch('https://www.triggerscore.de/.netlify/functions/postData', {

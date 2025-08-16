@@ -89,22 +89,23 @@
 <script setup lang='ts'>
 import { useStore } from '~/stores/store'
 import { useI18n } from 'vue-i18n'
+import type { Movie } from '~/types/movie'
 
 const store = useStore()
 
 const { t } = useI18n()
 
-const lowestScoreMovie: ComputedRef<any> = computed(() =>
+const lowestScoreMovie = computed(() =>
   store.triggerscores.length > 0
-    ? store.triggerscores.reduce(function (a: any, b: any) {
+    ? store.triggerscores.reduce(function (a, b) {
         return a.rating_total < b.rating_total ? a : b
       })
     : undefined
 )
 
-const highestScoreMovie: ComputedRef<any> = computed(() =>
+const highestScoreMovie = computed(() =>
   store.triggerscores.length > 0
-    ? store.triggerscores.reduce(function (a: any, b: any) {
+    ? store.triggerscores.reduce(function (a, b) {
         return a.rating_total > b.rating_total ? a : b
       })
     : undefined
@@ -112,7 +113,7 @@ const highestScoreMovie: ComputedRef<any> = computed(() =>
 
 const mostRatedMovie = computed(() =>
   store.triggerscores.length > 0
-    ? store.triggerscores.reduce(function (a: any, b: any) {
+    ? store.triggerscores.reduce(function (a, b) {
         return a.ratings > b.ratings ? a : b
       })
     : undefined
@@ -120,7 +121,7 @@ const mostRatedMovie = computed(() =>
 
 const mostLikedMovie = computed(() =>
   store.triggerscores.length > 0
-    ? store.triggerscores.reduce(function (a: any, b: any) {
+    ? store.triggerscores.reduce(function (a, b) {
         return a.likes > b.likes ? a : b
       })
     : undefined
@@ -128,7 +129,7 @@ const mostLikedMovie = computed(() =>
 
 const mostDislikedMovie = computed(() =>
   store.triggerscores.length > 0
-    ? store.triggerscores.reduce(function (a: any, b: any) {
+    ? store.triggerscores.reduce(function (a, b) {
         return a.dislikes > b.dislikes ? a : b
       })
     : undefined
@@ -136,7 +137,7 @@ const mostDislikedMovie = computed(() =>
 
 const mostCommentedMovie = computed(() =>
   store.triggerscores.length > 0
-    ? store.triggerscores.reduce(function (a: any, b: any) {
+    ? store.triggerscores.reduce(function (a, b) {
         const filteredArrayA = 
         a.comments ? 
         a.comments.filter((comment: string) => {
@@ -155,7 +156,7 @@ const mostCommentedMovie = computed(() =>
 const movie = computed(() => {
   if (lowestScoreMovie.value) {
     return store.movies.filter(
-      (movie: any) => movie.id == lowestScoreMovie.value!.movie_id
+      (movie: Movie) => movie.id == lowestScoreMovie.value!.movie_id
     )
   } else return []
 })
@@ -163,7 +164,7 @@ const movie = computed(() => {
 const movieHighest = computed(() => {
   if (highestScoreMovie.value) {
     return store.movies.filter(
-      (movie) => movie.id == highestScoreMovie.value.movie_id
+      (movie) => movie.id == highestScoreMovie.value?.movie_id
     )
   } else return []
 })

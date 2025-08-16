@@ -79,18 +79,20 @@
 
 <script lang='ts' setup>
 import { useStore } from '~/stores/store'
+import type { Movie } from '~/types/movie'
+import type { Provider, ProviderData, ProviderResponse } from '~/types/provider'
 
 const { locale } = useI18n()
 const route = useRoute()
 const store = useStore()
-const movie: any = computed(() => store.selectedMovie)
+const movie: ComputedRef<Movie | undefined> = computed(() => store.selectedMovie)
 
 const imdbURL = computed(
-  () => movie.value.imdb_id ? `https://www.imdb.com/title/${movie.value.imdb_id}` : undefined
+  () => movie.value?.imdb_id ? `https://www.imdb.com/title/${movie.value.imdb_id}` : undefined
 )
 
 const tmdbURL = computed(
-  () => movie.value.id ? `https://www.themoviedb.org/movie/${movie.value.id}` : undefined
+  () => movie.value?.id ? `https://www.themoviedb.org/movie/${movie.value?.id}` : undefined
 )
 
 const onNetflix = ref(false)
@@ -110,20 +112,20 @@ const loadProviders = async () => {
     const { data } = await useFetch(
     `/api/providers/${route.params.id}`
     )
-    const providers = data.value as any
+    const providers = data.value as ProviderResponse
     const regionProviders =
       providers.results[regionProvider.value]?.flatrate || []
     onNetflix.value = regionProviders.some(
-      (provider: any) => provider.provider_name === 'Netflix'
+      (provider: Provider) => provider.provider_name === 'Netflix'
     )
     onPrime.value = regionProviders.some(
-      (provider: any) => provider.provider_name === 'Amazon Prime Video'
+      (provider: Provider) => provider.provider_name === 'Amazon Prime Video'
     )
     onDisney.value = regionProviders.some(
-      (provider: any) => provider.provider_name === 'Disney Plus'
+      (provider: Provider) => provider.provider_name === 'Disney Plus'
     )
     onSky.value = regionProviders.some(
-      (provider: any) => provider.provider_name === 'WOW'
+      (provider: Provider) => provider.provider_name === 'WOW'
     )
   } catch (error) {
     console.log(
@@ -133,7 +135,7 @@ const loadProviders = async () => {
   }
 }
 
-const providerData: any = computed(() => store.providerData)
+const providerData: ComputedRef<ProviderData> = computed(() => store.providerData)
 
 const checkProviders = () => {
   const movieId: number = parseInt(route.params.id as string)

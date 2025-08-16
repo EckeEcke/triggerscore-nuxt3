@@ -204,9 +204,9 @@ const correctIndex = ref(-1)
 const selectedAnswer = ref<number | null>(null)
 const displayedKeywords = ref<string[]>([])
 const previousMovies = ref<number[]>([])
-const intervalKeywords = ref<any>(null)
-const intervalPoints = ref<any>(null)
-const intervalPosterBlur = ref<any>(null)
+const intervalKeywords = ref<ReturnType<typeof setInterval> | undefined>(undefined)
+const intervalPoints = ref<ReturnType<typeof setInterval> | undefined>(undefined)
+const intervalPosterBlur = ref<ReturnType<typeof setInterval> | undefined>(undefined)
 const playMode = ref('keywords')
 const isFullscreen = computed(() => store.isFullscreen)
 
@@ -219,7 +219,8 @@ const currentPoints = ref(1000)
 
 const moviesForQuiz = computed(() => {
   const availableMovies = movies.value.filter(movie => 
-    !previousMovies.value.includes(movie.id) && 
+    !previousMovies.value.includes(movie.id) &&
+    movie.keywords &&
     movie.keywords.keywords.length >= 4 &&
     movie.vote_count > 500 &&
     movie.poster_path !== null
@@ -229,7 +230,6 @@ const moviesForQuiz = computed(() => {
   while (selectedMovies.length < 4 && availableMovies.length > 0) {
     const randomIndex = Math.floor(Math.random() * availableMovies.length)
     selectedMovies.push(availableMovies.splice(randomIndex, 1)[0])
-    console.log(selectedMovies)
   }
   return selectedMovies
 })
@@ -248,7 +248,7 @@ const updatePosterBlur = () => {
     posterStyle.value = `filter:blur(${posterBlurLevels[posterBlurIndex.value]}rem)`
   } else {
     clearInterval(intervalPosterBlur.value)
-    intervalPosterBlur.value = null
+    intervalPosterBlur.value = undefined
   }
 }
 
@@ -257,18 +257,18 @@ const resetPosterBlur = () => {
   posterStyle.value = `filter:blur(${posterBlurLevels[posterBlurIndex.value]}rem)`
 }
 const movieTitlesForQuiz = computed(() => moviesForQuiz.value.map(movie => movie.title || movie.original_title))
-const keywordsForMovies = computed(() => moviesForQuiz.value.map(movie => movie.keywords.keywords.map((keyword: any) => keyword.name)))
+const keywordsForMovies = computed(() => moviesForQuiz.value.map(movie => movie.keywords?.keywords.map((keyword) => keyword.name)))
 
 const checkForRightAnswer = (indexOfAnswerGiven: number) => {
   if (selectedAnswer.value !== null) return
   clearInterval(intervalPosterBlur.value)
-  intervalPosterBlur.value = null
+  intervalPosterBlur.value = undefined
   posterBlurIndex.value = posterBlurLevels.length - 1
   posterStyle.value = `filter:blur(${posterBlurLevels[posterBlurIndex.value]}rem)`
   clearInterval(intervalKeywords.value)
-  intervalKeywords.value = null
+  intervalKeywords.value = undefined
   clearInterval(intervalPoints.value)
-  intervalPoints.value = null
+  intervalPoints.value = undefined
   selectedAnswer.value = indexOfAnswerGiven
   if (indexOfAnswerGiven === correctIndex.value) {
     correctGuesses.value++
@@ -375,8 +375,8 @@ const playAgain = () => {
     selectedAnswer.value = null
     displayedKeywords.value = []
     previousMovies.value = []
-    intervalKeywords.value = null
-    intervalPoints.value = null
+    intervalKeywords.value = undefined
+    intervalPoints.value = undefined
     correctGuesses.value = 0
     round.value = 1
     score.value = 0

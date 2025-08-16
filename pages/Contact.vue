@@ -158,8 +158,8 @@ if (route.query.comment) {
 
 const submitted = ref(false)
 
-const handleSubmit = async (e: any) => {
-  const form = e.target
+const handleSubmit = async (e: Event) => {
+  const form = e.target as HTMLFormElement
   const formData = new FormData(form)
   await useFetch('/', {
     method: 'POST',
@@ -169,6 +169,6 @@ const handleSubmit = async (e: any) => {
     body: formData.toString()
   })
     .then(() => (submitted.value = true))
-    .catch((error: any) => console.log(error))
+    .catch((error) => console.log(error))
 }
 </script>

@@ -108,9 +108,11 @@ const displayedScore = computed(() => {
 })
 
 const score = computed(() => {
-  if (store.shownScore && scoreAvailable.value) {
+  if (!scoreAvailable.value) return undefined
+  if (store.shownScore) {
     return props.scores[store.shownScore]
-  } else return props.scores['rating_total']
+  }
+  return props.scores['rating_total']
 })
 
 const scoreBackground = computed(() => getScoreBackground(score.value))

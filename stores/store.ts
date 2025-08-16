@@ -1,7 +1,92 @@
 import { defineStore } from 'pinia'
+import type { Movie } from '~/types/movie'
 import placeholderTriggerscores from '~/assets/triggerscores.json'
 import placeholderBondMovies from '~/assets/bondMovies.json'
-import type { Movie } from '~/types/movie'
+
+export type ScoreKey = 'rating_total' | 'rating_sexism' | 'rating_racism' | 'rating_others' | 'rating_cringe'
+
+
+export interface TriggerScore {
+    id: number,
+    movie_id: number,
+    rating_sexism: number,
+    rating_racism: number,
+    rating_others: number,
+    rating_cringe: number,
+    comment?: string,
+    liked?: number,
+    disliked?: number,
+    rating_total: number,
+    ratings: number,
+    comments: string[],
+    likes: number,
+    dislikes: number
+}
+
+interface ProviderData {
+    netflix: number[]
+    prime: number[]
+    disney: number[]
+    sky: number[]
+}
+
+interface Stats {
+    totalMovies?: number
+    totalRatings?: number
+    averageScore?: number
+}
+
+interface RecentRating {
+    movie_id: number
+    rating: number
+    created_at: string
+}
+
+interface RecentComment {
+    id: number
+    movie_id: number
+    comment: object
+    created_at: string
+}
+
+interface StoreState {
+    triggerscores: TriggerScore[]
+    movies: Movie[]
+    selectedMovie: Movie | undefined
+    loadingSelectedMovie: boolean
+    providerData: ProviderData
+    selectedMovieScore: TriggerScore | undefined
+    recentRatings: Movie[]
+    recentComments: RecentComment[]
+    recentScores: RecentRating[]
+    filteredMovies: Movie[]
+    searchInput: string
+    searchTerm: string
+    searchResults: Movie[]
+    searchError: boolean
+    bondMovies: Movie[]
+    bondMovieIDs: number[]
+    filterMoviesByYearMin: number
+    filterMoviesByYearMax: number
+    filterMoviesByNetflix: boolean
+    filterMoviesByPrime: boolean
+    filterMoviesByDisney: boolean
+    filterMoviesBySky: boolean
+    sortingOption: string
+    highlightsLoading: boolean
+    moviesLoading: boolean
+    shownScore: ScoreKey
+    top10Sexism: Movie[]
+    top10Racism: Movie[]
+    top10Others: Movie[]
+    top10Cringe: Movie[]
+    stats: Stats | undefined
+    minScore: number
+    maxScore: number
+    isFiltering: boolean
+    isMaintenanceMode: boolean
+    isFullscreen: boolean
+}
 
 const apiBaseUrl = process.env.NODE_ENV === 'development'
   ? 'http://localhost:8888/.netlify/functions'
@@ -31,14 +116,14 @@ const sortZtoA = (x: Movie, y: Movie) => {
   return 0
 }
 
-const sortByDateDesc = (x: Movie, y: Movie) => Number(new Date(y.release_date as any)) - Number(new Date(x.release_date as any))
+const sortByDateDesc = (x: Movie, y: Movie) => Number(new Date(y.release_date)) - Number(new Date(x.release_date))
 
 const sortByDateAsc =(
   x: { release_date: number },
   y: { release_date: number }
 ) => Number(new Date(x.release_date)) - Number(new Date(y.release_date))
 
-const sortByTsDesc = (array: any[], key: string): any =>
+const sortByTsDesc = (array: TriggerScore[], key: ScoreKey) =>
     (x: { id: number }, y: { id: number }) => {
         const triggerscoreX =
           array[
@@ -56,13 +141,13 @@ const sortByTsDesc = (array: any[], key: string): any =>
         }
 }
 
-const sortByTsAsc = (array: any[], key: any): any =>
-  (x: { id: string }, y: { id: string }): any => {
+const sortByTsAsc = (array: TriggerScore[], key: ScoreKey) =>
+  (x: { id: number }, y: { id: number }) => {
     const triggerscoreX =
-      array[array.map((score: any) => score.movie_id).indexOf(x.id)][key]
+      array[array.map((score) => score.movie_id).indexOf(x.id)][key]
     const triggerscoreY =
       array[
-        array.map((score: { movie_id: string }) => score.movie_id).indexOf(y.id)
+        array.map((score: { movie_id: number }) => score.movie_id).indexOf(y.id)
       ][key]
     if (triggerscoreX < triggerscoreY) {
       return -1
@@ -81,10 +166,10 @@ const adjustLocale = (locale: string) => {
 
 export const useStore = defineStore({
   id: 'store',
-  state: () => {
+  state: (): StoreState => {
     return {
-      triggerscores: placeholderTriggerscores,
-      movies: [] as any[],
+      triggerscores: placeholderTriggerscores as TriggerScore[],
+      movies: [] as Movie[],
       selectedMovie: undefined,
       loadingSelectedMovie: false,
       providerData: {
@@ -93,14 +178,14 @@ export const useStore = defineStore({
         disney: [],
         sky: [],
       },
-      selectedMovieScore: undefined as any,
+      selectedMovieScore: undefined,
       recentRatings: [],
-      recentComments: [] as Array<any>,
+      recentComments: [],
       recentScores: [],
-      filteredMovies: [] as any[],
+      filteredMovies: [],
       searchInput: '',
       searchTerm: '',
-      searchResults: [] as any[],
+      searchResults: [],
       searchError: false,
       bondMovies: placeholderBondMovies,
       bondMovieIDs: [
@@ -121,7 +206,7 @@ export const useStore = defineStore({
       top10Racism: [],
       top10Others: [],
       top10Cringe: [],
-      stats: undefined as any,
+      stats: undefined,
       minScore: 0,
       maxScore: 10,
       isFiltering: false,
@@ -134,23 +219,22 @@ export const useStore = defineStore({
       const response = await fetch(`${apiBaseUrl}/fetchScoresAndTop10sAndStats`)
       const scoresAndTop10s = await response.json()
       this.triggerscores = scoresAndTop10s.scores
-      this.setTop10Cringe(locale, scoresAndTop10s.top10s.cringe.map((movie: any) => movie.movie_id))
-      this.setTop10Others(locale, scoresAndTop10s.top10s.others.map((movie: any) => movie.movie_id))
-      this.setTop10Racism(locale, scoresAndTop10s.top10s.racism.map((movie: any) => movie.movie_id))
-      this.setTop10Sexism(locale, scoresAndTop10s.top10s.sexism.map((movie: any) => movie.movie_id))
+      this.setTop10Cringe(locale, scoresAndTop10s.top10s.cringe.map((score: TriggerScore) => score.movie_id))
+      this.setTop10Others(locale, scoresAndTop10s.top10s.others.map((score: TriggerScore) => score.movie_id))
+      this.setTop10Racism(locale, scoresAndTop10s.top10s.racism.map((score: TriggerScore) => score.movie_id))
+      this.setTop10Sexism(locale, scoresAndTop10s.top10s.sexism.map((score: TriggerScore) => score.movie_id))
       this.setStats(scoresAndTop10s.stats)
       this.setRecentRatings(locale, scoresAndTop10s.recentRatings)
       this.setRecentComments(scoresAndTop10s.recentComments)
       const loadedMovies = await fetch(`${apiBaseUrl}/fetchMovies?locale=${locale}`)
-      const movies = await loadedMovies.json()
-      this.movies = movies
+      this.movies = await loadedMovies.json()
       this.moviesLoading = false
     },
-    async setRecentRatings(locale: string, ratings: any) {
+    async setRecentRatings(locale: string, ratings: RecentRating[]) {
       this.recentScores = ratings
       if (!ratings) return
       const recentRatings = Promise.all(
-        ratings.map((entry: any) =>
+        ratings.map((entry) =>
           fetch(
             `https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${locale}`
           )
@@ -158,12 +242,12 @@ export const useStore = defineStore({
             .catch(() => console.log('oopsy'))
         )
       )
-      recentRatings.then((res: any) => (this.recentRatings = res))
+      recentRatings.then((res: Movie[]) => (this.recentRatings = res))
     },
-    async setRecentComments(comments: Array<object>) {
+    async setRecentComments(comments: Array<RecentComment>) {
       this.recentComments = comments
     },
-    async setTop10Sexism(locale: string, movieIds: Number[]) {
+    async setTop10Sexism(locale: string, movieIds: number[]) {
       if (!movieIds) return
       const loadedTop10 = Promise.all(
         movieIds.map((id) =>
@@ -174,9 +258,9 @@ export const useStore = defineStore({
             .catch(() => console.log('oopsy'))
         )
       )
-      loadedTop10.then((res: any) => (this.top10Sexism = res))
+      loadedTop10.then((res: Movie[]) => (this.top10Sexism = res))
     },
-    async setTop10Racism(locale: string, movieIds: Number[]) {
+    async setTop10Racism(locale: string, movieIds: number[]) {
       if (!movieIds) return
       const loadedTop10 = Promise.all(
         movieIds.map((id) =>
@@ -187,9 +271,9 @@ export const useStore = defineStore({
             .catch(() => console.log('oopsy'))
         )
       )
-      loadedTop10.then((res: any) => (this.top10Racism = res))
+      loadedTop10.then((res: Movie[]) => (this.top10Racism = res))
     },
-    async setTop10Others(locale: string, movieIds: Number[]) {
+    async setTop10Others(locale: string, movieIds: number[]) {
       if (!movieIds) return
       const loadedTop10 = Promise.all(
         movieIds.map((id) =>
@@ -200,9 +284,9 @@ export const useStore = defineStore({
             .catch(() => console.log('oopsy'))
         )
       )
-      loadedTop10.then((res: any) => (this.top10Others = res))
+      loadedTop10.then((res: Movie[]) => (this.top10Others = res))
     },
-    async setTop10Cringe(locale: string, movieIds: Number[]) {
+    async setTop10Cringe(locale: string, movieIds: number[]) {
       if (!movieIds) return
       const loadedTop10 = Promise.all(
         movieIds.map((id) =>
@@ -213,15 +297,15 @@ export const useStore = defineStore({
             .catch(() => console.log('oopsy'))
         )
       )
-      loadedTop10.then((res: any) => (this.top10Cringe = res))
+      loadedTop10.then((res: Movie[]) => (this.top10Cringe = res))
     },
-    async setStats(stats: any) {
+    async setStats(stats: object) {
       this.stats = stats
     },
-    setSearchInput(state: any, payload: any) {
+    setSearchInput(state: StoreState, payload: string) {
       this.searchInput = payload
     },
-    setSearchTerm(payload: any) {
+    setSearchTerm(payload: string) {
       this.searchTerm = payload
     },
     async setSearchResults(locale: string) {
@@ -234,16 +318,15 @@ export const useStore = defineStore({
         .then((res) => res.json())
         .catch((error) => console.log(error))
       fetchedSearchResults.then((res) => {
-        let filteredResults = res.results.filter((result: any) => {
-          return (
-            result.poster_path &&
-            result.overview &&
-            result.release_date &&
-            parseInt(result.release_date.substring(0, 4)) <= 2017
-          )
-        })
         // filter search results to not show garbage entries
-        this.searchResults = filteredResults
+        this.searchResults = res.results.filter((result: Movie) => {
+            return (
+                result.poster_path &&
+                result.overview &&
+                result.release_date &&
+                parseInt(result.release_date.substring(0, 4)) <= 2017
+            )
+        })
         if (this.searchResults.length == 0) {
           this.searchError = true
         }
@@ -258,7 +341,7 @@ export const useStore = defineStore({
         .then((res) => res.json())
         .catch((error) => console.log(error))
       fetchedSearchResults.then((res) => {
-        let filteredResults = res.results.filter((result: any) => {
+        const filteredResults = res.results.filter((result: Movie) => {
           return (
             result.poster_path &&
             result.overview &&
@@ -267,8 +350,8 @@ export const useStore = defineStore({
           )
         })
         // filter search results to not show garbage entries
-        let currentSearchResults: any = this.searchResults
-        filteredResults.map((entry: any) => currentSearchResults.push(entry))
+        const currentSearchResults: Movie[] = this.searchResults
+        filteredResults.map((entry: Movie) => currentSearchResults.push(entry))
         this.searchResults = currentSearchResults
         if (this.searchResults.length === 0) {
           this.searchError = true
@@ -278,7 +361,7 @@ export const useStore = defineStore({
     resetSearch() {
       this.searchError = false
     },
-    setSearchError(payload: any) {
+    setSearchError(payload: boolean) {
       this.searchError = payload
     },
     async setBondMovies(locale: string) {
@@ -288,7 +371,7 @@ export const useStore = defineStore({
       this.bondMovies = bondMovieData
       this.highlightsLoading = false
     },
-    async filterMovies(locale: string) {
+    async filterMovies() {
       this.isFiltering = true
       this.sortMovies(
         this.sortingOption,
@@ -321,32 +404,32 @@ export const useStore = defineStore({
       this.minScore = 0
       this.maxScore = 10
     },
-    setSortingOption(state: any, payload: any) {
+    setSortingOption(state: StoreState, payload: string) {
       this.sortingOption = payload
     },
-    setMovieYearMin(state: any, payload: any) {
+    setMovieYearMin(state: StoreState, payload: number) {
       this.filterMoviesByYearMin = payload
     },
-    setMovieYearMax(state: any, payload: any) {
+    setMovieYearMax(state: StoreState, payload: number) {
       this.filterMoviesByYearMax = payload
     },
-    setShownScore(state: any, payload: any) {
+    setShownScore(state: StoreState, payload: ScoreKey) {
       this.shownScore = payload
     },
-    setMinScore(state: any, payload: any) {
+    setMinScore(state: StoreState, payload: number) {
       this.minScore = payload
     },
-    setMaxScore(state: any, payload: any) {
+    setMaxScore(state: StoreState, payload: number) {
       this.maxScore = payload
     },
-    setIsFiltering(payload: any) {
+    setIsFiltering(payload: boolean) {
       this.isFiltering = payload
     },
     sortMovies(
       sortingOption: string,
-      array: any[],
-      triggerscores: any[],
-      shownScore: string
+      array: Movie[],
+      triggerscores: TriggerScore[],
+      shownScore: ScoreKey
     ) {
       let clonedArray = [...array]
       if (sortingOption === 'a-z') {
@@ -369,27 +452,27 @@ export const useStore = defineStore({
       }
       this.filteredMovies = clonedArray
     },
-    filterByYear(filterMax: number, filterMin: number, array: any[]) {
+    filterByYear(filterMax: number, filterMin: number, array: Movie[]) {
       let clonedArray = [...array]
       if (filterMin != null && filterMin >= 1900 && filterMin <= 2011) {
         clonedArray = clonedArray.filter(
-          (movie: any) => Number(movie.release_date.slice(0, 4)) >= filterMin
+          (movie) => Number(movie.release_date.slice(0, 4)) >= filterMin
         )
       }
       if (filterMax != null && filterMax >= 1900 && filterMax <= 2011) {
         clonedArray = clonedArray.filter(
-          (movie: any) =>
+          (movie) =>
             Number(movie.release_date.slice(0, 4)) <= filterMax + 1
         )
       }
       this.filteredMovies = clonedArray
     },
     filterByScore(
-      array: any[],
-      triggerscores: any[],
+      array: TriggerScore[],
+      triggerscores: TriggerScore[],
       min: number,
       max: number,
-      shownScore: string
+      shownScore: ScoreKey
     ) {
       let clonedArray = [...array]
       let clonedScores = [...triggerscores]
@@ -420,7 +503,7 @@ export const useStore = defineStore({
       if (this.filterMoviesByPrime) validIds.push(...this.providerData.prime)
       if (this.filterMoviesByDisney) validIds.push(...this.providerData.disney)
       if (this.filterMoviesBySky) validIds.push(...this.providerData.sky)
-      this.filteredMovies = clonedArray.filter((movie: any) => validIds.includes(movie.id))
+      this.filteredMovies = clonedArray.filter((movie: Movie) => validIds.includes(movie.id))
     }
   },
   getters: {

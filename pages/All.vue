@@ -134,12 +134,12 @@ import { useI18n } from 'vue-i18n'
 import LoadingAnimation from '~/components/animations/LoadingAnimation.vue'
 
 const store = useStore()
-const {locale, t } = useI18n()
+const { t } = useI18n()
 const showMenu = ref(false)
 const start = ref(0)
 const end = ref(24)
 
-store.filterMovies(locale.value)
+store.filterMovies()
 store.resetFilter()
 
 const totalPages = computed(() => Math.ceil(filteredMovies.value.length / 24))
@@ -172,10 +172,10 @@ const focusSearch = () => {
 
 const resetFilter = () => {
   store.resetFilter()
-  store.filterMovies(locale.value)
+  store.filterMovies()
 }
 
-const setPage = (startValue: any, endValue: any) => {
+const setPage = (startValue: number, endValue: number) => {
   start.value = startValue
   end.value = endValue
 }
@@ -183,7 +183,7 @@ const setPage = (startValue: any, endValue: any) => {
 watch(
   () => movies.value,
   () => {
-    store.filterMovies(locale.value)
+    store.filterMovies()
   }
 )
 

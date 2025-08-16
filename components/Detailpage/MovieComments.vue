@@ -38,7 +38,7 @@ const router = useRouter()
 const route = useRoute()
 
 defineProps<{
-  comments: [] | undefined,
+  comments: string[] | undefined,
 }>()
 
 const showMoreComments = ref(false)

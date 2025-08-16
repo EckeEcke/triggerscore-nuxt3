@@ -66,17 +66,28 @@
 <script setup lang='ts'>
 import { useI18n } from 'vue-i18n'
 import { getScoreBackground } from '~/utils/getScoreBackground'
+import type { Movie } from '~/types/movie'
+import type { TriggerScore, ScoreKey } from '~/stores/store'
 
 const { t } = useI18n()
 
 const props = defineProps({
-  movie: Object,
-  scores: Object,
+  movie: {
+    type: Object as PropType<Movie>,
+    default: undefined
+  },
+  scores: {
+    type: Object as PropType<TriggerScore>,
+    default: undefined
+  },
   shownScore: {
-    type: String,
+    type: String as PropType<ScoreKey>,
     default: 'rating_total',
   },
-  loadItem: Boolean,
+  loadItem: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const localePath = useLocalePath()

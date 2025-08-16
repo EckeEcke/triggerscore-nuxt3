@@ -77,14 +77,15 @@
   </div>
 </template>
 <script setup lang='ts'>
-import { useStore } from '~/stores/store'
+import { type ScoreKey, useStore } from '~/stores/store'
 import placeholderScores from '~/assets/triggerscores.json'
+import type { Movie } from '~/types/movie'
 
 const store = useStore()
 
 defineProps({
-  movies: Array<any>,
-  shownScore: String,
+  movies: Array as PropType<Movie[]>,
+  shownScore: String as PropType<ScoreKey>,
   title: String,
   subTitle: String,
   showBorder: Boolean,
@@ -92,7 +93,7 @@ defineProps({
 })
 
 const scrolled = ref(false)
-const swiper: Ref<any> = ref()
+const swiper = ref()
 
 const triggerscores = computed(() => store.triggerscores ?? placeholderScores)
 
