@@ -1,5 +1,5 @@
 <template>
-  <Html :lang="locale"></Html>
+  <Html :lang="locale"/>
   <div :class="isFullscreen ? 'pt-0' : 'pt-14'" class="bg-gray-900 min-h-screen flex flex-col pt-14">
     <template v-if="isMaintained">
       <div class="fixed top-1/2 -translate-y-1/2 flex flex-col justify-center gap-8 w-full text-white text-xl font-semibold items-center">
@@ -34,7 +34,7 @@ if (!isMaintained){
 const isFullscreen = computed(() => store.isFullscreen)
 
 const checkFullscreen = () => {
-    if (!process.client || !document) return
+    if (!import.meta.client || !document) return
     store.isFullscreen = !!document.fullscreenElement
 }
 

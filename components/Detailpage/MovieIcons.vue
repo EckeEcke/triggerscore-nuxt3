@@ -11,7 +11,7 @@
           class="w-16"
           alt="Logo Netflix"
           src="https://image.tmdb.org/t/p/original/wwemzKWzjKYJFfCeiB57q3r4Bcm.svg"
-        />
+        >
       </a>
       <a
         v-if="onPrime"
@@ -23,7 +23,7 @@
           class="w-16"
           alt="Logo Prime Video"
           src="~/assets/images/amazon-prime-logo3.svg"
-        />
+        >
       </a>
       <a
         v-if="onDisney"
@@ -35,7 +35,7 @@
           class="w-16"
           alt="Logo Disney Plus"
           src="~/assets/images/disney+-logo2.svg"
-        />
+        >
       </a>
       <a
         v-if="onSky"
@@ -47,11 +47,11 @@
           class="w-16"
           alt="Logo WOW"
           src="~/assets/images/sky-logo.svg"
-        />
+        >
       </a>
       <a
-        class="self-center"
         v-if="tmdbURL"
+        class="self-center"
         :href="tmdbURL"
         target="_blank"
       >
@@ -59,11 +59,11 @@
           class="w-16"
           alt="Logo TMDB"
           src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_1-5bdc75aaebeb75dc7ae79426ddd9be3b2be1e342510f8202baf6bffa71d7f5c4.svg"
-        />
+        >
       </a>
       <a
-        class="self-center"
         v-if="imdbURL"
+        class="self-center"
         :href="imdbURL"
         target="_blank"
       >
@@ -71,7 +71,7 @@
           class="w-16"
           alt="Logo IMDB"
           src="~/assets/images/imdb-logo.svg"
-        />
+        >
       </a>
     </div>
   </div>

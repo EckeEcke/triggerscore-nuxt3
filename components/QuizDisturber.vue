@@ -16,7 +16,7 @@
       {{ t('quiz.testYourMovieKnowledge') }}
     </p>
     <div class="mx-auto">
-      <img src="/images/quiz-image.png" alt="quiz illustration" />
+      <img src="/images/quiz-image.png" alt="quiz illustration" >
     </div>
     <transition
           enter-active-class="duration-500 ease-out"

@@ -3,10 +3,10 @@
     <client-only>
       <Vue3Lottie
         class="w-72"
-        :animationData="thankYouAnimation"
+        :animation-data="thankYouAnimation"
         :loop="false"
-        :autoPlay="true"
-        @onComplete="complete"
+        :auto-play="true"
+        @on-complete="complete"
       />
     </client-only>
   </div>

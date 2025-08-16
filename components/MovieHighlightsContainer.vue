@@ -23,20 +23,20 @@
           v-for="(movie, index) in movies"
           :key="index"
           :movie="movie"
-          :shownScore="shownScore"
+          :shown-score="shownScore"
           :scores="
             triggerscores[
               triggerscores.map((score) => score.movie_id).indexOf(movie.id)
             ]
           "
-          :loadItem="true"
+          :load-item="true"
         />
         <div
           class="z-10 justify-between md:px-4 container mx-auto xl:w-10/12 hidden sm:group-hover:flex pointer-events-none absolute top-36 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
         >
           <button
-            @click="scrollHighlightContainer('left')"
             class="bg-white rounded-full"
+            @click="scrollHighlightContainer('left')"
           >
             <font-awesome-icon
               class="h-full text-yellow-500 text-4xl transition transform scale-125 hover:scale-150 pointer-events-auto"
@@ -44,8 +44,8 @@
             />
           </button>
           <button
-            @click="scrollHighlightContainer('right')"
             class="bg-white rounded-full"
+            @click="scrollHighlightContainer('right')"
           >
             <font-awesome-icon
               class="h-full text-yellow-500 text-4xl transition transform scale-125 hover:scale-150 pointer-events-auto"
@@ -71,7 +71,7 @@
               rgba(5, 5, 15, 1)
             );
           "
-        ></div>
+        />
       </transition>
     </div>
   </div>

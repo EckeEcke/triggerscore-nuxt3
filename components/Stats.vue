@@ -18,8 +18,8 @@
         <MovieHighlightItem
           :scores="lowestScoreMovie"
           :movie="movie[0]"
-          shownScore="rating_total"
-          :loadItem="true"
+          shown-score="rating_total"
+          :load-item="true"
         />
       </div>
       <div>
@@ -29,8 +29,8 @@
         <MovieHighlightItem
           :scores="highestScoreMovie"
           :movie="movieHighest[0]"
-          shownScore="rating_total"
-          :loadItem="true"
+          shown-score="rating_total"
+          :load-item="true"
         />
       </div>
       <div>
@@ -40,8 +40,8 @@
         <MovieHighlightItem
           :scores="mostRatedMovie"
           :movie="mostRated[0]"
-          shownScore="rating_total"
-          :loadItem="true"
+          shown-score="rating_total"
+          :load-item="true"
         />
       </div>
       <div>
@@ -56,8 +56,8 @@
         <MovieHighlightItem
           :scores="mostCommentedMovie"
           :movie="mostCommented[0]"
-          shownScore="rating_total"
-          :loadItem="true"
+          shown-score="rating_total"
+          :load-item="true"
         />
       </div>
       <div>
@@ -67,8 +67,8 @@
         <MovieHighlightItem
           :scores="mostLikedMovie"
           :movie="mostLiked[0]"
-          shownScore="rating_total"
-          :loadItem="true"
+          shown-score="rating_total"
+          :load-item="true"
         />
       </div>
       <div>
@@ -78,8 +78,8 @@
         <MovieHighlightItem
           :scores="mostDislikedMovie"
           :movie="mostDisliked[0]"
-          shownScore="rating_total"
-          :loadItem="true"
+          shown-score="rating_total"
+          :load-item="true"
         />
       </div>
     </div>
@@ -137,12 +137,12 @@ const mostDislikedMovie = computed(() =>
 const mostCommentedMovie = computed(() =>
   store.triggerscores.length > 0
     ? store.triggerscores.reduce(function (a: any, b: any) {
-        let filteredArrayA = 
+        const filteredArrayA = 
         a.comments ? 
         a.comments.filter((comment: string) => {
           return comment.length > 3 }) : []
         
-        let filteredArrayB = 
+        const filteredArrayB = 
         b.comments ?
         b.comments.filter((comment: string) => {
           return comment.length > 3

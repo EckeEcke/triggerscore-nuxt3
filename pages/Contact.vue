@@ -31,9 +31,9 @@
       >
         <div class="hidden">
           <label>Don't fill this out if you're human:</label> 
-          <input name="bot-field" /> 
+          <input name="bot-field" > 
         </div>
-        <input type="hidden" name="form-name" value="contact" />
+        <input type="hidden" name="form-name" value="contact" >
         <div class="flex flex-col gap-1 mb-4">
           <label class="font-semibold mb-2 text-white">{{
             t("contact.name")
@@ -45,7 +45,7 @@
             class="border border-gray-300 p-2 rounded w-72 max-w-full"
             :placeholder="t('contact.placeholderName')"
             required
-          />
+          >
         </div>
         <div class="flex flex-col gap-1 mb-4">
           <label class="font-semibold mb-2 text-white">{{
@@ -58,7 +58,7 @@
             class="border border-gray-300 p-2 rounded w-72 max-w-full"
             :placeholder="t('contact.placeholderEmail')"
             required
-          />
+          >
         </div>
         <div class="flex flex-col gap-1 mb-6">
           <label class="font-semibold mb-2 text-white">{{
@@ -70,7 +70,7 @@
             class="border border-gray-300 p-2 rounded w-72 max-w-full"
             :placeholder="t('contact.placeholderMessage')"
             required
-          ></textarea>
+          />
         </div>
         <p>
           <button
@@ -106,7 +106,7 @@
             alt="Logo Github"
             class="h-10 mr-4 filter invert"
             src="../assets/images/github.svg"
-          />
+          >
         </a>
         <a
           href="https://www.linkedin.com/in/christian-eckardt-41527216a/"
@@ -116,7 +116,7 @@
             alt="Logo LinkedIn"
             class="h-10 mr-4"
             src="../assets/images/linkedin.svg"
-          />
+          >
         </a>
         <a
           href="https://www.xing.com/profile/Christian_Eckardt21/cv"
@@ -126,7 +126,7 @@
             alt="Logo Xing"
             class="h-10 mr-4"
             src="../assets/images/xing.svg"
-          />
+          >
         </a>
       </p>
     </div>

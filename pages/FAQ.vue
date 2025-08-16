@@ -31,7 +31,7 @@
         </h2>
       </div>
       <p class="font-semibold text-2xl">{{ t("faq.subheadline") }}</p>
-      <hr class="my-6" />
+      <hr class="my-6" >
       <section class="mt-4 leading-7">
         <p class="mb-2">
           <b>{{ t("faq.question1") }}</b>

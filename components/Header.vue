@@ -191,14 +191,14 @@
                   />
                 </button>
                 <input
-                  type="text"
-                  v-model="searchInput"
-                  v-on:keyup.enter="searchMovie"
-                  @input="resetSearchResults"
-                  class="lg:text-xl px-4 w-full outline-none transition"
                   ref="searchHeader"
+                  v-model="searchInput"
+                  type="text"
+                  class="lg:text-xl px-4 w-full outline-none transition"
                   :placeholder="t('header.searchPlaceholder')"
-                />
+                  @keyup.enter="searchMovie"
+                  @input="resetSearchResults"
+                >
                 <div
                   class="bg-white rounded-r-xl h-full w-8 flex justify-center"
                 >

@@ -21,7 +21,8 @@
           >
             {{ movie.title }}
           </NuxtLink>
-          <NuxtLink v-else class="text-base font-semibold h-6 cursor-pointer"
+          <NuxtLink
+v-else class="text-base font-semibold h-6 cursor-pointer"
           :to="pathToNavigate(movie.id)"
           tag="h3">
             {{ movie.original_title }}
@@ -41,7 +42,7 @@
             class="h-36 w-32 rounded-sm cursor-pointer"
             :alt="movie.original_title"
             :src="poster2"
-          />
+          >
         </NuxtLink>
         <div
           class="flex absolute top-1 right-1 rounded-lg justify-center w-12 h-12 bg-opacity-80 pointer-events-none"
@@ -63,17 +64,17 @@
 
       <article class="text-left relative w-full h-full flex flex-col">
         <NuxtLink
+          v-if="movie.title && movie.title.length > 0"
           :to="pathToNavigate(movie.id)"
           tag="h3"
-          v-if="movie.title && movie.title.length > 0"
           class="hidden md:block text-base mb-1 font-semibold h-6 overflow-hidden cursor-pointer "
         >
           {{ movie.title }}
         </NuxtLink>
         <NuxtLink
-        :to="pathToNavigate(movie.id)"
+        v-else
+          :to="pathToNavigate(movie.id)"
           tag="h3"
-          v-else
           class="hidden md:block text-base mb-1 font-semibold overflow-hidden cursor-pointer"
         >
           {{ movie.original_title }}

@@ -29,7 +29,7 @@
       <p class="font-semibold text-2xl">
         {{ t("about.headline") }}
       </p>
-      <hr class="my-6" />
+      <hr class="my-6" >
       <p class="mt-2 leading-7 mb-4">
         {{ t("about.paragraph1") }}
       </p>
@@ -38,7 +38,7 @@
       </p>
     </section>
     <div class="flex items-center gap-4 mt-8">
-      <img @click="toGithub()" class="h-8 cursor-pointer" src="../assets/images/github-logo.svg" alt="github link" />
+      <img class="h-8 cursor-pointer" src="../assets/images/github-logo.svg" alt="github link" @click="toGithub()" >
       <a class="text-white underline cursor-pointer hover:font-bold" href="https://github.com/EckeEcke/triggerscore-nuxt3" target="_blank">Triggerscore Github</a>
     </div>
   </div>

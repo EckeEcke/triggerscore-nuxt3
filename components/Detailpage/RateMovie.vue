@@ -10,8 +10,8 @@
         class="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-40 overflow-none"
       >
         <ThankyouAnimation
-          @complete="showConfirmationModal = false"
           key="animation"
+          @complete="showConfirmationModal = false"
         />
       </div>
     </Teleport>
@@ -20,7 +20,7 @@
         class="bg-green-550 text-white text-center text-2xl px-6 py-16 rounded-b lg:rounded h-72 lg:sticky lg:bottom-0"
       >
         <Transition name="fade" mode="out-in">
-          <div v-if="animCompleted" class="font-bold pt-8" key="text">
+          <div v-if="animCompleted" key="text" class="font-bold pt-8">
             <p>{{ t("rating.thanks") }}</p>
             <button
               class="text-base bg-yellow-500 transition hover:bg-yellow-600 p-3 mt-6 rounded font-semibold text-white uppercase"
@@ -35,19 +35,19 @@
           </div>
           <ThankyouAnimation
             v-else-if="!animCompleted"
-            @complete="animCompleted = true"
             key="animation"
+            @complete="animCompleted = true"
           />
         </Transition>
       </div>
       <div v-else class="mx-auto overflow-hidden text-left">
         <h2
-          class="font-semibold text-xl text-white py-6 px-4 lg:rounded-t"
           id="rating"
+          class="font-semibold text-xl text-white py-6 px-4 lg:rounded-t"
         >
-          {{ t("rating.submitFor") }}<br />"{{ movie.title ?? movie.original_title }}"
+          {{ t("rating.submitFor") }}<br >"{{ movie.title ?? movie.original_title }}"
         </h2>
-        <hr class="border-gray-800 hidden md:block max-w-lg ml-4" />
+        <hr class="border-gray-800 hidden md:block max-w-lg ml-4" >
         <label class="px-4 my-2 mt-6 block text-lg font-semibold">{{
           t("categories.sexism")
         }}</label>
@@ -58,13 +58,13 @@
           <button
             v-for="(n, i) in 11"
             :key="i"
-            @click="ratingSexism = ratingSexism == 10 - i ? null : 10 - i"
             :class="[
               ['rating' + (10 - i)],
               [ratingSexism == 10 - i ? 'opacity-100' : 'opacity-50'],
               [i == 0 ? 'mr-4' : ''],
             ]"
             class="w-12 sm:w-12 lg:w-10 xl:w-12 h-12 sm:h-12 lg:h-10 xl:h-12 p-1 text-center text-sm flex-none font-semibold text-white"
+            @click="ratingSexism = ratingSexism == 10 - i ? null : 10 - i"
           >
             <div
               class="w-full h-full rounded-lg flex text-center justify-center font-semibold"
@@ -81,7 +81,7 @@
           </button>
         </div>
 
-        <hr class="border-transparent" />
+        <hr class="border-transparent" >
         <label class="px-4 my-2 block text-lg font-semibold">{{
           t("categories.racism")
         }}</label>
@@ -92,13 +92,13 @@
           <button
             v-for="(n, i) in 11"
             :key="i"
-            @click="ratingRacism = ratingRacism == 10 - i ? null : 10 - i"
             :class="[
               ['rating' + (10 - i)],
               [ratingRacism == 10 - i ? 'opacity-100' : 'opacity-50'],
               [i == 0 ? 'mr-4' : ''],
             ]"
             class="w-12 sm:w-12 lg:w-10 xl:w-12 h-12 sm:h-12 lg:h-10 xl:h-12 p-1 text-center text-sm flex-none font-semibold text-white"
+            @click="ratingRacism = ratingRacism == 10 - i ? null : 10 - i"
           >
             <div
               class="w-full h-full rounded-lg flex text-center justify-center font-semibold"
@@ -114,7 +114,7 @@
             </div>
           </button>
         </div>
-        <hr class="border-transparent" />
+        <hr class="border-transparent" >
         <label class="px-4 my-2 block text-lg font-semibold">{{
           t("categories.others")
         }}</label>
@@ -125,13 +125,13 @@
           <button
             v-for="(n, i) in 11"
             :key="i"
-            @click="ratingOthers = ratingOthers == 10 - i ? null : 10 - i"
             :class="[
               ['rating' + (10 - i)],
               [ratingOthers == 10 - i ? 'opacity-100' : 'opacity-50'],
               [i == 0 ? 'mr-4' : ''],
             ]"
             class="w-12 sm:w-12 lg:w-10 xl:w-12 h-12 sm:h-12 lg:h-10 xl:h-12 p-1 text-center text-sm flex-none font-semibold text-white"
+            @click="ratingOthers = ratingOthers == 10 - i ? null : 10 - i"
           >
             <div
               class="w-full h-full rounded-lg flex text-center justify-center font-semibold"
@@ -148,7 +148,7 @@
           </button>
         </div>
 
-        <hr class="border-transparent" />
+        <hr class="border-transparent" >
         <label class="px-4 my-2 block text-lg font-semibold">{{
           t("categories.cringe")
         }}</label>
@@ -159,13 +159,13 @@
           <button
             v-for="(n, i) in 11"
             :key="i"
-            @click="ratingCringe = ratingCringe == 10 - i ? null : 10 - i"
             :class="[
               ['rating' + (10 - i)],
               [ratingCringe == 10 - i ? 'opacity-100' : 'opacity-50'],
               [i == 0 ? 'mr-4' : ''],
             ]"
             class="w-12 sm:w-12 lg:w-10 xl:w-12 h-12 sm:h-12 lg:h-10 xl:h-12 p-1 text-center text-sm flex-none font-semibold text-white"
+            @click="ratingCringe = ratingCringe == 10 - i ? null : 10 - i"
           >
             <div
               class="w-full h-full rounded-lg flex text-center justify-center font-semibold"
@@ -181,41 +181,41 @@
             </div>
           </button>
         </div>
-        <hr class="border-transparent" />
+        <hr class="border-transparent" >
         <p class="my-4 text-lg font-semibold px-4 max-w-lg">
           {{ t("rating.leaveComment") }} (optional)
         </p>
         <div class="w-full px-4 mb-4">
           <textarea
+            v-model="comment"
             rows="3"
             class="w-full max-w-lg bg-gray-950 p-2 resize-none rounded-lg"
             maxlength="100"
-            v-model="comment"
             :placeholder="t('rating.placeholder')"
-          ></textarea>
+          />
           <p v-if="comment.length > 0" class="text-right text-xs">
             {{ comment.length }}/100 {{ t("rating.characters") }}
           </p>
         </div>
-        <hr class="border-transparent" />
+        <hr class="border-transparent" >
         <div class="w-full">
           <p class="my-4 text-lg font-semibold px-4 max-w-lg">
             {{ t("rating.didYouLike") }} (optional)
           </p>
           <div class="flex justify-center md:justify-center gap-4 mx-4 mt-4 max-w-lg">
             <LikeAnimation
-              :dislikeClicked="disliked"
-              @likeClicked="handleLike"
+              :dislike-clicked="disliked"
               :class="{ 'opacity-30': !liked }"
+              @like-clicked="handleLike"
             />
             <DislikeAnimation
-              :likeClicked="liked"
-              @dislikeClicked="handleDislike"
+              :like-clicked="liked"
               :class="{ 'opacity-30': !disliked }"
+              @dislike-clicked="handleDislike"
             />
           </div>
         </div>
-        <hr class="border-transparent" />
+        <hr class="border-transparent" >
         <div class="flex justify-start pt-8 pb-12 px-4 rounded-b-lg">
           <button
             :disabled="

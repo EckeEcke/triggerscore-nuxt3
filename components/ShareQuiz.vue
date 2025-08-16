@@ -19,7 +19,7 @@
         class="w-10"
         alt="Logo WhatsApp"
         src="~/assets/images/WhatsApp.svg"
-      />
+      >
     </a>
     <a
       :href="'https://www.reddit.com/submit?url=' + currentURL"
@@ -29,7 +29,7 @@
         alt="Logo Reddit"
         class="w-10"
         src="~/assets/images/reddit-logo.svg"
-      />
+      >
     </a>
     <a
       :href="'https://www.facebook.com/sharer/sharer.php?u=' + currentURL"
@@ -39,7 +39,7 @@
         alt="Logo Facebook"
         class="w-10"
         src="~/assets/images/facebook-logo.svg"
-      />
+      >
     </a>
     <a
       :href="
@@ -56,9 +56,9 @@
     </a>
     <div class="flex relative cursor-pointer">
       <font-awesome-icon
-        @click="copyLink"
         :icon="['fas', 'link']"
         class="text-white self-center text-3xl"
+        @click="copyLink"
       />
       <div
         v-if="copied"

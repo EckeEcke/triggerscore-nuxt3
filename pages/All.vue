@@ -70,8 +70,8 @@
         />
       </section>
       <div
-        class="py-32"
         v-if="!isLoading && filteredMovies.length == 0 && !isFiltering"
+        class="py-32"
       >
         <p class="text-white text-xl font-semibold animate-bounce mb-4">
           {{ t("search.noResults") }}
@@ -90,12 +90,12 @@
     >
       <button
         v-for="index in totalPages"
-        v-bind:key="index"
-        @click="setPage((index - 1) * 24, (index - 1) * 24 + 24)"
+        :key="index"
         class="text-sm sm:text-lg text-black px-4 py-2 font-semibold bg-opacity-90 hover:text-yellow-500 hover:bg-white transition duration-300"
         :class="[
           start == Math.round((index - 1) * 24) ? 'bg-white' : 'bg-gray-500',
         ]"
+        @click="setPage((index - 1) * 24, (index - 1) * 24 + 24)"
       >
         {{ index }}
       </button>
@@ -105,9 +105,9 @@
       class="flex gap-1 justify-center mb-8 -mt-6 flex-wrap"
     >
       <button
-        @click="setPage(start - 24, end - 24)"
         class="text-lg px-4 py-2 font-semibold bg-transparent"
         :disabled="currentPage == 1"
+        @click="setPage(start - 24, end - 24)"
       >
         <font-awesome-icon
           :icon="['fas', 'chevron-left']"
@@ -115,9 +115,9 @@
         />
       </button>
       <button
-        @click="setPage(start + 24, end + 24)"
         class="text-lg px-4 py-2 font-semibold bg-transparent"
         :disabled="currentPage == totalPages"
+        @click="setPage(start + 24, end + 24)"
       >
         <font-awesome-icon
           :icon="['fas', 'chevron-right']"

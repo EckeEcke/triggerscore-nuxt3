@@ -1,5 +1,5 @@
 <template>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4" ref="container">
+    <div ref="container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
         <template
             v-for="(comment, index) in store.recentComments"
             :key="comment.movie_id"
@@ -39,7 +39,7 @@
                 }}
                 </NuxtLink>
             </div>
-            <hr class="mb-4 w-36 border-yellow-500" />
+            <hr class="mb-4 w-36 border-yellow-500" >
             <div class="flex justify-between gap-2">
                 <p class="italic text-sm">"{{ comment.comment }}"</p>
                 <div v-if="comment.liked === 1 || comment.liked === true">

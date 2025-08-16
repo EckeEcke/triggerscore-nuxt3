@@ -1,7 +1,7 @@
 <template>
   <div class="w-6 relative inline-block" style="transform: translateY(4px)">
     <client-only>
-      <Vue3Lottie :animationData="AngryJSON" />
+      <Vue3Lottie :animation-data="AngryJSON" />
     </client-only>
   </div>
 </template>

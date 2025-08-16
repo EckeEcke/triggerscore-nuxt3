@@ -11,7 +11,7 @@
         <div
           class="w-full h-full bg-cover rounded-t transition-300 transform scale-100 movie-poster"
           :style="[loadItem2 ? { backgroundImage: `url(${poster})` } : '']"
-        ></div>
+        />
       </div>
       <div
         class="absolute right-2 mx-auto mt-2 h-12 w-12 text-white rounded-lg bg-opacity-90"

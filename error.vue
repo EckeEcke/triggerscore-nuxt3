@@ -1,5 +1,5 @@
 <template>
-    <Html :lang="locale"></Html>
+    <Html :lang="locale"/>
     <div class="bg-gray-900 min-h-screen flex flex-col pt-14">
       <Header />
       <h2 class="text-white text-center p-16">ERROR</h2>

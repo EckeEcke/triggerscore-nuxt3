@@ -22,8 +22,8 @@
     </div>
     <p
       v-if="comments.length > 2"
-      @click="showMoreComments = !showMoreComments"
       class="text-right mt-3 cursor-pointer transition hover:text-yellow-500"
+      @click="showMoreComments = !showMoreComments"
     >
       {{ showMoreComments ? t("general.showLess") : t("general.showMore") }}
       <font-awesome-icon :icon="['fas', showMoreComments ? 'caret-up' : 'caret-down']" />

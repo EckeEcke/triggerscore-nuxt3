@@ -14,15 +14,15 @@
     <Meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </Head>
   
-  <Searchbox showTitle />
+  <Searchbox show-title />
   <LoadingAnimation v-show="isLoading" />
   <template v-if="!isLoading">
     <MovieHighlightsContainer
       :movies="store.bondMovies"
-      shownScore="rating_total"
+      shown-score="rating_total"
       :title="t('highlights.headline1')"
-      :subTitle="t('highlights.copy1')"
-      moreSpacing
+      :sub-title="t('highlights.copy1')"
+      more-spacing
     />
     <section class="mb-12 px-0 sm:px-4 container mx-auto xl:w-10/12">
       <div
@@ -59,10 +59,10 @@
         >
           <RecentRatingsItem
             v-for="(rating, index) in store.recentRatings"
+            :id="index"
             :key="index"
             :movie="rating"
             :scores="store.recentScores[index]"
-            :id="index"
           />
         </div>
         <div class="text-left text-white px-4 sm:px-0 col-span-2 lg:col-span-1">
@@ -106,30 +106,30 @@
       </div>
       <MovieHighlightsContainer
         :movies="store.top10Sexism"
-        shownScore="rating_sexism"
+        shown-score="rating_sexism"
         :title="t('highlights.headline2')"
-        :subTitle="t('highlights.copy2')"
+        :sub-title="t('highlights.copy2')"
       />
       <MovieHighlightsContainer
         :movies="store.top10Racism"
-        shownScore="rating_racism"
+        shown-score="rating_racism"
         :title="t('highlights.headline3')"
-        :subTitle="t('highlights.copy3')"
-        showBorder
+        :sub-title="t('highlights.copy3')"
+        show-border
       />
       <MovieHighlightsContainer
         :movies="store.top10Others"
-        shownScore="rating_others"
+        shown-score="rating_others"
         :title="t('highlights.headline4')"
-        :subTitle="t('highlights.copy4')"
-        showBorder
+        :sub-title="t('highlights.copy4')"
+        show-border
       />
       <MovieHighlightsContainer
         :movies="store.top10Cringe"
-        shownScore="rating_cringe"
+        shown-score="rating_cringe"
         :title="t('highlights.headline5')"
-        :subTitle="t('highlights.copy5')"
-        showBorder
+        :sub-title="t('highlights.copy5')"
+        show-border
       />
     </section>
     <section

@@ -44,37 +44,37 @@
             alt="Logo TMDB"
             class="w-10 lg:w-16 mx-auto"
             src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_1-5bdc75aaebeb75dc7ae79426ddd9be3b2be1e342510f8202baf6bffa71d7f5c4.svg"
-        /></a>
+        ></a>
         <a href="https://www.justwatch.com" target="blank"
           ><img
             alt="Logo JustWatch"
             class="w-14 lg:w-24 mx-auto"
             src="https://www.themoviedb.org/assets/2/v4/logos/justwatch-c2e58adf5809b6871db650fb74b43db2b8f3637fe3709262572553fa056d8d0a.svg"
-        /></a>
+        ></a>
         <a href="https://www.nuxt.com" target="blank"
           ><img
             alt="Logo Nuxt"
             class="w-12 lg:w-16 mx-auto"
             src="../assets/images/nuxt-logo.svg"
-        /></a>
+        ></a>
         <a href="https://www.tailwindcss.com" target="blank"
           ><img
             alt="Logo Tailwind"
             class="w-8 lg:w-12 mx-auto"
             src="../assets/images/tailwind.svg"
-        /></a>
+        ></a>
         <a href="https://www.nodejs.org" target="blank"
           ><img
             alt="Logo Node"
             class="w-10 lg:w-16 mx-auto"
             src="../assets/images/node-logo.svg"
-        /></a>
+        ></a>
         <a href="https://www.mongodb.com/" target="blank"
           ><img
             alt="Logo MongoDB"
             class="w-10 lg:w-16 mx-auto"
             src="../assets/images/mongodb-logo.svg"
-        /></a>
+        ></a>
       </div>
     </section>
   </footer>

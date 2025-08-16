@@ -3,9 +3,9 @@
     <client-only>
       <Vue3Lottie
         ref="anim"
-        :animationData="dislikeAnimation"
+        :animation-data="dislikeAnimation"
         :loop="false"
-        :autoPlay="false"
+        :auto-play="false"
       />
     </client-only>
   </div>

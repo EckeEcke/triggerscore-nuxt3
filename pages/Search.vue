@@ -74,9 +74,9 @@
     </transition-group>
     <button
       v-if="store.searchResults.length > 0 && !hideLoadMore"
-      @click="searchMore"
       :disabled="loadingMore"
       class="bg-yellow-500 transition hover:bg-yellow-600 p-3 my-6 rounded font-semibold text-white uppercase -mt-8 mb-20 disabled:opacity-50"
+      @click="searchMore"
     >
       {{ t("search.searchMore") }}
     </button>

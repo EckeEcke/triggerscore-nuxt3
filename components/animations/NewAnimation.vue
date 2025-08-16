@@ -1,7 +1,7 @@
 <template>
   <div class="absolute flex justify-center mx-auto w-64 h-64">
     <client-only>
-      <Vue3Lottie :animationData="newJSON" />
+      <Vue3Lottie :animation-data="newJSON" />
     </client-only>
   </div>
 </template>

@@ -41,7 +41,7 @@
                   </option>
                 </select>
               </div>
-              <hr class="my-4 border-gray-800" />
+              <hr class="my-4 border-gray-800" >
               <h2 class="font-semibold text-left mb-2">
                 {{ t("filter.displayedScore") }}
               </h2>
@@ -67,24 +67,24 @@
                   </option>
                 </select>
               </div>
-              <hr class="my-4 border-gray-800" />
+              <hr class="my-4 border-gray-800" >
               <div class="mb-6">
                 <h2 class="font-semibold text-left mb-6">
                   {{ t("filter.filterByScore") }}
                 </h2>
                 <Rangeslider class="px-3" />
               </div>
-              <hr class="my-4 border-gray-800" />
+              <hr class="my-4 border-gray-800" >
               <h2 class="font-semibold text-left mb-2">
                 {{ t("filter.filterByProvider") }}
               </h2>
               <div class="form-check text-left mb-2 h-8">
                 <input
+                  id="filter-netflix"
                   v-model="store.filterMoviesByNetflix"
                   class="h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer accent-yellow-500"
                   type="checkbox"
-                  id="filter-netflix"
-                />
+                >
                 <label
                   class="form-check-label inline-block text-gray-800 text-left"
                   for="filter-netflix"
@@ -93,16 +93,16 @@
                     alt="Logo Netflix"
                     class="h-4 mt-1 mx-2"
                     src="../assets/images/netflix-logo.svg"
-                  />
+                  >
                 </label>
               </div>
               <div class="form-check text-left mb-2 h-8">
                 <input
+                  id="filter-amazon"
                   v-model="store.filterMoviesByPrime"
                   class="h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer accent-yellow-500"
                   type="checkbox"
-                  id="filter-amazon"
-                />
+                >
                 <label
                   class="form-check-label inline-block text-gray-800 text-left"
                   for="filter-amazon"
@@ -111,16 +111,16 @@
                     alt="Logo Prime Video"
                     class="h-6 mt-1 mx-2"
                     src="../assets/images/amazon-prime-logo3.png"
-                  />
+                  >
                 </label>
               </div>
               <div class="form-check text-left mb-2 h-8">
                 <input
+                  id="filter-disney"
                   v-model="store.filterMoviesByDisney"
                   class="h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer accent-yellow-500"
                   type="checkbox"
-                  id="filter-disney"
-                />
+                >
                 <label
                   class="form-check-label inline-block text-gray-800 text-left"
                   for="filter-disney"
@@ -129,16 +129,16 @@
                     alt="Logo Disney Plus"
                     class="h-8 ml-2"
                     src="../assets/images/disney+-logo2.svg"
-                  />
+                  >
                 </label>
               </div>
               <div class="form-check text-left mb-2 h-8">
                 <input
+                  id="filter-disney"
                   v-model="store.filterMoviesBySky"
                   class="h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer accent-yellow-500"
                   type="checkbox"
-                  id="filter-disney"
-                />
+                >
                 <label
                   class="form-check-label inline-block text-gray-800 text-left"
                   for="filter-disney"
@@ -147,10 +147,10 @@
                     alt="Logo WOW"
                     class="h-4 mt-1 ml-2"
                     src="../assets/images/sky-logo.svg"
-                  />
+                  >
                 </label>
               </div>
-              <hr class="my-4 border-gray-800" />
+              <hr class="my-4 border-gray-800" >
               <div class="flex flex-col my-4">
                 <h2 class="font-semibold text-left mb-2">
                   {{ t("filter.filterByRelease") }}
@@ -158,27 +158,27 @@
                 <div class="flex">
                   <div class="w-1/2 mr-2 flex flex-col">
                     <input
+                      id="filter-start"
                       v-model="filterMin"
                       type="number"
-                      id="filter-start"
                       class="border border-gray-200 rounded w-24 p-2 text-center text-black"
                       min="1900"
                       max="2010"
                       :placeholder="t('filter.from')"
                       @input="scrollToTop"
-                    />
+                    >
                   </div>
                   <div class="w-1/2 mr-2 flex flex-col">
                     <input
+                      id="filter-end"
                       v-model="filterMax"
                       type="number"
-                      id="filter-end"
                       class="border border-gray-200 rounded w-24 p-2 text-center text-black"
                       min="1900"
                       max="2010"
                       :placeholder="t('filter.to')"
                       @input="scrollToTop"
-                    />
+                    >
                   </div>
                 </div>
               </div>
@@ -198,7 +198,7 @@
             <div class="text-sm my-5 font-semibold">
               {{ results }} {{ t("filter.results") }}
             </div>
-            <hr class="my-4 border-gray-800" />
+            <hr class="my-4 border-gray-800" >
             <button
               class="font-semibold bg-yellow-500 py-3 w-full shadow text-white uppercase rounded-lg"
               @click="resetFilter"

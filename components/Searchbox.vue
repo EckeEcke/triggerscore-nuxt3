@@ -29,20 +29,20 @@
           >
             <button
               class="flex items-center justify-center px-3 w-16 rounded-l-xl bg-yellow-500 transition hover:bg-yellow-600 text-white"
-              @click="searchMovie"
               :disabled="searchInput.length == 0"
+              @click="searchMovie"
             >
               <font-awesome-icon :icon="['fas', 'search']" class="text-lg" />
             </button>
             <input
-              type="search"
               id="search"
               v-model="searchInput"
-              v-on:keyup.enter="searchMovie"
+              type="search"
               class="px-4 py-4 w-full rounded-r-xl outline-none transition scroll-my-4 lg:text-xl opacity-80 focus:opacity-100"
               style="scroll-margin-top: 10rem"
               :placeholder="t('header.searchPlaceholder')"
-            />
+              @keyup.enter="searchMovie"
+            >
           </div>
         </div>
       </div>

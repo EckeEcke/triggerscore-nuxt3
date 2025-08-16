@@ -37,11 +37,11 @@
         <div class="flex flex-col w-full text-white rounded-t lg:rounded justify-start lg:mr-6 md:p-4">
           <div class="flex justify-between w-full sm:rounded-t p-4 pr-0">
             <img
-              :src="poster"
               :key="locale"
+              :src="poster"
               alt="movie poster"
               class="w-1/2 lg:w-76 h-auto object-contain rounded self-center detail-page-box-shadow"
-            />
+            >
             <MovieScore />
           </div>
           <div class="flex flex-col xl:flex-row">
@@ -65,7 +65,7 @@
                 </template>
                 <span v-if="movie.vote_average" class="mx-2">|</span>
                 <span v-if="movie.vote_average">
-                  <wbr />{{ t("rating.tmdb-rating") }}:
+                  <wbr >{{ t("rating.tmdb-rating") }}:
                   {{ movie.vote_average.toFixed(2) }}
                 </span>
                 <span v-if="score" class="mx-2 mb-2">|</span>
@@ -88,9 +88,9 @@
               </i>
               <p class="my-4 flex flex-wrap gap-1">
                 <span
-                  class="text-xs bg-gray-400 text-white p-2 rounded"
                   v-for="genre in genres"
                   :key="genre"
+                  class="text-xs bg-gray-400 text-white p-2 rounded"
                   >{{ genre }}</span
                 >
               </p>
@@ -110,21 +110,21 @@
           </div>
         </div>
         <RateMovie />
-        <hr class="border-gray-800 md:hidden" />
+        <hr class="border-gray-800 md:hidden" >
         <div class="px-4 md:hidden py-12 mb-4">
           <ShareMovie :movie="movie" />
         </div>
       </div>
-      <hr class="border-gray-800" />
+      <hr class="border-gray-800" >
       <div class="sm:px-4 radial-background sm:rounded-b">
         <MovieHighlightsContainer
           v-if="similarMovies.body"
           class="xl:w-full bg-transparent"
           :movies="similarMovies.body.slice(0,10)"
-          shownScore="rating_total"
+          shown-score="rating_total"
           :title="t('similar.headline')"
-          :subTitle="t('similar.copy', [movie.title ?? movie.original_title])"
-          moreSpacing
+          :sub-title="t('similar.copy', [movie.title ?? movie.original_title])"
+          more-spacing
         />
       </div>
     </div>

@@ -1,7 +1,7 @@
 <template>
     <div class="w-32 mx-auto -mt-8 opacity-70">
       <client-only>
-        <Vue3Lottie :animationData="animation" :loop="false" :autoPlay="true" />
+        <Vue3Lottie :animation-data="animation" :loop="false" :auto-play="true" />
       </client-only>
     </div>
   </template>

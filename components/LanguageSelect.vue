@@ -2,58 +2,58 @@
   <div class="relative flex align-center">
     <button
       v-if="locale == 'de'"
-      @click="showSelection = !showSelection"
       class="mr-6 sm:mr-10"
+      @click="showSelection = !showSelection"
     >
       <img
         alt="flag Germany"
         class="w-6 h-4 custom-shadow"
         src="../assets/images/germany.svg"
-      />
+      >
     </button>
     <button
       v-if="locale == 'en'"
-      @click="showSelection = !showSelection"
       class="mr-6 sm:mr-10"
+      @click="showSelection = !showSelection"
     >
       <img
         alt="flag UK"
         class="w-6 h-4 custom-shadow"
         src="../assets/images/uk.svg"
-      />
+      >
     </button>
     <button
       v-if="locale == 'us'"
-      @click="showSelection = !showSelection"
       class="mr-6 sm:mr-10"
+      @click="showSelection = !showSelection"
     >
       <img
         alt="flag US"
         class="w-6 h-4 custom-shadow"
         src="../assets/images/usa.svg"
-      />
+      >
     </button>
     <button
       v-if="locale == 'fr'"
-      @click="showSelection = !showSelection"
       class="mr-6 sm:mr-10"
+      @click="showSelection = !showSelection"
     >
       <img
         alt="flag France"
         class="w-6 h-4 custom-shadow"
         src="../assets/images/france.svg"
-      />
+      >
     </button>
     <button
       v-if="locale == 'es'"
-      @click="showSelection = !showSelection"
       class="mr-6 sm:mr-10"
+      @click="showSelection = !showSelection"
     >
       <img
         alt="flag Spain"
         class="w-6 h-4 custom-shadow"
         src="../assets/images/spain.svg"
-      />
+      >
     </button>
     <ul
       v-if="showSelection"
@@ -65,35 +65,35 @@
         tag="li"
         class="flex gap-2 cursor-pointer hover:text-yellow-500"
       >
-        <img class="w-6 self-center h-3" src="../assets/images/usa.svg" alt="flag US" />US
+        <img class="w-6 self-center h-3" src="../assets/images/usa.svg" alt="flag US" >US
       </NuxtLink>
       <NuxtLink
         :to="switchLocalePath('en')"
         tag="li"
         class="flex gap-2 cursor-pointer hover:text-yellow-500"
       >
-        <img class="w-6 self-center h-3" src="../assets/images/uk.svg" alt="flag UK" />EN
+        <img class="w-6 self-center h-3" src="../assets/images/uk.svg" alt="flag UK" >EN
       </NuxtLink>
       <NuxtLink
         :to="switchLocalePath('de')"
         tag="li"
         class="flex gap-2 cursor-pointer hover:text-yellow-500"
       >
-        <img class="w-6 self-center h-3" src="../assets/images/germany.svg" alt="flag Germany" />DE
+        <img class="w-6 self-center h-3" src="../assets/images/germany.svg" alt="flag Germany" >DE
       </NuxtLink>
       <NuxtLink
         :to="switchLocalePath('fr')"
         tag="li"
         class="flex gap-2 cursor-pointer hover:text-yellow-500"
       >
-        <img class="w-6 self-center h-3" src="../assets/images/france.svg" alt="flag France" />FR
+        <img class="w-6 self-center h-3" src="../assets/images/france.svg" alt="flag France" >FR
       </NuxtLink>
       <NuxtLink
         :to="switchLocalePath('es')"
         tag="li"
         class="flex gap-2 cursor-pointer hover:text-yellow-500"
       >
-        <img class="w-6 self-center h-3" src="../assets/images/spain.svg" alt="flag Spain" />ES
+        <img class="w-6 self-center h-3" src="../assets/images/spain.svg" alt="flag Spain" >ES
       </NuxtLink>
     </ul>
   </div>

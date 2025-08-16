@@ -90,45 +90,45 @@
             <div class="flex">
               <div class="w-1/2 mr-2 flex flex-col my-3">
                 <input
+                  id="filter-start"
                   v-model="store.filterMoviesByYearMin"
                   type="number"
-                  id="filter-start"
                   class="border border-gray-200 rounded w-20 p-2 text-center h-10 text-black"
                   min="1900"
                   max="2010"
                   :placeholder="t('filter.from')"
                   @input="scrollToTop"
-                />
+                >
               </div>
               <div class="w-1/2 mr-2 flex flex-col my-3">
                 <input
+                  id="filter-end"
                   v-model="store.filterMoviesByYearMax"
                   type="number"
-                  id="filter-end"
                   class="border border-gray-200 rounded w-20 p-2 text-center h-10 text-black"
                   min="1900"
                   max="2010"
                   :placeholder="t('filter.to')"
                   @input="scrollToTop"
-                />
+                >
               </div>
             </div>
           </div>
         </div>
-        <hr class="my-4 border-gray-800" />
+        <hr class="my-4 border-gray-800" >
         <div class="flex justify-between items-center">
           <div class="gap-4">
             <div class="flex items-center -mb-3">
               <div class="form-check text-left mb-1 h-8 mr-8">
                 <input
+                  id="filter-netflix"
                   v-model="netflixFilter"
                   class="h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer accent-yellow-500"
                   type="checkbox"
-                  id="filter-netflix"
                   @change="
                     store.filterMoviesByNetflix = !store.filterMoviesByNetflix
                   "
-                />
+                >
                 <label
                   class="form-check-label inline-block text-gray-800 text-left"
                   for="filter-netflix"
@@ -137,19 +137,19 @@
                     alt="Logo Netflix"
                     class="h-4 mt-1 mx-2"
                     src="../assets/images/netflix-logo.svg"
-                  />
+                  >
                 </label>
               </div>
               <div class="form-check text-left mb-1 h-8 mr-8">
                 <input
+                  id="filter-amazon"
                   v-model="primeFilter"
                   class="h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer accent-yellow-500"
                   type="checkbox"
-                  id="filter-amazon"
                   @change="
                     store.filterMoviesByPrime = !store.filterMoviesByPrime
                   "
-                />
+                >
                 <label
                   class="form-check-label inline-block text-gray-800 text-left"
                   for="filter-amazon"
@@ -158,19 +158,19 @@
                     alt="Logo Prime Video"
                     class="h-5 mt-1 mx-2"
                     src="../assets/images/amazon-prime-logo3.png"
-                  />
+                  >
                 </label>
               </div>
               <div class="form-check text-left mb-1 mr-8 h-8">
                 <input
+                  id="filter-disney"
                   v-model="disneyFilter"
                   class="h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer accent-yellow-500"
                   type="checkbox"
-                  id="filter-disney"
                   @change="
                     store.filterMoviesByDisney = !store.filterMoviesByDisney
                   "
-                />
+                >
                 <label
                   class="form-check-label inline-block text-gray-800 text-left"
                   for="filter-disney"
@@ -179,17 +179,17 @@
                     alt="Logo Disney Plus"
                     class="h-7 ml-2 mb-1"
                     src="../assets/images/disney+-logo2.svg"
-                  />
+                  >
                 </label>
               </div>
               <div class="form-check text-left mb-1 h-8">
                 <input
+                  id="filter-disney"
                   v-model="skyFilter"
                   class="h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer accent-yellow-500"
                   type="checkbox"
-                  id="filter-disney"
                   @change="store.filterMoviesBySky = !store.filterMoviesBySky"
-                />
+                >
                 <label
                   class="form-check-label inline-block text-gray-800 text-left"
                   for="filter-disney"
@@ -198,7 +198,7 @@
                     alt="Logo WOW"
                     class="h-4 mt-1 ml-2"
                     src="../assets/images/sky-logo.svg"
-                  />
+                  >
                 </label>
               </div>
             </div>
@@ -236,7 +236,7 @@ const resetFilter = () => {
 }
 
 const focusSearch = () => {
-  if (!process.client) return
+  if (!import.meta.client) return
   const search = document.getElementById('search')
   search!.scrollIntoView({ block: 'start' })
   search!.focus()

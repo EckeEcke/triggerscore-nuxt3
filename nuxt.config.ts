@@ -25,7 +25,7 @@ export default defineNuxtConfig({
       },
   },
 
-  modules: ['@pinia/nuxt', '@nuxtjs/robots', '@nuxtjs/i18n'],
+  modules: ['@pinia/nuxt', '@nuxtjs/robots', '@nuxtjs/i18n', '@nuxt/eslint'],
 
   // @ts-ignore
   i18n: {
