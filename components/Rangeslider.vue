@@ -21,9 +21,7 @@
           class="absolute pointer-events-none appearance-none z-20 h-2 w-full opacity-0 cursor-pointer left-0"
         />
         <div class="relative z-10 h-2">
-          <div
-            class="absolute z-10 left-0 right-0 bottom-0 top-0 rounded-md bg-gray-200"
-          ></div>
+          <div class="absolute z-10 left-0 right-0 bottom-0 top-0 rounded-md bg-gray-200"></div>
           <div
             class="absolute z-20 top-0 bottom-0 rounded-md bg-yellow-300"
             :style="'right:' + maxthumb + '%; left:' + minthumb + '%'"
@@ -39,10 +37,7 @@
         </div>
       </div>
     </div>
-    <div
-      v-if="minScore > 0 || maxScore < 10"
-      class="flex justify-around w-full mt-4 xl:mt-2"
-    >
+    <div v-if="minScore > 0 || maxScore < 10" class="flex justify-around w-full mt-4 xl:mt-2">
       <span>{{ minScore }}</span>
       <span>{{ t("filter.to") }}</span>
       <span>{{ maxScore }}</span>

@@ -202,9 +202,7 @@
           <p class="my-4 text-lg font-semibold px-4 max-w-lg">
             {{ t("rating.didYouLike") }} (optional)
           </p>
-          <div
-            class="flex justify-center md:justify-center gap-4 mx-4 mt-4 max-w-lg"
-          >
+          <div class="flex justify-center md:justify-center gap-4 mx-4 mt-4 max-w-lg">
             <LikeAnimation
               :dislikeClicked="disliked"
               @likeClicked="handleLike"
@@ -291,13 +289,15 @@ const submitRating = (event: Event) => {
     .then((data) => console.log(data))
     .catch((err) => console.log(err))
 }
-function handleLike(value: boolean) {
+
+const handleLike = (value: boolean) => {
   liked.value = value
   if (liked.value === true) {
     disliked.value = false
   }
 }
-function handleDislike(value: boolean) {
+
+const handleDislike = (value: boolean) => {
   disliked.value = value
   if (disliked.value === true) {
     liked.value = false

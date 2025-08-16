@@ -33,14 +33,8 @@
       </client-only>
     </Head>
     <div class="container mx-auto sm:pt-6 sm:pb-12 xl:w-10/12 md:px-4">
-      <LoadingAnimation v-if="false" />
-      <div
-        v-else
-        class="radial-background flex flex-col lg:flex-row px-0 sm:px-4 md:px-0 sm:rounded-t"
-      >
-        <div
-          class="flex flex-col w-full text-white rounded-t lg:rounded justify-start lg:mr-6 md:p-4"
-        >
+      <div class="radial-background flex flex-col lg:flex-row px-0 sm:px-4 md:px-0 sm:rounded-t">
+        <div class="flex flex-col w-full text-white rounded-t lg:rounded justify-start lg:mr-6 md:p-4">
           <div class="flex justify-between w-full sm:rounded-t p-4 pr-0">
             <img
               :src="poster"
@@ -65,16 +59,15 @@
                 <span>{{ movie.runtime }} {{ t("general.minutes") }}</span>
                 <template v-if="totalRatings.length">
                   <span v-if="totalRatings[0]" class="mx-2">|</span>
-                  <span v-if="totalRatings[0]"
-                    >{{ totalRatings[0].ratings }}
-                    {{ t("general.ratings") }}</span
-                  >
+                  <span v-if="totalRatings[0]">{{ totalRatings[0].ratings }}
+                    {{ t("general.ratings") }}
+                  </span>
                 </template>
                 <span v-if="movie.vote_average" class="mx-2">|</span>
-                <span v-if="movie.vote_average"
-                  ><wbr />{{ t("rating.tmdb-rating") }}:
-                  {{ movie.vote_average.toFixed(2) }}</span
-                >
+                <span v-if="movie.vote_average">
+                  <wbr />{{ t("rating.tmdb-rating") }}:
+                  {{ movie.vote_average.toFixed(2) }}
+                </span>
                 <span v-if="score" class="mx-2 mb-2">|</span>
                 <div v-if="score" class="inline-block mt-2 sm:mt-0">
                   <font-awesome-icon
@@ -90,11 +83,9 @@
                 </div>
               </div>
 
-              <i
-                v-if="movie.tagline && movie.tagline.length > 1"
-                class="text-sm md: text-md"
-                >"{{ movie.tagline }}"</i
-              >
+              <i v-if="movie.tagline && movie.tagline.length > 1" class="text-sm md: text-md">"
+                {{ movie.tagline }}"
+              </i>
               <p class="my-4 flex flex-wrap gap-1">
                 <span
                   class="text-xs bg-gray-400 text-white p-2 rounded"
@@ -152,7 +143,6 @@ import MovieIcons from './MovieIcons.vue'
 import MovieScore from './MovieScore.vue'
 import MovieTrailer from './MovieTrailer.vue'
 import ShareMovie from './ShareMovie.vue'
-import LoadingAnimation from '~/components/animations/LoadingAnimation.vue'
 
 const store = useStore()
 const route = useRoute()

@@ -1,10 +1,6 @@
 <template>
   <div v-if="trailerURL" class="iframe-container mt-4 mb-8 detailpage-box-shadow">
-    <iframe
-        :src="trailerURL"
-        allow="fullscreen"
-    >
-    </iframe>
+    <iframe :src="trailerURL" allow="fullscreen"></iframe>
   </div>
 </template>
 
