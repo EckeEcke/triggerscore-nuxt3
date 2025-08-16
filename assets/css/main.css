@@ -39,10 +39,10 @@
   background: linear-gradient(135deg, #FF6600, #FFD700, #FF6600, #FFD700);
   background-size:400%;
   animation: text-gradient 3s linear infinite;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   background-clip: text;
-    text-fill-color: transparent;
+  text-fill-color: transparent;
  }
  
  @keyframes text-gradient {
@@ -50,13 +50,13 @@
    background-position: 100% 50%;
   }
   30% {
-   background-position: 0% 50%;
+   background-position: 0 50%;
   }
    70% {
-   background-position: 0% 50%;
+   background-position: 0 50%;
   }
    100% {
-   background-position: 0% 50%;
+   background-position: 0 50%;
   }
  }
 
@@ -81,5 +81,5 @@
 }
 
 .font-semibold {
-  font-family: Avenir;
+    font-family: Avenir, serif;
 }
