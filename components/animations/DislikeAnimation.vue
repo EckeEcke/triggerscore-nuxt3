@@ -21,7 +21,10 @@ const props = defineProps({
   likeClicked: Boolean,
 })
 
-const anim: Ref<any> = ref(null)
+const anim: Ref<{
+  play: () => void,
+  stop: () => void,
+} | null> = ref(null)
 
 const emit = defineEmits(['dislikeClicked'])
 

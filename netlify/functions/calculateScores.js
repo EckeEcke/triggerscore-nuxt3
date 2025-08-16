@@ -14,12 +14,8 @@ export const calculateTotal = (score) => {
 
 export const calculateScores = (data) => {
     let scores = []
-    let comments = 0
     
     data.forEach(entry => {
-        if (entry.comment != null && entry.comment.length > 3) {
-            comments += 1
-        }
         const index = scores.map(score => score.movie_id).indexOf(entry.movie_id)
         const entryTotal = calculateTotal(entry)
         if (index === -1) {
@@ -37,10 +33,10 @@ export const calculateScores = (data) => {
             scores[index].rating_cringe += entry.rating_cringe
             scores[index].rating_total += entryTotal
             if (entry.liked === 1 || entry.liked === true) {
-            scores[index].likes += 1
+                scores[index].likes += 1
             }
             if (entry.disliked === 1 || entry.disliked === true) {
-            scores[index].dislikes += 1
+                scores[index].dislikes += 1
             }
             scores[index].comments.push(entry.comment)
         }

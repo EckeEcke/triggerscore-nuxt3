@@ -4,6 +4,7 @@ import placeholderTriggerscores from '~/assets/triggerscores.json'
 import placeholderBondMovies from '~/assets/bondMovies.json'
 
 export type ScoreKey = 'rating_total' | 'rating_sexism' | 'rating_racism' | 'rating_others' | 'rating_cringe'
+export type SortingOption = 'a-z' | 'z-a' | 'date-desc' | 'date-asc' | 'ts-desc' | 'ts-asc'
 
 
 export interface TriggerScore {
@@ -34,12 +35,15 @@ interface Stats {
     totalMovies?: number
     totalRatings?: number
     averageScore?: number
-}
-
-interface RecentRating {
-    movie_id: number
-    rating: number
-    created_at: string
+    amountMovies?: number
+    amountComments?: number
+    amountLikes?: number
+    amountDislikes?: number
+    averageTotal?: number
+    averageSexism?: number
+    averageRacism?: number
+    averageOthers?: number
+    averageCringe?: number
 }
 
 interface RecentComment {
@@ -47,6 +51,8 @@ interface RecentComment {
     movie_id: number
     comment: object
     created_at: string
+    liked: boolean | number
+    disliked: boolean | number
 }
 
 interface StoreState {
@@ -58,7 +64,7 @@ interface StoreState {
     selectedMovieScore: TriggerScore | undefined
     recentRatings: Movie[]
     recentComments: RecentComment[]
-    recentScores: RecentRating[]
+    recentScores: TriggerScore[]
     filteredMovies: Movie[]
     searchInput: string
     searchTerm: string
@@ -72,7 +78,7 @@ interface StoreState {
     filterMoviesByPrime: boolean
     filterMoviesByDisney: boolean
     filterMoviesBySky: boolean
-    sortingOption: string
+    sortingOption: SortingOption
     highlightsLoading: boolean
     moviesLoading: boolean
     shownScore: ScoreKey
@@ -118,42 +124,33 @@ const sortZtoA = (x: Movie, y: Movie) => {
 
 const sortByDateDesc = (x: Movie, y: Movie) => Number(new Date(y.release_date)) - Number(new Date(x.release_date))
 
-const sortByDateAsc =(
-  x: { release_date: number },
-  y: { release_date: number }
-) => Number(new Date(x.release_date)) - Number(new Date(y.release_date))
+const sortByDateAsc = (x: Movie, y: Movie) => Number(new Date(x.release_date)) - Number(new Date(y.release_date))
 
-const sortByTsDesc = (array: TriggerScore[], key: ScoreKey) =>
-    (x: { id: number }, y: { id: number }) => {
-        const triggerscoreX =
-          array[
-            array.map((score: { movie_id: number }) => score.movie_id).indexOf(x.id)
-          ][key]
-        const triggerscoreY =
-          array[
-            array.map((score: { movie_id: number }) => score.movie_id).indexOf(y.id)
-          ][key]
-        if (triggerscoreX > triggerscoreY) {
-          return -1
-        }
-        if (triggerscoreX < triggerscoreY) {
-          return 1
-        }
+const sortByTsDesc = (array: TriggerScore[], key: ScoreKey) => {
+    const scoreMap = new Map<number, TriggerScore>()
+    array.forEach(score => scoreMap.set(score.movie_id, score))
+
+    return (x: Movie, y: Movie) => {
+        const scoreX = scoreMap.get(x.id)?.[key] ?? 0
+        const scoreY = scoreMap.get(y.id)?.[key] ?? 0
+
+        if (scoreX > scoreY) return -1
+        if (scoreX < scoreY) return 1
+        return 0
+    }
 }
 
-const sortByTsAsc = (array: TriggerScore[], key: ScoreKey) =>
-  (x: { id: number }, y: { id: number }) => {
-    const triggerscoreX =
-      array[array.map((score) => score.movie_id).indexOf(x.id)][key]
-    const triggerscoreY =
-      array[
-        array.map((score: { movie_id: number }) => score.movie_id).indexOf(y.id)
-      ][key]
-    if (triggerscoreX < triggerscoreY) {
-      return -1
-    }
-    if (triggerscoreX > triggerscoreY) {
-      return 1
+const sortByTsAsc = (array: TriggerScore[], key: ScoreKey) => {
+    const scoreMap = new Map<number, TriggerScore>()
+    array.forEach(score => scoreMap.set(score.movie_id, score))
+
+    return (x: Movie, y: Movie) => {
+        const scoreX = scoreMap.get(x.id)?.[key] ?? 0
+        const scoreY = scoreMap.get(y.id)?.[key] ?? 0
+
+        if (scoreX > scoreY) return 1
+        if (scoreX < scoreY) return -1
+        return 0
     }
 }
 
@@ -230,7 +227,7 @@ export const useStore = defineStore({
       this.movies = await loadedMovies.json()
       this.moviesLoading = false
     },
-    async setRecentRatings(locale: string, ratings: RecentRating[]) {
+    async setRecentRatings(locale: string, ratings: TriggerScore[]) {
       this.recentScores = ratings
       if (!ratings) return
       const recentRatings = Promise.all(
@@ -404,7 +401,7 @@ export const useStore = defineStore({
       this.minScore = 0
       this.maxScore = 10
     },
-    setSortingOption(state: StoreState, payload: string) {
+    setSortingOption(state: StoreState, payload: SortingOption) {
       this.sortingOption = payload
     },
     setMovieYearMin(state: StoreState, payload: number) {
@@ -425,32 +422,38 @@ export const useStore = defineStore({
     setIsFiltering(payload: boolean) {
       this.isFiltering = payload
     },
-    sortMovies(
-      sortingOption: string,
+  sortMovies(
+      sortingOption: SortingOption,
       array: Movie[],
       triggerscores: TriggerScore[],
       shownScore: ScoreKey
-    ) {
-      let clonedArray = [...array]
-      if (sortingOption === 'a-z') {
-        clonedArray = clonedArray.sort(sortAtoZ)
-      }
-      if (sortingOption === 'z-a') {
-        clonedArray = clonedArray.sort(sortZtoA)
-      }
-      if (sortingOption === 'date-desc') {
-        clonedArray = clonedArray.sort(sortByDateDesc)
-      }
-      if (sortingOption === 'date-asc') {
-        clonedArray = clonedArray.sort(sortByDateAsc)
-      }
-      if (sortingOption === 'ts-desc') {
-        clonedArray = clonedArray.sort(sortByTsDesc(triggerscores, shownScore))
-      }
-      if (sortingOption === 'ts-asc') {
-        clonedArray = clonedArray.sort(sortByTsAsc(triggerscores, shownScore))
-      }
-      this.filteredMovies = clonedArray
+  ) {
+          let clonedArray = [...array]
+
+          switch (sortingOption) {
+              case 'a-z':
+                  clonedArray.sort(sortAtoZ)
+                  break
+              case 'z-a':
+                  clonedArray.sort(sortZtoA)
+                  break
+              case 'date-desc':
+                  clonedArray.sort(sortByDateDesc)
+                  break
+              case 'date-asc':
+                  clonedArray.sort(sortByDateAsc);
+                  break
+              case 'ts-desc':
+                  clonedArray.sort(sortByTsDesc(triggerscores, shownScore));
+                  break
+              case 'ts-asc':
+                  clonedArray.sort(sortByTsAsc(triggerscores, shownScore));
+                  break
+              default:
+                  break
+          }
+
+          this.filteredMovies = clonedArray
     },
     filterByYear(filterMax: number, filterMin: number, array: Movie[]) {
       let clonedArray = [...array]
@@ -468,7 +471,7 @@ export const useStore = defineStore({
       this.filteredMovies = clonedArray
     },
     filterByScore(
-      array: TriggerScore[],
+      array: Movie[],
       triggerscores: TriggerScore[],
       min: number,
       max: number,
@@ -490,8 +493,7 @@ export const useStore = defineStore({
     },
     async loadProviderData(locale: string) {
       const data = await fetch(`${apiBaseUrl}/fetchProviders?locale=${locale}`)
-      const providerData = await data.json()
-      this.providerData = providerData
+      this.providerData = await data.json()
     },
     async filterByProvider() {
       if (!this.filterMoviesByNetflix && !this.filterMoviesByPrime && !this.filterMoviesByDisney && !this.filterMoviesBySky) {

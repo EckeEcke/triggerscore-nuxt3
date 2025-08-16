@@ -27,7 +27,6 @@ export default defineNuxtConfig({
 
   modules: ['@pinia/nuxt', '@nuxtjs/robots', '@nuxtjs/i18n', '@nuxt/eslint'],
 
-  // @ts-ignore
   i18n: {
       locales: [
           { code: 'de', name: 'German', file: 'de.json' },

@@ -29,7 +29,7 @@
                 </div>
                 </div>
                 <NuxtLink
-                :to="pathToNavigate(comment.movie_id)"
+                :to="pathToNavigate(comment.movie_id.toString())"
                 tag="h4"
                 class="font-semibold cursor-pointer text-sm">
                 {{

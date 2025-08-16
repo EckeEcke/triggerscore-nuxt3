@@ -22,8 +22,9 @@ export const handler = async (event) => {
 
   try {
     const database = await connectToDatabase()
+    // try to connect
     const scores = database.collection('scores')
-    const query = { id: '3' }
+    console.log(scores)
     return {
       statusCode: 200,
       body: JSON.stringify({ message: 'Connected to database' }),
