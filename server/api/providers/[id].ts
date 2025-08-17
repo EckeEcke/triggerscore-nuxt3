@@ -10,5 +10,6 @@ export default defineEventHandler(async (event) => {
         })
     }
 
-    return useFetch(`https://api.themoviedb.org/3/movie/${id}/watch/providers?api_key=${apiKey}`)
+    const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/watch/providers?api_key=${apiKey}`)
+    return await response.json()
   })
