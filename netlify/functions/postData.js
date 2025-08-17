@@ -70,6 +70,7 @@ export const handler = async (event) => {
             title: body.title,
             original_title: body.original_title,
             runtime: body.runtime,
+            createdAt: new Date()
         })
 
         return {
