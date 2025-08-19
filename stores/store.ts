@@ -236,7 +236,7 @@ export const useStore = defineStore({
             `https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${locale}`
           )
             .then((res) => res.json())
-            .catch(() => console.log('ooopsy'))
+            .catch(() => console.log('oopsy'))
         )
       )
       recentRatings.then((res: Movie[]) => (this.recentRatings = res))
