@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="container text-white py-6 px-4 md:py-12 xl:w-10/12 text-left text-sm md:text-base mx-auto md:rounded-lg"
-  >
+  <div class="container text-white py-6 px-4 md:py-12 xl:w-10/12 text-left text-sm md:text-base mx-auto md:rounded-lg">
     <Head>
       <Title>Triggerscore - FAQ / Frequently asked questions</Title>
       <Meta charset="UTF-8" />
@@ -64,4 +62,16 @@
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
+
+useSeoMeta({
+  title: 'Triggerscore - FAQ / Frequently asked questions',
+  description: 'Frequently asked questions about Triggerscore',
+  author: 'Christian Eckardt',
+  ogTitle: 'Triggerscore - FAQ / Frequently asked questions',
+  ogDescription: 'Frequently asked questions about Triggerscore',
+  ogUrl: () => `https://www.triggerscore.de/faq`,
+  ogType: 'website',
+  charset: 'utf-8',
+  viewport: 'width=device-width, initial-scale=1.0',
+})
 </script>

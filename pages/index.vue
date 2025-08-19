@@ -1,19 +1,4 @@
 <template>
-  <Head>
-    <Title>Triggerscore - rating movies based on triggering potential</Title>
-    <Meta charset="UTF-8" />
-    <Meta
-      name="keywords"
-      content="triggering movies, ratings, movieratings, not aged well, bad movies"
-    />
-    <Meta
-      name="description"
-      content="Triggerscore offers a new way of watching old movies from back in the day: could this movie still be made like this nowadays? Or would it cause a huge sh*tstorm?"
-    />
-    <Meta name="author" content="Christian Eckardt" />
-    <Meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  </Head>
-  
   <Searchbox show-title />
   <LoadingAnimation v-show="isLoading" />
   <template v-if="!isLoading">
@@ -34,29 +19,18 @@
             ')',
         }"
       >
-        <h2
-          class="text-white text-2xl sm:text-4xl text-left font-semibold mb-2 uppercase"
-        >
+        <h2 class="text-white text-2xl sm:text-4xl text-left font-semibold mb-2 uppercase">
           {{ t("general.newest") }}
-          <span
-            class="text-2xl sm:text-4xl self-center font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200 cursor-pointer"
-          >
-            TRIGGERSC<font-awesome-icon
-              :icon="['fas', 'angry']"
-              class="text-white"
-            />RES
+          <span class="text-2xl sm:text-4xl self-center font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200 cursor-pointer">
+            TRIGGERSC<font-awesome-icon :icon="['fas', 'angry']" class="text-white" />RES
           </span>
         </h2>
         <p class="text-base md:text-lg text-white font-semibold text-left">
           {{ t("general.recentRatings") }}
         </p>
       </div>
-      <div
-        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 sm:gap-8 justify-content-start items-center"
-      >
-        <div
-          class="grid grid-cols-1 sm:grid-cols-2 sm:gap-8 col-span-2 justify-content-start recent-ratings"
-        >
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 sm:gap-8 justify-content-start items-center">
+        <div class="grid grid-cols-1 sm:grid-cols-2 sm:gap-8 col-span-2 justify-content-start recent-ratings">
           <RecentRatingsItem
             v-for="(rating, index) in store.recentRatings"
             :id="index"
@@ -84,17 +58,10 @@
               ')',
           }"
         >
-          <div class="">
-            <h2
-              class="text-2xl sm:text-4xl font-semibold mb-2 text-white uppercase"
-            >
-              <span
-                class="self-center font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200 cursor-pointer"
-              >
-                TRIGGERSC<font-awesome-icon
-                  :icon="['fas', 'angry']"
-                  class="text-white"
-                />RE
+          <div>
+            <h2 class="text-2xl sm:text-4xl font-semibold mb-2 text-white uppercase">
+              <span class="self-center font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200 cursor-pointer">
+                TRIGGERSC<font-awesome-icon :icon="['fas', 'angry']" class="text-white" />RE
               </span>
               {{ t("general.top10") }}
             </h2>
@@ -132,32 +99,25 @@
         show-border
       />
     </section>
-    <section
-      class="rounded p-4 py-8 sm:p-12 my-4 container xl:w-10/12 mx-auto bg-gradient-to-r from-gray-950 to-gray-80 text-white text-left"
-    > 
+    <section class="rounded p-4 py-8 sm:p-12 my-4 container xl:w-10/12 mx-auto bg-gradient-to-r from-gray-950 to-gray-80 text-white text-left">
       <DefinitionTriggered />
     </section>
-    <section
-      class="mb-4 mt-32 container xl:w-10/12 mx-auto"
-    > 
+    <section class="mb-4 mt-32 container xl:w-10/12 mx-auto">
       <QuizDisturber />
     </section>
-  <section class="container xl:w-10/12 mx-auto px-4 my-12 sm:my-24">
-    <div class="bg-opacity-90 py-16">
-      <h2 class="text-white text-xl font-semibold my-4">
-        {{ t("general.discoverMoreMovies") }}
-      </h2>
-      <div class="py-8">
-        <NuxtLink
-          :to="localePath('/all')"
-          class="bg-yellow-500 transition hover:bg-yellow-600 p-3 rounded-lg text-white font-semibold uppercase my-4"
-          >{{ t("header.allMovies") }}</NuxtLink
-        >
+    <section class="container xl:w-10/12 mx-auto px-4 my-12 sm:my-24">
+      <div class="bg-opacity-90 py-16">
+        <h2 class="text-white text-xl font-semibold my-4">
+          {{ t("general.discoverMoreMovies") }}
+        </h2>
+        <div class="py-8">
+          <a :href="localePath('/all')" class="bg-yellow-500 transition hover:bg-yellow-600 p-3 rounded-lg text-white font-semibold uppercase my-4">
+            {{ t("header.allMovies") }}
+          </a>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
   </template>
-  
 </template>
 
 <script setup lang='ts'>
@@ -177,6 +137,18 @@ const isLoading = computed(
     store.triggerscores.length == 0 ||
     store.loadingSelectedMovie
 )
+
+useSeoMeta({
+  title: 'Triggerscore - rating movies based on triggering potential',
+  description: 'Triggerscore offers a new way of watching old movies from back in the day: could this movie still be made like this nowadays? Or would it cause a huge sh*tstorm?',
+  author: 'Christian Eckardt',
+  ogTitle: 'Triggerscore - rating movies based on triggering potential',
+  ogDescription: 'Triggerscore offers a new way of watching old movies from back in the day: could this movie still be made like this nowadays? Or would it cause a huge sh*tstorm?',
+  ogUrl: () => `https://www.triggerscore.de/`,
+  ogType: 'website',
+  charset: 'utf-8',
+  viewport: 'width=device-width, initial-scale=1.0',
+})
 </script>
 
 <style scoped>

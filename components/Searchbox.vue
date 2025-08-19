@@ -10,26 +10,19 @@
     }"
   >
     <div class="container mx-auto px-4 xl:w-10/12">
-      <h1
-        v-if="showTitle"
-        class="text-white text-2xl md:text-4xl font-semibold text-left"
-      >
-        {{ t("search.searchHeadline1")
-        }}<NuxtLink
-          :to="localePath('/faq')"
-          class="text-yellow-500 transition hover:text-yellow-600"
-          >Triggerscore</NuxtLink
-        >
+      <h1 v-if="showTitle" class="text-white text-2xl md:text-4xl font-semibold text-left">
+        {{ t("search.searchHeadline1") }}´
+        <a :href="localePath('/faq')" class="text-yellow-500 transition hover:text-yellow-600">
+          Triggerscore
+        </a>
         {{ t("search.searchHeadline2") }}
       </h1>
       <div class="flex flex-col md:flex-row mx-auto">
         <div class="flex mx-auto py-4 self-center w-full opacity-95">
-          <div
-            class="rounded-lg flex w-full justify-start focus-within:shadow-inner"
-          >
+          <div class="rounded-lg flex w-full justify-start focus-within:shadow-inner">
             <button
               class="flex items-center justify-center px-3 w-16 rounded-l-xl bg-yellow-500 transition hover:bg-yellow-600 text-white"
-              :disabled="searchInput.length == 0"
+              :disabled="searchInput.length === 0"
               @click="searchMovie"
             >
               <font-awesome-icon :icon="['fas', 'search']" class="text-lg" />

@@ -1,13 +1,5 @@
 <template>
   <main class="bg-gray-900">
-    <Head>
-      <Title>Triggerscore - Searchpage</Title>
-      <Meta charset="UTF-8" />
-      <Meta name="keywords" content="triggering movies, search page" />
-      <Meta name="desription" content="search results for triggering movies" />
-      <Meta name="author" content="Christian Eckardt" />
-      <Meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    </Head>
     <div
       v-if="store.searchResults.length == 0 && store.searchError"
       class="text-center font-semibold container mx-auto my-8 xl:w-10/12 md:px-4"
@@ -22,10 +14,8 @@
           class="bg-yellow-500 transition hover:bg-yellow-600 p-3 my-6 rounded font-semibold text-white uppercase"
           @click="resetSearch"
         >
-          <font-awesome-icon
-            :icon="['fas', 'arrow-circle-left']"
-            class="mr-2"
-          />{{ t("general.back") }}
+          <font-awesome-icon :icon="['fas', 'arrow-circle-left']" class="mr-2" />
+          {{ t("general.back") }}
         </button>
       </div>
     </div>
@@ -43,10 +33,7 @@
           class="bg-yellow-500 transition hover:bg-yellow-600 p-3 mt-3 rounded font-semibold text-white uppercase"
           @click="resetSearch"
         >
-          <font-awesome-icon
-            :icon="['fas', 'arrow-circle-left']"
-            class="mr-2"
-          />{{ t("general.back") }}
+          <font-awesome-icon :icon="['fas', 'arrow-circle-left']" class="mr-2" />{{ t("general.back") }}
         </button>
       </div>
     </div>
@@ -65,11 +52,7 @@
         v-for="movie in store.searchResults"
         :key="movie.id"
         :movie="movie"
-        :scores="
-          store.triggerscores[
-            store.triggerscores.map((score) => score.movie_id).indexOf(movie.id)
-          ]
-        "
+        :scores="store.triggerscores[store.triggerscores.map((score) => score.movie_id).indexOf(movie.id)]"
       />
     </transition-group>
     <button
@@ -114,9 +97,18 @@ const searchMore = async () => {
   }, 2000)
 }
 
-if (store.searchTerm == '') {
-  navigateTo(localePath('/'))
-}
+if (store.searchTerm == '') navigateTo(localePath('/'))
+
+useSeoMeta({
+  title: 'Triggerscore - Search page',
+  description: 'Psearch results for triggering movies',
+  author: 'Christian Eckardt',
+  ogTitle: 'Triggerscore - Search page',
+  ogDescription: 'search results for triggering movies',
+  ogType: 'website',
+  charset: 'utf-8',
+  viewport: 'width=device-width, initial-scale=1.0',
+})
 
 </script>
 

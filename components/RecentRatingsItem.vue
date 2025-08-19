@@ -13,20 +13,9 @@
           </p>
         </div>
         <div class="w-9/12 overflow-hidden whitespace-nowrap custom-headline">
-          <NuxtLink
-            v-if="movie.title.length > 0"
-            tag="h3"
-            :to="pathToNavigate(movie.id)"
-            class="text-base font-semibold h-6 cursor-pointer"
-          >
-            {{ movie.title }}
-          </NuxtLink>
-          <NuxtLink
-v-else class="text-base font-semibold h-6 cursor-pointer"
-          :to="pathToNavigate(movie.id)"
-          tag="h3">
-            {{ movie.original_title }}
-          </NuxtLink>
+          <a :href="pathToNavigate" class="text-base font-semibold h-6 cursor-pointer">
+            <h3>{{ movie.title.length > 0 ? movie.title : movie.original_title }}</h3>
+          </a>
           <div class="text-xs pt-1">
             <span>{{ movie.release_date.substring(0, 4) }}</span>
             <span class="mx-2">|</span>
@@ -37,13 +26,13 @@ v-else class="text-base font-semibold h-6 cursor-pointer"
     </div>
     <div class="w-full px-3 md:px-0 pt-4 pb-3 gap-4 flex">
       <div class="relative hidden md:block">
-        <NuxtLink :to="pathToNavigate(movie.id)">
+        <a :href="pathToNavigate">
           <img
             class="h-36 w-32 rounded-sm cursor-pointer"
             :alt="movie.original_title"
-            :src="poster2"
+            :src="posterPath"
           >
-        </NuxtLink>
+        </a>
         <div
           class="flex absolute top-1 right-1 rounded-lg justify-center w-12 h-12 bg-opacity-80 pointer-events-none"
           :class="scoreBackground"
@@ -63,22 +52,13 @@ v-else class="text-base font-semibold h-6 cursor-pointer"
       </div>
 
       <article class="text-left relative w-full h-full flex flex-col">
-        <NuxtLink
+        <a
           v-if="movie.title && movie.title.length > 0"
-          :to="pathToNavigate(movie.id)"
-          tag="h3"
+          :href="pathToNavigate"
           class="hidden md:block text-base mb-1 font-semibold h-6 overflow-hidden cursor-pointer "
         >
-          {{ movie.title }}
-        </NuxtLink>
-        <NuxtLink
-        v-else
-          :to="pathToNavigate(movie.id)"
-          tag="h3"
-          class="hidden md:block text-base mb-1 font-semibold overflow-hidden cursor-pointer"
-        >
-          {{ movie.original_title }}
-        </NuxtLink>
+          <h3>{{ movie.title && movie.title.length > 0 ? movie.title : movie.original_title }}</h3>
+        </a>
         <div class="text-xs mb-1 py-1 hidden md:block">
           <span>{{ movie.release_date.substring(0, 4) }}</span>
           <span class="mx-2">|</span>
@@ -133,13 +113,10 @@ const props = defineProps({
 })
 
 const localePath = useLocalePath()
-const pathToNavigate = (id: string) => localePath(`/movie/${id}`)
+const pathToNavigate = computed(() => localePath(`/movie/${props.movie.id}`))
 
-const poster2 = computed(
-  () =>
-    `https://image.tmdb.org/t/p/original/${
-      props.movie.poster_path ?? placeholderRatings[props.id].poster_path
-    }`
+const posterPath = computed(
+    () => `https://image.tmdb.org/t/p/original/${props.movie.poster_path ?? placeholderRatings[props.id].poster_path}`
 )
 
 const scoreAvailable = computed(() => props.scores !== undefined)

@@ -4,10 +4,7 @@
     class="highlight-container w-full bg-gray-900 bg-opacity-95 px-4 mb-0 container mx-auto xl:w-10/12"
     :class="{ 'pt-4 pb-8': moreSpacing }"
   >
-    <div
-      class="font-semibold mb-4 pt-6"
-      :class="{ 'border-t border-gray-800': showBorder }"
-    >
+    <div class="font-semibold mb-4 pt-6" :class="{ 'border-t border-gray-800': showBorder }">
       <h2 class="text-xl text-yellow-500 text-left text-underline mb-2">
         {{ title }}
       </h2>
@@ -24,29 +21,19 @@
           :key="index"
           :movie="movie"
           :shown-score="shownScore"
-          :scores="
-            triggerscores[
-              triggerscores.map((score) => score.movie_id).indexOf(movie.id)
-            ]
-          "
+          :scores="triggerscores[triggerscores.map((score) => score.movie_id).indexOf(movie.id)]"
           :load-item="true"
         />
         <div
           class="z-10 justify-between md:px-4 container mx-auto xl:w-10/12 hidden sm:group-hover:flex pointer-events-none absolute top-36 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
         >
-          <button
-            class="bg-white rounded-full"
-            @click="scrollHighlightContainer('left')"
-          >
+          <button class="bg-white rounded-full" @click="scrollHighlightContainer('left')">
             <font-awesome-icon
               class="h-full text-yellow-500 text-4xl transition transform scale-125 hover:scale-150 pointer-events-auto"
               :icon="['fas', 'arrow-circle-left']"
             />
           </button>
-          <button
-            class="bg-white rounded-full"
-            @click="scrollHighlightContainer('right')"
-          >
+          <button class="bg-white rounded-full" @click="scrollHighlightContainer('right')">
             <font-awesome-icon
               class="h-full text-yellow-500 text-4xl transition transform scale-125 hover:scale-150 pointer-events-auto"
               :icon="['fas', 'arrow-circle-right']"

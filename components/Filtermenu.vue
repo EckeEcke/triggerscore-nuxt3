@@ -24,27 +24,9 @@
                 {{ t("filter.sort") }}
               </h2>
               <div class="flex w-full my-3 border border-gray-200 rounded">
-                <select
-                  v-model="store.sortingOption"
-                  class="w-full h-8 md:h-10 bg-white rounded p-2 text-sm md:text-base text-black"
-                >
-                  <option class="py-1" value="a-z">
-                    {{ t("filter.AtoZ") }}
-                  </option>
-                  <option class="py-1" value="z-a">
-                    {{ t("filter.ZtoA") }}
-                  </option>
-                  <option class="py-1" value="date-desc">
-                    {{ t("filter.yearDesc") }}
-                  </option>
-                  <option class="py-1" value="date-asc">
-                    {{ t("filter.yearAsc") }}
-                  </option>
-                  <option class="py-1" value="ts-desc">
-                    {{ t("filter.scoreDesc") }}
-                  </option>
-                  <option class="py-1" value="ts-asc">
-                    {{ t("filter.scoreAsc") }}
+                <select v-model="store.sortingOption" class="w-full h-8 md:h-10 bg-white rounded p-2 text-sm md:text-base text-black">
+                  <option v-for="(option, index) in sortingOptions" :key="index" :value="option.value">
+                    {{ option.name }}
                   </option>
                 </select>
               </div>
@@ -54,24 +36,9 @@
                 {{ t("filter.chooseScore") }}
               </h2>
               <div class="flex w-full my-3 border border-gray-200 rounded">
-                <select
-                  v-model="store.shownScore"
-                  class="w-full h-8 md:h-10 bg-white rounded p-2 text-sm md:text-base text-black"
-                >
-                  <option class="py-1" value="rating_total">
-                    {{ t("categories.totalScore") }}
-                  </option>
-                  <option class="py-1" value="rating_sexism">
-                    {{ t("categories.sexism") }}
-                  </option>
-                  <option class="py-1" value="rating_racism">
-                    {{ t("categories.racism") }}
-                  </option>
-                  <option class="py-1" value="rating_others">
-                    {{ t("categories.others") }}
-                  </option>
-                  <option class="py-1" value="rating_cringe">
-                    {{ t("categories.cringe") }}
+                <select v-model="store.shownScore" class="w-full h-8 md:h-10 bg-white rounded p-2 text-sm md:text-base text-black">
+                  <option v-for="(option, index) in scoreOptions" :key="index" :value="option.value" class="py-1">
+                    {{ option.name }}
                   </option>
                 </select>
               </div>
@@ -125,14 +92,8 @@
                   v-model="netflixFilter"
                   class="h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer accent-yellow-500"
                   type="checkbox"
-                  @change="
-                    store.filterMoviesByNetflix = !store.filterMoviesByNetflix
-                  "
                 >
-                <label
-                  class="form-check-label inline-block text-gray-800 text-left"
-                  for="filter-netflix"
-                >
+                <label class="form-check-label inline-block text-gray-800 text-left" for="filter-netflix">
                   <img
                     alt="Logo Netflix"
                     class="h-4 mt-1 mx-2"
@@ -146,14 +107,8 @@
                   v-model="primeFilter"
                   class="h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer accent-yellow-500"
                   type="checkbox"
-                  @change="
-                    store.filterMoviesByPrime = !store.filterMoviesByPrime
-                  "
                 >
-                <label
-                  class="form-check-label inline-block text-gray-800 text-left"
-                  for="filter-amazon"
-                >
+                <label class="form-check-label inline-block text-gray-800 text-left" for="filter-amazon">
                   <img
                     alt="Logo Prime Video"
                     class="h-5 mt-1 mx-2"
@@ -167,14 +122,8 @@
                   v-model="disneyFilter"
                   class="h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer accent-yellow-500"
                   type="checkbox"
-                  @change="
-                    store.filterMoviesByDisney = !store.filterMoviesByDisney
-                  "
                 >
-                <label
-                  class="form-check-label inline-block text-gray-800 text-left"
-                  for="filter-disney"
-                >
+                <label class="form-check-label inline-block text-gray-800 text-left" for="filter-disney">
                   <img
                     alt="Logo Disney Plus"
                     class="h-7 ml-2 mb-1"
@@ -188,12 +137,8 @@
                   v-model="skyFilter"
                   class="h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer accent-yellow-500"
                   type="checkbox"
-                  @change="store.filterMoviesBySky = !store.filterMoviesBySky"
                 >
-                <label
-                  class="form-check-label inline-block text-gray-800 text-left"
-                  for="filter-disney"
-                >
+                <label class="form-check-label inline-block text-gray-800 text-left" for="filter-disney">
                   <img
                     alt="Logo WOW"
                     class="h-4 mt-1 ml-2"
@@ -224,10 +169,77 @@ import { useI18n } from 'vue-i18n'
 
 const store = useStore()
 const { t } = useI18n()
-const netflixFilter = ref(store.filterMoviesByNetflix)
-const primeFilter = computed(() => store.filterMoviesByPrime)
-const disneyFilter = computed(() => store.filterMoviesByDisney)
-const skyFilter = computed(() => store.filterMoviesBySky)
+
+const scoreOptions = [
+  {
+    value: 'rating_total',
+    name: t('categories.totalScore')
+  },
+  {
+    value: 'rating_sexism',
+    name: t('categories.sexism')
+  },
+  {
+    value: 'rating_racism',
+    name: t('categories.racism')
+  },
+  {
+    value: 'rating_others',
+    name: t('categories.others')
+  },
+  {
+    value: 'rating_cringe',
+    name: t('categories.cringe')
+  },
+]
+
+const sortingOptions = [
+  {
+    value: 'a-z',
+    name: t('filter.AtoZ')
+  },
+  {
+    value: 'z-a',
+    name: t('filter.ZtoA')
+  },
+  {
+    value: 'date-desc',
+    name: t('filter.yearDesc')
+  },
+  {
+    value: 'date-asc',
+    name: t('filter.yearAsc')
+  },
+  {
+    value: 'ts-desc',
+    name: t('filter.scoreDesc')
+  },
+  {
+    value: 'ts-asc',
+    name: t('filter.scoreAsc')
+  },
+]
+
+const netflixFilter = computed({
+  get: () => store.filterMoviesByNetflix,
+  set: (value) => { store.filterMoviesByNetflix = value }
+})
+
+const primeFilter = computed({
+  get: () => store.filterMoviesByPrime,
+  set: (value) => { store.filterMoviesByPrime = value }
+})
+
+const disneyFilter = computed({
+  get: () => store.filterMoviesByDisney,
+  set: (value) => { store.filterMoviesByDisney = value }
+})
+
+const skyFilter = computed({
+  get: () => store.filterMoviesBySky,
+  set: (value) => { store.filterMoviesBySky = value }
+})
+
 const results = computed(() => store.filteredMovies.length)
 
 const resetFilter = () => {
@@ -246,60 +258,15 @@ const scrollToTop = () => {
   window.scrollTo(0, 0)
 }
 
-watch(
+watch([
   () => store.filterMoviesByNetflix,
-  () => {
-    store.filterMovies()
-  }
-)
-
-watch(
   () => store.filterMoviesByPrime,
-  () => {
-    store.filterMovies()
-  }
-)
-
-watch(
   () => store.filterMoviesByDisney,
-  () => {
-    store.filterMovies()
-  }
-)
-
-watch(
   () => store.filterMoviesBySky,
-  () => {
-    store.filterMovies()
-  }
-)
-
-watch(
   () => store.sortingOption,
-  () => {
-    store.filterMovies()
-  }
-)
-
-watch(
   () => store.filterMoviesByYearMin,
-  () => {
-    store.filterMovies()
-  }
-)
-
-watch(
   () => store.filterMoviesByYearMax,
-  () => {
-    store.filterMovies()
-  }
-)
-
-watch(
-  () => store.shownScore,
-  () => {
-    store.filterMovies()
-  }
-)
+  () => store.shownScore
+], store.filterMovies)
 
 </script>

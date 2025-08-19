@@ -9,7 +9,7 @@
           max="10"
           step="0.1"
           class="absolute pointer-events-none appearance-none z-20 h-2 w-full opacity-0 cursor-pointer left-0 focus:outline"
-          @input="mintrigger"
+          @input="minTrigger"
           @focus="minHasFocus = true"
           @blur="minHasFocus = false"
         >
@@ -20,24 +20,22 @@
           max="10"
           step="0.1"
           class="absolute pointer-events-none appearance-none z-20 h-2 w-full opacity-0 cursor-pointer left-0 focus:outline"
-          @input="maxtrigger"
+          @input="maxTrigger"
           @focus="maxHasFocus = true"
           @blur="maxHasFocus = false"
         >
         <div class="relative z-10 h-2">
           <div class="absolute z-10 left-0 right-0 bottom-0 top-0 rounded-md bg-gray-200"/>
-          <div
-            class="absolute z-20 top-0 bottom-0 rounded-md bg-yellow-300"
-            :style="'right:' + maxthumb + '%; left:' + minthumb + '%'"
+          <div class="absolute z-20 top-0 bottom-0 rounded-md bg-yellow-300" :style="'right:' + maxThumb + '%; left:' + minThumb + '%'"
           />
           <div
             class="absolute z-30 w-6 h-6 top-0 left-0 bg-yellow-500 rounded-full -mt-2 -ml-1"
-            :style="'left: ' + minthumb + '%'"
+            :style="'left: ' + minThumb + '%'"
             :class="{'ring-2 ring-white': minHasFocus}"
           />
           <div
             class="absolute z-30 w-6 h-6 top-0 right-0 bg-yellow-500 rounded-full -mt-2 -mr-3"
-            :style="'right: ' + maxthumb + '%'"
+            :style="'right: ' + maxThumb + '%'"
             :class="{'ring-2 ring-white': maxHasFocus}"
           />
         </div>
@@ -60,8 +58,8 @@ const store = useStore()
 
 const min = ref(0)
 const max = ref(10)
-const minthumb = ref(0)
-const maxthumb = ref(0)
+const minThumb = ref(0)
+const maxThumb = ref(0)
 
 const minHasFocus = ref(false)
 const maxHasFocus = ref(false)
@@ -70,38 +68,38 @@ const minScore = computed(() => store.minScore)
 
 const maxScore = computed(() => store.maxScore)
 
-const mintrigger = () => {
+const minTrigger = () => {
   if (minScore.value >= maxScore.value) {
     store.minScore = maxScore.value - 1
   }
   if (minScore.value == 10) {
     store.minScore = 0
   }
-  minthumb.value =
+  minThumb.value =
     (minScore.value - min.value) / (max.value - min.value) * 100
   store.filterMovies()
 }
 
-const maxtrigger = () => {
+const maxTrigger = () => {
   if (maxScore.value >= max.value) {
     store.maxScore = 10
   }
   if (maxScore.value <= minScore.value) {
     store.maxScore = minScore.value + 1
   }
-  maxthumb.value =
+  maxThumb.value =
     100 - ((maxScore.value - min.value) / (max.value - min.value)) * 100
   store.filterMovies()
 }
 
 onMounted(() => {
-  mintrigger()
-  maxtrigger()
+  minTrigger()
+  maxTrigger()
   watch(
     () => store.minScore,
     (currentValue) => {
       if (currentValue == 0) {
-        mintrigger()
+        minTrigger()
         store.filterMovies()
       }
     }
@@ -111,7 +109,7 @@ onMounted(() => {
     () => store.maxScore,
     (currentValue) => {
       if (currentValue == 10) {
-        maxtrigger()
+        maxTrigger()
         store.filterMovies()
       }
     }
@@ -124,7 +122,5 @@ input[type="range"]::-webkit-slider-thumb {
   pointer-events: all;
   width: 24px;
   height: 24px;
-  /*-webkit-appearance: none;
-  /* @apply w-6 h-6 appearance-none pointer-events-auto; */
 }
 </style>

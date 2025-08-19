@@ -1,18 +1,5 @@
 <template>
-  <div
-    class="container px-4 py-6 md:py-12 text-left text-sm md:text-base xl:w-10/12 mx-auto"
-  >
-    <Head>
-      <Title>Triggerscore - About / What is Triggerscore</Title>
-      <Meta charset="UTF-8" />
-      <Meta name="keywords" content="triggering movies, about Triggerscore" />
-      <Meta
-        name="description"
-        content="information on what Triggerscore is about"
-      />
-      <Meta name="author" content="Christian Eckardt" />
-      <Meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    </Head>
+  <div class="container px-4 py-6 md:py-12 text-left text-sm md:text-base xl:w-10/12 mx-auto">
     <section class="text-white lg:w-3/4">
       <div
         class="h-32 bg-cover bg-center py-12 px-8 mb-8"
@@ -39,7 +26,9 @@
     </section>
     <div class="flex items-center gap-4 mt-8">
       <img class="h-8 cursor-pointer" src="../assets/images/github-logo.svg" alt="github link" @click="toGithub()" >
-      <a class="text-white underline cursor-pointer hover:font-bold" href="https://github.com/EckeEcke/triggerscore-nuxt3" target="_blank">Triggerscore Github</a>
+      <a class="text-white underline cursor-pointer hover:font-bold" href="https://github.com/EckeEcke/triggerscore-nuxt3" target="_blank">
+        Triggerscore Github
+      </a>
     </div>
   </div>
 </template>
@@ -50,4 +39,16 @@ import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 
 const toGithub = () => navigateTo('https://github.com/EckeEcke/triggerscore-nuxt3', { external: true })
+
+useSeoMeta({
+  title: 'Triggerscore - About / What is Triggerscore',
+  description: 'information on what Triggerscore is about',
+  author: 'Christian Eckardt',
+  ogTitle: 'Triggerscore - About / What is Triggerscore',
+  ogDescription: 'Triggerscore - rating old movies based on how much users today get triggered',
+  ogUrl: () => `https://www.triggerscore.de/about`,
+  ogType: 'website',
+  charset: 'utf-8',
+  viewport: 'width=device-width, initial-scale=1.0',
+})
 </script>

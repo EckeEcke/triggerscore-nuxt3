@@ -1,8 +1,8 @@
 <template>
-  <NuxtLink
+  <a
     v-if="movie"
-    :to="pathToNavigate"
-    tag="div"
+    :href="pathToNavigate"
+    ref="movieItem"
     class="movie-highlight-item w-40 h-auto mr-3 bg-transparent shadow-md flex flex-none flex-col relative rounded transform transition duration-300 lg:hover-shadow-inner container-xl cursor-pointer"
     style="scroll-snap-align: start"
   >
@@ -10,29 +10,20 @@
       <div class="w-full h-60 overflow-hidden">
         <div
           class="w-full h-full bg-cover rounded-t transition-300 transform scale-100 movie-poster"
-          :style="[loadItem2 ? { backgroundImage: `url(${poster})` } : '']"
+          :style="[isVisible ? { backgroundImage: `url(${poster})` } : '']"
         />
       </div>
       <div
-        class="absolute right-2 mx-auto mt-2 h-12 w-12 text-white rounded-lg bg-opacity-90"
-        :class="scoreBackground"
-      >
+        class="absolute right-2 mx-auto mt-2 h-12 w-12 text-white rounded-lg bg-opacity-90" :class="scoreBackground">
         <div class="relative w-full h-full font-semibold">
-          <span
-            v-if="scoreAvailable"
-            class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-            >{{ score }}</span
-          >
-          <span
-            v-else
-            class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-            >-</span
-          >
+          <span v-if="scoreAvailable" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            {{ score }}
+          </span>
+          <span v-else class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            -
+          </span>
         </div>
-        <div
-          v-if="displayedScore != ''"
-          class="bg-gray-400 opacity-90 rounded p-1 my-1 text-xs font-light"
-        >
+        <div v-if="displayedScore !== ''" class="bg-gray-400 opacity-90 rounded p-1 my-1 text-xs font-light">
           {{ displayedScore }}
         </div>
       </div>
@@ -40,19 +31,16 @@
 
     <div class="w-full py-3 text-white">
       <article class="text-left relative w-full h-full">
-        <h3
-          v-if="movie.title && movie.title.length > 0"
-          class="text-sm max-h-14 mb-1 font-semibold overflow-hidden"
-        >
+        <h3 v-if="movie.title && movie.title.length > 0" class="text-sm max-h-14 mb-1 font-semibold overflow-hidden">
           {{ movie.title }}
         </h3>
         <h3 v-else class="text-sm h-16 mb-1 font-semibold overflow-hidden">
           {{ movie.original_title }}
         </h3>
         <p class="mt-3 mb-1 text-xs md:text-md text-gray-300">
-          <span class="self-center">{{
-            movie.release_date.substring(0, 4)
-          }}</span>
+          <span class="self-center">
+            {{ movie.release_date.substring(0, 4) }}
+          </span>
           <template v-if="movie.runtime">
             <span class="mx-2">|</span>
             <span>{{ movie.runtime }} {{ t("general.minutes") }}</span>
@@ -60,7 +48,7 @@
         </p>
       </article>
     </div>
-  </NuxtLink>
+  </a>
 </template>
 
 <script setup lang='ts'>
@@ -93,8 +81,35 @@ const props = defineProps({
 const localePath = useLocalePath()
 const pathToNavigate = computed(() => localePath(`/movie/${props.movie!.id}`))
 
+const movieItem = ref<HTMLElement | null>(null)
+const isVisible = ref(false)
 
-const loadItem2 = true // replace when intersection observer is fixed
+const observer = shallowRef<IntersectionObserver | null>(null)
+
+onMounted(() => {
+  if (!movieItem.value) return
+
+  observer.value = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          isVisible.value = true
+          observer.value?.disconnect()
+        }
+      },
+      {
+        rootMargin: '100px',
+        threshold: 0.1
+      }
+  )
+
+  observer.value.observe(movieItem.value)
+})
+
+onUnmounted(() => {
+  if (observer.value) {
+    observer.value.disconnect()
+  }
+})
 const poster = computed(
   () => `https://image.tmdb.org/t/p/original/${props.movie!.poster_path}`
 )

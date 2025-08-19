@@ -25,19 +25,8 @@
                   v-model="store.sortingOption"
                   class="w-full h-8 md:h-10 bg-white rounded p-2 outline-none text-sm md:text-base text-black"
                 >
-                  <option class="py-1" value="a-z">A-Z</option>
-                  <option class="py-1" value="z-a">Z-A</option>
-                  <option class="py-1" value="date-desc">
-                    {{ t("filter.yearDesc") }}
-                  </option>
-                  <option class="py-1" value="date-asc">
-                    {{ t("filter.yearAsc") }}
-                  </option>
-                  <option class="py-1" value="ts-desc">
-                    {{ t("filter.scoreDesc") }}
-                  </option>
-                  <option class="py-1" value="ts-asc">
-                    {{ t("filter.scoreAsc") }}
+                  <option v-for="(option, index) in sortingOptions" :key="index" :value="option.value" class="py-1">
+                    {{ option.name }}
                   </option>
                 </select>
               </div>
@@ -50,20 +39,8 @@
                   v-model="store.shownScore"
                   class="w-full h-8 md:h-10 bg-white rounded p-2 outline-none text-sm md:text-base text-black"
                 >
-                  <option class="py-1" value="rating_total">
-                    {{ t("categories.totalScore") }}
-                  </option>
-                  <option class="py-1" value="rating_sexism">
-                    {{ t("categories.sexism") }}
-                  </option>
-                  <option class="py-1" value="rating_racism">
-                    {{ t("categories.racism") }}
-                  </option>
-                  <option class="py-1" value="rating_others">
-                    {{ t("categories.others") }}
-                  </option>
-                  <option class="py-1" value="rating_cringe">
-                    {{ t("categories.cringe") }}
+                  <option v-for="(option, index) in scoreOptions" :key="index" :value="option.value" class="py-1">
+                    {{ option.name }}
                   </option>
                 </select>
               </div>
@@ -81,73 +58,45 @@
               <div class="form-check text-left mb-2 h-8">
                 <input
                   id="filter-netflix"
-                  v-model="store.filterMoviesByNetflix"
+                  v-model="netflixFilter"
                   class="h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer accent-yellow-500"
                   type="checkbox"
                 >
-                <label
-                  class="form-check-label inline-block text-gray-800 text-left"
-                  for="filter-netflix"
-                >
-                  <img
-                    alt="Logo Netflix"
-                    class="h-4 mt-1 mx-2"
-                    src="../assets/images/netflix-logo.svg"
-                  >
+                <label class="form-check-label inline-block text-gray-800 text-left" for="filter-netflix">
+                  <img alt="Logo Netflix" class="h-4 mt-1 mx-2" src="../assets/images/netflix-logo.svg">
                 </label>
               </div>
               <div class="form-check text-left mb-2 h-8">
                 <input
                   id="filter-amazon"
-                  v-model="store.filterMoviesByPrime"
+                  v-model="primeFilter"
                   class="h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer accent-yellow-500"
                   type="checkbox"
                 >
-                <label
-                  class="form-check-label inline-block text-gray-800 text-left"
-                  for="filter-amazon"
-                >
-                  <img
-                    alt="Logo Prime Video"
-                    class="h-6 mt-1 mx-2"
-                    src="../assets/images/amazon-prime-logo3.png"
-                  >
+                <label class="form-check-label inline-block text-gray-800 text-left" for="filter-amazon">
+                  <img alt="Logo Prime Video" class="h-6 mt-1 mx-2" src="../assets/images/amazon-prime-logo3.png">
                 </label>
               </div>
               <div class="form-check text-left mb-2 h-8">
                 <input
                   id="filter-disney"
-                  v-model="store.filterMoviesByDisney"
+                  v-model="disneyFilter"
                   class="h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer accent-yellow-500"
                   type="checkbox"
                 >
-                <label
-                  class="form-check-label inline-block text-gray-800 text-left"
-                  for="filter-disney"
-                >
-                  <img
-                    alt="Logo Disney Plus"
-                    class="h-8 ml-2"
-                    src="../assets/images/disney+-logo2.svg"
-                  >
+                <label class="form-check-label inline-block text-gray-800 text-left" for="filter-disney">
+                  <img alt="Logo Disney Plus" class="h-8 ml-2" src="../assets/images/disney+-logo2.svg">
                 </label>
               </div>
               <div class="form-check text-left mb-2 h-8">
                 <input
                   id="filter-disney"
-                  v-model="store.filterMoviesBySky"
+                  v-model="skyFilter"
                   class="h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer accent-yellow-500"
                   type="checkbox"
                 >
-                <label
-                  class="form-check-label inline-block text-gray-800 text-left"
-                  for="filter-disney"
-                >
-                  <img
-                    alt="Logo WOW"
-                    class="h-4 mt-1 ml-2"
-                    src="../assets/images/sky-logo.svg"
-                  >
+                <label class="form-check-label inline-block text-gray-800 text-left" for="filter-disney">
+                  <img alt="Logo WOW" class="h-4 mt-1 ml-2" src="../assets/images/sky-logo.svg">
                 </label>
               </div>
               <hr class="my-4 border-gray-800" >
@@ -221,11 +170,9 @@ const { t } = useI18n()
 
 defineEmits(['close'])
 
-const sortingOption = computed(() => store.sortingOption)
 const filterMin = computed(() => store.filterMoviesByYearMin)
 const filterMax = computed(() => store.filterMoviesByYearMax)
 const results = computed(() => store.filteredMovies.length)
-const shownScore = computed(() => store.shownScore)
 
 const resetFilter = () => {
   store.resetFilter()
@@ -237,61 +184,86 @@ const scrollToTop = () => {
 }
 
 
-watch(
+const scoreOptions = [
+  {
+    value: 'rating_total',
+    name: t('categories.totalScore')
+  },
+  {
+    value: 'rating_sexism',
+    name: t('categories.sexism')
+  },
+  {
+    value: 'rating_racism',
+    name: t('categories.racism')
+  },
+  {
+    value: 'rating_others',
+    name: t('categories.others')
+  },
+  {
+    value: 'rating_cringe',
+    name: t('categories.cringe')
+  },
+]
+
+const sortingOptions = [
+  {
+    value: 'a-z',
+    name: t('filter.AtoZ')
+  },
+  {
+    value: 'z-a',
+    name: t('filter.ZtoA')
+  },
+  {
+    value: 'date-desc',
+    name: t('filter.yearDesc')
+  },
+  {
+    value: 'date-asc',
+    name: t('filter.yearAsc')
+  },
+  {
+    value: 'ts-desc',
+    name: t('filter.scoreDesc')
+  },
+  {
+    value: 'ts-asc',
+    name: t('filter.scoreAsc')
+  },
+]
+
+const netflixFilter = computed({
+  get: () => store.filterMoviesByNetflix,
+  set: (value) => { store.filterMoviesByNetflix = value }
+})
+
+const primeFilter = computed({
+  get: () => store.filterMoviesByPrime,
+  set: (value) => { store.filterMoviesByPrime = value }
+})
+
+const disneyFilter = computed({
+  get: () => store.filterMoviesByDisney,
+  set: (value) => { store.filterMoviesByDisney = value }
+})
+
+const skyFilter = computed({
+  get: () => store.filterMoviesBySky,
+  set: (value) => { store.filterMoviesBySky = value }
+})
+
+watch([
   () => store.filterMoviesByNetflix,
-  () => {
-    store.filterMovies()
-  }
-)
-
-watch(
   () => store.filterMoviesByPrime,
-  () => {
-    store.filterMovies()
-  }
-)
-
-watch(
   () => store.filterMoviesByDisney,
-  () => {
-    store.filterMovies()
-  }
-)
-
-watch(
   () => store.filterMoviesBySky,
-  () => {
-    store.filterMovies()
-  }
-)
-
-watch(
-  () => sortingOption,
-  () => {
-    store.filterMovies()
-  }
-)
-
-watch(
-  () => filterMin,
-  () => {
-    store.filterMovies()
-  }
-)
-
-watch(
-  () => filterMax,
-  () => {
-    store.filterMovies()
-  }
-)
-
-watch(
-  () => shownScore,
-  () => {
-    store.filterMovies()
-  }
-)
+  () => store.sortingOption,
+  () => store.filterMoviesByYearMin,
+  () => store.filterMoviesByYearMax,
+  () => store.shownScore
+], store.filterMovies)
 
 </script>
 

@@ -1,45 +1,12 @@
 <template>
-  <section
-    :class="isFullscreen ? 'my-0 center-big-screen' : 'my-12'"
-    class="container xl:w-10/12 mx-auto px-4 max-w-800px">
-    <Head>
-      <Title>Triggerscore Quiz - Movie guessing based on keywords</Title>
-      <Meta charset="UTF-8" />
-      <Meta
-        name="keywords"
-        content="triggering movies, quiz, movie game, movie quiz"
-      />
-      <Meta
-        name="description"
-        content="Play Movie Quiz on Triggerscore"
-      />
-      <Meta name="author" content="Christian Eckardt" />
-      <Meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <Meta :property="'og:title'" content="Triggerscore Quiz" />
-      <Meta
-        property="og:description"
-        content="Triggerscore Quiz - Movie guessing based on keywords"
-      />
-      <Meta property="og:image" content="https://www.triggerscore.de/images/quiz-image-komprimiert.png" />
-      <Meta property="og:image:url" content="https://www.triggerscore.de/images/quiz-image-komprimiert.png" />
-      <Meta property="og:image:secure_url" content="https://www.triggerscore.de/images/quiz-image-komprimiert.png" />
-      <Meta
-        property="og:url"
-        content="https://www.triggerscore.de/Quiz"
-      />
-      <Meta property="og:type" content="game" />
-    </Head>
+  <section :class="isFullscreen ? 'my-0 center-big-screen' : 'my-12'" class="container xl:w-10/12 mx-auto px-4 max-w-800px">
     <div
       v-if="!gameRunning"
       :class="isFullscreen ? 'mt-8' : 'mt-0'"
       class="text-3xl self-center font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200"
     >
       <h1 aria-label="TRIGGERSCORE QUIZ">
-        TRIGGERSC<font-awesome-icon
-          aria-hidden="true"
-          :icon="['fas', 'angry']"
-          class="text-white"
-        /><span class="sr-only">O</span>RE QUIZ
+        TRIGGERSC<font-awesome-icon aria-hidden="true" :icon="['fas', 'angry']" class="text-white" /><span class="sr-only">O</span>RE QUIZ
       </h1> 
     </div>
     <div v-if="gameRunning" class="score-board grid grid-cols-2 bg-gradient-to-r from-gray-950 to-gray-800 text-white text-xl font-semibold p-4 my-8 rounded-xl" :class="isFullscreen ? 'my-8 md:mt-36' : 'my-8'">
@@ -61,7 +28,7 @@
       </div>
       <div class="pl-4" :class="currentPointsClass">
         <transition
-enter-active-class="duration-300 ease-out"
+          enter-active-class="duration-300 ease-out"
           enter-from-class="transform opacity-0"
           enter-to-class="opacity-100"
           leave-active-class="duration-200 ease-in"
@@ -69,7 +36,10 @@ enter-active-class="duration-300 ease-out"
           leave-to-class="transform opacity-0"
           mode="out-in"
         >
-          <span :key="currentPoints"><font-awesome-icon :icon="['fas', 'clock']" class="text-white mr-2" /> {{ currentPoints }}</span>
+          <span :key="currentPoints">
+            <font-awesome-icon :icon="['fas', 'clock']" class="text-white mr-2" />
+            {{ currentPoints }}
+          </span>
         </transition>      
       </div>
     </div>
@@ -403,6 +373,18 @@ const goBack = () => {
   }
   navigateTo(localePath('/'))
 }
+
+useSeoMeta({
+  title: 'Triggerscore Quiz - Movie guessing based on keywords',
+  description: 'Play Movie Quiz on Triggerscore',
+  author: 'Christian Eckardt',
+  ogTitle: 'Triggerscore Quiz - Movie guessing based on keywords',
+  ogDescription: 'Play Movie Quiz on Triggerscore',
+  ogUrl: () => `https://www.triggerscore.de/Quiz`,
+  ogType: 'website',
+  charset: 'utf-8',
+  viewport: 'width=device-width, initial-scale=1.0',
+})
 </script>
 
 <style scoped>

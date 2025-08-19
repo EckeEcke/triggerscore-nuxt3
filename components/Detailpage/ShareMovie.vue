@@ -50,7 +50,7 @@
         style="width: auto; height: 2.5rem"
       />
     </a>
-    <button class="flex relative cursor-pointer" @click="copyLink" aria-label="Copy link to clipboard">
+    <button class="flex relative cursor-pointer" aria-label="Copy link to clipboard" @click="copyLink">
       <font-awesome-icon
         :icon="['fas', 'link']"
         class="text-white self-center text-3xl"

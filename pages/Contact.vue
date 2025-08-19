@@ -2,23 +2,9 @@
   <div
     class="container text-white px-4 py-6 md:py-12 md:pb-8 text-left xl:w-10/12 mx-auto md:rounded-lg flex justify-start flex-wrap gap-12"
   >
-    <Head>
-      <Title>Triggerscore - Contact / Feel free to reach out to me</Title>
-      <Meta charset="UTF-8" />
-      <Meta name="keywords" content="triggering movies, contact Triggerscore" />
-      <Meta name="description" content="contact page for Triggerscore" />
-      <Meta name="author" content="Christian Eckardt" />
-      <Meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    </Head>
     <div v-show="!submitted" class="mr-8 max-w-full">
-      <h1
-        v-if="route.query.comment"
-        class="mb-4 text-xl md:text-2xl font-semibold uppercase"
-      >
-        {{ t("contact.reportHeadline") }}
-      </h1>
-      <h1 v-else class="mb-4 text-xl md:text-2xl font-semibold uppercase">
-        {{ t("contact.sendFeedback") }}
+      <h1 class="mb-4 text-xl md:text-2xl font-semibold uppercase">
+        {{ route.query.comment ? t("contact.reportHeadline") : t("contact.sendFeedback") }}
       </h1>
       <form
         name="contact"
@@ -48,9 +34,9 @@
           >
         </div>
         <div class="flex flex-col gap-1 mb-4">
-          <label class="font-semibold mb-2 text-white">{{
-            t("contact.email")
-          }}</label>
+          <label class="font-semibold mb-2 text-white">
+            {{ t("contact.email") }}
+          </label>
           <input
             v-model="form.mail"
             type="email"
@@ -91,7 +77,7 @@
         {{ t("contact.success") }}
       </p>
     </div>
-    <div class="">
+    <div>
       <h1 class="mb-4 text-xl md:text-2xl font-semibold uppercase">
         {{ t("header.contact") }}
       </h1>
@@ -102,31 +88,13 @@
       </p>
       <p class="mb-8 flex">
         <a href="https://github.com/EckeEcke" target="_blank">
-          <img
-            alt="Logo Github"
-            class="h-10 mr-4 filter invert"
-            src="../assets/images/github.svg"
-          >
+          <img alt="Logo Github" class="h-10 mr-4 filter invert" src="../assets/images/github.svg">
         </a>
-        <a
-          href="https://www.linkedin.com/in/christian-eckardt-41527216a/"
-          target="_blank"
-        >
-          <img
-            alt="Logo LinkedIn"
-            class="h-10 mr-4"
-            src="../assets/images/linkedin.svg"
-          >
+        <a href="https://www.linkedin.com/in/christian-eckardt-41527216a/" target="_blank">
+          <img alt="Logo LinkedIn" class="h-10 mr-4" src="../assets/images/linkedin.svg">
         </a>
-        <a
-          href="https://www.xing.com/profile/Christian_Eckardt21/cv"
-          target="_blank"
-        >
-          <img
-            alt="Logo Xing"
-            class="h-10 mr-4"
-            src="../assets/images/xing.svg"
-          >
+        <a href="https://www.xing.com/profile/Christian_Eckardt21/cv" target="_blank">
+          <img alt="Logo Xing" class="h-10 mr-4" src="../assets/images/xing.svg">
         </a>
       </p>
     </div>
@@ -171,4 +139,16 @@ const handleSubmit = async (e: Event) => {
     .then(() => (submitted.value = true))
     .catch((error) => console.log(error))
 }
+
+useSeoMeta({
+  title: 'Triggerscore - Contact / Feel free to reach out to me',
+  description: 'contact page for Triggerscore',
+  author: 'Christian Eckardt',
+  ogTitle: 'Triggerscore - Contact',
+  ogDescription: 'contact page for Triggerscore',
+  ogUrl: () => `https://www.triggerscore.de/contact`,
+  ogType: 'website',
+  charset: 'utf-8',
+  viewport: 'width=device-width, initial-scale=1.0',
+})
 </script>

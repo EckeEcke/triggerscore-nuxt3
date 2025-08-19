@@ -18,17 +18,15 @@
           <span>RE</span>
         </h2>
         <div class="flex text-white my-4 justify-center lg:justify-start">
-          <NuxtLink
-            :to="localePath('/about')"
-            class="border-r border-white px-4 lg:pl-0 uppercase"
-            >{{ t("header.about") }}</NuxtLink
-          >
-          <NuxtLink :to="localePath('/faq')" class="border-r border-white px-4 uppercase">{{
-            t("header.faq")
-          }}</NuxtLink>
-          <NuxtLink :to="localePath('/contact')" class="px-4 uppercase">{{
-            t("header.contact")
-          }}</NuxtLink>
+          <a :href="localePath('/about')" class="border-r border-white px-4 lg:pl-0 uppercase">
+            {{ t("header.about") }}
+          </a>
+          <a :href="localePath('/faq')" class="border-r border-white px-4 uppercase">
+            {{ t("header.faq") }}
+          </a>
+          <a :href="localePath('/contact')" class="px-4 uppercase">
+            {{ t("header.contact") }}
+          </a>
         </div>
         <article
           class="mx-auto text-white w-64 max-w-full text-center lg:text-left text-xs"

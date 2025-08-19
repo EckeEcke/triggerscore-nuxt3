@@ -1,19 +1,5 @@
 <template>
   <div class="bg-gray-900">
-    <Head>
-      <Title>Triggerscore - All Movies on Triggerscore / Filter Movies</Title>
-      <Meta charset="UTF-8" />
-      <Meta
-        name="keywords"
-        content="triggering movies, triggerscore, all movies on Triggerscore, filter"
-      />
-      <Meta
-        name="description"
-        content="Overview of all the movies on Triggerscore - filter movies to find what you are looking for"
-      />
-      <Meta name="author" content="Christian Eckardt" />
-      <Meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    </Head>
     <transition
       v-if="showMenu"
       enter-active-class="duration-100 ease-out"
@@ -34,12 +20,14 @@
             {{ t("index.headline") }}
           </h2>
           <p class="text-sm text-white">
-            {{ t("index.intro1")
-            }}<span
+            {{ t("index.intro1") }}
+            <span
               class="text-yellow-500 transition hover:text-yellow-600 font-semibold cursor-pointer"
               @click="focusSearch"
-              >{{ t("index.search") }}</span
-            >{{ t("index.intro2") }}
+            >
+              {{ t("index.search") }}
+            </span>
+            {{ t("index.intro2") }}
           </p>
         </div>
         <div class="ml-auto mt-4 -mr-2 sm:mr-0 lg:hidden">
@@ -63,8 +51,8 @@
           :key="movie.id"
           :movie="movie"
           :scores="
-            triggerscores[
-              triggerscores.map((score) => score.movie_id).indexOf(movie.id)
+            triggerScores[
+              triggerScores.map((score) => score.movie_id).indexOf(movie.id)
             ]
           "
         />
@@ -100,29 +88,20 @@
         {{ index }}
       </button>
     </div>
-    <div
-      v-if="totalPages > 1 && !isFiltering"
-      class="flex gap-1 justify-center mb-8 -mt-6 flex-wrap"
-    >
+    <div v-if="totalPages > 1 && !isFiltering" class="flex gap-1 justify-center mb-8 -mt-6 flex-wrap">
       <button
         class="text-lg px-4 py-2 font-semibold bg-transparent"
         :disabled="currentPage == 1"
         @click="setPage(start - 24, end - 24)"
       >
-        <font-awesome-icon
-          :icon="['fas', 'chevron-left']"
-          class="text-white hover:text-yellow-500 transition duration-300"
-        />
+        <font-awesome-icon :icon="['fas', 'chevron-left']" class="text-white hover:text-yellow-500 transition duration-300" />
       </button>
       <button
         class="text-lg px-4 py-2 font-semibold bg-transparent"
         :disabled="currentPage == totalPages"
         @click="setPage(start + 24, end + 24)"
       >
-        <font-awesome-icon
-          :icon="['fas', 'chevron-right']"
-          class="text-white hover:text-yellow-500 transition duration-300"
-        />
+        <font-awesome-icon :icon="['fas', 'chevron-right']" class="text-white hover:text-yellow-500 transition duration-300" />
       </button>
     </div>
   </div>
@@ -143,26 +122,19 @@ store.filterMovies()
 store.resetFilter()
 
 const totalPages = computed(() => Math.ceil(filteredMovies.value.length / 24))
-const isLoading = computed(
-  () =>
-    // store.highlightsLoading ||
-    store.moviesLoading ||
-    store.triggerscores.length == 0
-)
+const isLoading = computed(() => store.moviesLoading || store.triggerscores.length == 0)
 const filteredMovies = computed(() => store.filteredMovies)
 const loadedMovies = computed(() =>
   [...filteredMovies.value].filter(
-    (movie, index) => index >= start.value && index < end.value
+    (_, index) => index >= start.value && index < end.value
   )
 )
-const triggerscores = computed(() => store.triggerscores)
+const triggerScores = computed(() => store.triggerscores)
 const movies = computed(() => store.movies)
 const isFiltering = computed(() => store.isFiltering)
 const currentPage = computed(() => Math.floor(start.value / 24) + 1)
 
-const handleMenu = () => {
-  showMenu.value = !showMenu.value
-}
+const handleMenu = () => showMenu.value = !showMenu.value
 
 const focusSearch = () => {
   const search = document.getElementById('search')
@@ -200,6 +172,18 @@ watch(
     }
   }
 )
+
+useSeoMeta({
+  title: 'Triggerscore - All Movies on Triggerscore / Filter Movies',
+  description: 'Overview of all the movies on Triggerscore - filter movies to find what you are looking for',
+  author: 'Christian Eckardt',
+  ogTitle: 'Triggerscore - About / What is Triggerscore',
+  ogDescription: 'Triggerscore - rating old movies based on how much users today get triggered',
+  ogUrl: () => `https://www.triggerscore.de/about`,
+  ogType: 'website',
+  charset: 'utf-8',
+  viewport: 'width=device-width, initial-scale=1.0',
+})
 </script>
 
 <style scoped>
