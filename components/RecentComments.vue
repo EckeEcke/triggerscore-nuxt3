@@ -59,23 +59,25 @@
         </template>
     </div>
     <div class="flex gap-2 justify-center my-4">
-            <font-awesome-icon
-              :icon="['fas', 'circle']"
-              class="text-xl transform transition-300 hover:scale-110"
-              :class="[
+      <button @click="handleToggle(true)">
+        <font-awesome-icon
+            :icon="['fas', 'circle']"
+            class="text-xl transform transition-300 hover:scale-110"
+            :class="[
                 toggleBool ? 'text-yellow-500' : 'text-grey-500 opacity-50',
               ]"
-              @click="handleToggle(true)"
-            />
-            <font-awesome-icon
-              :icon="['fas', 'circle']"
-              class="text-xl transform transition-300 hover:scale-110"
-              :class="[
+        />
+      </button>
+      <button @click="handleToggle(false)">
+        <font-awesome-icon
+            :icon="['fas', 'circle']"
+            class="text-xl transform transition-300 hover:scale-110"
+            :class="[
                 !toggleBool ? 'text-yellow-500' : 'text-grey-500 opacity-50',
               ]"
-              @click="handleToggle(false)"
-            />
-          </div>
+        />
+      </button>
+    </div>
 </template>
 
 <script setup lang='ts'>
@@ -94,14 +96,22 @@ const commentTotalRating = (commentId: number, limitTop: number, limitBottom: nu
 }
 const localePath = useLocalePath()
 const toggleBool = ref(false)
-let intervalId: ReturnType<typeof setInterval> | undefined = undefined
+const startTime = ref(Date.now())
+const TOGGLE_INTERVAL = 10000
+const animationFrameId: Ref<number | undefined> = ref(undefined)
+
+const checkToggle = () => {
+  const now = Date.now()
+  if (now - startTime.value >= TOGGLE_INTERVAL) {
+    toggleBool.value = !toggleBool.value
+    startTime.value = now
+  }
+  animationFrameId.value = requestAnimationFrame(checkToggle)
+}
 
 const handleToggle = (value: boolean) => {
   toggleBool.value = value
-  clearInterval(intervalId)
-  intervalId = setInterval(() => {
-    toggleBool.value = !toggleBool.value
-  }, 10000)
+  startTime.value = Date.now()
 }
 
 const handleTouchStart = (event: TouchEvent) => {
@@ -122,16 +132,14 @@ const handleTouchEnd = (event: TouchEvent) => {
 }
 
 onMounted(() => {
-    intervalId = setInterval(() => {
-        toggleBool.value = !toggleBool.value
-    }, 10000)
+    animationFrameId.value = requestAnimationFrame(checkToggle)
     container.value!.addEventListener('touchstart', handleTouchStart, false)
     container.value!.addEventListener('touchend', handleTouchEnd, false)
 })
 
 onUnmounted(() => {
+    if (animationFrameId.value) cancelAnimationFrame(animationFrameId.value)
     container.value?.removeEventListener('touchstart', handleTouchStart, false)
     container.value?.removeEventListener('touchend', handleTouchEnd, false)
-    clearInterval(intervalId)
 })
 </script>

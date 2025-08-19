@@ -26,7 +26,7 @@
               <div class="flex w-full my-3 border border-gray-200 rounded">
                 <select
                   v-model="store.sortingOption"
-                  class="w-full h-8 md:h-10 bg-white rounded p-2 outline-none text-sm md:text-base text-black"
+                  class="w-full h-8 md:h-10 bg-white rounded p-2 text-sm md:text-base text-black"
                 >
                   <option class="py-1" value="a-z">
                     {{ t("filter.AtoZ") }}
@@ -56,7 +56,7 @@
               <div class="flex w-full my-3 border border-gray-200 rounded">
                 <select
                   v-model="store.shownScore"
-                  class="w-full h-8 md:h-10 bg-white rounded p-2 outline-none text-sm md:text-base text-black"
+                  class="w-full h-8 md:h-10 bg-white rounded p-2 text-sm md:text-base text-black"
                 >
                   <option class="py-1" value="rating_total">
                     {{ t("categories.totalScore") }}
@@ -123,7 +123,7 @@
                 <input
                   id="filter-netflix"
                   v-model="netflixFilter"
-                  class="h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer accent-yellow-500"
+                  class="h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer accent-yellow-500"
                   type="checkbox"
                   @change="
                     store.filterMoviesByNetflix = !store.filterMoviesByNetflix
@@ -144,7 +144,7 @@
                 <input
                   id="filter-amazon"
                   v-model="primeFilter"
-                  class="h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer accent-yellow-500"
+                  class="h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer accent-yellow-500"
                   type="checkbox"
                   @change="
                     store.filterMoviesByPrime = !store.filterMoviesByPrime
@@ -165,7 +165,7 @@
                 <input
                   id="filter-disney"
                   v-model="disneyFilter"
-                  class="h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer accent-yellow-500"
+                  class="h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer accent-yellow-500"
                   type="checkbox"
                   @change="
                     store.filterMoviesByDisney = !store.filterMoviesByDisney
@@ -186,7 +186,7 @@
                 <input
                   id="filter-disney"
                   v-model="skyFilter"
-                  class="h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer accent-yellow-500"
+                  class="h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer accent-yellow-500"
                   type="checkbox"
                   @change="store.filterMoviesBySky = !store.filterMoviesBySky"
                 >

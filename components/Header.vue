@@ -42,11 +42,13 @@
           >{{ t("header.about") }}</NuxtLink
         >
         <LanguageSelect />
-        <font-awesome-icon
-          :icon="['fas', 'search']"
-          class="text-lg text-white mr-6 sm:mr-10 md:mr-0 self-center hover:text-yellow-500"
-          @click="openSearch"
-        />
+        <button class="flex" @click="openSearch">
+          <font-awesome-icon
+              :icon="['fas', 'search']"
+              class="text-lg text-white mr-6 sm:mr-10 md:mr-0 self-center hover:text-yellow-500"
+
+          />
+        </button>
         <span class="md:hidden flex self-center"
           >
           <font-awesome-icon

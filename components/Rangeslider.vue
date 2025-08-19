@@ -8,8 +8,10 @@
           min="0"
           max="10"
           step="0.1"
-          class="absolute pointer-events-none appearance-none z-20 h-2 w-full opacity-0 cursor-pointer left-0"
+          class="absolute pointer-events-none appearance-none z-20 h-2 w-full opacity-0 cursor-pointer left-0 focus:outline"
           @input="mintrigger"
+          @focus="minHasFocus = true"
+          @blur="minHasFocus = false"
         >
         <input
           v-model="store.maxScore"
@@ -17,8 +19,10 @@
           min="0"
           max="10"
           step="0.1"
-          class="absolute pointer-events-none appearance-none z-20 h-2 w-full opacity-0 cursor-pointer left-0"
+          class="absolute pointer-events-none appearance-none z-20 h-2 w-full opacity-0 cursor-pointer left-0 focus:outline"
           @input="maxtrigger"
+          @focus="maxHasFocus = true"
+          @blur="maxHasFocus = false"
         >
         <div class="relative z-10 h-2">
           <div class="absolute z-10 left-0 right-0 bottom-0 top-0 rounded-md bg-gray-200"/>
@@ -29,10 +33,12 @@
           <div
             class="absolute z-30 w-6 h-6 top-0 left-0 bg-yellow-500 rounded-full -mt-2 -ml-1"
             :style="'left: ' + minthumb + '%'"
+            :class="{'ring-2 ring-white': minHasFocus}"
           />
           <div
             class="absolute z-30 w-6 h-6 top-0 right-0 bg-yellow-500 rounded-full -mt-2 -mr-3"
             :style="'right: ' + maxthumb + '%'"
+            :class="{'ring-2 ring-white': maxHasFocus}"
           />
         </div>
       </div>
@@ -56,6 +62,9 @@ const min = ref(0)
 const max = ref(10)
 const minthumb = ref(0)
 const maxthumb = ref(0)
+
+const minHasFocus = ref(false)
+const maxHasFocus = ref(false)
 
 const minScore = computed(() => store.minScore)
 
