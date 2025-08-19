@@ -362,9 +362,14 @@ export const useStore = defineStore({
       this.searchError = payload
     },
     async setBondMovies(locale: string) {
-      // const bondMovieData = placeholderBondMovies
-      const data = await fetch(`https://www.triggerscore.de/api/bondMovies?locale=${locale}`)
-      const bondMovieData = await data.json()
+      let bondMovieData
+      if (process.env.IS_LOCAL === 'true') {
+          bondMovieData = placeholderBondMovies
+      } else {
+          const data = await fetch(`https://www.triggerscore.de/api/bondMovies?locale=${locale}`)
+          bondMovieData = await data.json()
+      }
+
       this.bondMovies = bondMovieData
       this.highlightsLoading = false
     },

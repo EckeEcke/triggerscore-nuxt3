@@ -44,7 +44,7 @@
       <LoadingAnimation v-if="isFiltering" />
       <section
         v-if="!isLoading && filteredMovies.length > 0 && !isFiltering"
-        class="movielist grid gap-0 md:gap-2 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 w-full relative container mx-auto mt-8 md:mt-2 sm:pb-8 sm:px-4 xl:w-10/12"
+        class="grid gap-0 md:gap-2 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 w-full relative container mx-auto mt-8 md:mt-2 sm:pb-8 sm:px-4 xl:w-10/12"
       >
         <MovieListitem
           v-for="movie in loadedMovies"

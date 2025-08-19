@@ -40,7 +40,7 @@
     <transition-group
       v-if="store.searchResults.length > 0"
       tag="section"
-      class="movielist grid gap-0 md:gap-2 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 w-full relative container mx-auto md:mt-4 mb-24 md:px-4 xl:w-10/12"
+      class="grid gap-0 md:gap-2 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 w-full relative container mx-auto md:mt-4 mb-24 md:px-4 xl:w-10/12"
       enter-active-class="duration-500 ease-out"
       enter-from-class="opacity-0"
       enter-to-class="opacity-100"
