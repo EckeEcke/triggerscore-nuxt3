@@ -3,6 +3,4 @@ export default [
     { Allow: '*'},
     { Disallow: '/search' },
     { BlankLine: true },
-
-    // { Sitemap: 'https://www.triggerscore.de/sitemap.xml' }
 ]

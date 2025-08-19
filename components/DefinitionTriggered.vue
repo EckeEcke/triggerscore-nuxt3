@@ -1,5 +1,8 @@
 <template>
   <div class="flex flex-col lg:flex-row gap-4 sm:gap-12">
+    <div class="mx-auto mb-8">
+      <img src="/images/triggered.webp" alt="triggered-meme" >
+    </div>
     <div>
       <h3 class="text-2xl font-semibold mb-4">
         {{ t("definition.headline") }}
@@ -11,9 +14,6 @@
         <li>{{ t("definition.list.list2") }}</li>
         <li>{{ t("definition.list.list3") }}</li>
       </ul>
-    </div>
-    <div class="mx-auto mt-8">
-      <img src="/images/triggered.webp" alt="triggered-meme" >
     </div>
   </div>
 </template>
