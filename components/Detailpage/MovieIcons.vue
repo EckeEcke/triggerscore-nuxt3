@@ -2,75 +2,18 @@
   <div class="flex justify-between my-4 mb-4 align-end">
     <div class="streaming-services flex gap-4 w-full">
       <a
-        v-if="onNetflix"
-        href="https://www.netflix.com"
-        target="_blank"
-        class="self-center"
+          v-for="service in visibleServices"
+          :key="service.key"
+          :href="service.href"
+          target="_blank"
+          class="self-center"
+          :aria-label="`Watch on ${service.alt}`"
       >
         <img
-          class="w-16"
-          alt="Logo Netflix"
-          src="https://image.tmdb.org/t/p/original/wwemzKWzjKYJFfCeiB57q3r4Bcm.svg"
-        >
-      </a>
-      <a
-        v-if="onPrime"
-        href="https://www.amazon.de/primevideo"
-        target="_blank"
-        class="self-center -mx-2"
-      >
-        <img
-          class="w-16"
-          alt="Logo Prime Video"
-          src="~/assets/images/amazon-prime-logo3.svg"
-        >
-      </a>
-      <a
-        v-if="onDisney"
-        href="https://www.disneyplus.com/"
-        target="_blank"
-        class="self-center"
-      >
-        <img
-          class="w-16"
-          alt="Logo Disney Plus"
-          src="~/assets/images/disney+-logo2.svg"
-        >
-      </a>
-      <a
-        v-if="onSky"
-        href="https://skyticket.sky.de/home/login"
-        target="_blank"
-        class="self-center"
-      >
-        <img
-          class="w-16"
-          alt="Logo WOW"
-          src="~/assets/images/sky-logo.svg"
-        >
-      </a>
-      <a
-        v-if="tmdbURL"
-        class="self-center"
-        :href="tmdbURL"
-        target="_blank"
-      >
-        <img
-          class="w-16"
-          alt="Logo TMDB"
-          src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_1-5bdc75aaebeb75dc7ae79426ddd9be3b2be1e342510f8202baf6bffa71d7f5c4.svg"
-        >
-      </a>
-      <a
-        v-if="imdbURL"
-        class="self-center"
-        :href="imdbURL"
-        target="_blank"
-      >
-        <img
-          class="w-16"
-          alt="Logo IMDB"
-          src="~/assets/images/imdb-logo.svg"
+            class="w-16"
+            alt=""
+            :src="service.logo"
+            loading="lazy"
         >
       </a>
     </div>
@@ -81,6 +24,11 @@
 import { useStore } from '~/stores/store'
 import type { Movie } from '~/types/movie'
 import type { Provider, ProviderData, ProviderResponse } from '~/types/provider'
+import netflixLogo from '~/assets/images/netflix-logo.svg'
+import primeLogo from '~/assets/images/amazon-prime-logo3.svg'
+import disneyLogo from '~/assets/images/disney+-logo2.svg'
+import skyLogo from '~/assets/images/sky-logo.svg'
+import imdbLogo from '~/assets/images/imdb-logo.svg'
 
 const { locale } = useI18n()
 const route = useRoute()
@@ -99,6 +47,54 @@ const onNetflix = ref(false)
 const onPrime = ref(false)
 const onDisney = ref(false)
 const onSky = ref(false)
+
+const streamingServicesAndWebsites = computed(() => [  {
+  key: 'netflix',
+  enabled: onNetflix.value,
+  href: 'https://www.netflix.com',
+  alt: 'Netflix',
+  logo: netflixLogo
+},
+  {
+    key: 'prime',
+    enabled: onPrime.value,
+    href: 'https://www.amazon.de/primevideo',
+    alt: 'Prime Video',
+    logo: primeLogo
+  },
+  {
+    key: 'disney',
+    enabled: onDisney.value,
+    href: 'https://www.disneyplus.com/',
+    alt: 'Disney Plus',
+    logo: disneyLogo
+  },
+  {
+    key: 'sky',
+    enabled: onSky.value,
+    href: 'https://skyticket.sky.de/home/login',
+    alt: 'WOW',
+    logo: skyLogo
+  },
+  {
+    key: 'tmdb',
+    enabled: !!tmdbURL.value,
+    href: tmdbURL.value,
+    alt: 'TMDb',
+    logo: 'https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_1-5bdc75aaebeb75dc7ae79426ddd9be3b2be1e342510f8202baf6bffa71d7f5c4.svg'
+  },
+  {
+    key: 'imdb',
+    enabled: !!imdbURL.value,
+    href: imdbURL.value,
+    alt: 'IMDB',
+    logo: imdbLogo
+  }
+])
+
+const visibleServices = computed(() =>
+    streamingServicesAndWebsites.value.filter(service => service.enabled)
+)
 
 const regionProvider = computed(() => {
   if (locale.value === 'en') {

@@ -1,37 +1,5 @@
 <template>
-  <section
-    class="detail-page w-full bg-center bg-cover bg-fixed"
-    :style="backgroundImageStyle"
-  >
-    <Head>
-      <client-only>
-        <Title>{{ title }}</Title>
-        <Meta charset="UTF-8" />
-        <Meta
-          :name="'keywords'"
-          :content="'Triggerscore, triggering movies' + title"
-        />
-        <Meta
-          :name="'description'"
-          :content="'triggerscore rating for ' + title"
-        />
-        <Meta name="author" content="Christian Eckardt" />
-        <Meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <Meta :property="'og:title'" :content="JSON.stringify(title)" />
-        <Meta
-          property="og:description"
-          content="Triggerscore - rating old movies based on how much users today get triggered"
-        />
-        <Meta :property="'og:image'" :content="ogImage" />
-        <Meta :property="'og:image:url'" :content="ogImage" />
-        <Meta :property="'og:image:secure_url'" :content="ogImage" />
-        <Meta
-          :property="'og:url'"
-          :content="`https://www.triggerscore.de/movie/${route.params.id}`"
-        />
-        <Meta property="og:type" content="website" />
-      </client-only>
-    </Head>
+  <section class="detail-page w-full bg-center bg-cover bg-fixed">
     <div class="container mx-auto sm:pt-6 sm:pb-12 xl:w-10/12 md:px-4">
       <div class="radial-background flex flex-col lg:flex-row px-0 sm:px-4 md:px-0 sm:rounded-t">
         <div class="flex flex-col w-full text-white rounded-t lg:rounded justify-start lg:mr-6 md:p-4">
@@ -88,8 +56,8 @@
               </i>
               <p class="my-4 flex flex-wrap gap-1">
                 <span
-                  v-for="genre in genres"
-                  :key="genre"
+                  v-for="(genre, index) in genres"
+                  :key="genre + index"
                   class="text-xs bg-gray-400 text-white p-2 rounded"
                   >{{ genre }}</span
                 >
@@ -134,7 +102,7 @@
 <script setup lang='ts'>
 import { useI18n } from 'vue-i18n'
 import {type TriggerScore, useStore} from '~/stores/store'
-import { ref, computed, watch } from 'vue'
+import { computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import {emptyMovie, type Movie} from '~/types/movie'
 import RateMovie from './RateMovie.vue'
@@ -149,11 +117,8 @@ const route = useRoute()
 const { t, locale } = useI18n()
 
 const movie: ComputedRef<Movie | undefined> = computed(() => store.selectedMovie)
-// const backdrop = `url(https://image.tmdb.org/t/p/original/${movie.value.backdrop_path})`
-const releaseDate = parseInt(movie.value!.release_date.substring(0, 4))
+const releaseDate = movie.value?.release_date ? parseInt(movie.value.release_date.substring(0, 4)) : ''
 const score: ComputedRef<TriggerScore | undefined> = computed(() => store.selectedMovieScore)
-
-const similarMovies: Ref<{ body: Movie[] } | undefined> = ref(undefined)
 
 const title = computed(() =>
   movie.value !== emptyMovie ? movie.value?.title : 'Movie on Triggerscore'
@@ -161,14 +126,6 @@ const title = computed(() =>
 const poster = `https://www.triggerscore.de/api/poster?poster_path=${movie.value?.poster_path}`
 const ogImage = `https://www.triggerscore.de/api/og-image?poster_path=${movie.value?.poster_path}`
 const genres = computed(() => movie.value?.genres.map((genre: { name: string }) => genre.name))
-
-const backgroundImageStyle = computed(() => {
-    return {
-      // backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), ${backdrop.value}`,
-      // minHeight: 'calc(100vh - 20rem)',
-      // move back in if backdrop is wished
-    }
-})
 
 const totalRatings = computed(() => {
   return store.triggerscores.length > 0
@@ -184,15 +141,29 @@ const comments: ComputedRef<string[] | undefined> = computed(() =>
     : undefined
 )
 
-const fetchSimilarMovies = async () => { 
-  const response = await fetch(`/api/fetchSimilarMovies?movie_id=${route.params.id}&locale=${locale.value}`) 
-  if (!response.ok) { 
-    throw new Error(`Error fetching similar movies: ${response.statusText}`) 
-  } 
+const { data: similarMovies } = useFetch<{ body: Movie[] }>(
+    () => `/api/fetchSimilarMovies?movie_id=${route.params.id}&locale=${locale.value}`,
+    {
+      immediate: true,
+      server: true,
+      watch: [locale],
+    }
+)
 
-  similarMovies.value = await response.json()
-}
-
+useSeoMeta({
+  title: title.value,
+  description: () => `triggerscore rating for ${title.value}`,
+  author: 'Christian Eckardt',
+  ogTitle: title.value,
+  ogDescription: 'Triggerscore - rating old movies based on how much users today get triggered',
+  ogImage: ogImage,
+  ogImageUrl: ogImage,
+  ogImageSecureUrl: ogImage,
+  ogUrl: () => `https://www.triggerscore.de/movie/${route.params.id}`,
+  ogType: 'website',
+  charset: 'utf-8',
+  viewport: 'width=device-width, initial-scale=1.0',
+})
 
 watch(locale, () => {
   const loadMovie = async () => {
@@ -209,9 +180,6 @@ watch(locale, () => {
   loadMovie()
 })
 
-onMounted(() => {
-  fetchSimilarMovies()
-})
 </script>
 
 <style scoped>
