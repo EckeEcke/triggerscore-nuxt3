@@ -1,5 +1,5 @@
 <template>
-  <div class="w-32 -my-8" @click="runAnimation">
+  <button class="w-32 -my-8" @click="runAnimation">
     <client-only>
       <Vue3Lottie
         ref="anim"
@@ -8,7 +8,7 @@
         :auto-play="false"
       />
     </client-only>
-  </div>
+  </button>
 </template>
 
 <script setup lang='ts'>

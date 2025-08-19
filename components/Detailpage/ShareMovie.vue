@@ -6,53 +6,43 @@
   </h3>
   <div class="flex gap-6">
     <a
-      :href="
-        'whatsapp://send?text=' +
-        'Triggerscore - ' +
-        movie.title.replace('&', 'and') +
-        ' ' +
-        currentURL
-      "
+      :href="whatsAppLink"
       class=""
       data-action="share/whatsapp/share"
       target="_blank"
+      aria-label="WhatsApp Sharing"
     >
       <img
         class="w-10"
-        alt="Logo WhatsApp"
+        alt=""
         src="~/assets/images/WhatsApp.svg"
       >
     </a>
     <a
-      :href="'https://www.reddit.com/submit?url=' + currentURL"
+      :href="redditLink"
       target="_blank"
+      aria-label="Reddit Sharing"
     >
       <img
-        alt="Logo Reddit"
+        alt=""
         class="w-10"
         src="~/assets/images/reddit-logo.svg"
       >
     </a>
     <a
-      :href="'https://www.facebook.com/sharer/sharer.php?u=' + currentURL"
+      :href="facebookLink"
       target="_blank"
+      aria-label="Facebook Sharing"
     >
       <img
-        alt="Logo Facebook"
+        alt=""
         class="w-10"
         src="~/assets/images/facebook-logo.svg"
       >
     </a>
     <a
-      :href="
-        'mailto:?subject= ' +
-        movie.title +
-        ' on Triggerscore&body=Check out ' +
-        movie.title +
-        ' on Triggerscore: ' +
-        currentURL
-      "
-      title="Share by Email"
+      :href="eMailLink"
+      aria-label="Share by Email"
     >
       <font-awesome-icon
         :icon="['fas', 'envelope']"
@@ -60,19 +50,18 @@
         style="width: auto; height: 2.5rem"
       />
     </a>
-    <div class="flex relative cursor-pointer">
+    <button class="flex relative cursor-pointer" @click="copyLink" aria-label="Copy link to clipboard">
       <font-awesome-icon
         :icon="['fas', 'link']"
         class="text-white self-center text-3xl"
-        @click="copyLink"
       />
-      <div
+      <span
         v-if="copied"
         class="absolute top-full left-1/2 -translate-x-1/2 w-36 text-white text-center"
       >
         Kopiert in Zwischenablage
-      </div>
-    </div>
+      </span>
+    </button>
   </div>
 </template>
 
@@ -81,7 +70,7 @@ import { useI18n } from 'vue-i18n'
 
 const { t, locale } = useI18n()
 
-defineProps({
+const props = defineProps({
   movie: {
     type: Object,
     default: undefined
@@ -93,6 +82,11 @@ const route = useRoute()
 const currentURL = computed(
   () => `https://www.triggerscore.de/${locale.value}/movie/${route.params.id}`
 )
+
+const whatsAppLink = computed(() => 'whatsapp://send?text=' + 'Triggerscore - ' + props.movie?.title.replace('&', 'and') + ' ' + currentURL.value)
+const redditLink = computed(() => 'https://www.reddit.com/submit?url=' + currentURL.value)
+const facebookLink = computed(() => 'https://www.facebook.com/sharer/sharer.php?u=' + currentURL.value)
+const eMailLink = computed(() => 'mailto:?subject= ' + props.movie?.title + ' on Triggerscore&body=Check out ' + props.movie?.title + ' on Triggerscore: ' + currentURL.value)
 
 const copyLink = () => {
   navigator.clipboard.writeText(currentURL.value)
