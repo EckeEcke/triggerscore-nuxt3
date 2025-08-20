@@ -96,9 +96,6 @@ interface StoreState {
     hasLoadedData: boolean
 }
 
-const config = useRuntimeConfig()
-const isLocal = config.public.isLocal || false
-
 const apiBaseUrl = process.env.NODE_ENV === 'development'
   ? 'http://localhost:8888/.netlify/functions'
   : 'https://www.triggerscore.de/.netlify/functions'
@@ -384,7 +381,7 @@ export const useStore = defineStore('store', {
 
     async setBondMovies(locale: string) {
       let bondMovieData
-      if (isLocal) {
+      if (process.env.NODE_ENV === 'development') {
           bondMovieData = placeholderBondMovies
       } else {
           const data = await fetch(`https://www.triggerscore.de/api/bondMovies?locale=${locale}`)
