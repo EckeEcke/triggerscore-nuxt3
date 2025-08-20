@@ -1,6 +1,6 @@
 <template>
-    <div ref="container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
-        <template v-for="(comment, index) in store.recentComments" :key="comment.movie_id">
+    <div v-if="recentComments" ref="container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
+        <template v-for="(comment, index) in recentComments" :key="comment.movie_id">
             <div v-if="(index % 2 === 0) === toggleBool" class="bg-gradient-to-r from-gray-950 to-gray-800 p-4">
               <div class="mb-4 flex gap-2 items-center">
                   <div
@@ -67,6 +67,8 @@ const store = useStore()
 const container: Ref<HTMLElement | null> = ref(null)
 const touchstartX = ref(0)
 const touchstartY = ref(0)
+
+const recentComments: RecentComment[] = store.recentComments
 
 const totalRating = (comment: RecentComment) => {
   if (!store.triggerscores || store.triggerscores.length === 0) return
