@@ -96,7 +96,8 @@ interface StoreState {
     hasLoadedData: boolean
 }
 
-const { isLocal } = useRuntimeConfig().public
+const config = useRuntimeConfig()
+const isLocal = config.public.isLocal || false
 
 const apiBaseUrl = process.env.NODE_ENV === 'development'
   ? 'http://localhost:8888/.netlify/functions'
