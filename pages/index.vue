@@ -111,9 +111,9 @@
           {{ t("general.discoverMoreMovies") }}
         </h2>
         <div class="py-8">
-          <a :href="localePath('/all')" class="bg-yellow-500 transition hover:bg-yellow-600 p-3 rounded-lg text-white font-semibold uppercase my-4">
+          <NuxtLink :to="localePath('/all')" class="bg-yellow-500 transition hover:bg-yellow-600 p-3 rounded-lg text-white font-semibold uppercase my-4">
             {{ t("header.allMovies") }}
-          </a>
+          </NuxtLink>
         </div>
       </div>
     </section>

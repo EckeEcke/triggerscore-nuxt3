@@ -1,6 +1,6 @@
 <template>
   <div class="relative text-center mx-auto" style="max-width: 400px;">
-    <a :href="localePath('/Quiz')">
+    <NuxtLink :to="localePath('/Quiz')">
       <div class="headline-wrapper absolute w-full text-3xl self-center font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200">
         <h2 aria-label="TRIGGERSCORE QUIZ">
           TRIGGERSC<font-awesome-icon
@@ -26,7 +26,7 @@
       >
         <ClickAnimation v-if="showAnimation" class="animation" />
       </transition>
-    </a>
+    </NuxtLink>
   </div>
 </template>
 

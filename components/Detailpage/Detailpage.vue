@@ -88,7 +88,7 @@
         <MovieHighlightsContainer
           v-if="similarMovies?.body"
           class="xl:w-full bg-transparent"
-          :movies="similarMovies.body.slice(0,10)"
+          :movies="similarMoviesFiltered"
           shown-score="rating_total"
           :title="t('similar.headline')"
           :sub-title="t('similar.copy', [movie?.title ?? movie?.original_title])"
@@ -149,6 +149,8 @@ const { data: similarMovies } = useFetch<{ body: Movie[] }>(
       watch: [locale],
     }
 )
+
+const similarMoviesFiltered = computed(() => similarMovies?.value?.body.filter((movie) => movie.poster_path !== null).slice(0,10))
 
 useSeoMeta({
   title: title.value,

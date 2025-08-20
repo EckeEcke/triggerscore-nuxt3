@@ -19,17 +19,12 @@
 import { useI18n } from 'vue-i18n'
 import { useStore } from '~/stores/store'
 import MaintenanceAnimation from '~/components/animations/MaintenanceAnimation.vue'
+import { watch } from 'vue'
 
 const { locale } = useI18n()
 const store = useStore()
 
 const isMaintained = store.isMaintenanceMode
-
-if (!isMaintained){
-  store.setTriggerscores(locale.value)
-  store.setBondMovies(locale.value)
-  store.loadProviderData(locale.value)
-}
 
 const isFullscreen = computed(() => store.isFullscreen)
 
@@ -41,6 +36,13 @@ const checkFullscreen = () => {
 const onFullscreenChange = () => {
   checkFullscreen()
 }
+
+watch(locale, () => {
+  if (isMaintained) return
+  store.setTriggerscores(locale.value)
+  store.setBondMovies(locale.value)
+  store.loadProviderData(locale.value)
+})
 
 onMounted(() => {
   document.addEventListener('fullscreenchange', onFullscreenChange)

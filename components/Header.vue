@@ -2,27 +2,27 @@
   <header class="w-screen h-auto bg-red-950 bg-opacity-95 z-30 shadow-md flex flex-col fixed top-0" :class="isFixed ? 'fixed' : 'absolute'" role="banner">
     <section class="container mx-auto h-full p-4 xl:w-10/12 flex justify-between">
       <h1>
-        <a
-            :href="localePath('/')"
+        <NuxtLink
+            :to="localePath('/')"
             :aria-label="t('header.home')"
             class="leading-none text-xl md:leading-6 md:text-2xl self-center font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200 cursor-pointer"
         >
           TRIGGERSC<AngryAnimation />RE
-        </a>
+        </NuxtLink>
       </h1>
       <div class="flex sm:text-sm">
-        <a :href="localePath('/all')" class="animated-link text-white font-semibold self-center mr-6 md:mr-10 hidden md:block hover:text-yellow-500 uppercase">
+        <NuxtLink :to="localePath('/all')" class="animated-link text-white font-semibold self-center mr-6 md:mr-10 hidden md:block hover:text-yellow-500 uppercase">
           {{ t("header.allMovies") }}
-        </a>
-        <a :href="localePath('/quiz')" class="animated-link text-white font-semibold self-center mr-6 md:mr-10 hidden md:block hover:text-yellow-500 uppercase">
+        </NuxtLink>
+        <NuxtLink :to="localePath('/quiz')" class="animated-link text-white font-semibold self-center mr-6 md:mr-10 hidden md:block hover:text-yellow-500 uppercase">
           QUIZ
-        </a>
-        <a :href="localePath('/stats')" class="animated-link text-white font-semibold self-center mr-6 md:mr-10 hidden md:block hover:text-yellow-500 uppercase">
+        </NuxtLink>
+        <NuxtLink :to="localePath('/stats')" class="animated-link text-white font-semibold self-center mr-6 md:mr-10 hidden md:block hover:text-yellow-500 uppercase">
           STATS
-        </a>
-        <a :href="localePath('/about')" class="animated-link text-white font-semibold self-center mr-6 md:mr-10 hidden md:block hover:text-yellow-500 uppercase">
+        </NuxtLink>
+        <NuxtLink :to="localePath('/about')" class="animated-link text-white font-semibold self-center mr-6 md:mr-10 hidden md:block hover:text-yellow-500 uppercase">
           {{ t("header.about") }}
-        </a>
+        </NuxtLink>
         <LanguageSelect />
         <button class="flex" @click="openSearch">
           <font-awesome-icon :icon="['fas', 'search']" class="text-lg text-white mr-6 sm:mr-10 md:mr-0 self-center hover:text-yellow-500" />
@@ -68,45 +68,45 @@
             />
           </div>
           <div class="mb-6">
-            <a
-              :href="localePath('/')"
+            <NuxtLink
+              :to="localePath('/')"
               class="text-2xl md:text-2xl self-center font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200 cursor-pointer"
               @click="showNav = false"
             >
               TRIGGERSC<font-awesome-icon :icon="['fas', 'angry']" class="text-white" />RE
-            </a>
+            </NuxtLink>
           </div>
-          <a :href="localePath('/')" class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase">
+          <NuxtLink :to="localePath('/')" class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase">
             <div class="py-6" @click="showNav = false">
               {{ t("header.home") }}
             </div>
-          </a>
-          <a :href="localePath('/all')" class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase">
+          </NuxtLink>
+          <NuxtLink :to="localePath('/all')" class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase">
             <div class="py-6" @click="showNav = false">
               {{ t("header.allMovies") }}
             </div>
-          </a>
-          <a :href="localePath('/quiz')" class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase">
+          </NuxtLink>
+          <NuxtLink :to="localePath('/quiz')" class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase">
             <div class="py-6" @click="showNav = false">Quiz</div>
-          </a>
-          <a :href="localePath('/stats')" class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase">
+          </NuxtLink>
+          <NuxtLink :to="localePath('/stats')" class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase">
             <div class="py-6" @click="showNav = false">Stats</div>
-          </a>
-          <a :href="localePath('/about')" class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase">
+          </NuxtLink>
+          <NuxtLink :to="localePath('/about')" class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase">
             <div class="py-6" @click="showNav = false">
               {{ t("header.about") }}
             </div>
-          </a>
-          <a :href="localePath('/faq')" class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase">
+          </NuxtLink>
+          <NuxtLink :to="localePath('/faq')" class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase">
             <div class="py-6" @click="showNav = false">
               {{ t("header.faq") }}
             </div>
-          </a>
-          <a :href="localePath('/contact')" class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase">
+          </NuxtLink>
+          <NuxtLink :to="localePath('/contact')" class="text-lg text-white font-semibold self-center hover:text-yellow-500 uppercase">
             <div class="py-6" @click="showNav = false">
               {{ t("header.contact") }}
             </div>
-          </a>
+          </NuxtLink>
         </nav>
       </transition-group>
     </Teleport>

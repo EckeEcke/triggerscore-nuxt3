@@ -1,10 +1,10 @@
 <template>
   <div class="flex justify-between my-4 mb-4 align-end">
     <div class="streaming-services flex gap-4 w-full">
-      <a
+      <NuxtLink
           v-for="service in visibleServices"
           :key="service.key"
-          :href="service.href"
+          :to="service.href"
           target="_blank"
           class="self-center"
           :aria-label="`Watch on ${service.alt}`"
@@ -15,7 +15,7 @@
             :src="service.logo"
             loading="lazy"
         >
-      </a>
+      </NuxtLink>
     </div>
   </div>
 </template>

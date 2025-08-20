@@ -42,6 +42,9 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
       apiKey: process.env.TMDB_API_KEY,
+      public: {
+          isLocal: process.env.NUXT_PUBLIC_IS_LOCAL,
+      }
   },
 
   nitro: {

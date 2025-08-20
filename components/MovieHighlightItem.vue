@@ -1,12 +1,11 @@
 <template>
-  <a
+  <NuxtLink
     v-if="movie"
-    :href="pathToNavigate"
-    ref="movieItem"
+    :to="pathToNavigate"
     class="movie-highlight-item w-40 h-auto mr-3 bg-transparent shadow-md flex flex-none flex-col relative rounded transform transition duration-300 lg:hover-shadow-inner container-xl cursor-pointer"
     style="scroll-snap-align: start"
   >
-    <div class="flex">
+    <div class="flex" ref="movieItem">
       <div class="w-full h-60 overflow-hidden">
         <div
           class="w-full h-full bg-cover rounded-t transition-300 transform scale-100 movie-poster"
@@ -48,7 +47,7 @@
         </p>
       </article>
     </div>
-  </a>
+  </NuxtLink>
 </template>
 
 <script setup lang='ts'>

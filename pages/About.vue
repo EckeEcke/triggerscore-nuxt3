@@ -26,9 +26,9 @@
     </section>
     <div class="flex items-center gap-4 mt-8">
       <img class="h-8 cursor-pointer" src="../assets/images/github-logo.svg" alt="github link" @click="toGithub()" >
-      <a class="text-white underline cursor-pointer hover:font-bold" href="https://github.com/EckeEcke/triggerscore-nuxt3" target="_blank">
+      <NuxtLink class="text-white underline cursor-pointer hover:font-bold" to="https://github.com/EckeEcke/triggerscore-nuxt3" target="_blank">
         Triggerscore Github
-      </a>
+      </NuxtLink>
     </div>
   </div>
 </template>

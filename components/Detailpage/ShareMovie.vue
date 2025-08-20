@@ -5,8 +5,8 @@
     {{ t("rating.share") }}
   </h3>
   <div class="flex gap-6">
-    <a
-      :href="whatsAppLink"
+    <NuxtLink
+      :to="whatsAppLink"
       class=""
       data-action="share/whatsapp/share"
       target="_blank"
@@ -17,9 +17,9 @@
         alt=""
         src="~/assets/images/WhatsApp.svg"
       >
-    </a>
-    <a
-      :href="redditLink"
+    </NuxtLink>
+    <NuxtLink
+      :to="redditLink"
       target="_blank"
       aria-label="Reddit Sharing"
     >
@@ -28,9 +28,9 @@
         class="w-10"
         src="~/assets/images/reddit-logo.svg"
       >
-    </a>
-    <a
-      :href="facebookLink"
+    </NuxtLink>
+    <NuxtLink
+      :to="facebookLink"
       target="_blank"
       aria-label="Facebook Sharing"
     >
@@ -39,9 +39,9 @@
         class="w-10"
         src="~/assets/images/facebook-logo.svg"
       >
-    </a>
-    <a
-      :href="eMailLink"
+    </NuxtLink>
+    <NuxtLink
+      :to="eMailLink"
       aria-label="Share by Email"
     >
       <font-awesome-icon
@@ -49,7 +49,7 @@
         class="text-white"
         style="width: auto; height: 2.5rem"
       />
-    </a>
+    </NuxtLink>
     <button class="flex relative cursor-pointer" aria-label="Copy link to clipboard" @click="copyLink">
       <font-awesome-icon
         :icon="['fas', 'link']"

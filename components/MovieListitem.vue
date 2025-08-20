@@ -1,6 +1,6 @@
 <template>
-  <a
-    :href="pathToNavigate"
+  <NuxtLink
+    :to="pathToNavigate"
     class="movie-highlight-item transition-300 w-full h-44 bg-transparent sm:bg-gradient-to-r from-gray-950 to-gray-800 md:hover:from-gray-900 text-white sm:border border-t border-b sm:border-r-0 border-gray-950 md:border-0 shadow-md flex relative md:rounded container-xl cursor-pointer"
   >
     <div class="h-full w-44 md:rounded-l overflow-hidden">
@@ -37,7 +37,7 @@
         </p>
       </article>
     </div>
-  </a>
+  </NuxtLink>
 </template>
 
 <script setup lang='ts'>
@@ -54,7 +54,8 @@ const props = defineProps({
   },
   scores: {
     type: Object,
-    required: true,
+    required: false,
+    default: () => ({}),
   },
 })
 
@@ -74,7 +75,7 @@ const overview = computed(() =>
 const scoreAvailable = computed(() => props.scores !== undefined)
 
 const displayedScore = computed(() => {
-  if (store.shownScore == 'rating_sexism') {
+  if (store.shownScore === 'rating_sexism') {
     return 'Sexism'
   } else if (store.shownScore === 'rating_racism') {
     return 'Racism'

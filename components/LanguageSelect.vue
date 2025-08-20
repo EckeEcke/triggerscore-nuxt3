@@ -19,10 +19,10 @@
       class="absolute -left-2 bg-gradient-to-r from-gray-950 to-gray-800 text-white top-9 md:top-10 p-2 flex flex-col gap-2 w-20"
     >
       <li v-for="(option, index) in languageOptions" :key="index">
-        <a :href="switchLocalePath(option.locale)" class="flex gap-2 cursor-pointer hover:text-yellow-500">
+        <NuxtLink :to="switchLocalePath(option.locale)" class="flex gap-2 cursor-pointer hover:text-yellow-500">
           <img class="w-6 self-center h-3" :src="option.flag" alt="" >
           <span class="mt-1">{{ option.locale.toUpperCase()}}</span>
-        </a>
+        </NuxtLink>
       </li>
     </ul>
   </div>

@@ -15,14 +15,14 @@
                   }"
                   >
                     <div class="self-center text-white">
-                        {{ store.triggerscores.filter((score) => score.movie_id === comment.movie_id)[0].rating_total }}
+                        {{ totalRating(comment) }}
                     </div>
                   </div>
                   <h4
                       class="font-semibold cursor-pointer text-sm"
                       @click="navigateTo(localePath(`/movie/${comment.movie_id}`))"
                   >
-                    {{ store.movies.filter((movie) => movie.id === comment.movie_id)[0].title }}
+                    {{ movieTitle(comment) }}
                   </h4>
               </div>
               <hr class="mb-4 w-36 border-yellow-500" >
@@ -61,14 +61,25 @@
 </template>
 
 <script setup lang='ts'>
-import { useStore } from '~/stores/store'
+import { type RecentComment, useStore } from '~/stores/store'
 
 const store = useStore()
 const container: Ref<HTMLElement | null> = ref(null)
 const touchstartX = ref(0)
 const touchstartY = ref(0)
+
+const totalRating = (comment: RecentComment) => {
+  if (!store.triggerscores || store.triggerscores.length === 0) return
+  return store.triggerscores.find((score) => score.movie_id === comment.movie_id)?.rating_total
+}
+
+const movieTitle = (comment: RecentComment) => {
+  if (!store.triggerscores || store.triggerscores.length === 0) return
+  return store.movies.find((movie) => movie.id === comment.movie_id)?.title
+}
+
 const commentTotalRating = (commentId: number, limitTop: number, limitBottom: number) => {
-  const wantedMovie = store.triggerscores.filter(score => score.movie_id === commentId)[0]
+  const wantedMovie = store.triggerscores.find(score => score.movie_id === commentId)
   return wantedMovie !== undefined &&
       wantedMovie.rating_total !== undefined &&
       wantedMovie.rating_total < limitTop &&

@@ -13,9 +13,9 @@
           </p>
         </div>
         <div class="w-9/12 overflow-hidden whitespace-nowrap custom-headline">
-          <a :href="pathToNavigate" class="text-base font-semibold h-6 cursor-pointer">
+          <NuxtLink :to="pathToNavigate" class="text-base font-semibold h-6 cursor-pointer">
             <h3>{{ movie.title.length > 0 ? movie.title : movie.original_title }}</h3>
-          </a>
+          </NuxtLink>
           <div class="text-xs pt-1">
             <span>{{ movie.release_date.substring(0, 4) }}</span>
             <span class="mx-2">|</span>
@@ -26,13 +26,13 @@
     </div>
     <div class="w-full px-3 md:px-0 pt-4 pb-3 gap-4 flex">
       <div class="relative hidden md:block">
-        <a :href="pathToNavigate">
+        <NuxtLink :to="pathToNavigate">
           <img
             class="h-36 w-32 rounded-sm cursor-pointer"
             :alt="movie.original_title"
             :src="posterPath"
           >
-        </a>
+        </NuxtLink>
         <div
           class="flex absolute top-1 right-1 rounded-lg justify-center w-12 h-12 bg-opacity-80 pointer-events-none"
           :class="scoreBackground"
@@ -52,13 +52,13 @@
       </div>
 
       <article class="text-left relative w-full h-full flex flex-col">
-        <a
+        <NuxtLink
           v-if="movie.title && movie.title.length > 0"
-          :href="pathToNavigate"
+          :to="pathToNavigate"
           class="hidden md:block text-base mb-1 font-semibold h-6 overflow-hidden cursor-pointer "
         >
           <h3>{{ movie.title && movie.title.length > 0 ? movie.title : movie.original_title }}</h3>
-        </a>
+        </NuxtLink>
         <div class="text-xs mb-1 py-1 hidden md:block">
           <span>{{ movie.release_date.substring(0, 4) }}</span>
           <span class="mx-2">|</span>

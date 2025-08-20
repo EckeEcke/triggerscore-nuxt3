@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import type { Movie } from '~/types/movie'
 import placeholderTriggerscores from '~/assets/triggerscores.json'
 import placeholderBondMovies from '~/assets/bondMovies.json'
+import type { Locale } from 'vue-i18n'
 
 export type ScoreKey = 'rating_total' | 'rating_sexism' | 'rating_racism' | 'rating_others' | 'rating_cringe'
 export type SortingOption = 'a-z' | 'z-a' | 'date-desc' | 'date-asc' | 'ts-desc' | 'ts-asc'
@@ -46,7 +47,7 @@ interface Stats {
     averageCringe?: number
 }
 
-interface RecentComment {
+export interface RecentComment {
     id: number
     movie_id: number
     comment: object
@@ -92,7 +93,10 @@ interface StoreState {
     isFiltering: boolean
     isMaintenanceMode: boolean
     isFullscreen: boolean
+    hasLoadedData: boolean
 }
+
+const { isLocal } = useRuntimeConfig().public
 
 const apiBaseUrl = process.env.NODE_ENV === 'development'
   ? 'http://localhost:8888/.netlify/functions'
@@ -161,8 +165,7 @@ const adjustLocale = (locale: string) => {
   return locale
 }
 
-export const useStore = defineStore({
-  id: 'store',
+export const useStore = defineStore('store', {
   state: (): StoreState => {
     return {
       triggerscores: placeholderTriggerscores as TriggerScore[],
@@ -209,10 +212,12 @@ export const useStore = defineStore({
       isFiltering: false,
       isMaintenanceMode: false,
       isFullscreen: false,
+      hasLoadedData: false,
     }
   },
+
   actions: {
-    async setTriggerscores(locale: string) {
+    async setTriggerscores(locale: Locale) {
       const response = await fetch(`${apiBaseUrl}/fetchScoresAndTop10sAndStats`)
       const scoresAndTop10s = await response.json()
       this.triggerscores = scoresAndTop10s.scores
@@ -226,7 +231,9 @@ export const useStore = defineStore({
       const loadedMovies = await fetch(`${apiBaseUrl}/fetchMovies?locale=${locale}`)
       this.movies = await loadedMovies.json()
       this.moviesLoading = false
+      this.hasLoadedData = true
     },
+
     async setRecentRatings(locale: string, ratings: TriggerScore[]) {
       this.recentScores = ratings
       if (!ratings) return
@@ -241,9 +248,11 @@ export const useStore = defineStore({
       )
       recentRatings.then((res: Movie[]) => (this.recentRatings = res))
     },
+
     async setRecentComments(comments: Array<RecentComment>) {
       this.recentComments = comments
     },
+
     async setTop10Sexism(locale: string, movieIds: number[]) {
       if (!movieIds) return
       const loadedTop10 = Promise.all(
@@ -257,6 +266,7 @@ export const useStore = defineStore({
       )
       loadedTop10.then((res: Movie[]) => (this.top10Sexism = res))
     },
+
     async setTop10Racism(locale: string, movieIds: number[]) {
       if (!movieIds) return
       const loadedTop10 = Promise.all(
@@ -270,6 +280,7 @@ export const useStore = defineStore({
       )
       loadedTop10.then((res: Movie[]) => (this.top10Racism = res))
     },
+
     async setTop10Others(locale: string, movieIds: number[]) {
       if (!movieIds) return
       const loadedTop10 = Promise.all(
@@ -283,6 +294,7 @@ export const useStore = defineStore({
       )
       loadedTop10.then((res: Movie[]) => (this.top10Others = res))
     },
+
     async setTop10Cringe(locale: string, movieIds: number[]) {
       if (!movieIds) return
       const loadedTop10 = Promise.all(
@@ -296,15 +308,19 @@ export const useStore = defineStore({
       )
       loadedTop10.then((res: Movie[]) => (this.top10Cringe = res))
     },
+
     async setStats(stats: object) {
       this.stats = stats
     },
+
     setSearchInput(state: StoreState, payload: string) {
       this.searchInput = payload
     },
+
     setSearchTerm(payload: string) {
       this.searchTerm = payload
     },
+
     async setSearchResults(locale: string) {
       this.searchResults = []
       this.searchError = false
@@ -329,6 +345,7 @@ export const useStore = defineStore({
         }
       })
     },
+
     async searchMore(page: number, locale: string) {
       const searchTerm = this.searchTerm
       const adjustedLocale = adjustLocale(locale) // turns US locale into EN for search request
@@ -355,15 +372,18 @@ export const useStore = defineStore({
         }
       })
     },
+
     resetSearch() {
       this.searchError = false
     },
+
     setSearchError(payload: boolean) {
       this.searchError = payload
     },
+
     async setBondMovies(locale: string) {
       let bondMovieData
-      if (process.env.IS_LOCAL === 'true') {
+      if (isLocal) {
           bondMovieData = placeholderBondMovies
       } else {
           const data = await fetch(`https://www.triggerscore.de/api/bondMovies?locale=${locale}`)
@@ -373,6 +393,7 @@ export const useStore = defineStore({
       this.bondMovies = bondMovieData
       this.highlightsLoading = false
     },
+
     async filterMovies() {
       this.isFiltering = true
       this.sortMovies(
@@ -396,6 +417,7 @@ export const useStore = defineStore({
       this.filterByProvider()
       this.isFiltering = false
     },
+
     resetFilter() {
       this.filterMoviesByPrime = false
       this.filterMoviesByNetflix = false
@@ -406,60 +428,69 @@ export const useStore = defineStore({
       this.minScore = 0
       this.maxScore = 10
     },
+
     setSortingOption(state: StoreState, payload: SortingOption) {
       this.sortingOption = payload
     },
+
     setMovieYearMin(state: StoreState, payload: number) {
       this.filterMoviesByYearMin = payload
     },
+
     setMovieYearMax(state: StoreState, payload: number) {
       this.filterMoviesByYearMax = payload
     },
+
     setShownScore(state: StoreState, payload: ScoreKey) {
       this.shownScore = payload
     },
+
     setMinScore(state: StoreState, payload: number) {
       this.minScore = payload
     },
+
     setMaxScore(state: StoreState, payload: number) {
       this.maxScore = payload
     },
+
     setIsFiltering(payload: boolean) {
       this.isFiltering = payload
     },
-  sortMovies(
+
+    sortMovies(
       sortingOption: SortingOption,
       array: Movie[],
       triggerscores: TriggerScore[],
       shownScore: ScoreKey
-  ) {
-          const clonedArray = [...array]
+    ) {
+      const clonedArray = [...array]
 
-          switch (sortingOption) {
-              case 'a-z':
-                  clonedArray.sort(sortAtoZ)
-                  break
-              case 'z-a':
-                  clonedArray.sort(sortZtoA)
-                  break
-              case 'date-desc':
-                  clonedArray.sort(sortByDateDesc)
-                  break
-              case 'date-asc':
-                  clonedArray.sort(sortByDateAsc);
-                  break
-              case 'ts-desc':
-                  clonedArray.sort(sortByTsDesc(triggerscores, shownScore));
-                  break
-              case 'ts-asc':
-                  clonedArray.sort(sortByTsAsc(triggerscores, shownScore));
-                  break
-              default:
-                  break
-          }
+      switch (sortingOption) {
+          case 'a-z':
+              clonedArray.sort(sortAtoZ)
+              break
+          case 'z-a':
+              clonedArray.sort(sortZtoA)
+              break
+          case 'date-desc':
+              clonedArray.sort(sortByDateDesc)
+              break
+          case 'date-asc':
+              clonedArray.sort(sortByDateAsc);
+              break
+          case 'ts-desc':
+              clonedArray.sort(sortByTsDesc(triggerscores, shownScore));
+              break
+          case 'ts-asc':
+              clonedArray.sort(sortByTsAsc(triggerscores, shownScore));
+              break
+          default:
+              break
+      }
 
-          this.filteredMovies = clonedArray
+      this.filteredMovies = clonedArray
     },
+
     filterByYear(filterMax: number, filterMin: number, array: Movie[]) {
       let clonedArray = [...array]
       if (filterMin != null && filterMin >= 1900 && filterMin <= 2011) {
@@ -496,10 +527,12 @@ export const useStore = defineStore({
       })
       this.filteredMovies = clonedArray
     },
+
     async loadProviderData(locale: string) {
       const data = await fetch(`${apiBaseUrl}/fetchProviders?locale=${locale}`)
       this.providerData = await data.json()
     },
+
     async filterByProvider() {
       if (!this.filterMoviesByNetflix && !this.filterMoviesByPrime && !this.filterMoviesByDisney && !this.filterMoviesBySky) {
         return
@@ -512,29 +545,5 @@ export const useStore = defineStore({
       if (this.filterMoviesBySky) validIds.push(...this.providerData.sky)
       this.filteredMovies = clonedArray.filter((movie: Movie) => validIds.includes(movie.id))
     }
-  },
-  getters: {
-    getTriggerscores: (state) => state.triggerscores,
-    getMovies: (state) => state.movies,
-    getRecentRatings: (state) => state.recentRatings,
-    getSearchInput: (state) => state.searchInput,
-    getSearchTerm: (state) => state.searchTerm,
-    getSearchResults: (state) => state.searchResults,
-    getSearchError: (state) => state.searchError,
-    getBondMovies: (state) => state.bondMovies,
-    getBondMovieIDs: (state) => state.bondMovieIDs,
-    getFilteredMovies: (state) => state.filteredMovies,
-    getSortingOption: (state) => state.sortingOption,
-    getHighlightsLoading: (state) => state.highlightsLoading,
-    getMoviesLoading: (state) => state.moviesLoading,
-    getShownScore: (state) => state.shownScore,
-    getTop10Sexism: (state) => state.top10Sexism,
-    getTop10Racism: (state) => state.top10Racism,
-    getTop10Others: (state) => state.top10Others,
-    getTop10Cringe: (state) => state.top10Cringe,
-    getRecentScores: (state) => state.recentScores,
-    getStats: (state) => state.stats,
-    getIsFiltering: (state) => state.isFiltering,
-    getSelectedMovie: (state) => state.selectedMovie,
   },
 })

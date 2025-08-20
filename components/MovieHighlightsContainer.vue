@@ -73,7 +73,8 @@ const store = useStore()
 defineProps({
   movies: {
     type: Array as PropType<Movie[]>,
-    required: true,
+    required: false,
+    default: () => []
   },
   shownScore: {
     type: String as PropType<ScoreKey>,

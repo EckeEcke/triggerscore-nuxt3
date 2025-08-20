@@ -84,18 +84,18 @@
       <p class="font-semibold">Christian Eckardt</p>
       <p class="mb-8 font-semibold">22301 Hamburg</p>
       <p class="mb-8 font-semibold">
-        <a href="https://eckeecke.github.io">eckeecke.github.io</a>
+        <NuxtLink to="https://eckeecke.github.io">eckeecke.github.io</NuxtLink>
       </p>
       <p class="mb-8 flex">
-        <a href="https://github.com/EckeEcke" target="_blank">
+        <NuxtLink to="https://github.com/EckeEcke" target="_blank">
           <img alt="Logo Github" class="h-10 mr-4 filter invert" src="../assets/images/github.svg">
-        </a>
-        <a href="https://www.linkedin.com/in/christian-eckardt-41527216a/" target="_blank">
+        </NuxtLink>
+        <NuxtLink to="https://www.linkedin.com/in/christian-eckardt-41527216a/" target="_blank">
           <img alt="Logo LinkedIn" class="h-10 mr-4" src="../assets/images/linkedin.svg">
-        </a>
-        <a href="https://www.xing.com/profile/Christian_Eckardt21/cv" target="_blank">
+        </NuxtLink>
+        <NuxtLink to="https://www.xing.com/profile/Christian_Eckardt21/cv" target="_blank">
           <img alt="Logo Xing" class="h-10 mr-4" src="../assets/images/xing.svg">
-        </a>
+        </NuxtLink>
       </p>
     </div>
   </div>

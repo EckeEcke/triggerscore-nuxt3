@@ -12,9 +12,9 @@
     <div class="container mx-auto px-4 xl:w-10/12">
       <h1 v-if="showTitle" class="text-white text-2xl md:text-4xl font-semibold text-left">
         {{ t("search.searchHeadline1") }}
-        <a :href="localePath('/faq')" class="text-yellow-500 transition hover:text-yellow-600">
+        <NuxtLink :to="localePath('/faq')" class="text-yellow-500 transition hover:text-yellow-600">
           Triggerscore
-        </a>
+        </NuxtLink>
         {{ t("search.searchHeadline2") }}
       </h1>
       <div class="flex flex-col md:flex-row mx-auto">

@@ -4,12 +4,12 @@
     {{ t("quiz.share") }}
   </h3>
   <div class="flex justify-center gap-6">
-    <a v-for="(option, index) in socialMediaOptions" :key="index" :href="option.url" target="_blank">
+    <NuxtLink v-for="(option, index) in socialMediaOptions" :key="index" :to="option.url" target="_blank">
       <img class="w-10" :alt="option.alt" :src="option.logo">
-    </a>
-    <a :href="'mailto:?subject= Triggerscore Movie Quiz&body=Check out: ' + currentURL" title="Share by Email">
+    </NuxtLink>
+    <NuxtLink :to="'mailto:?subject= Triggerscore Movie Quiz&body=Check out: ' + currentURL" title="Share by Email">
       <font-awesome-icon :icon="['fas', 'envelope']" class="text-white" style="width: auto; height: 2.5rem" />
-    </a>
+    </NuxtLink>
     <div class="flex relative cursor-pointer">
       <font-awesome-icon :icon="['fas', 'link']" class="text-white self-center text-3xl" @click="copyLink" />
       <div v-if="copied" class="absolute top-full left-1/2 -translate-x-1/2 w-36 text-white text-center">
