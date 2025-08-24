@@ -49,6 +49,14 @@ export const handler = async (event) => {
     const ratings = await database.collection('scores').find({ movie_id: parseInt(id) }).toArray()
     const calculatedScores = calculateScores(ratings)
 
+    if (!ratings || ratings.length === 0) {
+      return {
+          statusCode: 404,
+          body: JSON.stringify({ message: 'No scores found for this movie ID.' }),
+          headers,
+      }
+    }
+
     return {
       statusCode: 200,
       body: JSON.stringify(calculatedScores),

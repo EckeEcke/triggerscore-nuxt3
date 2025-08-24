@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col lg:flex-row gap-4 sm:gap-12">
-    <div class="mx-auto mb-8">
+    <div class="mx-auto mb-8 sm:mb-0">
       <img src="/images/triggered.webp" alt="triggered-meme" >
     </div>
     <div>

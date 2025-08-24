@@ -10,6 +10,7 @@
         class="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-40 overflow-none"
       >
         <ThankyouAnimation
+          class="h-72 pt-12 bg-green-550 rounded"
           key="animation"
           @complete="showConfirmationModal = false"
         />
@@ -82,9 +83,9 @@
         </div>
 
         <hr class="border-transparent" >
-        <label class="px-4 my-2 block text-lg font-semibold">{{
-          t("categories.racism")
-        }}</label>
+        <label class="px-4 my-2 block text-lg font-semibold">
+          {{ t("categories.racism") }}
+        </label>
         <p class="px-4 mb-4 max-w-lg">{{ t("rating.descRacism") }}</p>
         <div
           class="max-w-full rating hide-scrollbar flex w-fit sm:justify-end ml-3 overflow-y-scroll sm:overflow-hidden mb-4"
@@ -115,9 +116,9 @@
           </button>
         </div>
         <hr class="border-transparent" >
-        <label class="px-4 my-2 block text-lg font-semibold">{{
-          t("categories.others")
-        }}</label>
+        <label class="px-4 my-2 block text-lg font-semibold">
+          {{ t("categories.others") }}
+        </label>
         <p class="px-4 mb-4 max-w-lg">{{ t("rating.descOthers") }}</p>
         <div
           class="max-w-full rating hide-scrollbar flex w-fit sm:justify-end ml-3 overflow-y-scroll sm:overflow-hidden mb-4"

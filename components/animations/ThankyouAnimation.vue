@@ -2,7 +2,7 @@
   <div class="w-72 mx-auto">
     <client-only>
       <Vue3Lottie
-        class="w-72"
+        class="w-72 gh-72"
         :animation-data="thankYouAnimation"
         :loop="false"
         :auto-play="true"
