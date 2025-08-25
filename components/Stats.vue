@@ -46,7 +46,8 @@
       </div>
       <div>
         <h2 class="font-semibold mt-4 h-14 flex items-center pr-2 w-40">
-          {{ t('stats.mostComments', [
+          {{
+            t('stats.mostComments', [
               mostCommentedMovie?.comments.filter((comment) => {
                 return comment.length > 3;
               }).length,

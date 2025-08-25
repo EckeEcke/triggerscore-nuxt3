@@ -11,9 +11,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     const response = await fetch(`https://api.themoviedb.org/3/movie/${movie_id}/similar?api_key=${apiKey}&language=${locale}&page=1`)
-    if (!response.ok) {
-      throw new Error(`Error fetching similar movies: ${response.statusText}`)
-    }
+
     const data = await response.json()
     return {
       statusCode: 200,
@@ -22,8 +20,9 @@ export default defineEventHandler(async (event) => {
   } catch (error) {
     console.error('Error fetching similar movies:', error)
     return {
-      statusCode: 500,
-      body: JSON.stringify({ message: 'Internal Server Error' })
+      statusCode: 200,
+      results: [],
+      message: 'Unable to fetch similar movies at this time'
     }
   }
 })
