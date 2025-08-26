@@ -461,6 +461,7 @@ export const useStore = defineStore('store', {
       triggerscores: TriggerScore[],
       shownScore: ScoreKey
     ) {
+      if (!array || array.length <= 0) return
       const clonedArray = [...array]
 
       switch (sortingOption) {
