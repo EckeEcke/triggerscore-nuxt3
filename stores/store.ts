@@ -216,6 +216,7 @@ export const useStore = defineStore('store', {
 
   actions: {
     async setTriggerscores(locale: Locale) {
+      this.moviesLoading = true
       const response = await fetch(`${apiBaseUrl}/fetchScoresAndTop10sAndStats`)
       const scoresAndTop10s = await response.json()
       this.triggerscores = scoresAndTop10s.scores

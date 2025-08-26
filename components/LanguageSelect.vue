@@ -1,5 +1,6 @@
 <template>
-  <div class="relative flex align-center">
+  <span v-if="isLoading" class="loader mr-6 sm:mr-10"></span>
+  <div v-else class="relative flex align-center">
     <template v-for="(option, index) in languageOptions" :key="index">
       <button
           v-if="locale == option.locale"
@@ -38,6 +39,7 @@ import usFlag from '../assets/images/usa.svg'
 
 const { locale } = useI18n()
 const switchLocalePath = useSwitchLocalePath()
+const store = useStore()
 
 const showSelection = ref(false)
 
@@ -67,10 +69,32 @@ const languageOptions: { locale: Locale, flag: string }[] = [
     flag: esFlag,
   },
 ]
+
+const isLoading = computed(() => store.moviesLoading || store.isFiltering)
 </script>
 
 <style scoped>
 .custom-shadow {
   box-shadow: rgba(0, 0, 0, 0.3) 0 4px 6px;
+}
+
+.loader {
+  width: 16px;
+  height: 16px;
+  border: 5px solid #FFF;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

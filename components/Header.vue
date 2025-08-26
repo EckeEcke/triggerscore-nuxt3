@@ -10,7 +10,7 @@
           TRIGGERSC<AngryAnimation />RE
         </NuxtLink>
       </h1>
-      <div class="flex sm:text-sm">
+      <div class="flex items-center sm:text-sm">
         <NuxtLink :to="localePath('/all')" class="animated-link text-white font-semibold self-center mr-6 md:mr-10 hidden md:block hover:text-yellow-500 uppercase">
           {{ t("header.allMovies") }}
         </NuxtLink>
