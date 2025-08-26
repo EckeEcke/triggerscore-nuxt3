@@ -51,12 +51,11 @@ const loadTriggerscore = async () => {
       `https://www.triggerscore.de/.netlify/functions/fetchMovieById?id=${id}`
     )
 
-    if (response.status === 404) {
+    const scores = await response.json()
+    if (!scores.length) {
       store.selectedMovieScore = undefined
       return
     }
-
-    const scores = await response.json()
     store.selectedMovieScore = scores[0]
   } catch (error) {
     console.log(

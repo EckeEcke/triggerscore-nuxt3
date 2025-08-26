@@ -1,5 +1,5 @@
 <template>
-  <span v-if="isLoading" class="loader mr-6 sm:mr-10"></span>
+  <span v-if="isLoading" class="loader w-6 h-6 mr-6 sm:mr-10"></span>
   <div v-else class="relative flex align-center">
     <template v-for="(option, index) in languageOptions" :key="index">
       <button
@@ -79,8 +79,6 @@ const isLoading = computed(() => store.moviesLoading || store.isFiltering)
 }
 
 .loader {
-  width: 16px;
-  height: 16px;
   border: 5px solid #FFF;
   border-bottom-color: transparent;
   border-radius: 50%;

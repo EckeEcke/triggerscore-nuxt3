@@ -51,8 +51,8 @@ export const handler = async (event) => {
 
     if (!ratings || ratings.length === 0) {
       return {
-          statusCode: 404,
-          body: JSON.stringify({ message: 'No scores found for this movie ID.' }),
+          statusCode: 200,
+          body: JSON.stringify([]),
           headers,
       }
     }
