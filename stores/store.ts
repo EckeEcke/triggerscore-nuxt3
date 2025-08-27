@@ -167,7 +167,7 @@ export const useStore = defineStore('store', {
   state: (): StoreState => {
     return {
       triggerscores: placeholderTriggerscores as TriggerScore[],
-      movies: [] as Movie[],
+      movies: [],
       selectedMovie: undefined,
       loadingSelectedMovie: false,
       providerData: {

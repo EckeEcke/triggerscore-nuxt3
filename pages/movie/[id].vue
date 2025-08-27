@@ -19,7 +19,8 @@ const { locale } = useI18n()
 store.loadingSelectedMovie = true
 
 const loadMovie = async () => {
-  const existingMovie = store.movies.find(movie => movie.id.toString() === id)
+  const existingMovie = Array.isArray(store.movies) ?
+      store.movies.find(movie => movie.id.toString() === id) : undefined
   if (existingMovie) {
     store.selectedMovie = existingMovie
     return Promise.resolve()

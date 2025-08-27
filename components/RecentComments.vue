@@ -76,7 +76,7 @@ const totalRating = (comment: RecentComment) => {
 }
 
 const movieTitle = (comment: RecentComment) => {
-  if (!store.triggerscores || store.triggerscores.length === 0) return
+  if (!store.triggerscores || store.triggerscores.length === 0 || !Array.isArray(store.movies)) return
   return store.movies.find((movie) => movie.id === comment.movie_id)?.title
 }
 
