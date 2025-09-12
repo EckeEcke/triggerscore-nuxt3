@@ -38,8 +38,6 @@ async function runSync() {
         const uniqueMovieIds = new Set(movieIdsToProcess.map(doc => doc.movie_id))
         console.log(`Processing ${uniqueMovieIds.size} unique movie IDs.`)
 
-        for (const movieId of uniqueMovieIds) {
-            if (!movieId) continue
             for (const locale of LOCALES_TO_FETCH) {
                 const collectionName = `${COLLECTION_PREFIX}${locale}`;
                 console.log(`\n--- Processing Locale: ${locale}. Targeting collection: '${collectionName}' ---`)
@@ -68,9 +66,9 @@ async function runSync() {
                         const apiData = await response.json()
 
                         const result = await moviesCollection.updateOne(
-                            { _id: apiData.id },
-                            { $set: apiData },
-                            { upsert: true }
+                            {_id: apiData.id},
+                            {$set: apiData},
+                            {upsert: true}
                         )
 
                         if (result.upsertedCount > 0) {
@@ -83,13 +81,11 @@ async function runSync() {
 
                     } catch (error) {
                         console.error(`    -> FAILED to process movie ID ${movieId} for locale ${locale}:`, error.message)
-                    }
-                    finally {
+                    } finally {
                         await delay(RATE_LIMIT_DELAY_MS) // rate limiting
                     }
                 }
             }
-        }
     } catch (error) {
         console.error('A critical error occurred:', error)
         process.exit(1)
