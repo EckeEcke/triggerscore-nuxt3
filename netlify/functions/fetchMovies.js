@@ -5,7 +5,7 @@ const devAllowedOrigins = ['http://localhost:3000', 'http://localhost:3001', 'ht
 const prodAllowedOrigins = ['https://www.triggerscore.de']
 const allowedOrigins = process.env.NODE_ENV === 'development' ? devAllowedOrigins : prodAllowedOrigins
 
-const ALLOWED_LOCALES = ['en', 'de', 'fr', 'es', 'en']
+const ALLOWED_LOCALES = ['en', 'de', 'fr', 'es', 'us']
 const COLLECTION_PREFIX = 'movies_'
 
 export const handler = async (event) => {
