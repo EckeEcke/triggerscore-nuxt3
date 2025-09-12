@@ -31,6 +31,6 @@ jobs:
 
         run: npm run task:sync-movies
         env:
-          MONGODB_URI: ${{ secrets.MONGODB_URI }}
-          EXTERNAL_API_KEY: ${{ secrets.EXTERNAL_API_KEY }}
+          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
           DATABASE_NAME: ${{ secrets.DATABASE_NAME }}

@@ -1,6 +1,6 @@
 import { MongoClient } from 'mongodb'
 
-const MONGODB_URI = process.env.DATABASE_PASSWORD
+const DATABASE_PASSWORD = process.env.DATABASE_PASSWORD
 const MOVIE_API_KEY = process.env.TMDB_API_KEY
 const DATABASE_NAME = process.env.DATABASE_NAME
 const SCORES_COLLECTION = 'scores'
@@ -8,13 +8,15 @@ const MOVIES_COLLECTION = 'movies'
 
 const EXTERNAL_API_URL = 'https://api.themoviedb.org/3/movie/'
 
+const uri = `mongodb+srv://ceckardt254:${DATABASE_PASSWORD}@cluster0.sen83.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
+
 async function runSync() {
-    if (!MONGODB_URI || !MOVIE_API_KEY) {
-        console.error('FATAL: MONGODB_URI and EXTERNAL_API_KEY must be set.')
+    if (!DATABASE_PASSWORD || !MOVIE_API_KEY) {
+        console.error('FATAL: DATABASE_PASSWORD and TMDB must be set.')
         process.exit(1)
     }
 
-    const client = new MongoClient(MONGODB_URI)
+    const client = new MongoClient(uri)
     console.log('Starting movie sync process...')
 
     try {
