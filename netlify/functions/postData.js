@@ -11,6 +11,8 @@ const LOCALES_TO_FETCH = ['en', 'de', 'fr', 'es', 'it']
 const COLLECTION_PREFIX = 'movies_'
 const RATE_LIMIT_DELAY_MS = 300
 
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms))
+
 export const handler = async (event) => {
     const origin = event.headers.origin
     const userAgent = event.headers['user-agent']
