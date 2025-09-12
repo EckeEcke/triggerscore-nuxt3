@@ -7,6 +7,10 @@ const prodAllowedOrigins = ['https://www.triggerscore.de']
 
 const allowedOrigins = process.env.NODE_ENV === 'development' ? devAllowedOrigins : prodAllowedOrigins
 
+const LOCALES_TO_FETCH = ['en', 'de', 'fr', 'es', 'it']
+const COLLECTION_PREFIX = 'movies_'
+const RATE_LIMIT_DELAY_MS = 300
+
 export const handler = async (event) => {
     const origin = event.headers.origin
     const userAgent = event.headers['user-agent']
@@ -72,6 +76,35 @@ export const handler = async (event) => {
             runtime: body.runtime,
             createdAt: new Date()
         })
+
+        console.log(`Starting just-in-time sync for movie ID: ${movieID}...`)
+        try {
+            for (const locale of LOCALES_TO_FETCH) {
+                const collectionName = `${COLLECTION_PREFIX}${locale}`
+                const moviesCollection = database.collection(collectionName)
+
+                const url = new URL(`https://api.themoviedb.org/3/movie/${movieID}`)
+                url.searchParams.append('api_key', process.env.API_KEY)
+                url.searchParams.append('language', locale)
+
+                const response = await fetch(url.toString())
+                if (!response.ok) {
+                    console.error(`  -> Failed to fetch locale '${locale}' for movie ${movieID}. Status: ${response.status}`)
+                } else {
+                    const apiData = await response.json()
+                    await moviesCollection.updateOne(
+                        { _id: apiData.id },
+                        { $set: apiData },
+                        { upsert: true }
+                    )
+                    console.log(`  -> Synced locale '${locale}' for movie: ${apiData.title}`)
+                }
+
+                await delay(RATE_LIMIT_DELAY_MS)
+            }
+        } catch (syncError) {
+            console.error(`An error occurred during the movie data sync for ID ${movieID}:`, syncError)
+        }
 
         return {
             statusCode: 200,

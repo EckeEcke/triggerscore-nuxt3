@@ -3,66 +3,63 @@ import { rateLimit } from './rateLimit.js'
 
 const devAllowedOrigins = ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:8888']
 const prodAllowedOrigins = ['https://www.triggerscore.de']
-
 const allowedOrigins = process.env.NODE_ENV === 'development' ? devAllowedOrigins : prodAllowedOrigins
 
+const ALLOWED_LOCALES = ['en', 'de', 'fr', 'es', 'en']
+const COLLECTION_PREFIX = 'movies_'
+
 export const handler = async (event) => {
-  const origin = event.headers.origin
-  const userAgent = event.headers['user-agent']
-  const ip = event.headers['x-forwarded-for'] || event.connection.remoteAddress
-  if (!event.headers['user-agent']) console.log('no ip')
+    const origin = event.headers.origin
+    const userAgent = event.headers['user-agent']
+    const ip = event.headers['x-forwarded-for'] || event.connection.remoteAddress
 
-  const headers = {
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Access-Control-Allow-Credentials': 'true',
-  }
-
-  if (allowedOrigins.includes(origin)) {
-    headers['Access-Control-Allow-Origin'] = origin
-  } else {
-    headers['Access-Control-Allow-Origin'] = 'null'
-  }
-
-  const rateLimitResponse = rateLimit(ip, userAgent)
-  if (rateLimitResponse) {
-    return {
-      ...rateLimitResponse,
-      headers,
+    const headers = {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Credentials': 'true',
     }
-  }
-
-  try {
-    const url = new URL(event.rawUrl)
-    const locale = url.searchParams.get('locale')
-    const database = await connectToDatabase()
-    const scores = database.collection('scores')
-    const movieIds = await scores.distinct('movie_id')
-    
-    const movieDataPromises = movieIds.map(id => 
-      fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.API_KEY}&language=${locale}&append_to_response=videos,keywords`)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(`Error fetching movie data: ${response.statusText}`)
-          }
-          return response.json()
-        })
-    )
-    
-    const movieDataResponses = await Promise.all(movieDataPromises)
-    const movies = movieDataResponses.map(response => response)
-
-    return {
-      statusCode: 200,
-      body: JSON.stringify(movies),
-      headers,
+    if (allowedOrigins.includes(origin)) {
+        headers['Access-Control-Allow-Origin'] = origin
+    } else {
+        headers['Access-Control-Allow-Origin'] = 'null'
     }
-  } catch (error) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: error.message }),
-      headers,
+
+    const rateLimitResponse = rateLimit(ip, userAgent)
+    if (rateLimitResponse) {
+        return { ...rateLimitResponse, headers }
     }
-  }
+
+    try {
+        const url = new URL(event.rawUrl)
+        const locale = url.searchParams.get('locale')
+
+        if (!locale || !ALLOWED_LOCALES.includes(locale)) {
+            return {
+                statusCode: 400,
+                body: JSON.stringify({ error: `Invalid or missing 'locale' parameter. Allowed values are: ${ALLOWED_LOCALES.join(', ')}` }),
+                headers,
+            }
+        }
+
+        const collectionName = `${COLLECTION_PREFIX}${locale}`
+
+        const database = await connectToDatabase()
+        const moviesCollection = database.collection(collectionName)
+
+        const movies = await moviesCollection.find({}).toArray()
+
+        return {
+            statusCode: 200,
+            body: JSON.stringify(movies),
+            headers,
+        }
+    } catch (error) {
+        console.error('An error occurred in the function:', error)
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ error: 'An internal server error occurred.' }),
+            headers,
+        }
+    }
 }
