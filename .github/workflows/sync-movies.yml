@@ -1,0 +1,36 @@
+name: Sync Movies from TMDB API
+
+on:
+  repository_dispatch:
+    types: [sync-movies-trigger]
+
+  schedule:
+    - cron: '0 5 * * *'
+
+  workflow_dispatch:
+
+jobs:
+  sync:
+    name: Fetch Movie Data and Save to DB
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js v22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Movie Sync Script
+
+        run: npm run task:sync-movies
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          EXTERNAL_API_KEY: ${{ secrets.EXTERNAL_API_KEY }}
+          DATABASE_NAME: ${{ secrets.DATABASE_NAME }}

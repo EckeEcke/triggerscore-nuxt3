@@ -2,8 +2,7 @@ import { MongoClient } from 'mongodb'
 
 const MONGODB_URI = process.env.DATABASE_PASSWORD
 const MOVIE_API_KEY = process.env.TMDB_API_KEY
-
-const DATABASE_NAME = 'triggerscore'
+const DATABASE_NAME = process.env.DATABASE_NAME
 const SCORES_COLLECTION = 'scores'
 const MOVIES_COLLECTION = 'movies'
 
