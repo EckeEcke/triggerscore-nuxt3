@@ -220,12 +220,12 @@ export const useStore = defineStore('store', {
       const response = await fetch(`${apiBaseUrl}/fetchScoresAndTop10sAndStats`)
       const scoresAndTop10s = await response.json()
       this.triggerscores = scoresAndTop10s.scores
-      this.setTop10Cringe(locale, scoresAndTop10s.top10s.cringe.map((score: TriggerScore) => score.movie_id))
-      this.setTop10Others(locale, scoresAndTop10s.top10s.others.map((score: TriggerScore) => score.movie_id))
-      this.setTop10Racism(locale, scoresAndTop10s.top10s.racism.map((score: TriggerScore) => score.movie_id))
-      this.setTop10Sexism(locale, scoresAndTop10s.top10s.sexism.map((score: TriggerScore) => score.movie_id))
+      this.setTop10Cringe(scoresAndTop10s.top10s.cringe.map((score: TriggerScore) => score.movie_id))
+      this.setTop10Others(scoresAndTop10s.top10s.others.map((score: TriggerScore) => score.movie_id))
+      this.setTop10Racism(scoresAndTop10s.top10s.racism.map((score: TriggerScore) => score.movie_id))
+      this.setTop10Sexism(scoresAndTop10s.top10s.sexism.map((score: TriggerScore) => score.movie_id))
       this.setStats(scoresAndTop10s.stats)
-      this.setRecentRatings(locale, scoresAndTop10s.recentRatings)
+      this.setRecentRatings(scoresAndTop10s.recentRatings)
       this.setRecentComments(scoresAndTop10s.recentComments)
       const loadedMovies = await fetch(`${apiBaseUrl}/fetchMovies?locale=${locale}`)
       this.movies = await loadedMovies.json()
@@ -233,79 +233,77 @@ export const useStore = defineStore('store', {
       this.hasLoadedData = true
     },
 
-    async setRecentRatings(locale: string, ratings: TriggerScore[]) {
-      this.recentScores = ratings
-      if (!ratings) return
-      const recentRatings = Promise.all(
-        ratings.map((entry) =>
-          fetch(
-            `https://api.themoviedb.org/3/movie/${entry.movie_id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${locale}`
-          )
-            .then((res) => res.json())
-            .catch(() => console.log('oopsy'))
-        )
-      )
-      recentRatings.then((res: Movie[]) => (this.recentRatings = res))
+    setRecentRatings(ratings: TriggerScore[]) {
+        this.recentScores = ratings
+        if (!ratings || ratings.length === 0) {
+            this.recentRatings = []
+            return
+        }
+        const movieMap = new Map(this.movies.map(movie => [movie.id, movie]))
+        const foundMovies = ratings
+            .map(entry => movieMap.get(entry.movie_id))
+            .filter((movie): movie is Movie => movie !== undefined)
+        this.recentRatings = foundMovies
     },
 
     async setRecentComments(comments: Array<RecentComment>) {
       this.recentComments = comments
     },
 
-    async setTop10Sexism(locale: string, movieIds: number[]) {
-      if (!movieIds) return
-      const loadedTop10 = Promise.all(
-        movieIds.map((id) =>
-          fetch(
-            `https://api.themoviedb.org/3/movie/${id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${locale}`
-          )
-            .then((res) => res.json())
-            .catch(() => console.log('oopsy'))
-        )
-      )
-      loadedTop10.then((res: Movie[]) => (this.top10Sexism = res))
+    setTop10Sexism(movieIds: number[]) {
+        if (!movieIds || movieIds.length === 0) {
+            this.top10Sexism = []
+            return
+        }
+
+        const foundMovies = movieIds
+            .map(id =>
+                this.movies.find(movie => movie.id === id)
+            )
+            .filter((movie): movie is Movie => movie !== undefined)
+        this.top10Sexism = foundMovies
     },
 
-    async setTop10Racism(locale: string, movieIds: number[]) {
-      if (!movieIds) return
-      const loadedTop10 = Promise.all(
-        movieIds.map((id) =>
-          fetch(
-            `https://api.themoviedb.org/3/movie/${id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${locale}`
-          )
-            .then((res) => res.json())
-            .catch(() => console.log('oopsy'))
-        )
-      )
-      loadedTop10.then((res: Movie[]) => (this.top10Racism = res))
+    setTop10Racism(movieIds: number[]) {
+        if (!movieIds || movieIds.length === 0) {
+            this.top10Sexism = []
+            return
+        }
+
+        const foundMovies = movieIds
+            .map(id =>
+                this.movies.find(movie => movie.id === id)
+            )
+            .filter((movie): movie is Movie => movie !== undefined)
+        this.top10Racism = foundMovies
     },
 
-    async setTop10Others(locale: string, movieIds: number[]) {
-      if (!movieIds) return
-      const loadedTop10 = Promise.all(
-        movieIds.map((id) =>
-          fetch(
-            `https://api.themoviedb.org/3/movie/${id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${locale}`
-          )
-            .then((res) => res.json())
-            .catch(() => console.log('oopsy'))
-        )
-      )
-      loadedTop10.then((res: Movie[]) => (this.top10Others = res))
+    setTop10Others(movieIds: number[]) {
+        if (!movieIds || movieIds.length === 0) {
+            this.top10Sexism = []
+            return
+        }
+
+        const foundMovies = movieIds
+            .map(id =>
+                this.movies.find(movie => movie.id === id)
+            )
+            .filter((movie): movie is Movie => movie !== undefined)
+        this.top10Others = foundMovies
     },
 
-    async setTop10Cringe(locale: string, movieIds: number[]) {
-      if (!movieIds) return
-      const loadedTop10 = Promise.all(
-        movieIds.map((id) =>
-          fetch(
-            `https://api.themoviedb.org/3/movie/${id}?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${locale}`
-          )
-            .then((res) => res.json())
-            .catch(() => console.log('oopsy'))
-        )
-      )
-      loadedTop10.then((res: Movie[]) => (this.top10Cringe = res))
+    setTop10Cringe(movieIds: number[]) {
+        if (!movieIds || movieIds.length === 0) {
+            this.top10Sexism = []
+            return
+        }
+
+        const foundMovies = movieIds
+            .map(id =>
+                this.movies.find(movie => movie.id === id)
+            )
+            .filter((movie): movie is Movie => movie !== undefined)
+        this.top10Cringe = foundMovies
     },
 
     async setStats(stats: object) {
