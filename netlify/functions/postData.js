@@ -47,7 +47,9 @@ export const handler = async (event) => {
 
     try {
         const body = JSON.parse(event.body)
-        if (!body.movieID) {
+        const { movieID } = body
+
+        if (!movieID) {
             console.log("No movie defined in request body...")
             return {
                 statusCode: 400,
@@ -58,7 +60,7 @@ export const handler = async (event) => {
 
         const database = await connectToDatabase()
         const result = await database.collection('scores').insertOne({
-            movie_id: body.movieID,
+            movie_id: movieID,
             rating_sexism: body.sexism,
             rating_racism: body.racism,
             rating_others: body.others,
