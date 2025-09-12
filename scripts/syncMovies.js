@@ -53,6 +53,7 @@ async function runSync() {
                         const url = new URL(`${EXTERNAL_API_URL}${movieId}`)
                         url.searchParams.append('api_key', MOVIE_API_KEY)
                         url.searchParams.append('language', locale)
+                        url.searchParams.append('append_to_response', 'videos,keywords')
 
                         const response = await fetch(url.toString())
                         if (!response.ok) {
