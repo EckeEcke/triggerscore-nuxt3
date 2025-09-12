@@ -12,6 +12,9 @@ const uri = `mongodb+srv://ceckardt254:${DATABASE_PASSWORD}@cluster0.sen83.mongo
 const LOCALES_TO_FETCH = ['en', 'us', 'fr', 'es', 'de']
 const COLLECTION_PREFIX = 'movies_'
 
+const RATE_LIMIT_DELAY_MS = 300
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms))
+
 async function runSync() {
     if (!DATABASE_PASSWORD || !MOVIE_API_KEY) {
         console.error('FATAL: DATABASE_PASSWORD and TMDB must be set.')
@@ -55,6 +58,10 @@ async function runSync() {
 
                         const response = await fetch(url.toString())
                         if (!response.ok) {
+                            if (response.status === 429) {
+                                console.error(`    -> RATE LIMIT EXCEEDED. Waiting for 10 seconds before retrying...`);
+                                await delay(10000)
+                            }
                             throw new Error(`API request failed with status ${response.status}`)
                         }
 
@@ -76,6 +83,9 @@ async function runSync() {
 
                     } catch (error) {
                         console.error(`    -> FAILED to process movie ID ${movieId} for locale ${locale}:`, error.message)
+                    }
+                    finally {
+                        await delay(RATE_LIMIT_DELAY_MS) // rate limiting
                     }
                 }
             }
