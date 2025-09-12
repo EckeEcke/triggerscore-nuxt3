@@ -7,7 +7,7 @@ const prodAllowedOrigins = ['https://www.triggerscore.de']
 
 const allowedOrigins = process.env.NODE_ENV === 'development' ? devAllowedOrigins : prodAllowedOrigins
 
-const LOCALES_TO_FETCH = ['en', 'de', 'fr', 'es', 'it']
+const LOCALES_TO_FETCH = ['en', 'de', 'fr', 'es', 'us']
 const COLLECTION_PREFIX = 'movies_'
 const RATE_LIMIT_DELAY_MS = 300
 

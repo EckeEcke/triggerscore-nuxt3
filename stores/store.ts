@@ -220,6 +220,8 @@ export const useStore = defineStore('store', {
       const response = await fetch(`${apiBaseUrl}/fetchScoresAndTop10sAndStats`)
       const scoresAndTop10s = await response.json()
       this.triggerscores = scoresAndTop10s.scores
+      const loadedMovies = await fetch(`${apiBaseUrl}/fetchMovies?locale=${locale}`)
+      this.movies = await loadedMovies.json()
       this.setTop10Cringe(scoresAndTop10s.top10s.cringe.map((score: TriggerScore) => score.movie_id))
       this.setTop10Others(scoresAndTop10s.top10s.others.map((score: TriggerScore) => score.movie_id))
       this.setTop10Racism(scoresAndTop10s.top10s.racism.map((score: TriggerScore) => score.movie_id))
@@ -227,8 +229,6 @@ export const useStore = defineStore('store', {
       this.setStats(scoresAndTop10s.stats)
       this.setRecentRatings(scoresAndTop10s.recentRatings)
       this.setRecentComments(scoresAndTop10s.recentComments)
-      const loadedMovies = await fetch(`${apiBaseUrl}/fetchMovies?locale=${locale}`)
-      this.movies = await loadedMovies.json()
       this.moviesLoading = false
       this.hasLoadedData = true
     },

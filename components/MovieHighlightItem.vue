@@ -114,6 +114,7 @@ const poster = computed(
 )
 
 const score = computed(() => {
+  if (props.scores?.[props.shownScore] === 0) return 0
   return props.scores?.[props.shownScore] || '-'
 })
 
