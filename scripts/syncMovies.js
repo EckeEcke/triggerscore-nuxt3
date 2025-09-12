@@ -65,7 +65,7 @@ async function runSync() {
                     console.log(`-> No changes for: ${apiData.title} (ID: ${apiData.id})`)
                 }
 
-            } catch (error: any) {
+            } catch (error) {
                 console.error(`--> FAILED to process movie ID ${movieId}:`, error.message)
             }
         }
