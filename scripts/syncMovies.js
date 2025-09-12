@@ -4,11 +4,13 @@ const DATABASE_PASSWORD = process.env.DATABASE_PASSWORD
 const MOVIE_API_KEY = process.env.TMDB_API_KEY
 const DATABASE_NAME = process.env.DATABASE_NAME
 const SCORES_COLLECTION = 'scores'
-const MOVIES_COLLECTION = 'movies'
 
 const EXTERNAL_API_URL = 'https://api.themoviedb.org/3/movie/'
 
 const uri = `mongodb+srv://ceckardt254:${DATABASE_PASSWORD}@cluster0.sen83.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
+
+const LOCALES_TO_FETCH = ['en', 'us', 'fr', 'es', 'de']
+const COLLECTION_PREFIX = 'movies_'
 
 async function runSync() {
     if (!DATABASE_PASSWORD || !MOVIE_API_KEY) {
@@ -25,7 +27,6 @@ async function runSync() {
 
         const db = client.db(DATABASE_NAME)
         const scoresCollection = db.collection(SCORES_COLLECTION)
-        const moviesCollection = db.collection(MOVIES_COLLECTION)
 
         const movieIdsToProcess = await scoresCollection.find({}, { projection: { movie_id: 1, _id: 0 } }).toArray()
 
@@ -36,37 +37,47 @@ async function runSync() {
 
         for (const movieId of uniqueMovieIds) {
             if (!movieId) continue
+            for (const locale of LOCALES_TO_FETCH) {
+                const collectionName = `${COLLECTION_PREFIX}${locale}`;
+                console.log(`\n--- Processing Locale: ${locale}. Targeting collection: '${collectionName}' ---`)
 
-            try {
-                console.log(`Processing movie ID: ${movieId}...`)
+                const moviesCollection = db.collection(collectionName)
 
-                const url = new URL(`${EXTERNAL_API_URL}${movieId}`)
-                url.searchParams.append('api_key', MOVIE_API_KEY)
+                for (const movieId of uniqueMovieIds) {
+                    if (!movieId) continue
 
-                const response = await fetch(url.toString())
+                    try {
+                        console.log(`  -> Fetching movie ID ${movieId} for locale ${locale}...`)
 
-                if (!response.ok) {
-                    throw new Error(`API request failed with status ${response.status}`)
+                        const url = new URL(`${EXTERNAL_API_URL}${movieId}`)
+                        url.searchParams.append('api_key', MOVIE_API_KEY)
+                        url.searchParams.append('language', locale)
+
+                        const response = await fetch(url.toString())
+                        if (!response.ok) {
+                            throw new Error(`API request failed with status ${response.status}`)
+                        }
+
+                        const apiData = await response.json()
+
+                        const result = await moviesCollection.updateOne(
+                            { _id: apiData.id },
+                            { $set: apiData },
+                            { upsert: true }
+                        )
+
+                        if (result.upsertedCount > 0) {
+                            console.log(`    -> CREATED: ${apiData.title} (ID: ${apiData.id})`)
+                        } else if (result.modifiedCount > 0) {
+                            console.log(`    -> UPDATED: ${apiData.title} (ID: ${apiData.id})`)
+                        } else {
+                            console.log(`    -> No changes for: ${apiData.title} (ID: ${apiData.id})`)
+                        }
+
+                    } catch (error) {
+                        console.error(`    -> FAILED to process movie ID ${movieId} for locale ${locale}:`, error.message)
+                    }
                 }
-
-                const apiData = await response.json()
-
-                const result = await moviesCollection.updateOne(
-                    { _id: apiData.id },
-                    { $set: apiData },
-                    { upsert: true }
-                )
-
-                if (result.upsertedCount > 0) {
-                    console.log(`-> CREATED new entry for: ${apiData.title} (ID: ${apiData.id})`)
-                } else if (result.modifiedCount > 0) {
-                    console.log(`-> UPDATED existing entry for: ${apiData.title} (ID: ${apiData.id})`)
-                } else {
-                    console.log(`-> No changes for: ${apiData.title} (ID: ${apiData.id})`)
-                }
-
-            } catch (error) {
-                console.error(`--> FAILED to process movie ID ${movieId}:`, error.message)
             }
         }
     } catch (error) {
