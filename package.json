@@ -8,10 +8,11 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "task:sync-movies": "node scripts/syncMovies.ts"
+    "task:sync-movies": "npx ts-node scripts/syncMovies.ts"
   },
   "devDependencies": {
     "@nuxt/devtools": "^2.6.2",
+    "ts-node": "^10.9.2",
     "vue-tsc": "^3.0.6"
   },
   "dependencies": {
