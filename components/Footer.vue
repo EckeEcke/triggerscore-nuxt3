@@ -12,7 +12,7 @@
           <span>RE</span>
         </h2>
         <div class="flex text-white my-4 justify-center lg:justify-start">
-          <NuxtLink :to="localePath('about')" class="border-r border-white px-4 lg:pl-0 uppercase">
+          <NuxtLink :to="localePath('/about')" class="border-r border-white px-4 lg:pl-0 uppercase">
             {{ t("header.about") }}
           </NuxtLink>
           <NuxtLink :to="localePath('/faq')" class="border-r border-white px-4 uppercase">
