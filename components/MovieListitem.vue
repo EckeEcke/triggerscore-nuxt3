@@ -10,7 +10,7 @@
       <div class="absolute top-2 right-2 h-12 w-12 text-lg text-white rounded-lg font-semibold" :class="scoreBackground">
         <div class="relative w-full h-full">
           <span class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            {{ scores ? score : "-" }}
+            {{ displayedScoreValue }}
           </span>
         </div>
         <div v-if="displayedScore != ''" class="bg-gray-400 rounded p-1 my-1 text-xs font-light">
@@ -92,6 +92,11 @@ const score = computed(() => {
     return props.scores[store.shownScore]
   }
   return props.scores['rating_total']
+})
+
+const displayedScoreValue = computed(() => {
+  if (!score.value || !props.scores) return '-'
+  return score.value
 })
 
 const scoreBackground = computed(() => getScoreBackground(score.value))
