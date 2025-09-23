@@ -4,7 +4,7 @@
             <div v-if="(index % 2 === 0) === toggleBool" class="bg-gradient-to-r from-gray-950 to-gray-800 p-4">
               <div class="mb-4 flex gap-2 items-center">
                   <div
-                  class="flex shrink-0 justify-center rounded-lg w-8 h-8 mr-2 bg-opacity-80"
+                  class="flex shrink-0 justify-center rounded-lg w-10 h-10 mr-2 bg-opacity-80"
                   :class="{
                       'bg-red-700':
                       commentTotalRating(comment.movie_id, 11, 7),
@@ -14,16 +14,16 @@
                       commentTotalRating(comment.movie_id, 4, 0),
                   }"
                   >
-                    <div class="self-center text-white">
+                    <div class="self-center text-white text-lg font-semibold">
                         {{ totalRating(comment) }}
                     </div>
                   </div>
-                  <h4
-                      class="font-semibold cursor-pointer text-sm"
+                  <h3
+                      class="font-semibold cursor-pointer text-base"
                       @click="navigateTo(localePath(`/movie/${comment.movie_id}`))"
                   >
                     {{ movieTitle(comment) }}
-                  </h4>
+                  </h3>
               </div>
               <hr class="mb-4 w-36 border-yellow-500" >
               <div class="flex justify-between gap-2">
