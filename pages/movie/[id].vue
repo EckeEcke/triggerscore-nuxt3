@@ -37,44 +37,19 @@ const loadMovie = async () => {
   }
 }
 
-const loadTriggerscore = async () => {
-  const existingScore = store.triggerscores.find(
-    score => score.movie_id.toString() === id
-  )
-  if (existingScore) {
-    store.selectedMovieScore = existingScore
-    return Promise.resolve()
-  } else {
-    store.selectedMovieScore = undefined
-  }
-  try {
-    const response = await fetch(
-      `https://www.triggerscore.de/.netlify/functions/fetchMovieById?id=${id}`
-    )
+const existingScore = store.triggerscores.find(score => score.movie_id.toString() === id)
 
-    const scores = await response.json()
-    if (!scores.length) {
-      store.selectedMovieScore = undefined
-      return
-    }
-    store.selectedMovieScore = scores[0]
-  } catch (error) {
-    console.log(
-      'Oops, an error occurred while loading the Triggerscore: ',
-      error
-    )
-    store.selectedMovieScore = undefined
-  }
+if (existingScore) {
+  store.selectedMovieScore = existingScore
+} else {
+  store.selectedMovieScore = undefined
 }
 
-// Use Promise.all to wait for all async functions to finish
 try {
-  await Promise.all([loadMovie(), loadTriggerscore()])
+  await loadMovie()
   store.loadingSelectedMovie = false
   isLoading.value = false
-  // All async functions have completed
 } catch (error) {
-  // Handle any errors that occurred during the async functions
   store.loadingSelectedMovie = false
   clearError()
   await navigateTo('/')
