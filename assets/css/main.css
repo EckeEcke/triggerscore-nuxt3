@@ -62,14 +62,17 @@
 
 @font-face {
   font-family: Lato;
+  font-display: swap;
   src: url("/fonts/Lato-Regular.ttf");
 }
 @font-face {
   font-family: Avenir;
+  font-display: swap;
   src: url("/fonts/Avenir.otf");
 }
 @font-face {
   font-family: AvenirLight;
+  font-display: swap;
   src: url("/fonts/AvenirLight.otf");
 }
 #__nuxt {
