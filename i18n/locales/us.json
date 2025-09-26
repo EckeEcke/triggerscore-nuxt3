@@ -119,8 +119,7 @@
     "report": "Hello, I want to report the following comment: ",
     "reportHeadline": "Report comment",
     "success": "Thank You!",
-    "successMessage": "Your message has been sent successfully. We'll get back to you as soon as possible.",
-    "sendAnother": "Send Another Message",
+    "successMessage": "Your message has been sent successfully. I'll get back to you as soon as possible.",
     "backToHome": "Back to Home",
     "sending": "Sending..."
   },

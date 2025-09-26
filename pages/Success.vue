@@ -13,15 +13,8 @@
 
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
         <NuxtLink
-            :to="localePath('/contact')"
-            class="bg-yellow-500 text-white px-6 py-3 rounded-lg hover:bg-yellow-600 font-semibold transition uppercase"
-        >
-          {{ t('contact.sendAnother') }}
-        </NuxtLink>
-
-        <NuxtLink
             :to="localePath('/')"
-            class="bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 font-semibold transition uppercase"
+            class="bg-yellow-500 text-white px-6 py-3 rounded-lg hover:bg-yellow-600 font-semibold transition uppercase"
         >
           {{ t('contact.backToHome') }}
         </NuxtLink>

@@ -119,8 +119,7 @@
     "report": "Hallo, ich möchte den folgenden Kommentar melden: ",
     "reportHeadline": "Kommentar melden",
     "success": "Vielen Dank!",
-    "successMessage": "Ihre Nachricht wurde erfolgreich versendet. Wir melden uns schnellstmöglich bei Ihnen.",
-    "sendAnother": "Weitere Nachricht senden",
+    "successMessage": "Deine Nachricht wurde erfolgreich versendet. Ich melde mich schnellstmöglich bei dir.",
     "backToHome": "Zurück zur Startseite",
     "sending": "Wird gesendet..."
   },
