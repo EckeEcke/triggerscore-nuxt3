@@ -116,9 +116,13 @@
     "placeholderEmail": "Enter email",
     "placeholderMessage": "Enter message",
     "send": "Send",
-    "success": "Message successfully send ",
     "report": "Hello, I want to report the following comment: ",
-    "reportHeadline": "Report comment"
+    "reportHeadline": "Report comment",
+    "success": "Thank You!",
+    "successMessage": "Your message has been sent successfully. We'll get back to you as soon as possible.",
+    "sendAnother": "Send Another Message",
+    "backToHome": "Back to Home",
+    "sending": "Sending..."
   },
   "rating": {
     "thanks": "Thanks for your rating!",

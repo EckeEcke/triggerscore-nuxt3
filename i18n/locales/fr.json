@@ -116,9 +116,13 @@
     "placeholderEmail": "Entrez email",
     "placeholderMessage": "Entrez commentaire",
     "send": "Envoyer",
-    "success": "Message envoyé avec succès ",
     "report": "Bonjour, je signale le commentaire suivant: ",
-    "reportHeadline": "Signaler commentaire"
+    "reportHeadline": "Signaler commentaire",
+    "success": "Merci !",
+    "successMessage": "Votre message a été envoyé avec succès. Nous vous répondrons dans les plus brefs délais.",
+    "sendAnother": "Envoyer un autre message",
+    "backToHome": "Retour à l'accueil",
+    "sending": "Envoi en cours..."
   },
   "rating": {
     "thanks": "Merci pour votre évaluation!",

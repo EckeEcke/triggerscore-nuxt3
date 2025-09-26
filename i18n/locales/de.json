@@ -116,9 +116,13 @@
     "placeholderEmail": "E-Mail-Adresse eingeben",
     "placeholderMessage": "Nachricht eingeben",
     "send": "Absenden",
-    "success": "Nachricht erfolgreich versendet ",
     "report": "Hallo, ich möchte den folgenden Kommentar melden: ",
-    "reportHeadline": "Kommentar melden"
+    "reportHeadline": "Kommentar melden",
+    "success": "Vielen Dank!",
+    "successMessage": "Ihre Nachricht wurde erfolgreich versendet. Wir melden uns schnellstmöglich bei Ihnen.",
+    "sendAnother": "Weitere Nachricht senden",
+    "backToHome": "Zurück zur Startseite",
+    "sending": "Wird gesendet..."
   },
   "rating": {
     "thanks": "Danke für deine Bewertung!",

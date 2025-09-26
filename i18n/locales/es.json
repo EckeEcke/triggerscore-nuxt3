@@ -116,9 +116,13 @@
         "placeholderEmail": "Ingrese su correo electrónico",
         "placeholderMessage": "Ingrese su mensaje",
         "send": "Enviar",
-        "success": "Mensaje enviado exitosamente",
         "report": "Hola, quiero informar el siguiente comentario:",
-        "reportHeadline": "Informar comentario"
+        "reportHeadline": "Informar comentario",
+        "success": "¡Gracias!",
+        "successMessage": "Su mensaje ha sido enviado exitosamente. Nos pondremos en contacto con usted lo antes posible.",
+        "sendAnother": "Enviar otro mensaje",
+        "backToHome": "Volver al inicio",
+        "sending": "Enviando..."
     },
     "rating": {
         "thanks": "¡Gracias por tu calificación!",
