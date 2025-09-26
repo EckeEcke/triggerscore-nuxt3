@@ -2,16 +2,16 @@
   <div
       class="container text-white px-4 py-6 md:py-12 md:pb-8 text-left xl:w-10/12 mx-auto md:rounded-lg flex justify-start flex-wrap gap-12"
   >
-    <div v-show="!showSuccess" class="mr-8 max-w-full">
+    <div v-show="!submitted" class="mr-8 max-w-full">
       <h1 class="mb-4 text-xl md:text-2xl font-semibold uppercase">
         {{ route.query.comment ? t("contact.reportHeadline") : t("contact.sendFeedback") }}
       </h1>
 
       <form
+          ref="formElement"
           name="contact-nuxt3"
           class="w-full p-8 bg-gradient-to-r from-gray-950 to-gray-800 rounded text-gray-900"
           method="POST"
-          action="/form-success"
           data-netlify="true"
           data-netlify-honeypot="bot-field"
           @submit="handleSubmit"
@@ -69,26 +69,20 @@
               type="submit"
               :disabled="isSubmitting"
           >
-            {{ isSubmitting ? t("contact.sending") : t("contact.send") }}
+            {{ isSubmitting ? t("contact.sending") || "Sending..." : t("contact.send") }}
           </button>
         </p>
       </form>
     </div>
 
     <div
-        v-show="showSuccess"
+        v-show="submitted"
         class="w-full sm:w-1/2 lg:w-1/4 h-64 bg-green-500 rounded-lg flex flex-col align-center justify-center"
     >
       <SuccessAnimation />
       <p class="p-4 text-white font-semibold text-center self-center -mt-8">
         {{ t("contact.success") }}
       </p>
-      <button
-          @click="resetForm"
-          class="mt-4 mx-4 bg-white text-green-500 px-4 py-2 rounded font-semibold hover:bg-gray-100"
-      >
-        {{ t("contact.sendAnother") }}
-      </button>
     </div>
 
     <div>
@@ -117,11 +111,10 @@
 
 <script setup lang='ts'>
 import { useI18n } from 'vue-i18n'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, nextTick } from 'vue'
 import SuccessAnimation from '~/components/animations/SuccessAnimation.vue'
 
 const route = useRoute()
-const router = useRouter()
 const { t } = useI18n()
 
 const form = ref({
@@ -131,7 +124,8 @@ const form = ref({
 })
 
 const isSubmitting = ref(false)
-const showSuccess = ref(false)
+const submitted = ref(false)
+const formElement = ref<HTMLFormElement>()
 
 if (route.query.comment) {
   form.value.message =
@@ -143,37 +137,31 @@ if (route.query.comment) {
 }
 
 onMounted(() => {
-  if (process.client) {
-    if (route.query.success === 'true') {
-      showSuccess.value = true
-      router.replace({ query: {} })
-    }
-
-    if (localStorage.getItem('formSubmitted')) {
-      showSuccess.value = true
-      localStorage.removeItem('formSubmitted')
-    }
+  if (process.client && route.query.success) {
+    submitted.value = true
   }
 })
 
-const handleSubmit = () => {
+const handleSubmit = async (event: Event) => {
   isSubmitting.value = true
 
-  if (process.client) {
-    localStorage.setItem('formSubmitted', 'true')
-  }
-}
+  await nextTick()
 
-const resetForm = () => {
-  showSuccess.value = false
-  isSubmitting.value = false
-  form.value = {
-    name: '',
-    mail: '',
-    message: ''
-  }
+  if (formElement.value) {
+    const nameInput = formElement.value.querySelector('input[name="name"]') as HTMLInputElement
+    const mailInput = formElement.value.querySelector('input[name="mail"]') as HTMLInputElement
+    const messageInput = formElement.value.querySelector('textarea[name="message"]') as HTMLTextAreaElement
 
-  router.replace({ query: {} })
+    if (nameInput) nameInput.value = form.value.name
+    if (mailInput) mailInput.value = form.value.mail
+    if (messageInput) messageInput.value = form.value.message
+
+    console.log('Form values synced:', {
+      name: nameInput?.value,
+      mail: mailInput?.value,
+      message: messageInput?.value
+    })
+  }
 }
 
 useSeoMeta({
