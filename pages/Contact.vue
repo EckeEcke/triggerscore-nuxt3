@@ -14,7 +14,7 @@
           method="POST"
           data-netlify="true"
           data-netlify-honeypot="bot-field"
-          :action="localePath('/form-success')"
+
           @submit="handleSubmit"
       >
         <div class="hidden">
