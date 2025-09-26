@@ -56,5 +56,13 @@ export default defineNuxtConfig({
       }
   },
 
+routeRules: {
+    '/de/contact': { prerender: true },
+    '/en/contact': { prerender: true },
+    '/es/contact': { prerender: true },
+    '/fr/contact': { prerender: true },
+    '/us/contact': { prerender: true },
+},
+
   compatibilityDate: '2025-04-16'
 })

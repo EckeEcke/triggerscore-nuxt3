@@ -1,76 +1,82 @@
 <template>
   <div
-    class="container text-white px-4 py-6 md:py-12 md:pb-8 text-left xl:w-10/12 mx-auto md:rounded-lg flex justify-start flex-wrap gap-12"
+      class="container text-white px-4 py-6 md:py-12 md:pb-8 text-left xl:w-10/12 mx-auto md:rounded-lg flex justify-start flex-wrap gap-12"
   >
     <div v-show="!submitted" class="mr-8 max-w-full">
       <h1 class="mb-4 text-xl md:text-2xl font-semibold uppercase">
         {{ route.query.comment ? t("contact.reportHeadline") : t("contact.sendFeedback") }}
       </h1>
       <form
-        name="contact"
-        class="w-full p-8 bg-gradient-to-r from-gray-950 to-gray-800 rounded text-gray-900"
-        method="post"
-        netlify
-        data-netlify="true"
-        data-netlify-honeypot="bot-field"
-        @submit.prevent="handleSubmit"
+          name="contact"
+          class="w-full p-8 bg-gradient-to-r from-gray-950 to-gray-800 rounded text-gray-900"
+          method="post"
+          netlify
+          data-netlify="true"
+          data-netlify-honeypot="bot-field"
+          @submit.prevent="handleSubmit"
       >
         <div class="hidden">
-          <label>Don't fill this out if you're human:</label> 
-          <input name="bot-field" > 
+          <label>Don't fill this out if you're human:</label>
+          <input name="bot-field">
         </div>
-        <input type="hidden" name="form-name" value="contact" >
+        <input type="hidden" name="form-name" value="contact">
+
         <div class="flex flex-col gap-1 mb-4">
           <label class="font-semibold mb-2 text-white">{{
-            t("contact.name")
-          }}</label>
+              t("contact.name")
+            }}</label>
           <input
-            v-model="form.name"
-            type="text"
-            name="name"
-            class="border border-gray-300 p-2 rounded w-72 max-w-full"
-            :placeholder="t('contact.placeholderName')"
-            required
+              v-model="form.name"
+              type="text"
+              name="name"
+              class="border border-gray-300 p-2 rounded w-72 max-w-full"
+              :placeholder="t('contact.placeholderName')"
+              required
           >
         </div>
+
         <div class="flex flex-col gap-1 mb-4">
           <label class="font-semibold mb-2 text-white">
             {{ t("contact.email") }}
           </label>
           <input
-            v-model="form.mail"
-            type="email"
-            name="mail"
-            class="border border-gray-300 p-2 rounded w-72 max-w-full"
-            :placeholder="t('contact.placeholderEmail')"
-            required
+              v-model="form.mail"
+              type="email"
+              name="mail"
+              class="border border-gray-300 p-2 rounded w-72 max-w-full"
+              :placeholder="t('contact.placeholderEmail')"
+              required
           >
         </div>
+
         <div class="flex flex-col gap-1 mb-6">
           <label class="font-semibold mb-2 text-white">{{
-            t("contact.message")
-          }}</label>
+              t("contact.message")
+            }}</label>
           <textarea
-            v-model="form.message"
-            name="message"
-            class="border border-gray-300 p-2 rounded w-72 max-w-full"
-            :placeholder="t('contact.placeholderMessage')"
-            required
+              v-model="form.message"
+              name="message"
+              class="border border-gray-300 p-2 rounded w-72 max-w-full"
+              :placeholder="t('contact.placeholderMessage')"
+              required
           />
         </div>
+
         <p>
           <button
-            class="w-full text-white bg-yellow-500 p-3 text-semibold rounded-lg shadow-lg transition hover:bg-yellow-600 font-semibold uppercase"
-            type="submit"
+              class="w-full text-white bg-yellow-500 p-3 text-semibold rounded-lg shadow-lg transition hover:bg-yellow-600 font-semibold uppercase"
+              type="submit"
+              :disabled="isSubmitting"
           >
-            {{ t("contact.send") }}
+            {{ isSubmitting ? t("contact.sending") : t("contact.send") }}
           </button>
         </p>
       </form>
     </div>
+
     <div
-      v-show=submitted
-      class="w-full sm:w-1/2 lg:w-1/4 h-64 bg-green-500 rounded-lg flex flex-col align-center justify-center"
+        v-show="submitted"
+        class="w-full sm:w-1/2 lg:w-1/4 h-64 bg-green-500 rounded-lg flex flex-col align-center justify-center"
     >
       <SuccessAnimation />
       <p class="p-4 text-white font-semibold text-center self-center -mt-8">
@@ -115,29 +121,49 @@ const form = ref({
   message: '',
 })
 
+const submitted = ref(false)
+const isSubmitting = ref(false)
+
 if (route.query.comment) {
   form.value.message =
-    t('contact.report') +
-    route.query.id +
-    " - '" +
-    route.query.comment +
-    "...'"
+      t('contact.report') +
+      route.query.id +
+      " - '" +
+      route.query.comment +
+      "...'"
 }
 
-const submitted = ref(false)
+const handleSubmit = async () => {
+  isSubmitting.value = true
 
-const handleSubmit = async (e: Event) => {
-  const form = e.target as HTMLFormElement
-  const formData = new FormData(form)
-  await useFetch('/', {
-    method: 'POST',
-    headers: {
+  try {
+    const formData = new URLSearchParams()
+    formData.append('form-name', 'contact')
+    formData.append('name', form.value.name)
+    formData.append('mail', form.value.mail)
+    formData.append('message', form.value.message)
+
+    const { data } = await $fetch('/', {
+      method: 'POST',
+      headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-    body: formData.toString()
-  })
-    .then(() => (submitted.value = true))
-    .catch((error) => console.log(error))
+      body: formData.toString()
+    })
+
+    submitted.value = true
+
+    form.value = {
+      name: '',
+      mail: '',
+      message: ''
+    }
+
+  } catch (error) {
+    console.error('Form submission error:', error)
+  } finally {
+    isSubmitting.value = false
+  }
 }
 
 useSeoMeta({
