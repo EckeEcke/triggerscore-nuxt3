@@ -15,7 +15,7 @@
         :style="{
           backgroundImage:
             'linear-gradient(to bottom, rgba(27,7,7,0.7), rgba(47,7,7,0.8)),url(' +
-            'images/backdrop-ballermann6.jpg' +
+            'images/backdrop-ballermann6.webp' +
             ')',
         }"
       >
@@ -54,7 +54,7 @@
           :style="{
             backgroundImage:
               'linear-gradient(to bottom, rgba(27,27,27,0.5), rgba(67,27,27,0.6)),url(' +
-              '/images/backdrop-backtothefuture.jpg' +
+              '/images/backdrop-backtothefuture.webp' +
               ')',
           }"
         >

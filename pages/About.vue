@@ -6,7 +6,7 @@
         :style="{
           backgroundImage:
             'linear-gradient(to bottom, rgba(47,27,27,0.6), rgba(67,27,27,0.7)),url(' +
-            '/images/backdrop-scarymovie.jpg' +
+            '/images/backdrop-scarymovie.webp' +
             ')',
         }"
       >

@@ -78,7 +78,7 @@
     <div v-else class="p-8 text-center text-balance">
       <h2 class="text-white text-xl font-semibold mb-8">{{ t("quiz.tagline") }}</h2>
       <div class="flex flex-col gap-8 items-center align-center justify-center mb-8">
-        <img class="quiz-image max-w-16 hidden md:block" src="/images/quiz-image-komprimiert.png" alt="" >
+        <img class="quiz-image max-w-16 hidden md:block" src="/images/quiz-image.webp" alt="" >
         <p class="text-white text-lg text-wrap-balance">
           {{ t("quiz.description") }}
         </p>

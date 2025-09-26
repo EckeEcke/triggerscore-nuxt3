@@ -14,7 +14,7 @@
         {{ t('quiz.testYourMovieKnowledge') }}
       </p>
       <div class="mx-auto">
-        <img src="/images/quiz-image.png" alt="Play Triggerscore Quiz" >
+        <img src="/images/quiz-image.webp" alt="Play Triggerscore Quiz" >
       </div>
       <transition
         enter-active-class="duration-500 ease-out"

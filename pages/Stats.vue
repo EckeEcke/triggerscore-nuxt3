@@ -6,7 +6,7 @@
       :style="{
         backgroundImage:
           'linear-gradient(to bottom, rgba(67,27,27,0.5), rgba(87,27,27,0.6)),url(' +
-          '/images/backdrop-jurassicpark.jpg' +
+          '/images/backdrop-jurassicpark.webp' +
           ')',
       }"
     >
