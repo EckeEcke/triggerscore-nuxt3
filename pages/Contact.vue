@@ -14,8 +14,7 @@
           method="POST"
           data-netlify="true"
           data-netlify-honeypot="bot-field"
-
-          @submit="handleSubmit"
+          :action="localePath('/success')"
       >
         <div class="hidden">
           <label>Don't fill this out if you're human:</label>
