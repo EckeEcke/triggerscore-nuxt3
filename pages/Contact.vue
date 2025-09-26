@@ -1,26 +1,26 @@
 <template>
-  <!--
   <div
       class="container text-white px-4 py-6 md:py-12 md:pb-8 text-left xl:w-10/12 mx-auto md:rounded-lg flex justify-start flex-wrap gap-12"
   >
-    <div v-show="!submitted" class="mr-8 max-w-full">
+    <div v-show="!showSuccess" class="mr-8 max-w-full">
       <h1 class="mb-4 text-xl md:text-2xl font-semibold uppercase">
         {{ route.query.comment ? t("contact.reportHeadline") : t("contact.sendFeedback") }}
       </h1>
+
       <form
           name="contact-nuxt3"
           class="w-full p-8 bg-gradient-to-r from-gray-950 to-gray-800 rounded text-gray-900"
-          method="post"
-          netlify
+          method="POST"
+          action="/form-success"
           data-netlify="true"
           data-netlify-honeypot="bot-field"
-          @submit.prevent="handleSubmit"
+          @submit="handleSubmit"
       >
         <div class="hidden">
           <label>Don't fill this out if you're human:</label>
           <input name="bot-field">
         </div>
-        <input type="hidden" name="form-name" value="contact">
+        <input type="hidden" name="form-name" value="contact-nuxt3">
 
         <div class="flex flex-col gap-1 mb-4">
           <label class="font-semibold mb-2 text-white">{{
@@ -76,14 +76,21 @@
     </div>
 
     <div
-        v-show="submitted"
+        v-show="showSuccess"
         class="w-full sm:w-1/2 lg:w-1/4 h-64 bg-green-500 rounded-lg flex flex-col align-center justify-center"
     >
       <SuccessAnimation />
       <p class="p-4 text-white font-semibold text-center self-center -mt-8">
         {{ t("contact.success") }}
       </p>
+      <button
+          @click="resetForm"
+          class="mt-4 mx-4 bg-white text-green-500 px-4 py-2 rounded font-semibold hover:bg-gray-100"
+      >
+        {{ t("contact.sendAnother") }}
+      </button>
     </div>
+
     <div>
       <h1 class="mb-4 text-xl md:text-2xl font-semibold uppercase">
         {{ t("header.contact") }}
@@ -106,31 +113,15 @@
       </p>
     </div>
   </div>
-  -->
-  <template>
-    <div>
-      <!-- Your existing form -->
-
-      <!-- Simple test form -->
-      <hr>
-      <h3>Simple Test (No JavaScript)</h3>
-      <form name="contact-nuxt3" method="POST" data-netlify="true">
-        <input type="hidden" name="form-name" value="contact-nuxt3" />
-        <input type="text" name="name" value="Test User" required /><br><br>
-        <input type="email" name="mail" value="test@example.com" required /><br><br>
-        <textarea name="message" required>This is a test message</textarea><br><br>
-        <button type="submit">Send Pure HTML Test</button>
-      </form>
-    </div>
-  </template>
 </template>
 
 <script setup lang='ts'>
 import { useI18n } from 'vue-i18n'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import SuccessAnimation from '~/components/animations/SuccessAnimation.vue'
 
 const route = useRoute()
+const router = useRouter()
 const { t } = useI18n()
 
 const form = ref({
@@ -139,8 +130,8 @@ const form = ref({
   message: '',
 })
 
-const submitted = ref(false)
 const isSubmitting = ref(false)
+const showSuccess = ref(false)
 
 if (route.query.comment) {
   form.value.message =
@@ -151,37 +142,38 @@ if (route.query.comment) {
       "...'"
 }
 
-const handleSubmit = async () => {
-  isSubmitting.value = true
-
-  try {
-    const formData = new URLSearchParams()
-    formData.append('form-name', 'contact')
-    formData.append('name', form.value.name)
-    formData.append('mail', form.value.mail)
-    formData.append('message', form.value.message)
-
-    const { data } = await $fetch('/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: formData.toString()
-    })
-
-    submitted.value = true
-
-    form.value = {
-      name: '',
-      mail: '',
-      message: ''
+onMounted(() => {
+  if (process.client) {
+    if (route.query.success === 'true') {
+      showSuccess.value = true
+      router.replace({ query: {} })
     }
 
-  } catch (error) {
-    console.error('Form submission error:', error)
-  } finally {
-    isSubmitting.value = false
+    if (localStorage.getItem('formSubmitted')) {
+      showSuccess.value = true
+      localStorage.removeItem('formSubmitted')
+    }
   }
+})
+
+const handleSubmit = () => {
+  isSubmitting.value = true
+
+  if (process.client) {
+    localStorage.setItem('formSubmitted', 'true')
+  }
+}
+
+const resetForm = () => {
+  showSuccess.value = false
+  isSubmitting.value = false
+  form.value = {
+    name: '',
+    mail: '',
+    message: ''
+  }
+
+  router.replace({ query: {} })
 }
 
 useSeoMeta({
