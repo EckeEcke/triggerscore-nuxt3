@@ -216,21 +216,46 @@ export const useStore = defineStore('store', {
 
   actions: {
     async setTriggerscores(locale: Locale) {
-      this.moviesLoading = true
-      const response = await fetch(`${apiBaseUrl}/fetchScoresAndTop10sAndStats`)
-      const scoresAndTop10s = await response.json()
-      this.triggerscores = scoresAndTop10s.scores
-      const loadedMovies = await fetch(`${apiBaseUrl}/fetchMovies?locale=${locale}`)
-      this.movies = await loadedMovies.json()
-      this.setTop10Cringe(scoresAndTop10s.top10s.cringe.map((score: TriggerScore) => score.movie_id))
-      this.setTop10Others(scoresAndTop10s.top10s.others.map((score: TriggerScore) => score.movie_id))
-      this.setTop10Racism(scoresAndTop10s.top10s.racism.map((score: TriggerScore) => score.movie_id))
-      this.setTop10Sexism(scoresAndTop10s.top10s.sexism.map((score: TriggerScore) => score.movie_id))
-      this.setStats(scoresAndTop10s.stats)
-      this.setRecentRatings(scoresAndTop10s.recentRatings)
-      this.setRecentComments(scoresAndTop10s.recentComments)
-      this.moviesLoading = false
-      this.hasLoadedData = true
+        this.moviesLoading = true
+
+        try {
+            const response = await fetch(`${apiBaseUrl}/fetchScoresAndTop10sAndStats`, {
+                signal: AbortSignal.timeout(25000)
+            })
+
+            if (!response.ok) {
+                throw new Error(`Failed to fetch scores: ${response.status} ${response.statusText}`)
+            }
+
+            const scoresAndTop10s = await response.json()
+            this.triggerscores = scoresAndTop10s.scores
+
+            const loadedMovies = await fetch(`${apiBaseUrl}/fetchMovies?locale=${locale}`, {
+                signal: AbortSignal.timeout(25000)
+            })
+
+            if (!loadedMovies.ok) {
+                throw new Error(`Failed to fetch movies: ${loadedMovies.status} ${loadedMovies.statusText}`)
+            }
+
+            this.movies = await loadedMovies.json()
+
+            this.setTop10Cringe(scoresAndTop10s.top10s.cringe.map((score: TriggerScore) => score.movie_id))
+            this.setTop10Others(scoresAndTop10s.top10s.others.map((score: TriggerScore) => score.movie_id))
+            this.setTop10Racism(scoresAndTop10s.top10s.racism.map((score: TriggerScore) => score.movie_id))
+            this.setTop10Sexism(scoresAndTop10s.top10s.sexism.map((score: TriggerScore) => score.movie_id))
+            this.setStats(scoresAndTop10s.stats)
+            this.setRecentRatings(scoresAndTop10s.recentRatings)
+            this.setRecentComments(scoresAndTop10s.recentComments)
+            this.hasLoadedData = true
+
+        } catch (error) {
+            console.error('Error in setTriggerscores:', error)
+            this.moviesLoading = false
+            throw error
+        } finally {
+            this.moviesLoading = false
+        }
     },
 
     setRecentRatings(ratings: TriggerScore[]) {

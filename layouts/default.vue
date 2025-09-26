@@ -39,9 +39,15 @@ const onFullscreenChange = () => {
 
 watch(locale, () => {
   if (isMaintained) return
-  store.setTriggerscores(locale.value)
-  store.setBondMovies(locale.value)
-  store.loadProviderData(locale.value)
+  store.setTriggerscores(locale.value).catch(error => {
+    console.error('Watcher error:', error)
+  })
+  store.setBondMovies(locale.value).catch(error => {
+    console.error('Watcher error:', error)
+  })
+  store.loadProviderData(locale.value).catch(error => {
+    console.error('Watcher error:', error)
+  })
 })
 
 onMounted(() => {

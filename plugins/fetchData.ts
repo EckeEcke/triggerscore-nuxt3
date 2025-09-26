@@ -6,9 +6,17 @@ export default defineNuxtPlugin((nuxtApp: any) => {
 
     const isMaintained = store.isMaintenanceMode
 
-    if (!isMaintained && !store.hasLoadedData){
-        store.setTriggerscores(locale.value)
-        store.setBondMovies(locale.value)
-        store.loadProviderData(locale.value)
+    if (!isMaintained && !store.hasLoadedData) {
+        store.setTriggerscores(locale.value).catch(error => {
+            console.error('Error loading trigger scores:', error)
+        })
+
+        store.setBondMovies(locale.value).catch(error => {
+            console.error('Error loading Bond movies:', error)
+        })
+
+        store.loadProviderData(locale.value).catch(error => {
+            console.error('Error loading provider data:', error)
+        })
     }
 })
