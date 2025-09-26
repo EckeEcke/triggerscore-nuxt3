@@ -1,4 +1,5 @@
 <template>
+  <!--
   <div
       class="container text-white px-4 py-6 md:py-12 md:pb-8 text-left xl:w-10/12 mx-auto md:rounded-lg flex justify-start flex-wrap gap-12"
   >
@@ -105,6 +106,23 @@
       </p>
     </div>
   </div>
+  -->
+  <template>
+    <div>
+      <!-- Your existing form -->
+
+      <!-- Simple test form -->
+      <hr>
+      <h3>Simple Test (No JavaScript)</h3>
+      <form name="contact-nuxt3" method="POST" data-netlify="true">
+        <input type="hidden" name="form-name" value="contact-nuxt3" />
+        <input type="text" name="name" value="Test User" required /><br><br>
+        <input type="email" name="mail" value="test@example.com" required /><br><br>
+        <textarea name="message" required>This is a test message</textarea><br><br>
+        <button type="submit">Send Pure HTML Test</button>
+      </form>
+    </div>
+  </template>
 </template>
 
 <script setup lang='ts'>
