@@ -14,7 +14,8 @@
           method="POST"
           data-netlify="true"
           data-netlify-honeypot="bot-field"
-          :action="localePath('/success')"
+          action="/success"
+          @submit="handleSubmit"
       >
         <div class="hidden">
           <label>Don't fill this out if you're human:</label>
@@ -114,7 +115,6 @@ import { useI18n } from 'vue-i18n'
 import { ref, onMounted, nextTick } from 'vue'
 import SuccessAnimation from '~/components/animations/SuccessAnimation.vue'
 
-const localePath = useLocalePath()
 const route = useRoute()
 const { t } = useI18n()
 
