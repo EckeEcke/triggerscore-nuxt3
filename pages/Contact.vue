@@ -7,7 +7,7 @@
         {{ route.query.comment ? t("contact.reportHeadline") : t("contact.sendFeedback") }}
       </h1>
       <form
-          name="contact"
+          name="contact-nuxt3"
           class="w-full p-8 bg-gradient-to-r from-gray-950 to-gray-800 rounded text-gray-900"
           method="post"
           netlify
