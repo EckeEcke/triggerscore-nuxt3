@@ -14,7 +14,7 @@
           method="POST"
           data-netlify="true"
           data-netlify-honeypot="bot-field"
-          action="/success"
+          :action="localePath('/form-success')"
           @submit="handleSubmit"
       >
         <div class="hidden">
@@ -115,6 +115,7 @@ import { useI18n } from 'vue-i18n'
 import { ref, onMounted, nextTick } from 'vue'
 import SuccessAnimation from '~/components/animations/SuccessAnimation.vue'
 
+const localePath = useLocalePath()
 const route = useRoute()
 const { t } = useI18n()
 
