@@ -8,11 +8,5 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "types": [
-      "@nuxt/types",
-      "@nuxt/schema",
-      "vite/client",
-      "./types/components"
-    ],
   }
 }

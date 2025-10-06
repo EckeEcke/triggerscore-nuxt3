@@ -162,7 +162,7 @@ const store = useStore()
 
 const isFixed = computed(() => route.path !== '/Quiz')
 
-const showSearch = ref(false)
+const showSearch = useState('showSearch', () => false)
 const showMenu = ref(false)
 const showNav = ref(false)
 

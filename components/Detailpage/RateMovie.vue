@@ -10,8 +10,8 @@
         class="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-40 overflow-none"
       >
         <ThankyouAnimation
+            key="animation"
           class="h-72 pt-12 bg-green-550 rounded"
-          key="animation"
           @complete="showConfirmationModal = false"
         />
       </div>

@@ -12,7 +12,7 @@
       <Sidebar @close="handleMenu" />
     </transition>
     <LoadingAnimation v-if="isLoading" />
-    <Searchbox v-if="!isLoading" />
+    <Searchbox v-if="false" />
     <div v-if="!isLoading">
       <div class="container px-4 xl:w-10/12 mx-auto flex flex-col mt-8 mb-4">
         <div class="text-left lg:hidden">
@@ -136,10 +136,10 @@ const currentPage = computed(() => Math.floor(start.value / 24) + 1)
 
 const handleMenu = () => showMenu.value = !showMenu.value
 
+const showSearch = useState('showSearch')
+
 const focusSearch = () => {
-  const search = document.getElementById('search')
-  search!.scrollIntoView()
-  search!.focus()
+  showSearch.value = true
 }
 
 const resetFilter = () => {

@@ -15,6 +15,7 @@ export default defineEventHandler(async (event) => {
             `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=${locale ?? 'de'}&append_to_response=videos`
         )
         return response
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
         throw createError({
             statusCode: error?.response?.status || 502,

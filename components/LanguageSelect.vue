@@ -1,5 +1,5 @@
 <template>
-  <span v-if="isLoading" class="loader w-6 h-6 mr-6 sm:mr-10"></span>
+  <span v-if="isLoading" class="loader w-6 h-6 mr-6 sm:mr-10" />
   <div v-else class="relative flex align-center">
     <template v-for="(option, index) in languageOptions" :key="index">
       <button

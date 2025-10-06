@@ -1,5 +1,6 @@
 import { useStore } from '~/stores/store'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default defineNuxtPlugin((nuxtApp: any) => {
     const locale = nuxtApp.$i18n?.locale || 'en'
     const store = useStore()

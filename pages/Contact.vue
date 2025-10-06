@@ -111,7 +111,7 @@
 
 <script setup lang='ts'>
 import { useI18n } from 'vue-i18n'
-import { ref, onMounted, nextTick } from 'vue'
+import { ref, onMounted } from 'vue'
 import SuccessAnimation from '~/components/animations/SuccessAnimation.vue'
 
 const route = useRoute()
@@ -137,12 +137,15 @@ if (route.query.comment) {
 }
 
 onMounted(() => {
-  if (process.client && route.query.success) {
+  if (import.meta.client && route.query.success) {
     submitted.value = true
   }
 })
 
-const handleSubmit = async (event: Event) => {
+/*
+currently outcommented since using default submit by html form
+
+const handleSubmit = async () => {
   isSubmitting.value = true
 
   await nextTick()
@@ -163,6 +166,7 @@ const handleSubmit = async (event: Event) => {
     })
   }
 }
+*/
 
 useSeoMeta({
   title: 'Triggerscore - Contact / Feel free to reach out to me',

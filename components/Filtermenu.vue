@@ -247,11 +247,9 @@ const resetFilter = () => {
   store.filterMovies()
 }
 
+const showSearch = useState('showSearch')
 const focusSearch = () => {
-  if (!import.meta.client) return
-  const search = document.getElementById('search')
-  search!.scrollIntoView({ block: 'start' })
-  search!.focus()
+  showSearch.value = true
 }
 
 const scrollToTop = () => {
