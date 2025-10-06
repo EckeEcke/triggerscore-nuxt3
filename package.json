@@ -12,7 +12,6 @@
   },
   "devDependencies": {
     "@nuxt/devtools": "^2.6.2",
-    "@nuxt/eslint": "^1.9.0",
     "@nuxt/eslint-config": "^1.9.0",
     "eslint": "^9.37.0",
     "vue-tsc": "^3.0.6"
@@ -23,6 +22,7 @@
     "@fortawesome/free-regular-svg-icons": "^7.0.0",
     "@fortawesome/free-solid-svg-icons": "^7.0.0",
     "@fortawesome/vue-fontawesome": "^3.1.1",
+    "@nuxt/eslint": "^1.9.0",
     "@nuxtjs/i18n": "^10.0.6",
     "@nuxtjs/robots": "^5.5.0",
     "@pinia/nuxt": "^0.11.2",
