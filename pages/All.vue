@@ -79,7 +79,7 @@
       <button
         v-for="index in totalPages"
         :key="index"
-        class="text-sm sm:text-lg text-black px-4 py-2 font-semibold bg-opacity-90 hover:text-yellow-500 hover:bg-white transition duration-300"
+        class="rounded-sm text-sm sm:text-lg text-black w-10 h-10 text-center py-2 font-semibold bg-opacity-90 hover:text-yellow-500 hover:bg-white transition duration-300"
         :class="[
           start == Math.round((index - 1) * 24) ? 'bg-white' : 'bg-gray-500',
         ]"
