@@ -35,7 +35,7 @@ function loadVisitCounts() {
           path: page.path,
           append: `#visit-count-${page.id}`,
           no_branding: true,
-          style: '* {color: #000; font-size: 14px;font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;border: none}'
+          style: '* {color: #000; font-size: 14px;font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;border: none!important}'
         })
       })
     }
