@@ -7,6 +7,11 @@
         <div :id="'visit-count-' + page.id" class="visit-count"></div>
       </div>
     </div>
+    <NuxtLink href="https://triggerscore.goatcounter.com/settings/main" target="blank">
+      <div class="bg-yellow-500 transition hover:bg-yellow-600 p-3 rounded-lg text-white font-semibold uppercase my-16 max-w-md mx-auto">
+        OPEN FULL METRICS
+      </div>
+    </NuxtLink>
   </div>
 </template>
 
