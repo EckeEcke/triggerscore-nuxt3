@@ -101,7 +101,7 @@
         <NuxtLink to="https://www.linkedin.com/in/christian-eckardt-41527216a/" target="_blank">
           <img alt="Logo LinkedIn" class="h-10 mr-4" src="../assets/images/linkedin.svg">
         </NuxtLink>
-        <NuxtLink to="https://www.xing.com/profile/Christian_Eckardt21/cv" target="_blank">
+        <NuxtLink to="https://www.xing.com/profile/Christian_Eckardt097954" target="_blank">
           <img alt="Logo Xing" class="h-10 mr-4" src="../assets/images/xing.svg">
         </NuxtLink>
       </p>
