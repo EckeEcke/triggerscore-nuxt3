@@ -35,6 +35,7 @@ function loadVisitCounts() {
           path: page.path,
           append: `#visit-count-${page.id}`,
           no_branding: true,
+          style: '* {color: #000; font-size: 14px;  font-family: AvenirLight, Lato, Helvetica, Arial, sans-serif;border: none}'
         })
       })
     }
@@ -77,10 +78,5 @@ setTimeout(() => loadVisitCounts(), 2000)
 <style>
 .visit-count iframe {
   margin: 0 auto;
-}
-
-.vist-count iframe * {
-  color: black;
-  font-family: AvenirLight, Lato, Helvetica, Arial, sans-serif;
 }
 </style>
