@@ -78,4 +78,9 @@ setTimeout(() => loadVisitCounts(), 2000)
 .visit-count iframe {
   margin: 0 auto;
 }
+
+.vist-count iframe * {
+  color: black;
+  font-family: AvenirLight, Lato, Helvetica, Arial, sans-serif;
+}
 </style>
