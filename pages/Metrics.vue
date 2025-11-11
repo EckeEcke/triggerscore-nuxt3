@@ -35,7 +35,7 @@ function loadVisitCounts() {
           path: page.path,
           append: `#visit-count-${page.id}`,
           no_branding: true,
-          style: '* {color: #000; font-size: 14px;font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;border: none!important}'
+          style: '* {color: #000; font-size: 14px;font-family: Arial, sans-serif;border: none!important}'
         })
       })
     }
