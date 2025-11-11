@@ -6,13 +6,6 @@ export default defineNuxtConfig({
   app: {
       head: {
           link: [{ rel: 'icon', type: 'image/png', href: '/favicon.ico' }],
-          script: [
-              {
-                  'data-goatcounter': 'https://triggerscore.goatcounter.com/count',
-                  async: true,
-                  src: '//gc.zgo.at/count.js'
-              }
-          ]
       }
   },
 
