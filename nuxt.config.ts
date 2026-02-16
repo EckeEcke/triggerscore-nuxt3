@@ -2,67 +2,69 @@ import { defineNuxtConfig } from 'nuxt/config'
 
 // @ts-nocheck
 export default defineNuxtConfig({
-  // ssr: false, // delete when maintenance is over
-  app: {
-      head: {
-          link: [{ rel: 'icon', type: 'image/png', href: '/favicon.ico' }],
-      }
-  },
+	future: {
+		compatibilityVersion: 4
+	},
+	app: {
+		head: {
+			link: [{ rel: 'icon', type: 'image/png', href: '/favicon.ico' }]
+		}
+	},
 
-  build: {
-      transpile: ['@fortawesome/vue-fontawesome']
-  },
+	build: {
+		transpile: ['@fortawesome/vue-fontawesome']
+	},
 
-  css: [
-      '~/assets/css/main.css',
-      '@fortawesome/fontawesome-svg-core/styles.css'
-  ],
+	css: [
+		'~/assets/css/main.css',
+		'@fortawesome/fontawesome-svg-core/styles.css'
+	],
 
-  postcss: {
-      plugins: {
-      tailwindcss: {},
-      autoprefixer: {},
-      },
-  },
+	postcss: {
+		plugins: {
+			tailwindcss: {},
+			autoprefixer: {}
+		}
+	},
 
-  modules: ['@pinia/nuxt', '@nuxtjs/robots', '@nuxtjs/i18n', '@nuxt/eslint'],
+	modules: ['@pinia/nuxt', '@nuxtjs/robots', '@nuxtjs/i18n', '@nuxt/eslint'],
 
-  i18n: {
-      locales: [
-          { code: 'de', name: 'German', file: 'de.json' },
-          { code: 'en', name: 'English UK', file: 'en.json' },
-          { code: 'es', name: 'Spanish', file: 'es.json' },
-          { code: 'fr', name: 'French', file: 'fr.json' },
-          { code: 'us', name: 'English US', file: 'us.json' },
-      ],
-      defaultLocale: 'de',
-      strategy: 'prefix',
-      detectBrowserLanguage: false,
-  },
+	i18n: {
+		locales: [
+			{ code: 'de', name: 'German', file: 'de.json' },
+			{ code: 'en', name: 'English UK', file: 'en.json' },
+			{ code: 'es', name: 'Spanish', file: 'es.json' },
+			{ code: 'fr', name: 'French', file: 'fr.json' },
+			{ code: 'us', name: 'English US', file: 'us.json' }
+		],
+		defaultLocale: 'de',
+		strategy: 'prefix',
+		detectBrowserLanguage: false
+	},
 
-  runtimeConfig: {
-      apiKey: process.env.TMDB_API_KEY,
-      public: {
-          isLocal: process.env.NUXT_PUBLIC_IS_LOCAL,
-      }
-  },
+	runtimeConfig: {
+		apiKey: process.env.TMDB_API_KEY,
+		public: {
+			isLocal: process.env.NUXT_PUBLIC_IS_LOCAL
+		}
+	},
 
-  nitro: {
-      devProxy: {
-          '/.netlify/functions/': {
-              target: 'http://localhost:8888',
-              changeOrigin: true, 
-          }
-      }
-  },
+	nitro: {
+		devProxy: {
+			'/.netlify/functions/': {
+				target: 'http://localhost:8888',
+				changeOrigin: true
+			}
+		}
+	},
 
-routeRules: {
-    '/de/contact': { prerender: true },
-    '/en/contact': { prerender: true },
-    '/es/contact': { prerender: true },
-    '/fr/contact': { prerender: true },
-    '/us/contact': { prerender: true },
-},
+	routeRules: {
+		'/de/contact': { prerender: true },
+		'/en/contact': { prerender: true },
+		'/es/contact': { prerender: true },
+		'/fr/contact': { prerender: true },
+		'/us/contact': { prerender: true }
+	},
 
-  compatibilityDate: '2025-04-16'
+	compatibilityDate: '2025-04-16'
 })
