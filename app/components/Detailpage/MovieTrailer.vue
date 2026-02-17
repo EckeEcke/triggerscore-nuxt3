@@ -1,5 +1,5 @@
 <template>
-  <div v-if="trailerURL" class="iframe-container mt-4 mb-8 detailpage-box-shadow">
+  <div v-if="trailerURL" class="iframe-container">
     <iframe :src="trailerURL" allowfullscreen title="Movie trailer video" />
   </div>
 </template>
@@ -24,7 +24,8 @@ iframe {
   position: relative; 
   width: 100%; 
   padding-bottom: 56.25%; /* Default 16:9 aspect ratio, adjust if needed */ 
-  height: 0; 
+  height: 0;
+  @apply mt-4 mb-8 detailpage-box-shadow; 
 } 
   
 .iframe-container iframe { 

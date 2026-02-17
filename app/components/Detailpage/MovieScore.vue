@@ -1,17 +1,17 @@
 <template>
-  <div v-if="score" class="w-full flex flex-col mx-2 self-center rounded-tr">
+  <div v-if="score" class="movie-score-wrapper">
       <div
-        class="mx-auto bg-opacity-90 w-12 sm:w-20 md:w-24 lg:w-20 h-12 sm:h-20 md:h-24 lg:h-20 border border-gray-900 p-2 text-3xl rounded-lg flex justify-center my-3"
+        class="score-background"
         :class="getScoreBackground(score.rating_total)"
       >
-        <div class="self-center text-white text-lg md:text-xl font-semibold">
+        <div class="total-score">
           {{ score.rating_total }}
         </div>
       </div>
-      <div class="text-left w-auto mx-auto text-white text-xs sm:text-base">
-        <div v-for="cat in categories" :key="cat.key" class="flex my-2 md:text-lg lg:text-base">
+      <div class="sub-scores">
+        <div v-for="cat in categories" :key="cat.key" class="sub-score-wrapper">
           <div
-              class="flex rounded sm:rounded-lg justify-center w-8 h-8 sm:w-12 sm:h-12 lg:w-10 lg:h-10 mr-2"
+              class="sub-score-background"
               :class="getScoreBackground(score[cat.key])"
           >
             <div class="self-center">{{ score[cat.key] }}</div>
@@ -20,13 +20,13 @@
         </div>
       </div>
   </div>
-  <div v-else class="w-full flex flex-col mx-2 self-center rounded-tr">
+  <div v-else class="no-score-wrapper">
     <div
-      class="text-base md:text-2xl lg:text-lg self-center font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200"
+      class="no-score-text"
     >
       TRIGGERSC<font-awesome-icon :icon="['fas', 'angry']" class="text-white" />RE
     </div>
-    <p class="text-white mt-4">{{ t("general.noRatings") }}</p>
+    <p class="no-score-subtext">{{ t("general.noRatings") }}</p>
   </div>
 </template>
 
@@ -47,3 +47,41 @@ const categories: { key: ScoreKey; label: string }[] = [
 ]
 
 </script>
+
+<style scoped>
+.movie-score-wrapper {
+  @apply w-full flex flex-col mx-2 self-center rounded-tr;
+}
+
+.score-background {
+  @apply mx-auto bg-opacity-90 w-12 sm:w-20 md:w-24 lg:w-20 h-12 sm:h-20 md:h-24 lg:h-20 border border-gray-900 p-2 text-3xl rounded-lg flex justify-center my-3;
+}
+
+.total-score {
+  @apply self-center text-white text-lg md:text-xl font-semibold;
+}
+
+.sub-scores {
+  @apply text-left w-auto mx-auto text-white text-xs sm:text-base;
+}
+
+.sub-score-wrapper {
+  @apply flex my-2 md:text-lg lg:text-base;
+}
+
+.sub-score-background {
+  @apply flex rounded sm:rounded-lg justify-center w-8 h-8 sm:w-12 sm:h-12 lg:w-10 lg:h-10 mr-2;
+}
+
+.no-score-wrapper {
+  @apply w-full flex flex-col mx-2 self-center rounded-tr;
+}
+
+.no-score-text {
+  @apply text-base md:text-2xl lg:text-lg self-center font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200;
+}
+
+.no-score-subtext {
+  @apply text-base md:text-2xl lg:text-lg self-center font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200;
+}
+</style>

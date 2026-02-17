@@ -1,6 +1,6 @@
 <template>
-  <div class="flex justify-between my-4 mb-4 align-end">
-    <div class="streaming-services flex gap-4 w-full">
+  <div class="icons-wrapper">
+    <div class="streaming-services">
       <NuxtLink
           v-for="service in visibleServices"
           :key="service.key"
@@ -153,3 +153,13 @@ onMounted(() => {
 })
 
 </script>
+
+<style scoped>
+.icons-wrapper {
+  @apply flex justify-between my-4 mb-4 items-end;
+}
+
+.streaming-services {
+  @apply flex gap-4 w-full;
+}
+</style>

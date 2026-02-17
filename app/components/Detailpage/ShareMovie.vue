@@ -1,7 +1,5 @@
 <template>
-  <h3
-    class="pb-0 text-white text-left font-semibold text-lg mb-4"
-  >
+  <h3 class="headline">
     {{ t("rating.share") }}
   </h3>
   <div class="flex gap-6">
@@ -50,14 +48,14 @@
         style="width: auto; height: 2.5rem"
       />
     </NuxtLink>
-    <button class="flex relative cursor-pointer" aria-label="Copy link to clipboard" @click="copyLink">
+    <button class="clipboard-btn" aria-label="Copy link to clipboard" @click="copyLink">
       <font-awesome-icon
         :icon="['fas', 'link']"
         class="text-white self-center text-3xl"
       />
       <span
         v-if="copied"
-        class="absolute top-full left-1/2 -translate-x-1/2 w-36 text-white text-center"
+        class="clipboard-info"
       >
         Kopiert in Zwischenablage
       </span>
@@ -94,3 +92,17 @@ const copyLink = () => {
   setTimeout(() => (copied.value = false), 1000)
 }
 </script>
+
+<style scoped>
+.headline {
+  @apply pb-0 text-white text-left font-semibold text-lg mb-4;
+}
+
+.clipboard-btn {
+  @apply flex relative cursor-pointer;
+}
+
+.clipboard-info {
+  @apply absolute top-full left-1/2 -translate-x-1/2 w-36 text-white text-center;
+}
+</style>
