@@ -20,6 +20,14 @@ export default defineNuxtConfig({
 		'@fortawesome/fontawesome-svg-core/styles.css'
 	],
 
+	vite: {
+		resolve: {
+			alias: {
+				'lottie-web': 'lottie-web/build/player/lottie_light.js'
+			}
+		}
+	},
+
 	postcss: {
 		plugins: {
 			tailwindcss: {},
@@ -30,6 +38,7 @@ export default defineNuxtConfig({
 	modules: ['@pinia/nuxt', '@nuxtjs/robots', '@nuxtjs/i18n', '@nuxt/eslint'],
 
 	i18n: {
+		langDir: 'locales',
 		locales: [
 			{ code: 'de', name: 'German', file: 'de.json' },
 			{ code: 'en', name: 'English UK', file: 'en.json' },
@@ -37,9 +46,11 @@ export default defineNuxtConfig({
 			{ code: 'fr', name: 'French', file: 'fr.json' },
 			{ code: 'us', name: 'English US', file: 'us.json' }
 		],
+		lazy: true,
 		defaultLocale: 'de',
 		strategy: 'prefix',
-		detectBrowserLanguage: false	},
+		detectBrowserLanguage: false
+	},
 
 	runtimeConfig: {
 		apiKey: process.env.TMDB_API_KEY,

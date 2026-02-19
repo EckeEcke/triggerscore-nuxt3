@@ -62,7 +62,6 @@
 </template>
 <script setup lang="ts">
 import { type ScoreKey, useStore } from '~/stores/store'
-import placeholderScores from '~/assets/triggerscores.json'
 import type { Movie } from '~/types/movie'
 
 const store = useStore()
@@ -98,7 +97,7 @@ defineProps({
 const scrolled = ref(false)
 const swiper = ref()
 
-const triggerscores = computed(() => store.triggerscores ?? placeholderScores)
+const triggerscores = computed(() => store.triggerscores)
 
 const handleScroll = () => {
 	scrolled.value = !(swiper.value && swiper.value.scrollLeft === 0)
