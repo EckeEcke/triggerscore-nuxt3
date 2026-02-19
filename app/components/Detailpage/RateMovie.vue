@@ -256,7 +256,7 @@ onMounted(() => {
 
 <style scoped>
 .ratings-section {
-  @apply lg:flex lg:justify-center w-full md:pt-4;
+  @apply lg:flex lg:justify-center w-full md:pt-0;
 }
 
 .ratings-wrapper {
