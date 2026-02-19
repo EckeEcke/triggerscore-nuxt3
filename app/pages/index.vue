@@ -8,6 +8,7 @@
 			:title="t('highlights.headline1')"
 			:sub-title="t('highlights.copy1')"
 			more-spacing
+      class="xl:w-10/12"
 		/>
 		<section class="container mb-12 px-0 sm:px-4 mx-auto xl:w-10/12">
 			<NewestRatingsHeader />

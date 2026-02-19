@@ -466,7 +466,7 @@ useSeoMeta({
 }
 
 .keyword {
-  @apply bg-gray-500 text-white font-semibold p-2 rounded text-sm md:text-lg transition-opacity duration-500 ease-in-out opacity-0;
+  @apply bg-gray-500 text-white font-semibold p-2 rounded text-sm md:text-lg transition-opacity duration-500 ease-in-out;
 }
 
 .intro {

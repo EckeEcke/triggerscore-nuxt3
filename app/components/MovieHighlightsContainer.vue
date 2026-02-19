@@ -1,7 +1,7 @@
 <template>
 	<div
 		v-if="triggerscores.length > 0 && movies && movies?.length > 0"
-		class="container highlight-container"
+		class="highlight-container container"
 		:class="{ 'pt-4 pb-8': moreSpacing }"
 	>
 		<div

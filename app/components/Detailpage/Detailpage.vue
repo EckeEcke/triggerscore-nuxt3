@@ -1,6 +1,6 @@
 <template>
   <section class="detail-page">
-    <div class="container">
+    <div class="container mx-auto sm:pt-6 sm:pb-12 xl:w-10/12 md:px-4">
       <div class="radial-background">
         <div class="detail-page-content">
           <div class="score-wrapper">
@@ -84,7 +84,7 @@
         </div>
       </div>
       <hr class="border-gray-800" >
-      <div class="sm:px-4 radial-background sm:rounded-b">
+      <div class="radial-background similar-movies">
         <MovieHighlightsContainer
           v-if="similarMovies?.body"
           class="xl:w-full bg-transparent"
@@ -198,12 +198,15 @@ watch(locale, () => {
   @apply w-1/2 h-auto object-contain rounded self-center;
 }
 
-.container {
-  @apply mx-auto sm:pt-6 sm:pb-12 xl:w-10/12 md:px-4;
-}
-
 .radial-background {
   @apply flex flex-col lg:flex-row px-0 sm:px-4 md:px-0 sm:rounded-t;
+}
+
+.similar-movies {
+  @apply sm:px-4 sm:rounded-b;
+  .highlight-container {
+    @apply w-full;
+  }
 }
 
 .detail-page-content {
