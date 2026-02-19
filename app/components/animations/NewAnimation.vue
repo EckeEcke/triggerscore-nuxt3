@@ -1,11 +1,7 @@
 <template>
   <div class="absolute flex justify-center mx-auto w-64 h-64">
     <client-only>
-      <Vue3Lottie :animation-data="newJSON" />
+      <Vue3Lottie animation-link="/animations/new-animation.json" />
     </client-only>
   </div>
 </template>
-
-<script setup lang='ts'>
-import newJSON from '../../assets/images/new-animation.json'
-</script>

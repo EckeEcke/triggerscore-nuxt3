@@ -1,11 +1,7 @@
 <template>
-  <div class="w-6 relative inline-block" style="transform: translateY(4px)">
+  <div class="w-6 h-6 relative inline-block">
     <client-only>
-      <Vue3Lottie :animation-data="AngryJSON" />
+      <Vue3Lottie animation-link="/animations/angry-animation.json" /> />
     </client-only>
   </div>
 </template>
-
-<script setup lang='ts'>
-import AngryJSON from '../../assets/images/angry-animation.json'
-</script>

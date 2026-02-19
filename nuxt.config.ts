@@ -39,8 +39,7 @@ export default defineNuxtConfig({
 		],
 		defaultLocale: 'de',
 		strategy: 'prefix',
-		detectBrowserLanguage: false
-	},
+		detectBrowserLanguage: false	},
 
 	runtimeConfig: {
 		apiKey: process.env.TMDB_API_KEY,
@@ -55,6 +54,9 @@ export default defineNuxtConfig({
 				target: 'http://localhost:8888',
 				changeOrigin: true
 			}
+		},
+		prerender: {
+			routes: ['/about', '/contact', '/stats']
 		}
 	},
 

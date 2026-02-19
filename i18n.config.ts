@@ -6,6 +6,7 @@ import us from '~/i18n/locales/us.json'
 
 export default defineI18nConfig(() => ({
     legacy: false,
+    lazy: true,
     locales: [
         { code: 'de', name: 'German', file: de },
         { code: 'en', name: 'English UK', file: en },

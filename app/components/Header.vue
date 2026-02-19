@@ -248,7 +248,7 @@ onUnmounted(() => {
 
 <style scoped>
 header {
-	@apply w-screen h-auto bg-red-950 bg-opacity-95 z-30 shadow-md flex flex-col top-0;
+	@apply w-screen h-auto bg-red-950 bg-opacity-95 z-30 shadow-md flex items-center flex-col top-0;
 }
 
 nav {
@@ -260,7 +260,7 @@ nav {
 }
 
 .header-logo {
-	@apply leading-none text-xl md:leading-6 md:text-2xl self-center font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200 cursor-pointer;
+	@apply leading-none text-xl md:leading-6 md:text-2xl flex items-center self-center font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200 cursor-pointer;
 }
 
 .container {
