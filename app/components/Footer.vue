@@ -1,17 +1,17 @@
 <template>
-  <footer class="w-full h-72 lg:h-64 py-2 bg-red-950 bg-opacity-90 shadow-md mt-auto">
+  <footer>
     <section
-      class="container mx-auto h-full px-1 md:px-4 xl:w-10/12 flex flex-col md:flex-row justify-around md:justify-between"
+      class="container"
     >
-      <div class="self-center my-2 w-full md:w-auto">
+      <div class="footer-content">
         <h2
-          class="text-2xl font-semibold text-center lg:text-left text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200"
+          class="headline"
         >
           <span>TRIGGERSC</span>
           <span><font-awesome-icon :icon="['fas', 'angry']" class="text-white mx-1"/></span>
           <span>RE</span>
         </h2>
-        <div class="flex text-white my-4 justify-center lg:justify-start">
+        <div class="links-wrapper">
           <NuxtLink :to="localePath('/about')" class="border-r border-white px-4 lg:pl-0 uppercase">
             {{ t("header.about") }}
           </NuxtLink>
@@ -22,11 +22,11 @@
             {{ t("header.contact") }}
           </NuxtLink>
         </div>
-        <article class="mx-auto text-white w-64 max-w-full text-center lg:text-left text-xs">
+        <article class="slogan">
           {{ t("general.slogan") }}
         </article>
       </div>
-      <div class="self-center items-center grid my-2 px-2 grid-cols-3 lg:grid-cols-3 gap-4">
+      <div class="logos-grid">
         <NuxtLink to="https://www.themoviedb.org" target="blank">
           <img
             alt="Logo TMDB"
@@ -74,3 +74,33 @@ import { useI18n } from 'vue-i18n'
 const localePath = useLocalePath()
 const { t } = useI18n()
  </script>
+
+ <style scoped>
+ .headline {
+  @apply text-2xl font-semibold text-center lg:text-left text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200;
+ }
+
+.logos-grid {
+  @apply self-center items-center grid my-2 px-2 grid-cols-3 lg:grid-cols-3 gap-4;
+}
+
+.container {
+  @apply  mx-auto h-full px-1 md:px-4 xl:w-10/12 flex flex-col md:flex-row justify-around md:justify-between;
+}
+
+footer {
+  @apply w-full h-72 lg:h-64 py-2 bg-red-950 bg-opacity-90 shadow-md mt-auto;
+}
+
+.footer-content {
+  @apply self-center my-2 w-full md:w-auto;
+}
+
+.links-wrapper {
+  @apply flex text-white my-4 justify-center lg:justify-start;
+}
+
+.slogan {
+  @apply mx-auto text-white w-64 max-w-full text-center lg:text-left text-xs;
+}
+</style>

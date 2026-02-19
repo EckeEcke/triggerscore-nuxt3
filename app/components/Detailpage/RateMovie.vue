@@ -254,7 +254,7 @@ onMounted(() => {
 })
 </script>
 
-<style>
+<style scoped>
 .ratings-section {
   @apply lg:flex lg:justify-center w-full md:pt-4;
 }

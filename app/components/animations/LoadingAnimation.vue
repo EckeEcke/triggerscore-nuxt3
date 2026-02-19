@@ -7,9 +7,9 @@
       <Vue3Lottie :animation-data="loadingJSON" />
     </client-only>
     <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2">
-      <p class="text-white font-semibold text-4xl">
+      <h2 class="text-white font-semibold text-4xl">
         {{ t("general.loadMovies") }}
-      </p>
+      </h2>
     </div>
   </div>
 </template>

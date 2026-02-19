@@ -1,7 +1,7 @@
 <template>
-  <div class="relative text-center mx-auto" style="max-width: 400px;">
+  <div class="quiz-disturber" style="max-width: 400px;">
     <NuxtLink :to="localePath('/Quiz')">
-      <div class="headline-wrapper absolute w-full text-3xl self-center font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200">
+      <div class="headline-wrapper">
         <h2 aria-label="TRIGGERSCORE QUIZ">
           TRIGGERSC<font-awesome-icon
             aria-hidden="true"
@@ -10,7 +10,7 @@
           /><span class="sr-only">O</span>RE QUIZ
         </h2>
       </div>
-      <p class="absolute bottom-4 w-full text-white text-3xl font-semibold box-shadow">
+      <p class="quiz-cta box-shadow">
         {{ t('quiz.testYourMovieKnowledge') }}
       </p>
       <div class="mx-auto">
@@ -59,6 +59,11 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+.quiz-disturber {
+  text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
+  @apply relative text-center mx-auto;
+}
+
 img {
   width: 100%;
   max-width: 400px;
@@ -68,10 +73,11 @@ img {
 .headline-wrapper {
   top: 16px;
   width: 100%;
+  @apply  absolute w-full text-3xl self-center font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200;
 }
 
-p {
-  text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
+.quiz-cta {
+  @apply absolute bottom-4 w-full text-white text-3xl font-semibold;
 }
 
 .animation {

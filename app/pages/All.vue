@@ -14,15 +14,15 @@
     <LoadingAnimation v-if="isLoading" />
     <Searchbox v-if="false" />
     <div v-if="!isLoading">
-      <div class="container px-4 xl:w-10/12 mx-auto flex flex-col mt-8 mb-4">
+      <div class="main-container container">
         <div class="text-left lg:hidden">
-          <h2 class="text-2xl md:text-3xl font-semibold mb-2 text-yellow-500">
+          <h2 class="title">
             {{ t("index.headline") }}
           </h2>
           <p class="text-sm text-white">
             {{ t("index.intro1") }}
             <span
-              class="text-yellow-500 transition hover:text-yellow-600 font-semibold cursor-pointer"
+              class="search-textlink"
               @click="focusSearch"
             >
               {{ t("index.search") }}
@@ -30,9 +30,9 @@
             {{ t("index.intro2") }}
           </p>
         </div>
-        <div class="ml-auto mt-4 -mr-2 sm:mr-0 lg:hidden">
+        <div class="sidebar-btn-wrapper">
           <button
-            class="bg-yellow-500 text-white uppercase disabled:opacity-50 font-semibold p-3 rounded-lg shadow-lg transition duration-300 hover:scale-105 hover:bg-yellow-600"
+            class="open-sidebar-btn"
             @click="handleMenu"
           >
             <font-awesome-icon class="mr-2" :icon="['fas', 'filter']" />
@@ -44,7 +44,7 @@
       <LoadingAnimation v-if="isFiltering" />
       <section
         v-if="!isLoading && filteredMovies.length > 0 && !isFiltering"
-        class="grid gap-0 md:gap-2 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 w-full relative container mx-auto mt-8 md:mt-2 sm:pb-8 sm:px-4 xl:w-10/12"
+        class="container movies-grid"
       >
         <MovieListitem
           v-for="movie in loadedMovies"
@@ -61,11 +61,11 @@
         v-if="!isLoading && filteredMovies.length == 0 && !isFiltering"
         class="py-32"
       >
-        <p class="text-white text-xl font-semibold animate-bounce mb-4">
+        <p class="no-results-message">
           {{ t("search.noResults") }}
         </p>
         <button
-          class="font-semibold bg-yellow-500 p-3 shadow text-white uppercase rounded-lg"
+          class="reset-btn"
           @click="resetFilter"
         >
           {{ t("filter.resetFilter") }}
@@ -74,12 +74,12 @@
     </div>
     <div
       v-if="totalPages > 1 && !isFiltering"
-      class="flex gap-1 justify-center my-8 md:mt-0 flex-wrap"
+      class="pagination"
     >
       <button
         v-for="index in totalPages"
         :key="index"
-        class="rounded-sm text-sm sm:text-lg text-black w-10 h-10 text-center py-2 font-semibold bg-opacity-90 hover:text-yellow-500 hover:bg-white transition duration-300"
+        class="pagination-btn"
         :class="[
           start == Math.round((index - 1) * 24) ? 'bg-white' : 'bg-gray-500',
         ]"
@@ -90,18 +90,18 @@
     </div>
     <div v-if="totalPages > 1 && !isFiltering" class="flex gap-1 justify-center mb-8 -mt-6 flex-wrap">
       <button
-        class="text-lg px-4 py-2 font-semibold bg-transparent"
+        class="pagination-prev-next-btn"
         :disabled="currentPage == 1"
         @click="setPage(start - 24, end - 24)"
       >
-        <font-awesome-icon :icon="['fas', 'chevron-left']" class="text-white hover:text-yellow-500 transition duration-300" />
+        <font-awesome-icon :icon="['fas', 'chevron-left']" class="prev-next-icon" />
       </button>
       <button
-        class="text-lg px-4 py-2 font-semibold bg-transparent"
+        class="pagination-prev-next-btn"
         :disabled="currentPage == totalPages"
         @click="setPage(start + 24, end + 24)"
       >
-        <font-awesome-icon :icon="['fas', 'chevron-right']" class="text-white hover:text-yellow-500 transition duration-300" />
+        <font-awesome-icon :icon="['fas', 'chevron-right']" class="prev-next-icon" />
       </button>
     </div>
   </div>
@@ -189,5 +189,52 @@ useSeoMeta({
 <style scoped>
 button:disabled {
   opacity: 0.3;
+}
+
+.main-container {
+  @apply px-4 xl:w-10/12 mx-auto flex flex-col mt-8 mb-4;
+}
+
+.movies-grid {
+  @apply  grid gap-0 md:gap-2 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 w-full relative mx-auto mt-8 md:mt-2 sm:pb-8 sm:px-4 xl:w-10/12;
+}
+
+.title {
+  @apply text-2xl md:text-3xl font-semibold mb-2 text-yellow-500;
+}
+
+.search-textlink {
+  @apply text-yellow-500 transition hover:text-yellow-600 font-semibold cursor-pointer;
+}
+
+.sidebar-btn-wrapper {
+  @apply ml-auto mt-4 -mr-2 sm:mr-0 lg:hidden;
+}
+.open-sidebar-btn {
+  @apply bg-yellow-500 text-white uppercase disabled:opacity-50 font-semibold p-3 rounded-lg shadow-lg transition duration-300 hover:scale-105 hover:bg-yellow-600;
+}
+
+.no-results-message {
+  @apply text-white text-xl font-semibold animate-bounce mb-4;
+}
+
+.reset-btn {
+  @apply font-semibold bg-yellow-500 p-3 shadow text-white uppercase rounded-lg;
+}
+
+.pagination {
+  @apply flex gap-1 justify-center my-8 md:mt-0 flex-wrap;
+}
+
+.pagination-btn {
+  @apply rounded-sm text-sm sm:text-lg text-black w-10 h-10 text-center py-2 font-semibold bg-opacity-90 hover:text-yellow-500 hover:bg-white transition duration-300;
+}
+
+.pagination-prev-next-btn {
+  @apply text-lg px-4 py-2 font-semibold bg-transparent;
+}
+
+.prev-next-icon {
+  @apply text-white hover:text-yellow-500 transition duration-300;
 }
 </style>

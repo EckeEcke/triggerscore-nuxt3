@@ -2,16 +2,16 @@
   <main class="bg-gray-900">
     <div
       v-if="store.searchResults.length == 0 && store.searchError"
-      class="text-center font-semibold container mx-auto my-8 xl:w-10/12 md:px-4"
+      class="search-page"
     >
-      <div class="py-6 px-2 md:rounded-lg">
+      <div class="no-results-infobox">
         <p class="text-white text-lg">
           {{ t("search.noResults1") }} <i>"{{ store.searchTerm }}"</i>&nbsp;
           {{ t("search.noResults2") }}
         </p>
         <NoResultsAnimation />
         <button
-          class="bg-yellow-500 transition hover:bg-yellow-600 p-3 my-6 rounded font-semibold text-white uppercase"
+          class="btn"
           @click="resetSearch"
         >
           <font-awesome-icon :icon="['fas', 'arrow-circle-left']" class="mr-2" />
@@ -21,7 +21,7 @@
     </div>
     <div
       v-if="store.searchResults.length > 0 && !store.searchError"
-      class="text-center font-semibold container mx-auto my-8 xl:w-10/12 md:px-4"
+      class="results-infobox"
     >
       <div class="py-6 px-2 md:rounded">
         <p class="text-white text-lg">
@@ -30,7 +30,7 @@
           }}
         </p>
         <button
-          class="bg-yellow-500 transition hover:bg-yellow-600 p-3 mt-3 rounded font-semibold text-white uppercase"
+          class="btn"
           @click="resetSearch"
         >
           <font-awesome-icon :icon="['fas', 'arrow-circle-left']" class="mr-2" />{{ t("general.back") }}
@@ -40,7 +40,7 @@
     <transition-group
       v-if="store.searchResults.length > 0"
       tag="section"
-      class="grid gap-0 md:gap-2 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 w-full relative container mx-auto md:mt-4 mb-24 md:px-4 xl:w-10/12"
+      class="results-grid"
       enter-active-class="duration-500 ease-out"
       enter-from-class="opacity-0"
       enter-to-class="opacity-100"
@@ -58,7 +58,7 @@
     <button
       v-if="store.searchResults.length > 0 && !hideLoadMore"
       :disabled="loadingMore"
-      class="bg-yellow-500 transition hover:bg-yellow-600 p-3 my-6 rounded font-semibold text-white uppercase -mt-8 mb-20 disabled:opacity-50"
+      class="btn -mt-8 mb-20 disabled:opacity-50"
       @click="searchMore"
     >
       {{ t("search.searchMore") }}
@@ -116,5 +116,25 @@ useSeoMeta({
 
 main {
   min-height: calc(100vh - 20rem);
+}
+
+.search-page {
+  @apply text-center font-semibold container mx-auto my-8 xl:w-10/12 md:px-4;
+}
+
+.no-results-infobox {
+  @apply py-6 px-2 md:rounded-lg;
+}
+
+.btn {
+  @apply bg-yellow-500 transition hover:bg-yellow-600 p-3 my-6 rounded font-semibold text-white uppercase;
+}
+
+.results-grid {
+  @apply grid gap-0 md:gap-2 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 w-full relative container mx-auto md:mt-4 mb-24 md:px-4 xl:w-10/12;
+}
+
+.results-infobox {
+  @apply text-center font-semibold container mx-auto my-8 xl:w-10/12 md:px-4;
 }
 </style>

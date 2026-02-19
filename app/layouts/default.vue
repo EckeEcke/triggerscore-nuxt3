@@ -1,10 +1,10 @@
 <template>
   <Html :lang="locale"/>
-  <div :class="isFullscreen ? 'pt-0' : 'pt-14'" class="bg-gray-900 min-h-screen flex flex-col pt-14">
+  <div :class="isFullscreen ? 'pt-0' : 'pt-14'" class="page-background">
     <template v-if="isMaintained">
-      <div class="fixed top-1/2 -translate-y-1/2 flex flex-col justify-center gap-8 w-full text-white text-xl font-semibold items-center">
+      <div class="maintenance-info">
         <MaintenanceAnimation />
-        Currenty under maintenance
+        Currently under maintenance
       </div>
     </template>   
     <template v-else>
@@ -71,3 +71,13 @@ useHead({
   }
 })
 </script>
+
+<style scoped>
+.page-background {
+  @apply bg-gray-900 min-h-screen flex flex-col pt-14;
+}
+
+.maintenance-info {
+  @apply fixed top-1/2 -translate-y-1/2 flex flex-col justify-center gap-8 w-full text-white text-xl font-semibold items-center;
+}
+</style>

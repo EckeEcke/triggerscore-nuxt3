@@ -1,6 +1,6 @@
 <template>
-  <div class="flex my-1 text-sm">
-    <div class="flex justify-center rounded-lg w-8 h-8 mr-2 bg-opacity-80" :class="getScoreBackground(score)">
+  <div class="recent-rating-score">
+    <div class="score-background" :class="getScoreBackground(score)">
       <div class="self-center text-white">
         {{ score }}
       </div>
@@ -23,3 +23,13 @@ defineProps({
   },
 })
 </script>
+
+<style scoped>
+.recent-rating-score {
+  @apply flex my-1 text-sm;
+}
+
+.score-background {
+  @apply flex justify-center rounded-lg w-8 h-8 mr-2 bg-opacity-80;
+}
+</style>

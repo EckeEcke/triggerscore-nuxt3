@@ -1,16 +1,14 @@
 <template>
-  <div
-      class="container text-white px-4 py-6 md:py-12 md:pb-8 text-left xl:w-10/12 mx-auto md:rounded-lg flex justify-start flex-wrap gap-12"
-  >
-    <div v-show="!submitted" class="mr-8 max-w-full">
-      <h1 class="mb-4 text-xl md:text-2xl font-semibold uppercase">
+  <div class="container">
+    <div v-show="!submitted" class="form-wrapper">
+      <h1 class="headline">
         {{ route.query.comment ? t("contact.reportHeadline") : t("contact.sendFeedback") }}
       </h1>
 
       <form
           ref="formElement"
           name="contact-nuxt3"
-          class="w-full p-8 bg-gradient-to-r from-gray-950 to-gray-800 rounded text-gray-900"
+          class="contact-form"
           method="POST"
           data-netlify="true"
           data-netlify-honeypot="bot-field"
@@ -22,42 +20,42 @@
         </div>
         <input type="hidden" name="form-name" value="contact-nuxt3">
 
-        <div class="flex flex-col gap-1 mb-4">
-          <label class="font-semibold mb-2 text-white">{{
+        <div class="form-element">
+          <label class="form-label">{{
               t("contact.name")
             }}</label>
           <input
               v-model="form.name"
               type="text"
               name="name"
-              class="border border-gray-300 p-2 rounded w-72 max-w-full"
+              class="form-input"
               :placeholder="t('contact.placeholderName')"
               required
           >
         </div>
 
-        <div class="flex flex-col gap-1 mb-4">
-          <label class="font-semibold mb-2 text-white">
+        <div class="form-element">
+          <label class="form-label">
             {{ t("contact.email") }}
           </label>
           <input
               v-model="form.mail"
               type="email"
               name="mail"
-              class="border border-gray-300 p-2 rounded w-72 max-w-full"
+              class="form-input"
               :placeholder="t('contact.placeholderEmail')"
               required
           >
         </div>
 
-        <div class="flex flex-col gap-1 mb-6">
-          <label class="font-semibold mb-2 text-white">{{
+        <div class="form-element">
+          <label class="form-label">{{
               t("contact.message")
             }}</label>
           <textarea
               v-model="form.message"
               name="message"
-              class="border border-gray-300 p-2 rounded w-72 max-w-full"
+              class="form-input"
               :placeholder="t('contact.placeholderMessage')"
               required
           />
@@ -65,7 +63,7 @@
 
         <p>
           <button
-              class="w-full text-white bg-yellow-500 p-3 text-semibold rounded-lg shadow-lg transition hover:bg-yellow-600 font-semibold uppercase"
+              class="btn"
               type="submit"
               :disabled="isSubmitting"
           >
@@ -77,21 +75,21 @@
 
     <div
         v-show="submitted"
-        class="w-full sm:w-1/2 lg:w-1/4 h-64 bg-green-500 rounded-lg flex flex-col align-center justify-center"
+        class="success-info"
     >
       <SuccessAnimation />
-      <p class="p-4 text-white font-semibold text-center self-center -mt-8">
+      <p class="success-message">
         {{ t("contact.success") }}
       </p>
     </div>
 
     <div>
-      <h1 class="mb-4 text-xl md:text-2xl font-semibold uppercase">
+      <h1 class="headline-2">
         {{ t("header.contact") }}
       </h1>
       <p class="font-semibold">Christian Eckardt</p>
-      <p class="mb-8 font-semibold">22301 Hamburg</p>
-      <p class="mb-8 font-semibold">
+      <p class="font-semibold">22339 Hamburg</p>
+      <p class="my-8 font-semibold">
         <NuxtLink to="https://eckeecke.github.io">eckeecke.github.io</NuxtLink>
       </p>
       <p class="mb-8 flex">
@@ -180,3 +178,53 @@ useSeoMeta({
   viewport: 'width=device-width, initial-scale=1.0',
 })
 </script>
+
+<style scoped>
+.headline {
+  @apply mb-4 text-xl md:text-2xl font-semibold uppercase;
+}
+
+.headline {
+  @apply  text-white px-4 py-6 md:py-12 md:pb-8 text-left xl:w-10/12 mx-auto md:rounded-lg flex justify-start flex-wrap gap-12;
+}
+
+.headline-2 {
+  @apply mb-4 text-xl md:text-2xl font-semibold uppercase;
+}
+
+.container {
+  @apply  text-white px-4 py-6 md:py-12 md:pb-8 text-left xl:w-10/12 mx-auto md:rounded-lg flex justify-start flex-wrap gap-12;
+}
+
+.form-wrapper {
+  @apply mr-8 max-w-full;
+}
+
+.form-element {
+  @apply flex flex-col gap-1 mb-4;
+}
+
+.form-input {
+  @apply border border-gray-300 p-2 rounded w-72 max-w-full;
+}
+
+.form-label {
+  @apply font-semibold mb-2 text-white;
+}
+
+.contact-form {
+  @apply w-full p-8 bg-gradient-to-r from-gray-950 to-gray-800 rounded text-gray-900;
+}
+
+.btn {
+  @apply w-full text-white bg-yellow-500 p-3 font-semibold rounded-lg shadow-lg transition hover:bg-yellow-600 font-semibold uppercase;
+}
+
+.success-info {
+  @apply w-full sm:w-1/2 lg:w-1/4 h-64 bg-green-500 rounded-lg flex flex-col items-center justify-center;
+}
+
+.success-message {
+  @apply p-4 text-white font-semibold text-center self-center -mt-8;
+}
+</style>

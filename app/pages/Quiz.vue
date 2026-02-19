@@ -1,15 +1,15 @@
 <template>
-  <section :class="isFullscreen ? 'my-0 center-big-screen' : 'my-12'" class="container xl:w-10/12 mx-auto px-4 max-w-800px">
+  <section :class="isFullscreen ? 'my-0 center-big-screen' : 'my-12'" class="quiz-page max-w-800px">
     <div
       v-if="!gameRunning"
       :class="isFullscreen ? 'mt-8' : 'mt-0'"
-      class="text-3xl self-center font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200"
+      class="headline"
     >
       <h1 aria-label="TRIGGERSCORE QUIZ">
         TRIGGERSC<font-awesome-icon aria-hidden="true" :icon="['fas', 'angry']" class="text-white" /><span class="sr-only">O</span>RE QUIZ
       </h1> 
     </div>
-    <div v-if="gameRunning" class="score-board grid grid-cols-2 bg-gradient-to-r from-gray-950 to-gray-800 text-white text-xl font-semibold p-4 my-8 rounded-xl" :class="isFullscreen ? 'my-8 md:mt-36' : 'my-8'">
+    <div v-if="gameRunning" class="score-board" :class="isFullscreen ? 'my-8 md:mt-36' : 'my-8'">
       <div class="pr-4 border-r border-white">
         <transition 
           enter-active-class="duration-500 ease-out"
@@ -48,7 +48,7 @@
         <img :src="poster" :style="posterStyle" alt="movie poster" >
       </div>
       <div v-if="playMode === 'keywords'" class="keywords-wrapper mb-8">
-      <h2 class="text-center font-semibold text-2xl mb-4 text-white">Keywords</h2>
+      <h2 class="keywords-headline">Keywords</h2>
         <transition-group
           tag="div"
           class="flex flex-wrap gap-2"
@@ -56,15 +56,15 @@
           enter-to-class="opacity-100"
           enter-active-class="transition duration-300"
         >
-          <span v-for="keyword in displayedKeywords" :key="keyword" class="bg-gray-500 text-white font-semibold p-2 rounded text-sm md:text-lg transition-opacity duration-500 ease-in-out opacity-0">
+          <span v-for="keyword in displayedKeywords" :key="keyword" class="keyword">
             {{ keyword }}
           </span>
         </transition-group>
       </div>
-      <h2 class="text-2xl text-white my-8 font-semibold">{{ t("quiz.question") }}</h2>
+      <h2 class="question">{{ t("quiz.question") }}</h2>
       <transition-group
           tag="div"
-          class="grid grid-cols-2 gap-4 mb-2"
+          class="answers-grid"
           enter-from-class="opacity-0"
           enter-to-class="opacity-100"
           enter-active-class="transition duration-1000"
@@ -75,24 +75,24 @@
         </button>
       </transition-group>
     </div>
-    <div v-else class="p-8 text-center text-balance">
-      <h2 class="text-white text-xl font-semibold mb-8">{{ t("quiz.tagline") }}</h2>
-      <div class="flex flex-col gap-8 items-center align-center justify-center mb-8">
-        <img class="quiz-image max-w-16 hidden md:block" src="/images/quiz-image.webp" alt="" >
-        <p class="text-white text-lg text-wrap-balance">
+    <div v-else class="intro">
+      <h2 class="intro-headline">{{ t("quiz.tagline") }}</h2>
+      <div class="intro-image-wrapper">
+        <img class="quiz-image" src="/images/quiz-image.webp" alt="" >
+        <p class="intro-text">
           {{ t("quiz.description") }}
         </p>
       </div>
-      <div class="flex flex-col gap-4 mx-auto" style="width: 260px;">
+      <div class="intro-btns">
         <div>
-          <button v-if="moviesForQuiz.length > 0" class="bg-yellow-600 transition hover:bg-yellow-700 p-3 rounded-lg text-white text-lg font-semibold uppercase w-full" @click="startGame">
+          <button v-if="moviesForQuiz.length > 0" class="start-btn" @click="startGame">
             {{ t("quiz.startGame") }} <font-awesome-icon
               aria-hidden="true"
               :icon="['fas', 'circle-question']"
               class="text-white"
             />
           </button>
-          <button v-else disabled class="opacity-80 bg-yellow-600 transition hover:bg-yellow-700 p-3 rounded-lg text-white text-lg font-semibold uppercase w-full" @click="startGame">
+          <button v-else disabled class="start-btn" @click="startGame">
             <font-awesome-icon
               aria-hidden="true"
               :icon="['fas', 'spinner']"
@@ -100,8 +100,8 @@
             />
           </button>
         </div>
-        <div class="fullscreen-button text-white">
-          <button class="bg-gray-600 hover:bg-yellow-700 p-3 rounded-lg text-white text-lg font-semibold uppercase w-full" @click="toggleFullscreen">
+        <div class="text-white">
+          <button class="fullscreen-btn" @click="toggleFullscreen">
             Fullscreen an/aus <font-awesome-icon
               aria-hidden="true"
               :icon="['fas', 'expand']"
@@ -119,18 +119,18 @@
       leave-from-class="opacity-100"
       leave-to-class="transform opacity-0"
     >
-      <div v-if="showModal" class="fixed inset-0 flex items-center justify-center bg-gray-900">
-        <div class="text-white text-xl font-semibold p-8 mx-4 rounded-lg shadow-lg text-center">
+      <div v-if="showModal" class="completion-modal">
+        <div class="modal-content">
           <h2 class="text-3xl font-semibold mb-8">Game Over!</h2>
           <p>{{ t("quiz.finalScore") }}{{ score }}</p>
           <p class="mb-8">{{ t("quiz.correctGuesses", { correctGuesses: correctGuesses }) }}</p>
           <p>{{ t("quiz.congratulations") }}</p>
           <p class="mb-8 shiny-text text-3xl">{{  getPlayerTitle(score) }}</p>
           <div class="flex flex-col gap-4 mt-8">
-            <button class="bg-yellow-600 transition hover:bg-yellow-700 p-3 rounded-lg text-white font-semibold text-lg uppercase" @click="playAgain">
+            <button class="btn" @click="playAgain">
               {{ t("quiz.playAgain") }}
             </button>
-            <button class="bg-gray-500 transition hover:bg-yellow-700 p-3 rounded-lg text-white font-semibold text-lg uppercase" @click="goBack">
+            <button class="back-btn" @click="goBack">
               {{ t("general.back") }}
             </button>
           </div>
@@ -146,8 +146,8 @@
       leave-from-class="opacity-100"
       leave-to-class="transform opacity-0"
     >
-      <div v-if="showRoundModal" class="fixed inset-0 flex items-center justify-center bg-gradient-to-r bg-gray-900">
-        <div class="shiny-text uppercase text-5xl font-semibold p-8 mx-4 rounded-lg shadow-lg text-center">
+      <div v-if="showRoundModal" class="round-modal">
+        <div class="shiny-text round-message">
           <span v-if="round === 10">{{  t("quiz.lastRound") }}</span>
         <span v-else>{{ t("quiz.round") }} {{  round }}</span>
         </div>
@@ -266,10 +266,10 @@ const checkForRightAnswer = (indexOfAnswerGiven: number) => {
 }
 
 const buttonClass = (index: number) => {
-  if (selectedAnswer.value === null) return 'bg-yellow-600 transition hover:bg-yellow-700 p-3 rounded-lg text-white font-semibold'
-  if (index === correctIndex.value) return 'bg-green-500 p-3 transition rounded-lg text-white font-semibold hop'
-  if (index === selectedAnswer.value) return 'bg-red-700 p-3 transition rounded-lg text-white font-semibold drop'
-  return 'bg-yellow-600 p-3 rounded-lg text-white font-semibold'
+  if (selectedAnswer.value === null) return 'answer-unselected'
+  if (index === correctIndex.value) return 'answer-correct'
+  if (index === selectedAnswer.value) return 'answer-incorrect'
+  return 'answer-neutral'
 }
 
 const currentPointsClass = computed(() => {
@@ -388,12 +388,106 @@ useSeoMeta({
 </script>
 
 <style scoped>
+.quiz-page {
+  @apply container xl:w-10/12 mx-auto px-4;
+}
+
+.headline {
+  @apply text-3xl self-center font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200;
+}
+
 .score-board {
   border: 4px solid orange;
+  @apply grid grid-cols-2 bg-gradient-to-r from-gray-950 to-gray-800 text-white text-xl font-semibold p-4 my-8 rounded-xl;
+}
+
+.start-btn {
+  @apply bg-yellow-600 transition hover:bg-yellow-700 p-3 rounded-lg text-white text-lg font-semibold uppercase w-full;
+}
+
+.fullscreen-btn {
+  @apply bg-gray-600 hover:bg-yellow-700 p-3 rounded-lg text-white text-lg font-semibold uppercase w-full;
+}
+
+.completion-modal {
+  @apply fixed inset-0 flex items-center justify-center bg-gray-900;
+}
+
+.modal-content {
+  @apply text-white text-xl font-semibold p-8 mx-4 rounded-lg shadow-lg text-center;
+}
+
+.btn {
+  @apply bg-yellow-600 transition hover:bg-yellow-700 p-3 rounded-lg text-white font-semibold text-lg uppercase;
+}
+
+.back-btn {
+  @apply bg-gray-500 transition hover:bg-yellow-700 p-3 rounded-lg text-white font-semibold text-lg uppercase;
+}
+
+.round-modal {
+  @apply fixed inset-0 flex items-center justify-center bg-gradient-to-r bg-gray-900;
+}
+
+.round-message {
+  @apply uppercase text-5xl font-semibold p-8 mx-4 rounded-lg shadow-lg text-center;
+}
+
+.answers-grid {
+  @apply grid grid-cols-2 gap-4 mb-2;
+}
+
+.answer-unselected {
+  @apply bg-yellow-600 transition hover:bg-yellow-700 p-3 rounded-lg text-white font-semibold;
+}
+
+.answer-correct {
+  @apply bg-green-500 p-3 transition rounded-lg text-white font-semibold hop;
+}
+
+.answer-incorrect {
+  @apply bg-red-700 p-3 transition rounded-lg text-white font-semibold drop
+}
+
+.answer-neutral {
+  @apply bg-yellow-600 p-3 rounded-lg text-white font-semibold;
+}
+
+.question {
+  @apply text-2xl text-white my-8 font-semibold;
+}
+
+.keywords-headline {
+  @apply text-center font-semibold text-2xl mb-4 text-white;
 }
 
 .keywords-wrapper {
   min-height: 30vh;
+}
+
+.keyword {
+  @apply bg-gray-500 text-white font-semibold p-2 rounded text-sm md:text-lg transition-opacity duration-500 ease-in-out opacity-0;
+}
+
+.intro {
+  @apply p-8 text-center text-balance;
+}
+
+.intro-headline {
+  @apply text-white text-xl font-semibold mb-8;
+}
+
+.intro-image-wrapper {
+  @apply flex flex-col gap-8 items-center items-center justify-center mb-8;
+}
+
+.intro-text {
+  @apply text-white text-lg text-balance;
+}
+
+.intro-btns {
+  width: 260px;
+  @apply flex flex-col gap-4 mx-auto;
 }
 
 .max-w-800px {
@@ -401,6 +495,7 @@ useSeoMeta({
 }
 
 .quiz-image {
+  @apply hidden md:block;
   width: 600px;
   max-width: 100%;
 }

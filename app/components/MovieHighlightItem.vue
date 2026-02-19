@@ -8,7 +8,7 @@
     <div ref="movieItem" class="flex">
       <div class="w-full h-60 overflow-hidden">
         <div
-          class="w-full h-full bg-cover rounded-t transition-300 transform scale-100 movie-poster"
+          class="w-full h-full bg-cover rounded-t transition duration-300 transform scale-100 movie-poster"
           :style="[isVisible ? { backgroundImage: `url(${poster})` } : '']"
         />
       </div>

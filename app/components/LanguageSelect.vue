@@ -1,6 +1,6 @@
 <template>
-  <span v-if="isLoading" class="loader w-6 h-6 mr-6 sm:mr-10" />
-  <div v-else class="relative flex align-center">
+  <span v-if="isLoading" class="loader" />
+  <div v-else class="language-options">
     <template v-for="(option, index) in languageOptions" :key="index">
       <button
           v-if="locale == option.locale"
@@ -17,10 +17,10 @@
     <ul
       v-if="showSelection"
       v-click-away="hideSelection"
-      class="absolute -left-2 bg-gradient-to-r from-gray-950 to-gray-800 text-white top-9 md:top-10 p-2 flex flex-col gap-2 w-20"
+      class="options-list"
     >
       <li v-for="(option, index) in languageOptions" :key="index">
-        <NuxtLink :to="switchLocalePath(option.locale)" class="flex gap-2 cursor-pointer hover:text-yellow-500">
+        <NuxtLink :to="switchLocalePath(option.locale)" class="language-option">
           <img class="w-6 self-center h-3" :src="option.flag" alt="" >
           <span class="mt-1">{{ option.locale.toUpperCase()}}</span>
         </NuxtLink>
@@ -85,6 +85,19 @@ const isLoading = computed(() => store.moviesLoading || store.isFiltering)
   display: inline-block;
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
+  @apply w-6 h-6 mr-6 sm:mr-10;
+}
+
+.language-options {
+  @apply relative flex items-center;
+}
+
+.language-option {
+  @apply flex gap-2 cursor-pointer hover:text-yellow-500;
+}
+
+.options-list {
+  @apply absolute -left-2 bg-gradient-to-r from-gray-950 to-gray-800 text-white top-9 md:top-10 p-2 flex flex-col gap-2 w-20;
 }
 
 @keyframes rotation {

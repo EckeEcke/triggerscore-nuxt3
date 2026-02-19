@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-cover bg-center"
+    class="background"
     :class="showTitle ? 'py-16 md:py-24' : 'py-8'"
     :style="{
       backgroundImage:
@@ -9,10 +9,10 @@
         ')',
     }"
   >
-    <div class="container mx-auto px-4 xl:w-10/12">
-      <h1 v-if="showTitle" class="text-white text-2xl md:text-4xl font-semibold text-left">
+    <div class="container">
+      <h1 v-if="showTitle" class="headline">
         {{ t("search.searchHeadline1") }}
-        <NuxtLink :to="localePath('/faq')" class="text-yellow-500 transition hover:text-yellow-600">
+        <NuxtLink :to="localePath('/faq')" class="headline-text">
           Triggerscore
         </NuxtLink>
         {{ t("search.searchHeadline2") }}
@@ -67,3 +67,21 @@ const searchMovie = async () => {
 }
 
 </script>
+
+<style scoped>
+.container {
+  @apply mx-auto px-4 xl:w-10/12;
+}
+
+.background {
+  @apply bg-cover bg-center;
+}
+
+.headline {
+  @apply text-white text-2xl md:text-4xl font-semibold text-left;
+}
+
+.headline-text {
+  @apply text-yellow-500 transition hover:text-yellow-600;
+}
+</style>

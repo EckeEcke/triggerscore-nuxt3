@@ -1,27 +1,27 @@
 <template>
-  <section class="detail-page w-full bg-center bg-cover bg-fixed">
-    <div class="container mx-auto sm:pt-6 sm:pb-12 xl:w-10/12 md:px-4">
-      <div class="radial-background flex flex-col lg:flex-row px-0 sm:px-4 md:px-0 sm:rounded-t">
-        <div class="flex flex-col w-full text-white rounded-t lg:rounded justify-start lg:mr-6 md:p-4">
-          <div class="flex justify-between w-full sm:rounded-t p-4 pr-0">
+  <section class="detail-page">
+    <div class="container">
+      <div class="radial-background">
+        <div class="detail-page-content">
+          <div class="score-wrapper">
             <img
               :key="locale"
               :src="poster"
               alt="movie poster"
-              class="w-1/2 lg:w-76 h-auto object-contain rounded self-center detail-page-box-shadow"
+              class="movie-poster detail-page-box-shadow"
             >
             <MovieScore />
           </div>
-          <div class="flex flex-col xl:flex-row">
-            <div class="w-full text-left px-4 py-2 flex flex-col">
+          <div class="movie-data-section">
+            <div class="movie-data-container">
               <div class="flex justify-between">
                 <h2
-                  class="text-xl font-semibold md:text-2xl self-center mb-1 sm:mb-2"
+                  class="title"
                 >
                   {{ movie?.title ?? movie?.original_title }}
                 </h2>
               </div>
-              <div class="mb-4 text-xs md:text-md text-gray-400">
+              <div class="movie-data">
                 {{ releaseDate }}
                 <span class="mx-2">|</span>
                 <span>{{ movie?.runtime }} {{ t("general.minutes") }}</span>
@@ -37,7 +37,7 @@
                   {{ movie?.vote_average.toFixed(2) }}
                 </span>
                 <span v-if="score" class="mx-2 mb-2">|</span>
-                <div v-if="score" class="inline-block mt-2 sm:mt-0">
+                <div v-if="score" class="likes">
                   <font-awesome-icon
                     :icon="['fas', 'thumbs-up']"
                     class="mr-1"
@@ -51,14 +51,14 @@
                 </div>
               </div>
 
-              <i v-if="movie?.tagline && movie?.tagline.length > 1" class="text-sm md: text-md">"
+              <i v-if="movie?.tagline && movie?.tagline.length > 1" class="text-sm md:text-base">"
                 {{ movie.tagline }}"
               </i>
               <p class="my-4 flex flex-wrap gap-1">
                 <span
                   v-for="(genre, index) in genres"
                   :key="genre + index"
-                  class="text-xs bg-gray-400 text-white p-2 rounded"
+                  class="genre-flag"
                   >{{ genre }}</span
                 >
               </p>
@@ -78,7 +78,7 @@
           </div>
         </div>
         <RateMovie />
-        <hr class="border-gray-800 md:hidden" >
+        <hr>
         <div class="px-4 md:hidden py-12 mb-4">
           <ShareMovie :movie="movie" />
         </div>
@@ -187,10 +187,59 @@ watch(locale, () => {
 <style scoped>
 .detail-page {
   min-height: calc(100vh - 5rem);
+  @apply w-full bg-center bg-cover bg-fixed;
 }
 
 .detail-page-box-shadow {
   box-shadow: rgba(50, 50, 93, 0.25) 0 50px 100px -20px, rgba(0, 0, 0, 0.3) 0 30px 60px -30px;
+}
+
+.movie-poster {
+  @apply w-1/2 h-auto object-contain rounded self-center;
+}
+
+.container {
+  @apply mx-auto sm:pt-6 sm:pb-12 xl:w-10/12 md:px-4;
+}
+
+.radial-background {
+  @apply flex flex-col lg:flex-row px-0 sm:px-4 md:px-0 sm:rounded-t;
+}
+
+.detail-page-content {
+  @apply flex flex-col w-full text-white rounded-t lg:rounded justify-start lg:mr-6 md:p-4;
+}
+
+.score-wrapper {
+  @apply flex justify-between w-full sm:rounded-t p-4 pr-0;
+}
+
+.title {
+  @apply text-xl font-semibold md:text-2xl self-center mb-1 sm:mb-2;
+}
+
+.movie-data-section {
+  @apply flex flex-col xl:flex-row;
+}
+
+.movie-data-container {
+  @apply w-full text-left px-4 py-2 flex flex-col;
+}
+
+.movie-data {
+  @apply mb-4 text-xs md:text-base text-gray-400;
+}
+
+.likes {
+  @apply inline-block mt-2 sm:mt-0;
+}
+
+.genre-flag {
+  @apply text-xs bg-gray-600 text-white p-2 rounded;
+}
+
+hr {
+  @apply border-gray-800 md:hidden;
 }
 
 </style>

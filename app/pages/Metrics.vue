@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="font-semibold text-3xl text-white my-16">Metrics</h1>
+    <h1 class="headline">Metrics</h1>
     <div id="metrics-container">
       <div v-for="page in pages" :key="page.id" class="metric-item">
         <h2 class="text-white">{{ page.title }}</h2>
@@ -8,7 +8,7 @@
       </div>
     </div>
     <NuxtLink href="https://triggerscore.goatcounter.com/settings/main" target="blank">
-      <div class="bg-yellow-500 transition hover:bg-yellow-600 p-3 rounded-lg text-white font-semibold uppercase my-16 max-w-md mx-auto">
+      <div class="btn">
         OPEN FULL METRICS
       </div>
     </NuxtLink>
@@ -51,6 +51,14 @@ setTimeout(() => loadVisitCounts(), 2000)
 </script>
 
 <style scoped>
+.headline {
+  @apply font-semibold text-3xl text-white my-16;
+}
+
+.btn {
+  @apply bg-yellow-500 transition hover:bg-yellow-600 p-3 rounded-lg text-white font-semibold uppercase my-16 max-w-md mx-auto;
+}
+
 #metrics-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
