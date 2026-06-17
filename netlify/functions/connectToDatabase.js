@@ -1,40 +1,47 @@
-import { connectToDatabase } from './dbClient.js'
+import { connectToDatabase } from "./dbClient.js";
 
-const devAllowedOrigins = ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:8888']
-const prodAllowedOrigins = ['https://www.triggerscore.de']
+const devAllowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:3001",
+  "http://localhost:8888",
+];
+const prodAllowedOrigins = ["https://www.triggerscore.netlify.app"];
 
-const allowedOrigins = process.env.NODE_ENV === 'development' ? devAllowedOrigins : prodAllowedOrigins
+const allowedOrigins =
+  process.env.NODE_ENV === "development"
+    ? devAllowedOrigins
+    : prodAllowedOrigins;
 
 export const handler = async (event) => {
-  const origin = event.headers?.origin || ''
+  const origin = event.headers?.origin || "";
   const headers = {
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Access-Control-Allow-Credentials': 'true',
-  }
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Credentials": "true",
+  };
 
   if (allowedOrigins.includes(origin)) {
-    headers['Access-Control-Allow-Origin'] = origin
+    headers["Access-Control-Allow-Origin"] = origin;
   } else {
-    headers['Access-Control-Allow-Origin'] = 'null'
+    headers["Access-Control-Allow-Origin"] = "null";
   }
 
   try {
-    const database = await connectToDatabase()
+    const database = await connectToDatabase();
     // try to connect
-    const scores = database.collection('scores')
-    console.log(scores)
+    const scores = database.collection("scores");
+    console.log(scores);
     return {
       statusCode: 200,
-      body: JSON.stringify({ message: 'Connected to database' }),
+      body: JSON.stringify({ message: "Connected to database" }),
       headers,
-    }
+    };
   } catch (error) {
     return {
       statusCode: 500,
       body: JSON.stringify({ error: error.message }),
       headers,
-    }
+    };
   }
-}
+};

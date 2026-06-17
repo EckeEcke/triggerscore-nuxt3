@@ -21,20 +21,14 @@
           </h2>
           <p class="text-sm text-white">
             {{ t("index.intro1") }}
-            <span
-              class="search-textlink"
-              @click="focusSearch"
-            >
+            <span class="search-textlink" @click="focusSearch">
               {{ t("index.search") }}
             </span>
             {{ t("index.intro2") }}
           </p>
         </div>
         <div class="sidebar-btn-wrapper">
-          <button
-            class="open-sidebar-btn"
-            @click="handleMenu"
-          >
+          <button class="open-sidebar-btn" @click="handleMenu">
             <font-awesome-icon class="mr-2" :icon="['fas', 'filter']" />
             Filter
           </button>
@@ -64,18 +58,12 @@
         <p class="no-results-message">
           {{ t("search.noResults") }}
         </p>
-        <button
-          class="reset-btn"
-          @click="resetFilter"
-        >
+        <button class="reset-btn" @click="resetFilter">
           {{ t("filter.resetFilter") }}
         </button>
       </div>
     </div>
-    <div
-      v-if="totalPages > 1 && !isFiltering"
-      class="pagination"
-    >
+    <div v-if="totalPages > 1 && !isFiltering" class="pagination">
       <button
         v-for="index in totalPages"
         :key="index"
@@ -88,76 +76,87 @@
         {{ index }}
       </button>
     </div>
-    <div v-if="totalPages > 1 && !isFiltering" class="flex gap-1 justify-center mb-8 -mt-6 flex-wrap">
+    <div
+      v-if="totalPages > 1 && !isFiltering"
+      class="flex gap-1 justify-center mb-8 -mt-6 flex-wrap"
+    >
       <button
         class="pagination-prev-next-btn"
         :disabled="currentPage == 1"
         @click="setPage(start - 24, end - 24)"
       >
-        <font-awesome-icon :icon="['fas', 'chevron-left']" class="prev-next-icon" />
+        <font-awesome-icon
+          :icon="['fas', 'chevron-left']"
+          class="prev-next-icon"
+        />
       </button>
       <button
         class="pagination-prev-next-btn"
         :disabled="currentPage == totalPages"
         @click="setPage(start + 24, end + 24)"
       >
-        <font-awesome-icon :icon="['fas', 'chevron-right']" class="prev-next-icon" />
+        <font-awesome-icon
+          :icon="['fas', 'chevron-right']"
+          class="prev-next-icon"
+        />
       </button>
     </div>
   </div>
 </template>
 
-<script setup lang='ts'>
-import { useStore } from '~/stores/store'
-import { useI18n } from 'vue-i18n'
-import LoadingAnimation from '~/components/animations/LoadingAnimation.vue'
+<script setup lang="ts">
+import { useStore } from "~/stores/store";
+import { useI18n } from "vue-i18n";
+import LoadingAnimation from "~/components/animations/LoadingAnimation.vue";
 
-const store = useStore()
-const { t } = useI18n()
-const showMenu = ref(false)
-const start = ref(0)
-const end = ref(24)
+const store = useStore();
+const { t } = useI18n();
+const showMenu = ref(false);
+const start = ref(0);
+const end = ref(24);
 
-store.filterMovies()
-store.resetFilter()
+store.filterMovies();
+store.resetFilter();
 
-const totalPages = computed(() => Math.ceil(filteredMovies.value.length / 24))
-const isLoading = computed(() => store.moviesLoading || store.triggerscores.length == 0)
-const filteredMovies = computed(() => store.filteredMovies)
+const totalPages = computed(() => Math.ceil(filteredMovies.value.length / 24));
+const isLoading = computed(
+  () => store.moviesLoading || store.triggerscores.length == 0,
+);
+const filteredMovies = computed(() => store.filteredMovies);
 const loadedMovies = computed(() =>
   [...filteredMovies.value].filter(
-    (_, index) => index >= start.value && index < end.value
-  )
-)
-const triggerScores = computed(() => store.triggerscores)
-const movies = computed(() => store.movies)
-const isFiltering = computed(() => store.isFiltering)
-const currentPage = computed(() => Math.floor(start.value / 24) + 1)
+    (_, index) => index >= start.value && index < end.value,
+  ),
+);
+const triggerScores = computed(() => store.triggerscores);
+const movies = computed(() => store.movies);
+const isFiltering = computed(() => store.isFiltering);
+const currentPage = computed(() => Math.floor(start.value / 24) + 1);
 
-const handleMenu = () => showMenu.value = !showMenu.value
+const handleMenu = () => (showMenu.value = !showMenu.value);
 
-const showSearch = useState('showSearch')
+const showSearch = useState("showSearch");
 
 const focusSearch = () => {
-  showSearch.value = true
-}
+  showSearch.value = true;
+};
 
 const resetFilter = () => {
-  store.resetFilter()
-  store.filterMovies()
-}
+  store.resetFilter();
+  store.filterMovies();
+};
 
 const setPage = (startValue: number, endValue: number) => {
-  start.value = startValue
-  end.value = endValue
-}
+  start.value = startValue;
+  end.value = endValue;
+};
 
 watch(
   () => movies.value,
   () => {
-    store.filterMovies()
-  }
-)
+    store.filterMovies();
+  },
+);
 
 watch(
   () => filteredMovies.value,
@@ -170,20 +169,22 @@ watch(
         end.value = 24;
       }
     }
-  }
-)
+  },
+);
 
 useSeoMeta({
-  title: 'Triggerscore - All Movies on Triggerscore / Filter Movies',
-  description: 'Overview of all the movies on Triggerscore - filter movies to find what you are looking for',
-  author: 'Christian Eckardt',
-  ogTitle: 'Triggerscore - About / What is Triggerscore',
-  ogDescription: 'Triggerscore - rating old movies based on how much users today get triggered',
-  ogUrl: () => `https://www.triggerscore.de/about`,
-  ogType: 'website',
-  charset: 'utf-8',
-  viewport: 'width=device-width, initial-scale=1.0',
-})
+  title: "Triggerscore - All Movies on Triggerscore / Filter Movies",
+  description:
+    "Overview of all the movies on Triggerscore - filter movies to find what you are looking for",
+  author: "Christian Eckardt",
+  ogTitle: "Triggerscore - About / What is Triggerscore",
+  ogDescription:
+    "Triggerscore - rating old movies based on how much users today get triggered",
+  ogUrl: () => `https://www.triggerscore.netlify.app/about`,
+  ogType: "website",
+  charset: "utf-8",
+  viewport: "width=device-width, initial-scale=1.0",
+});
 </script>
 
 <style scoped>
@@ -196,7 +197,7 @@ button:disabled {
 }
 
 .movies-grid {
-  @apply  grid gap-0 md:gap-2 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 w-full relative mx-auto mt-8 md:mt-2 sm:pb-8 sm:px-4 xl:w-10/12;
+  @apply grid gap-0 md:gap-2 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 w-full relative mx-auto mt-8 md:mt-2 sm:pb-8 sm:px-4 xl:w-10/12;
 }
 
 .title {

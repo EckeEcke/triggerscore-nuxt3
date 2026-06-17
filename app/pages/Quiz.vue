@@ -1,17 +1,28 @@
 <template>
-  <section :class="isFullscreen ? 'my-0 center-big-screen' : 'my-12'" class="quiz-page max-w-800px">
+  <section
+    :class="isFullscreen ? 'my-0 center-big-screen' : 'my-12'"
+    class="quiz-page max-w-800px"
+  >
     <div
       v-if="!gameRunning"
       :class="isFullscreen ? 'mt-8' : 'mt-0'"
       class="headline"
     >
       <h1 aria-label="TRIGGERSCORE QUIZ">
-        TRIGGERSC<font-awesome-icon aria-hidden="true" :icon="['fas', 'angry']" class="text-white" /><span class="sr-only">O</span>RE QUIZ
-      </h1> 
+        TRIGGERSC<font-awesome-icon
+          aria-hidden="true"
+          :icon="['fas', 'angry']"
+          class="text-white"
+        /><span class="sr-only">O</span>RE QUIZ
+      </h1>
     </div>
-    <div v-if="gameRunning" class="score-board" :class="isFullscreen ? 'my-8 md:mt-36' : 'my-8'">
+    <div
+      v-if="gameRunning"
+      class="score-board"
+      :class="isFullscreen ? 'my-8 md:mt-36' : 'my-8'"
+    >
       <div class="pr-4 border-r border-white">
-        <transition 
+        <transition
           enter-active-class="duration-500 ease-out"
           enter-from-class="transform opacity-0"
           enter-to-class="opacity-100"
@@ -21,7 +32,10 @@
           mode="out-in"
         >
           <span :key="score">
-            <font-awesome-icon :icon="['fas', 'user']" class="text-white mr-2" />
+            <font-awesome-icon
+              :icon="['fas', 'user']"
+              class="text-white mr-2"
+            />
             {{ score }}
           </span>
         </transition>
@@ -37,18 +51,25 @@
           mode="out-in"
         >
           <span :key="currentPoints">
-            <font-awesome-icon :icon="['fas', 'clock']" class="text-white mr-2" />
+            <font-awesome-icon
+              :icon="['fas', 'clock']"
+              class="text-white mr-2"
+            />
             {{ currentPoints }}
           </span>
-        </transition>      
+        </transition>
       </div>
     </div>
     <div v-if="gameRunning">
-      <div v-if="playMode === 'poster'" class="image-wrapper" style="display: flex; justify-content: center">
-        <img :src="poster" :style="posterStyle" alt="movie poster" >
+      <div
+        v-if="playMode === 'poster'"
+        class="image-wrapper"
+        style="display: flex; justify-content: center"
+      >
+        <img :src="poster" :style="posterStyle" alt="movie poster" />
       </div>
       <div v-if="playMode === 'keywords'" class="keywords-wrapper mb-8">
-      <h2 class="keywords-headline">Keywords</h2>
+        <h2 class="keywords-headline">Keywords</h2>
         <transition-group
           tag="div"
           class="flex flex-wrap gap-2"
@@ -56,21 +77,30 @@
           enter-to-class="opacity-100"
           enter-active-class="transition duration-300"
         >
-          <span v-for="keyword in displayedKeywords" :key="keyword" class="keyword">
+          <span
+            v-for="keyword in displayedKeywords"
+            :key="keyword"
+            class="keyword"
+          >
             {{ keyword }}
           </span>
         </transition-group>
       </div>
       <h2 class="question">{{ t("quiz.question") }}</h2>
       <transition-group
-          tag="div"
-          class="answers-grid"
-          enter-from-class="opacity-0"
-          enter-to-class="opacity-100"
-          enter-active-class="transition duration-1000"
-          mode="out-in"
+        tag="div"
+        class="answers-grid"
+        enter-from-class="opacity-0"
+        enter-to-class="opacity-100"
+        enter-active-class="transition duration-1000"
+        mode="out-in"
+      >
+        <button
+          v-for="(title, index) in movieTitlesForQuiz"
+          :key="title"
+          :class="buttonClass(index)"
+          @click="checkForRightAnswer(index)"
         >
-        <button v-for="(title, index) in movieTitlesForQuiz" :key="title" :class="buttonClass(index)" @click="checkForRightAnswer(index)">
           {{ title }}
         </button>
       </transition-group>
@@ -78,15 +108,20 @@
     <div v-else class="intro">
       <h2 class="intro-headline">{{ t("quiz.tagline") }}</h2>
       <div class="intro-image-wrapper">
-        <img class="quiz-image" src="/images/quiz-image.webp" alt="" >
+        <img class="quiz-image" src="/images/quiz-image.webp" alt="" />
         <p class="intro-text">
           {{ t("quiz.description") }}
         </p>
       </div>
       <div class="intro-btns">
         <div>
-          <button v-if="moviesForQuiz.length > 0" class="start-btn" @click="startGame">
-            {{ t("quiz.startGame") }} <font-awesome-icon
+          <button
+            v-if="moviesForQuiz.length > 0"
+            class="start-btn"
+            @click="startGame"
+          >
+            {{ t("quiz.startGame") }}
+            <font-awesome-icon
               aria-hidden="true"
               :icon="['fas', 'circle-question']"
               class="text-white"
@@ -102,14 +137,15 @@
         </div>
         <div class="text-white">
           <button class="fullscreen-btn" @click="toggleFullscreen">
-            Fullscreen an/aus <font-awesome-icon
+            Fullscreen an/aus
+            <font-awesome-icon
               aria-hidden="true"
               :icon="['fas', 'expand']"
               class="text-white"
             />
           </button>
         </div>
-      </div>  
+      </div>
     </div>
     <transition
       enter-active-class="transition duration-500 ease-out"
@@ -123,9 +159,11 @@
         <div class="modal-content">
           <h2 class="text-3xl font-semibold mb-8">Game Over!</h2>
           <p>{{ t("quiz.finalScore") }}{{ score }}</p>
-          <p class="mb-8">{{ t("quiz.correctGuesses", { correctGuesses: correctGuesses }) }}</p>
+          <p class="mb-8">
+            {{ t("quiz.correctGuesses", { correctGuesses: correctGuesses }) }}
+          </p>
           <p>{{ t("quiz.congratulations") }}</p>
-          <p class="mb-8 shiny-text text-3xl">{{  getPlayerTitle(score) }}</p>
+          <p class="mb-8 shiny-text text-3xl">{{ getPlayerTitle(score) }}</p>
           <div class="flex flex-col gap-4 mt-8">
             <button class="btn" @click="playAgain">
               {{ t("quiz.playAgain") }}
@@ -148,243 +186,263 @@
     >
       <div v-if="showRoundModal" class="round-modal">
         <div class="shiny-text round-message">
-          <span v-if="round === 10">{{  t("quiz.lastRound") }}</span>
-        <span v-else>{{ t("quiz.round") }} {{  round }}</span>
+          <span v-if="round === 10">{{ t("quiz.lastRound") }}</span>
+          <span v-else>{{ t("quiz.round") }} {{ round }}</span>
         </div>
       </div>
     </transition>
   </section>
 </template>
 
-<script setup lang='ts'>
-import { useStore } from '~/stores/store'
+<script setup lang="ts">
+import { useStore } from "~/stores/store";
 
-const { t } = useI18n()
+const { t } = useI18n();
 
-const store = useStore()
-const localePath = useLocalePath()
+const store = useStore();
+const localePath = useLocalePath();
 
-const movies = computed(() => store.movies)
+const movies = computed(() => store.movies);
 
-const gameRunning = ref(false)
-const showModal = ref(false)
-const showRoundModal = ref(false)
+const gameRunning = ref(false);
+const showModal = ref(false);
+const showRoundModal = ref(false);
 
-const correctIndex = ref(-1)
-const selectedAnswer = ref<number | null>(null)
-const displayedKeywords = ref<string[]>([])
-const previousMovies = ref<number[]>([])
-const intervalKeywords = ref<ReturnType<typeof setInterval> | undefined>(undefined)
-const intervalPoints = ref<ReturnType<typeof setInterval> | undefined>(undefined)
-const intervalPosterBlur = ref<ReturnType<typeof setInterval> | undefined>(undefined)
-const playMode = ref('keywords')
-const isFullscreen = computed(() => store.isFullscreen)
+const correctIndex = ref(-1);
+const selectedAnswer = ref<number | null>(null);
+const displayedKeywords = ref<string[]>([]);
+const previousMovies = ref<number[]>([]);
+const intervalKeywords = ref<ReturnType<typeof setInterval> | undefined>(
+  undefined,
+);
+const intervalPoints = ref<ReturnType<typeof setInterval> | undefined>(
+  undefined,
+);
+const intervalPosterBlur = ref<ReturnType<typeof setInterval> | undefined>(
+  undefined,
+);
+const playMode = ref("keywords");
+const isFullscreen = computed(() => store.isFullscreen);
 
-const correctGuesses = ref(0)
+const correctGuesses = ref(0);
 
-const round = ref(1)
-const score = ref(0)
-const currentPoints = ref(1000)
-
+const round = ref(1);
+const score = ref(0);
+const currentPoints = ref(1000);
 
 const moviesForQuiz = computed(() => {
-  const availableMovies = movies.value.filter(movie => 
-    !previousMovies.value.includes(movie.id) &&
-    movie.keywords &&
-    movie.keywords.keywords.length >= 4 &&
-    movie.vote_count > 500 &&
-    movie.poster_path !== null
-  )
+  const availableMovies = movies.value.filter(
+    (movie) =>
+      !previousMovies.value.includes(movie.id) &&
+      movie.keywords &&
+      movie.keywords.keywords.length >= 4 &&
+      movie.vote_count > 500 &&
+      movie.poster_path !== null,
+  );
 
-  const selectedMovies = []
+  const selectedMovies = [];
   while (selectedMovies.length < 4 && availableMovies.length > 0) {
-    const randomIndex = Math.floor(Math.random() * availableMovies.length)
-    selectedMovies.push(availableMovies.splice(randomIndex, 1)[0])
+    const randomIndex = Math.floor(Math.random() * availableMovies.length);
+    selectedMovies.push(availableMovies.splice(randomIndex, 1)[0]);
   }
-  return selectedMovies
-})
+  return selectedMovies;
+});
 
 const poster = computed(
-  () => `https://image.tmdb.org/t/p/original/${moviesForQuiz.value[correctIndex.value].poster_path}`
-)
+  () =>
+    `https://image.tmdb.org/t/p/original/${moviesForQuiz.value[correctIndex.value].poster_path}`,
+);
 
-const posterBlurLevels = [2, 1.5, 1.25, 1, 0.75, 0.5, 0.2, 0.1, 0]
-const posterBlurIndex = ref(0)
-const posterStyle = ref(`filter:blur(${posterBlurLevels[posterBlurIndex.value]}rem)`)
+const posterBlurLevels = [2, 1.5, 1.25, 1, 0.75, 0.5, 0.2, 0.1, 0];
+const posterBlurIndex = ref(0);
+const posterStyle = ref(
+  `filter:blur(${posterBlurLevels[posterBlurIndex.value]}rem)`,
+);
 
 const updatePosterBlur = () => {
   if (posterBlurIndex.value < posterBlurLevels.length - 1) {
-    posterBlurIndex.value += 1
-    posterStyle.value = `filter:blur(${posterBlurLevels[posterBlurIndex.value]}rem)`
+    posterBlurIndex.value += 1;
+    posterStyle.value = `filter:blur(${posterBlurLevels[posterBlurIndex.value]}rem)`;
   } else {
-    clearInterval(intervalPosterBlur.value)
-    intervalPosterBlur.value = undefined
+    clearInterval(intervalPosterBlur.value);
+    intervalPosterBlur.value = undefined;
   }
-}
+};
 
 const resetPosterBlur = () => {
-  posterBlurIndex.value = 0
-  posterStyle.value = `filter:blur(${posterBlurLevels[posterBlurIndex.value]}rem)`
-}
-const movieTitlesForQuiz = computed(() => moviesForQuiz.value.map(movie => movie.title || movie.original_title))
-const keywordsForMovies = computed(() => moviesForQuiz.value.map(movie => movie.keywords?.keywords.map((keyword) => keyword.name)))
+  posterBlurIndex.value = 0;
+  posterStyle.value = `filter:blur(${posterBlurLevels[posterBlurIndex.value]}rem)`;
+};
+const movieTitlesForQuiz = computed(() =>
+  moviesForQuiz.value.map((movie) => movie.title || movie.original_title),
+);
+const keywordsForMovies = computed(() =>
+  moviesForQuiz.value.map((movie) =>
+    movie.keywords?.keywords.map((keyword) => keyword.name),
+  ),
+);
 
 const checkForRightAnswer = (indexOfAnswerGiven: number) => {
-  if (selectedAnswer.value !== null) return
-  clearInterval(intervalPosterBlur.value)
-  intervalPosterBlur.value = undefined
-  posterBlurIndex.value = posterBlurLevels.length - 1
-  posterStyle.value = `filter:blur(${posterBlurLevels[posterBlurIndex.value]}rem)`
-  clearInterval(intervalKeywords.value)
-  intervalKeywords.value = undefined
-  clearInterval(intervalPoints.value)
-  intervalPoints.value = undefined
-  selectedAnswer.value = indexOfAnswerGiven
+  if (selectedAnswer.value !== null) return;
+  clearInterval(intervalPosterBlur.value);
+  intervalPosterBlur.value = undefined;
+  posterBlurIndex.value = posterBlurLevels.length - 1;
+  posterStyle.value = `filter:blur(${posterBlurLevels[posterBlurIndex.value]}rem)`;
+  clearInterval(intervalKeywords.value);
+  intervalKeywords.value = undefined;
+  clearInterval(intervalPoints.value);
+  intervalPoints.value = undefined;
+  selectedAnswer.value = indexOfAnswerGiven;
   if (indexOfAnswerGiven === correctIndex.value) {
-    correctGuesses.value++
-    score.value += currentPoints.value
+    correctGuesses.value++;
+    score.value += currentPoints.value;
   }
-  
+
   if (round.value < 10) {
     setTimeout(() => {
-      round.value++
-      showRoundModal.value = true
-      selectedAnswer.value = null
+      round.value++;
+      showRoundModal.value = true;
+      selectedAnswer.value = null;
       setTimeout(() => {
-        displayedKeywords.value = []
-        previousMovies.value.push(...moviesForQuiz.value.map(movie => movie.id))
+        displayedKeywords.value = [];
+        previousMovies.value.push(
+          ...moviesForQuiz.value.map((movie) => movie.id),
+        );
         setTimeout(() => {
-          showRoundModal.value = false
-          startNewRound()
-        }, 2000)
-      }, 400)
-    }, 1900)
-    
+          showRoundModal.value = false;
+          startNewRound();
+        }, 2000);
+      }, 400);
+    }, 1900);
   } else {
-    setTimeout(() => { showModal.value = true }, 1900)
+    setTimeout(() => {
+      showModal.value = true;
+    }, 1900);
   }
-}
+};
 
 const buttonClass = (index: number) => {
-  if (selectedAnswer.value === null) return 'answer-unselected'
-  if (index === correctIndex.value) return 'answer-correct'
-  if (index === selectedAnswer.value) return 'answer-incorrect'
-  return 'answer-neutral'
-}
+  if (selectedAnswer.value === null) return "answer-unselected";
+  if (index === correctIndex.value) return "answer-correct";
+  if (index === selectedAnswer.value) return "answer-incorrect";
+  return "answer-neutral";
+};
 
 const currentPointsClass = computed(() => {
   if (currentPoints.value < 400) {
-    return 'text-red-500'
+    return "text-red-500";
   } else if (currentPoints.value >= 400 && currentPoints.value <= 600) {
-    return 'text-yellow-500'
+    return "text-yellow-500";
   } else {
-    return ''
+    return "";
   }
-})
+});
 
-const setRandomCorrectIndex = () => correctIndex.value = Math.floor(Math.random() * 4)
+const setRandomCorrectIndex = () =>
+  (correctIndex.value = Math.floor(Math.random() * 4));
 
 const displayKeywords = () => {
-  const keywords = keywordsForMovies.value[correctIndex.value]
-  if (!keywords) return
-  let index = 0
-  displayedKeywords.value = []
+  const keywords = keywordsForMovies.value[correctIndex.value];
+  if (!keywords) return;
+  let index = 0;
+  displayedKeywords.value = [];
 
   intervalKeywords.value = setInterval(() => {
     if (index < keywords.length) {
-      displayedKeywords.value.push(keywords[index])
-      index++
+      displayedKeywords.value.push(keywords[index]);
+      index++;
     } else {
-      clearInterval(intervalKeywords.value)
+      clearInterval(intervalKeywords.value);
     }
-    if (index === 10) clearInterval(intervalKeywords.value)
-  }, 3000)
-}
+    if (index === 10) clearInterval(intervalKeywords.value);
+  }, 3000);
+};
 
 const startGame = () => {
-  showRoundModal.value = true
+  showRoundModal.value = true;
   setTimeout(() => {
-    showRoundModal.value = false
-    gameRunning.value = true
-    startNewRound()
-  }, 2000)
-}
+    showRoundModal.value = false;
+    gameRunning.value = true;
+    startNewRound();
+  }, 2000);
+};
 
 const startNewRound = () => {
-  setRandomCorrectIndex()
-  playMode.value = round.value % 2 === 0 ? 'poster' : 'keywords'
-  clearInterval(intervalKeywords.value)
-  clearInterval(intervalPoints.value)
-  resetPosterBlur()
-  displayKeywords()
-  intervalPosterBlur.value = setInterval(() => updatePosterBlur(), 3000)
-  currentPoints.value = 1000
+  setRandomCorrectIndex();
+  playMode.value = round.value % 2 === 0 ? "poster" : "keywords";
+  clearInterval(intervalKeywords.value);
+  clearInterval(intervalPoints.value);
+  resetPosterBlur();
+  displayKeywords();
+  intervalPosterBlur.value = setInterval(() => updatePosterBlur(), 3000);
+  currentPoints.value = 1000;
   setTimeout(() => {
-      intervalPoints.value = setInterval(() => {
-        if (currentPoints.value > 0) {
-          currentPoints.value -= 50
-        } else {
-          clearInterval(intervalPoints.value)
-        }
-      }, 2000)}, 4000)
-}
+    intervalPoints.value = setInterval(() => {
+      if (currentPoints.value > 0) {
+        currentPoints.value -= 50;
+      } else {
+        clearInterval(intervalPoints.value);
+      }
+    }, 2000);
+  }, 4000);
+};
 
 const getPlayerTitle = (score: number) => {
-  if (score > 8500) return t('quiz.titles.worldClassCineast')
-  if (score > 7500) return t('quiz.titles.cineast')
-  if (score > 6500) return t('quiz.titles.movieExpert')
-  if (score > 5500) return t('quiz.titles.movieFan')
-  return t('quiz.titles.movieBeginner')
-}
+  if (score > 8500) return t("quiz.titles.worldClassCineast");
+  if (score > 7500) return t("quiz.titles.cineast");
+  if (score > 6500) return t("quiz.titles.movieExpert");
+  if (score > 5500) return t("quiz.titles.movieFan");
+  return t("quiz.titles.movieBeginner");
+};
 
 const playAgain = () => {
-    gameRunning.value = false
-  	showModal.value = false
-    showRoundModal.value = false
-    correctIndex.value = -1
-    selectedAnswer.value = null
-    displayedKeywords.value = []
-    previousMovies.value = []
-    intervalKeywords.value = undefined
-    intervalPoints.value = undefined
-    correctGuesses.value = 0
-    round.value = 1
-    score.value = 0
-    currentPoints.value = 1000
-}
+  gameRunning.value = false;
+  showModal.value = false;
+  showRoundModal.value = false;
+  correctIndex.value = -1;
+  selectedAnswer.value = null;
+  displayedKeywords.value = [];
+  previousMovies.value = [];
+  intervalKeywords.value = undefined;
+  intervalPoints.value = undefined;
+  correctGuesses.value = 0;
+  round.value = 1;
+  score.value = 0;
+  currentPoints.value = 1000;
+};
 
 const toggleFullscreen = () => {
-  const elem = document.documentElement
+  const elem = document.documentElement;
   if (!document.fullscreenElement) {
-      elem.requestFullscreen()
-      store.isFullscreen = true
+    elem.requestFullscreen();
+    store.isFullscreen = true;
   } else {
     if (document.exitFullscreen) {
-      document.exitFullscreen()
-      store.isFullscreen = false
+      document.exitFullscreen();
+      store.isFullscreen = false;
     }
   }
-}
+};
 
 const goBack = () => {
   if (document.exitFullscreen) {
-    document.exitFullscreen()
-    store.isFullscreen = false
+    document.exitFullscreen();
+    store.isFullscreen = false;
   }
-  navigateTo(localePath('/'))
-}
+  navigateTo(localePath("/"));
+};
 
 useSeoMeta({
-  title: 'Triggerscore Quiz - Movie guessing based on keywords',
-  description: 'Play Movie Quiz on Triggerscore',
-  author: 'Christian Eckardt',
-  ogTitle: 'Triggerscore Quiz - Movie guessing based on keywords',
-  ogDescription: 'Play Movie Quiz on Triggerscore',
-  ogUrl: () => `https://www.triggerscore.de/Quiz`,
-  ogType: 'website',
-  charset: 'utf-8',
-  viewport: 'width=device-width, initial-scale=1.0',
-})
+  title: "Triggerscore Quiz - Movie guessing based on keywords",
+  description: "Play Movie Quiz on Triggerscore",
+  author: "Christian Eckardt",
+  ogTitle: "Triggerscore Quiz - Movie guessing based on keywords",
+  ogDescription: "Play Movie Quiz on Triggerscore",
+  ogUrl: () => `https://www.triggerscore.netlify.app/Quiz`,
+  ogType: "website",
+  charset: "utf-8",
+  viewport: "width=device-width, initial-scale=1.0",
+});
 </script>
 
 <style scoped>
@@ -446,7 +504,7 @@ useSeoMeta({
 }
 
 .answer-incorrect {
-  @apply bg-red-700 p-3 transition rounded-lg text-white font-semibold drop
+  @apply bg-red-700 p-3 transition rounded-lg text-white font-semibold drop;
 }
 
 .answer-neutral {
@@ -509,13 +567,15 @@ useSeoMeta({
   animation: drop 1s ease-in-out;
 }
 
-.image-wrapper, .image-wrapper img {
+.image-wrapper,
+.image-wrapper img {
   max-height: 30vh;
   width: auto;
 }
 
 @media screen and (min-width: 450px) {
-  .image-wrapper, .image-wrapper img {
+  .image-wrapper,
+  .image-wrapper img {
     max-height: 35vh;
   }
 
@@ -562,5 +622,4 @@ useSeoMeta({
     transform: translateY(0) scale(1);
   }
 }
-
 </style>

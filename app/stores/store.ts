@@ -1,602 +1,602 @@
-import { defineStore } from 'pinia'
-import type { Movie } from '~/types/movie'
-import type { Locale } from 'vue-i18n'
+import { defineStore } from "pinia";
+import type { Movie } from "~/types/movie";
+import type { Locale } from "vue-i18n";
 
 export type ScoreKey =
-	| 'rating_total'
-	| 'rating_sexism'
-	| 'rating_racism'
-	| 'rating_others'
-	| 'rating_cringe'
+  | "rating_total"
+  | "rating_sexism"
+  | "rating_racism"
+  | "rating_others"
+  | "rating_cringe";
 export type SortingOption =
-	| 'a-z'
-	| 'z-a'
-	| 'date-desc'
-	| 'date-asc'
-	| 'ts-desc'
-	| 'ts-asc'
+  | "a-z"
+  | "z-a"
+  | "date-desc"
+  | "date-asc"
+  | "ts-desc"
+  | "ts-asc";
 
 export interface TriggerScore {
-	id: number
-	movie_id: number
-	rating_sexism: number
-	rating_racism: number
-	rating_others: number
-	rating_cringe: number
-	comment?: string
-	liked?: number
-	disliked?: number
-	rating_total: number
-	ratings: number
-	comments: string[]
-	likes: number
-	dislikes: number
+  id: number;
+  movie_id: number;
+  rating_sexism: number;
+  rating_racism: number;
+  rating_others: number;
+  rating_cringe: number;
+  comment?: string;
+  liked?: number;
+  disliked?: number;
+  rating_total: number;
+  ratings: number;
+  comments: string[];
+  likes: number;
+  dislikes: number;
 }
 
 interface ProviderData {
-	netflix: number[]
-	prime: number[]
-	disney: number[]
-	sky: number[]
+  netflix: number[];
+  prime: number[];
+  disney: number[];
+  sky: number[];
 }
 
 interface Stats {
-	totalMovies?: number
-	totalRatings?: number
-	averageScore?: number
-	amountMovies?: number
-	amountComments?: number
-	amountLikes?: number
-	amountDislikes?: number
-	averageTotal?: number
-	averageSexism?: number
-	averageRacism?: number
-	averageOthers?: number
-	averageCringe?: number
+  totalMovies?: number;
+  totalRatings?: number;
+  averageScore?: number;
+  amountMovies?: number;
+  amountComments?: number;
+  amountLikes?: number;
+  amountDislikes?: number;
+  averageTotal?: number;
+  averageSexism?: number;
+  averageRacism?: number;
+  averageOthers?: number;
+  averageCringe?: number;
 }
 
 export interface RecentComment {
-	id: number
-	movie_id: number
-	comment: object
-	created_at: string
-	liked: boolean | number
-	disliked: boolean | number
+  id: number;
+  movie_id: number;
+  comment: object;
+  created_at: string;
+  liked: boolean | number;
+  disliked: boolean | number;
 }
 
 interface StoreState {
-	triggerscores: TriggerScore[]
-	movies: Movie[]
-	selectedMovie: Movie | undefined
-	loadingSelectedMovie: boolean
-	providerData: ProviderData
-	selectedMovieScore: TriggerScore | undefined
-	recentRatings: Movie[]
-	recentComments: RecentComment[]
-	recentScores: TriggerScore[]
-	filteredMovies: Movie[]
-	searchInput: string
-	searchTerm: string
-	searchResults: Movie[]
-	searchError: boolean
-	bondMovies: Movie[]
-	bondMovieIDs: number[]
-	filterMoviesByYearMin: number
-	filterMoviesByYearMax: number
-	filterMoviesByNetflix: boolean
-	filterMoviesByPrime: boolean
-	filterMoviesByDisney: boolean
-	filterMoviesBySky: boolean
-	sortingOption: SortingOption
-	highlightsLoading: boolean
-	moviesLoading: boolean
-	shownScore: ScoreKey
-	top10Sexism: Movie[]
-	top10Racism: Movie[]
-	top10Others: Movie[]
-	top10Cringe: Movie[]
-	stats: Stats | undefined
-	minScore: number
-	maxScore: number
-	isFiltering: boolean
-	isMaintenanceMode: boolean
-	isFullscreen: boolean
-	hasLoadedData: boolean
+  triggerscores: TriggerScore[];
+  movies: Movie[];
+  selectedMovie: Movie | undefined;
+  loadingSelectedMovie: boolean;
+  providerData: ProviderData;
+  selectedMovieScore: TriggerScore | undefined;
+  recentRatings: Movie[];
+  recentComments: RecentComment[];
+  recentScores: TriggerScore[];
+  filteredMovies: Movie[];
+  searchInput: string;
+  searchTerm: string;
+  searchResults: Movie[];
+  searchError: boolean;
+  bondMovies: Movie[];
+  bondMovieIDs: number[];
+  filterMoviesByYearMin: number;
+  filterMoviesByYearMax: number;
+  filterMoviesByNetflix: boolean;
+  filterMoviesByPrime: boolean;
+  filterMoviesByDisney: boolean;
+  filterMoviesBySky: boolean;
+  sortingOption: SortingOption;
+  highlightsLoading: boolean;
+  moviesLoading: boolean;
+  shownScore: ScoreKey;
+  top10Sexism: Movie[];
+  top10Racism: Movie[];
+  top10Others: Movie[];
+  top10Cringe: Movie[];
+  stats: Stats | undefined;
+  minScore: number;
+  maxScore: number;
+  isFiltering: boolean;
+  isMaintenanceMode: boolean;
+  isFullscreen: boolean;
+  hasLoadedData: boolean;
 }
 
 const apiBaseUrl =
-	process.env.NODE_ENV === 'development'
-		? 'http://localhost:8888/.netlify/functions'
-		: 'https://www.triggerscore.de/.netlify/functions'
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:8888/.netlify/functions"
+    : "https://www.triggerscore.netlify.app/.netlify/functions";
 
 const sortAtoZ = (x: Movie, y: Movie): 1 | -1 | 0 => {
-	const titleX = x.title ? x.title : x.original_title
-	const titleY = y.title ? y.title : y.original_title
-	if (titleX < titleY) {
-		return -1
-	}
-	if (titleX > titleY) {
-		return 1
-	}
-	return 0
-}
+  const titleX = x.title ? x.title : x.original_title;
+  const titleY = y.title ? y.title : y.original_title;
+  if (titleX < titleY) {
+    return -1;
+  }
+  if (titleX > titleY) {
+    return 1;
+  }
+  return 0;
+};
 
 const sortZtoA = (x: Movie, y: Movie) => {
-	const titleX = x.title ? x.title : x.original_title
-	const titleY = y.title ? y.title : y.original_title
-	if (titleX > titleY) {
-		return -1
-	}
-	if (titleX < titleY) {
-		return 1
-	}
-	return 0
-}
+  const titleX = x.title ? x.title : x.original_title;
+  const titleY = y.title ? y.title : y.original_title;
+  if (titleX > titleY) {
+    return -1;
+  }
+  if (titleX < titleY) {
+    return 1;
+  }
+  return 0;
+};
 
 const sortByDateDesc = (x: Movie, y: Movie) =>
-	Number(new Date(y.release_date)) - Number(new Date(x.release_date))
+  Number(new Date(y.release_date)) - Number(new Date(x.release_date));
 
 const sortByDateAsc = (x: Movie, y: Movie) =>
-	Number(new Date(x.release_date)) - Number(new Date(y.release_date))
+  Number(new Date(x.release_date)) - Number(new Date(y.release_date));
 
 const sortByTsDesc = (array: TriggerScore[], key: ScoreKey) => {
-	const scoreMap = new Map<number, TriggerScore>()
-	array.forEach((score) => scoreMap.set(score.movie_id, score))
+  const scoreMap = new Map<number, TriggerScore>();
+  array.forEach((score) => scoreMap.set(score.movie_id, score));
 
-	return (x: Movie, y: Movie) => {
-		const scoreX = scoreMap.get(x.id)?.[key] ?? 0
-		const scoreY = scoreMap.get(y.id)?.[key] ?? 0
+  return (x: Movie, y: Movie) => {
+    const scoreX = scoreMap.get(x.id)?.[key] ?? 0;
+    const scoreY = scoreMap.get(y.id)?.[key] ?? 0;
 
-		if (scoreX > scoreY) return -1
-		if (scoreX < scoreY) return 1
-		return 0
-	}
-}
+    if (scoreX > scoreY) return -1;
+    if (scoreX < scoreY) return 1;
+    return 0;
+  };
+};
 
 const sortByTsAsc = (array: TriggerScore[], key: ScoreKey) => {
-	const scoreMap = new Map<number, TriggerScore>()
-	array.forEach((score) => scoreMap.set(score.movie_id, score))
+  const scoreMap = new Map<number, TriggerScore>();
+  array.forEach((score) => scoreMap.set(score.movie_id, score));
 
-	return (x: Movie, y: Movie) => {
-		const scoreX = scoreMap.get(x.id)?.[key] ?? 0
-		const scoreY = scoreMap.get(y.id)?.[key] ?? 0
+  return (x: Movie, y: Movie) => {
+    const scoreX = scoreMap.get(x.id)?.[key] ?? 0;
+    const scoreY = scoreMap.get(y.id)?.[key] ?? 0;
 
-		if (scoreX > scoreY) return 1
-		if (scoreX < scoreY) return -1
-		return 0
-	}
-}
+    if (scoreX > scoreY) return 1;
+    if (scoreX < scoreY) return -1;
+    return 0;
+  };
+};
 
 const adjustLocale = (locale: string) => {
-	if (locale == 'us') {
-		return 'en'
-	}
-	return locale
-}
+  if (locale == "us") {
+    return "en";
+  }
+  return locale;
+};
 
-export const useStore = defineStore('store', {
-	state: (): StoreState => {
-		return {
-			triggerscores: [],
-			movies: [],
-			selectedMovie: undefined,
-			loadingSelectedMovie: false,
-			providerData: {
-				netflix: [],
-				prime: [],
-				disney: [],
-				sky: []
-			},
-			selectedMovieScore: undefined,
-			recentRatings: [],
-			recentComments: [],
-			recentScores: [],
-			filteredMovies: [],
-			searchInput: '',
-			searchTerm: '',
-			searchResults: [],
-			searchError: false,
-			bondMovies: [],
-			bondMovieIDs: [
-				646, 657, 658, 660, 667, 668, 681, 253, 682, 691, 698, 699, 700, 707,
-				708, 709, 710, 714, 36643, 36669
-			],
-			filterMoviesByYearMin: 1900,
-			filterMoviesByYearMax: 2011,
-			filterMoviesByNetflix: false,
-			filterMoviesByPrime: false,
-			filterMoviesByDisney: false,
-			filterMoviesBySky: false,
-			sortingOption: 'a-z',
-			highlightsLoading: true,
-			moviesLoading: true,
-			shownScore: 'rating_total',
-			top10Sexism: [],
-			top10Racism: [],
-			top10Others: [],
-			top10Cringe: [],
-			stats: undefined,
-			minScore: 0,
-			maxScore: 10,
-			isFiltering: false,
-			isMaintenanceMode: false,
-			isFullscreen: false,
-			hasLoadedData: false
-		}
-	},
+export const useStore = defineStore("store", {
+  state: (): StoreState => {
+    return {
+      triggerscores: [],
+      movies: [],
+      selectedMovie: undefined,
+      loadingSelectedMovie: false,
+      providerData: {
+        netflix: [],
+        prime: [],
+        disney: [],
+        sky: [],
+      },
+      selectedMovieScore: undefined,
+      recentRatings: [],
+      recentComments: [],
+      recentScores: [],
+      filteredMovies: [],
+      searchInput: "",
+      searchTerm: "",
+      searchResults: [],
+      searchError: false,
+      bondMovies: [],
+      bondMovieIDs: [
+        646, 657, 658, 660, 667, 668, 681, 253, 682, 691, 698, 699, 700, 707,
+        708, 709, 710, 714, 36643, 36669,
+      ],
+      filterMoviesByYearMin: 1900,
+      filterMoviesByYearMax: 2011,
+      filterMoviesByNetflix: false,
+      filterMoviesByPrime: false,
+      filterMoviesByDisney: false,
+      filterMoviesBySky: false,
+      sortingOption: "a-z",
+      highlightsLoading: true,
+      moviesLoading: true,
+      shownScore: "rating_total",
+      top10Sexism: [],
+      top10Racism: [],
+      top10Others: [],
+      top10Cringe: [],
+      stats: undefined,
+      minScore: 0,
+      maxScore: 10,
+      isFiltering: false,
+      isMaintenanceMode: false,
+      isFullscreen: false,
+      hasLoadedData: false,
+    };
+  },
 
-	actions: {
-		async setTriggerscores(locale: Locale) {
-			this.moviesLoading = true
+  actions: {
+    async setTriggerscores(locale: Locale) {
+      this.moviesLoading = true;
 
-			try {
-				const response = await fetch(
-					`${apiBaseUrl}/fetchScoresAndTop10sAndStats`,
-					{
-						signal: AbortSignal.timeout(25000)
-					}
-				)
+      try {
+        const response = await fetch(
+          `${apiBaseUrl}/fetchScoresAndTop10sAndStats`,
+          {
+            signal: AbortSignal.timeout(25000),
+          },
+        );
 
-				if (!response.ok) {
-					throw new Error(
-						`Failed to fetch scores: ${response.status} ${response.statusText}`
-					)
-				}
+        if (!response.ok) {
+          throw new Error(
+            `Failed to fetch scores: ${response.status} ${response.statusText}`,
+          );
+        }
 
-				const scoresAndTop10s = await response.json()
-				this.triggerscores = scoresAndTop10s.scores
+        const scoresAndTop10s = await response.json();
+        this.triggerscores = scoresAndTop10s.scores;
 
-				const loadedMovies = await fetch(
-					`${apiBaseUrl}/fetchMovies?locale=${locale}`,
-					{
-						signal: AbortSignal.timeout(25000)
-					}
-				)
+        const loadedMovies = await fetch(
+          `${apiBaseUrl}/fetchMovies?locale=${locale}`,
+          {
+            signal: AbortSignal.timeout(25000),
+          },
+        );
 
-				if (!loadedMovies.ok) {
-					throw new Error(
-						`Failed to fetch movies: ${loadedMovies.status} ${loadedMovies.statusText}`
-					)
-				}
+        if (!loadedMovies.ok) {
+          throw new Error(
+            `Failed to fetch movies: ${loadedMovies.status} ${loadedMovies.statusText}`,
+          );
+        }
 
-				this.movies = await loadedMovies.json()
+        this.movies = await loadedMovies.json();
 
-				this.setTop10Cringe(
-					scoresAndTop10s.top10s.cringe.map(
-						(score: TriggerScore) => score.movie_id
-					)
-				)
-				this.setTop10Others(
-					scoresAndTop10s.top10s.others.map(
-						(score: TriggerScore) => score.movie_id
-					)
-				)
-				this.setTop10Racism(
-					scoresAndTop10s.top10s.racism.map(
-						(score: TriggerScore) => score.movie_id
-					)
-				)
-				this.setTop10Sexism(
-					scoresAndTop10s.top10s.sexism.map(
-						(score: TriggerScore) => score.movie_id
-					)
-				)
-				this.setStats(scoresAndTop10s.stats)
-				this.setRecentRatings(scoresAndTop10s.recentRatings)
-				this.setRecentComments(scoresAndTop10s.recentComments)
-				this.hasLoadedData = true
-			} catch (error) {
-				console.error('Error in setTriggerscores:', error)
-				this.moviesLoading = false
-				throw error
-			} finally {
-				this.moviesLoading = false
-			}
-		},
+        this.setTop10Cringe(
+          scoresAndTop10s.top10s.cringe.map(
+            (score: TriggerScore) => score.movie_id,
+          ),
+        );
+        this.setTop10Others(
+          scoresAndTop10s.top10s.others.map(
+            (score: TriggerScore) => score.movie_id,
+          ),
+        );
+        this.setTop10Racism(
+          scoresAndTop10s.top10s.racism.map(
+            (score: TriggerScore) => score.movie_id,
+          ),
+        );
+        this.setTop10Sexism(
+          scoresAndTop10s.top10s.sexism.map(
+            (score: TriggerScore) => score.movie_id,
+          ),
+        );
+        this.setStats(scoresAndTop10s.stats);
+        this.setRecentRatings(scoresAndTop10s.recentRatings);
+        this.setRecentComments(scoresAndTop10s.recentComments);
+        this.hasLoadedData = true;
+      } catch (error) {
+        console.error("Error in setTriggerscores:", error);
+        this.moviesLoading = false;
+        throw error;
+      } finally {
+        this.moviesLoading = false;
+      }
+    },
 
-		setRecentRatings(ratings: TriggerScore[]) {
-			this.recentScores = ratings
-			if (!ratings || ratings.length === 0) {
-				this.recentRatings = []
-				return
-			}
-			const movieMap = new Map(this.movies.map((movie) => [movie.id, movie]))
-			const foundMovies = ratings
-				.map((entry) => movieMap.get(entry.movie_id))
-				.filter((movie): movie is Movie => movie !== undefined)
-			this.recentRatings = foundMovies
-		},
+    setRecentRatings(ratings: TriggerScore[]) {
+      this.recentScores = ratings;
+      if (!ratings || ratings.length === 0) {
+        this.recentRatings = [];
+        return;
+      }
+      const movieMap = new Map(this.movies.map((movie) => [movie.id, movie]));
+      const foundMovies = ratings
+        .map((entry) => movieMap.get(entry.movie_id))
+        .filter((movie): movie is Movie => movie !== undefined);
+      this.recentRatings = foundMovies;
+    },
 
-		async setRecentComments(comments: Array<RecentComment>) {
-			this.recentComments = comments
-		},
+    async setRecentComments(comments: Array<RecentComment>) {
+      this.recentComments = comments;
+    },
 
-		setTop10Sexism(movieIds: number[]) {
-			if (!movieIds || movieIds.length === 0) {
-				this.top10Sexism = []
-				return
-			}
+    setTop10Sexism(movieIds: number[]) {
+      if (!movieIds || movieIds.length === 0) {
+        this.top10Sexism = [];
+        return;
+      }
 
-			const foundMovies = movieIds
-				.map((id) => this.movies.find((movie) => movie.id === id))
-				.filter((movie): movie is Movie => movie !== undefined)
-			this.top10Sexism = foundMovies
-		},
+      const foundMovies = movieIds
+        .map((id) => this.movies.find((movie) => movie.id === id))
+        .filter((movie): movie is Movie => movie !== undefined);
+      this.top10Sexism = foundMovies;
+    },
 
-		setTop10Racism(movieIds: number[]) {
-			if (!movieIds || movieIds.length === 0) {
-				this.top10Sexism = []
-				return
-			}
+    setTop10Racism(movieIds: number[]) {
+      if (!movieIds || movieIds.length === 0) {
+        this.top10Sexism = [];
+        return;
+      }
 
-			const foundMovies = movieIds
-				.map((id) => this.movies.find((movie) => movie.id === id))
-				.filter((movie): movie is Movie => movie !== undefined)
-			this.top10Racism = foundMovies
-		},
+      const foundMovies = movieIds
+        .map((id) => this.movies.find((movie) => movie.id === id))
+        .filter((movie): movie is Movie => movie !== undefined);
+      this.top10Racism = foundMovies;
+    },
 
-		setTop10Others(movieIds: number[]) {
-			if (!movieIds || movieIds.length === 0) {
-				this.top10Sexism = []
-				return
-			}
+    setTop10Others(movieIds: number[]) {
+      if (!movieIds || movieIds.length === 0) {
+        this.top10Sexism = [];
+        return;
+      }
 
-			const foundMovies = movieIds
-				.map((id) => this.movies.find((movie) => movie.id === id))
-				.filter((movie): movie is Movie => movie !== undefined)
-			this.top10Others = foundMovies
-		},
+      const foundMovies = movieIds
+        .map((id) => this.movies.find((movie) => movie.id === id))
+        .filter((movie): movie is Movie => movie !== undefined);
+      this.top10Others = foundMovies;
+    },
 
-		setTop10Cringe(movieIds: number[]) {
-			if (!movieIds || movieIds.length === 0) {
-				this.top10Sexism = []
-				return
-			}
+    setTop10Cringe(movieIds: number[]) {
+      if (!movieIds || movieIds.length === 0) {
+        this.top10Sexism = [];
+        return;
+      }
 
-			const foundMovies = movieIds
-				.map((id) => this.movies.find((movie) => movie.id === id))
-				.filter((movie): movie is Movie => movie !== undefined)
-			this.top10Cringe = foundMovies
-		},
+      const foundMovies = movieIds
+        .map((id) => this.movies.find((movie) => movie.id === id))
+        .filter((movie): movie is Movie => movie !== undefined);
+      this.top10Cringe = foundMovies;
+    },
 
-		async setStats(stats: object) {
-			this.stats = stats
-		},
+    async setStats(stats: object) {
+      this.stats = stats;
+    },
 
-		setSearchInput(state: StoreState, payload: string) {
-			this.searchInput = payload
-		},
+    setSearchInput(state: StoreState, payload: string) {
+      this.searchInput = payload;
+    },
 
-		setSearchTerm(payload: string) {
-			this.searchTerm = payload
-		},
+    setSearchTerm(payload: string) {
+      this.searchTerm = payload;
+    },
 
-		async setSearchResults(locale: string) {
-			this.searchResults = []
-			this.searchError = false
-			this.searchTerm = this.searchInput
-			const fetchedSearchResults = fetch(
-				`https://api.themoviedb.org/3/search/movie?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${locale}&include_adult=false&page=1&query=${this.searchTerm}`
-			)
-				.then((res) => res.json())
-				.catch((error) => console.log(error))
-			fetchedSearchResults.then((res) => {
-				// filter search results to not show garbage entries
-				this.searchResults = res.results.filter((result: Movie) => {
-					return (
-						result.poster_path &&
-						result.overview &&
-						result.release_date &&
-						parseInt(result.release_date.substring(0, 4)) <= 2017
-					)
-				})
-				if (this.searchResults.length == 0) {
-					this.searchError = true
-				}
-			})
-		},
+    async setSearchResults(locale: string) {
+      this.searchResults = [];
+      this.searchError = false;
+      this.searchTerm = this.searchInput;
+      const fetchedSearchResults = fetch(
+        `https://api.themoviedb.org/3/search/movie?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${locale}&include_adult=false&page=1&query=${this.searchTerm}`,
+      )
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+      fetchedSearchResults.then((res) => {
+        // filter search results to not show garbage entries
+        this.searchResults = res.results.filter((result: Movie) => {
+          return (
+            result.poster_path &&
+            result.overview &&
+            result.release_date &&
+            parseInt(result.release_date.substring(0, 4)) <= 2017
+          );
+        });
+        if (this.searchResults.length == 0) {
+          this.searchError = true;
+        }
+      });
+    },
 
-		async searchMore(page: number, locale: string) {
-			const searchTerm = this.searchTerm
-			const adjustedLocale = adjustLocale(locale) // turns US locale into EN for search request
-			const fetchedSearchResults = fetch(
-				`https://api.themoviedb.org/3/search/movie?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${adjustedLocale}&include_adult=false&page=${page}&query=${searchTerm}`
-			)
-				.then((res) => res.json())
-				.catch((error) => console.log(error))
-			fetchedSearchResults.then((res) => {
-				const filteredResults = res.results.filter((result: Movie) => {
-					return (
-						result.poster_path &&
-						result.overview &&
-						result.release_date &&
-						parseInt(result.release_date.substring(0, 4)) <= 2017
-					)
-				})
-				// filter search results to not show garbage entries
-				const currentSearchResults: Movie[] = this.searchResults
-				filteredResults.map((entry: Movie) => currentSearchResults.push(entry))
-				this.searchResults = currentSearchResults
-				if (this.searchResults.length === 0) {
-					this.searchError = true
-				}
-			})
-		},
+    async searchMore(page: number, locale: string) {
+      const searchTerm = this.searchTerm;
+      const adjustedLocale = adjustLocale(locale); // turns US locale into EN for search request
+      const fetchedSearchResults = fetch(
+        `https://api.themoviedb.org/3/search/movie?api_key=3e92da81c3e5cfc7c33a33d6aa2bad8c&language=${adjustedLocale}&include_adult=false&page=${page}&query=${searchTerm}`,
+      )
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+      fetchedSearchResults.then((res) => {
+        const filteredResults = res.results.filter((result: Movie) => {
+          return (
+            result.poster_path &&
+            result.overview &&
+            result.release_date &&
+            parseInt(result.release_date.substring(0, 4)) <= 2017
+          );
+        });
+        // filter search results to not show garbage entries
+        const currentSearchResults: Movie[] = this.searchResults;
+        filteredResults.map((entry: Movie) => currentSearchResults.push(entry));
+        this.searchResults = currentSearchResults;
+        if (this.searchResults.length === 0) {
+          this.searchError = true;
+        }
+      });
+    },
 
-		resetSearch() {
-			this.searchError = false
-		},
+    resetSearch() {
+      this.searchError = false;
+    },
 
-		setSearchError(payload: boolean) {
-			this.searchError = payload
-		},
+    setSearchError(payload: boolean) {
+      this.searchError = payload;
+    },
 
-		async setBondMovies(locale: string) {
-			const data = await fetch(`/api/bondMovies?locale=${locale}`)
-			const bondMovieData = await data.json()
+    async setBondMovies(locale: string) {
+      const data = await fetch(`/api/bondMovies?locale=${locale}`);
+      const bondMovieData = await data.json();
 
-			this.bondMovies = bondMovieData
-			this.highlightsLoading = false
-		},
+      this.bondMovies = bondMovieData;
+      this.highlightsLoading = false;
+    },
 
-		async filterMovies() {
-			this.isFiltering = true
-			this.sortMovies(
-				this.sortingOption,
-				this.movies,
-				this.triggerscores,
-				this.shownScore
-			)
-			this.filterByYear(
-				this.filterMoviesByYearMax,
-				this.filterMoviesByYearMin,
-				this.filteredMovies
-			)
-			this.filterByScore(
-				this.filteredMovies,
-				this.triggerscores,
-				this.minScore,
-				this.maxScore,
-				this.shownScore
-			)
-			this.filterByProvider()
-			this.isFiltering = false
-		},
+    async filterMovies() {
+      this.isFiltering = true;
+      this.sortMovies(
+        this.sortingOption,
+        this.movies,
+        this.triggerscores,
+        this.shownScore,
+      );
+      this.filterByYear(
+        this.filterMoviesByYearMax,
+        this.filterMoviesByYearMin,
+        this.filteredMovies,
+      );
+      this.filterByScore(
+        this.filteredMovies,
+        this.triggerscores,
+        this.minScore,
+        this.maxScore,
+        this.shownScore,
+      );
+      this.filterByProvider();
+      this.isFiltering = false;
+    },
 
-		resetFilter() {
-			this.filterMoviesByPrime = false
-			this.filterMoviesByNetflix = false
-			this.filterMoviesByDisney = false
-			this.filterMoviesBySky = false
-			this.filterMoviesByYearMin = 0
-			this.filterMoviesByYearMax = 2100
-			this.minScore = 0
-			this.maxScore = 10
-		},
+    resetFilter() {
+      this.filterMoviesByPrime = false;
+      this.filterMoviesByNetflix = false;
+      this.filterMoviesByDisney = false;
+      this.filterMoviesBySky = false;
+      this.filterMoviesByYearMin = 0;
+      this.filterMoviesByYearMax = 2100;
+      this.minScore = 0;
+      this.maxScore = 10;
+    },
 
-		setSortingOption(state: StoreState, payload: SortingOption) {
-			this.sortingOption = payload
-		},
+    setSortingOption(state: StoreState, payload: SortingOption) {
+      this.sortingOption = payload;
+    },
 
-		setMovieYearMin(state: StoreState, payload: number) {
-			this.filterMoviesByYearMin = payload
-		},
+    setMovieYearMin(state: StoreState, payload: number) {
+      this.filterMoviesByYearMin = payload;
+    },
 
-		setMovieYearMax(state: StoreState, payload: number) {
-			this.filterMoviesByYearMax = payload
-		},
+    setMovieYearMax(state: StoreState, payload: number) {
+      this.filterMoviesByYearMax = payload;
+    },
 
-		setShownScore(state: StoreState, payload: ScoreKey) {
-			this.shownScore = payload
-		},
+    setShownScore(state: StoreState, payload: ScoreKey) {
+      this.shownScore = payload;
+    },
 
-		setMinScore(state: StoreState, payload: number) {
-			this.minScore = payload
-		},
+    setMinScore(state: StoreState, payload: number) {
+      this.minScore = payload;
+    },
 
-		setMaxScore(state: StoreState, payload: number) {
-			this.maxScore = payload
-		},
+    setMaxScore(state: StoreState, payload: number) {
+      this.maxScore = payload;
+    },
 
-		setIsFiltering(payload: boolean) {
-			this.isFiltering = payload
-		},
+    setIsFiltering(payload: boolean) {
+      this.isFiltering = payload;
+    },
 
-		sortMovies(
-			sortingOption: SortingOption,
-			array: Movie[],
-			triggerscores: TriggerScore[],
-			shownScore: ScoreKey
-		) {
-			if (!Array.isArray(array) || array.length <= 0) return
-			const clonedArray = [...array]
+    sortMovies(
+      sortingOption: SortingOption,
+      array: Movie[],
+      triggerscores: TriggerScore[],
+      shownScore: ScoreKey,
+    ) {
+      if (!Array.isArray(array) || array.length <= 0) return;
+      const clonedArray = [...array];
 
-			switch (sortingOption) {
-				case 'a-z':
-					clonedArray.sort(sortAtoZ)
-					break
-				case 'z-a':
-					clonedArray.sort(sortZtoA)
-					break
-				case 'date-desc':
-					clonedArray.sort(sortByDateDesc)
-					break
-				case 'date-asc':
-					clonedArray.sort(sortByDateAsc)
-					break
-				case 'ts-desc':
-					clonedArray.sort(sortByTsDesc(triggerscores, shownScore))
-					break
-				case 'ts-asc':
-					clonedArray.sort(sortByTsAsc(triggerscores, shownScore))
-					break
-				default:
-					break
-			}
+      switch (sortingOption) {
+        case "a-z":
+          clonedArray.sort(sortAtoZ);
+          break;
+        case "z-a":
+          clonedArray.sort(sortZtoA);
+          break;
+        case "date-desc":
+          clonedArray.sort(sortByDateDesc);
+          break;
+        case "date-asc":
+          clonedArray.sort(sortByDateAsc);
+          break;
+        case "ts-desc":
+          clonedArray.sort(sortByTsDesc(triggerscores, shownScore));
+          break;
+        case "ts-asc":
+          clonedArray.sort(sortByTsAsc(triggerscores, shownScore));
+          break;
+        default:
+          break;
+      }
 
-			this.filteredMovies = clonedArray
-		},
+      this.filteredMovies = clonedArray;
+    },
 
-		filterByYear(filterMax: number, filterMin: number, array: Movie[]) {
-			let clonedArray = [...array]
-			if (filterMin != null && filterMin >= 1900 && filterMin <= 2011) {
-				clonedArray = clonedArray.filter(
-					(movie) => Number(movie.release_date.slice(0, 4)) >= filterMin
-				)
-			}
-			if (filterMax != null && filterMax >= 1900 && filterMax <= 2011) {
-				clonedArray = clonedArray.filter(
-					(movie) => Number(movie.release_date.slice(0, 4)) <= filterMax + 1
-				)
-			}
-			this.filteredMovies = clonedArray
-		},
-		filterByScore(
-			array: Movie[],
-			triggerscores: TriggerScore[],
-			min: number,
-			max: number,
-			shownScore: ScoreKey
-		) {
-			let clonedArray = [...array]
-			let clonedScores = [...triggerscores]
-			clonedScores = clonedScores.filter((score) => {
-				return score[shownScore] >= min && score[shownScore] <= max
-			})
-			clonedArray = clonedArray.filter((movie: { id: number }) => {
-				return (
-					clonedScores
-						.map((score: { movie_id: number }) => score.movie_id)
-						.indexOf(movie.id) > -1
-				)
-			})
-			this.filteredMovies = clonedArray
-		},
+    filterByYear(filterMax: number, filterMin: number, array: Movie[]) {
+      let clonedArray = [...array];
+      if (filterMin != null && filterMin >= 1900 && filterMin <= 2011) {
+        clonedArray = clonedArray.filter(
+          (movie) => Number(movie.release_date.slice(0, 4)) >= filterMin,
+        );
+      }
+      if (filterMax != null && filterMax >= 1900 && filterMax <= 2011) {
+        clonedArray = clonedArray.filter(
+          (movie) => Number(movie.release_date.slice(0, 4)) <= filterMax + 1,
+        );
+      }
+      this.filteredMovies = clonedArray;
+    },
+    filterByScore(
+      array: Movie[],
+      triggerscores: TriggerScore[],
+      min: number,
+      max: number,
+      shownScore: ScoreKey,
+    ) {
+      let clonedArray = [...array];
+      let clonedScores = [...triggerscores];
+      clonedScores = clonedScores.filter((score) => {
+        return score[shownScore] >= min && score[shownScore] <= max;
+      });
+      clonedArray = clonedArray.filter((movie: { id: number }) => {
+        return (
+          clonedScores
+            .map((score: { movie_id: number }) => score.movie_id)
+            .indexOf(movie.id) > -1
+        );
+      });
+      this.filteredMovies = clonedArray;
+    },
 
-		async loadProviderData(locale: string) {
-			const data = await fetch(`${apiBaseUrl}/fetchProviders?locale=${locale}`)
-			this.providerData = await data.json()
-		},
+    async loadProviderData(locale: string) {
+      const data = await fetch(`${apiBaseUrl}/fetchProviders?locale=${locale}`);
+      this.providerData = await data.json();
+    },
 
-		async filterByProvider() {
-			if (
-				!this.filterMoviesByNetflix &&
-				!this.filterMoviesByPrime &&
-				!this.filterMoviesByDisney &&
-				!this.filterMoviesBySky
-			) {
-				return
-			}
-			const clonedArray = [...this.filteredMovies]
-			const validIds: number[] = []
-			if (this.filterMoviesByNetflix)
-				validIds.push(...this.providerData.netflix)
-			if (this.filterMoviesByPrime) validIds.push(...this.providerData.prime)
-			if (this.filterMoviesByDisney) validIds.push(...this.providerData.disney)
-			if (this.filterMoviesBySky) validIds.push(...this.providerData.sky)
-			this.filteredMovies = clonedArray.filter((movie: Movie) =>
-				validIds.includes(movie.id)
-			)
-		}
-	}
-})
+    async filterByProvider() {
+      if (
+        !this.filterMoviesByNetflix &&
+        !this.filterMoviesByPrime &&
+        !this.filterMoviesByDisney &&
+        !this.filterMoviesBySky
+      ) {
+        return;
+      }
+      const clonedArray = [...this.filteredMovies];
+      const validIds: number[] = [];
+      if (this.filterMoviesByNetflix)
+        validIds.push(...this.providerData.netflix);
+      if (this.filterMoviesByPrime) validIds.push(...this.providerData.prime);
+      if (this.filterMoviesByDisney) validIds.push(...this.providerData.disney);
+      if (this.filterMoviesBySky) validIds.push(...this.providerData.sky);
+      this.filteredMovies = clonedArray.filter((movie: Movie) =>
+        validIds.includes(movie.id),
+      );
+    },
+  },
+});

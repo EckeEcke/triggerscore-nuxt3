@@ -123,8 +123,8 @@ const score: ComputedRef<TriggerScore | undefined> = computed(() => store.select
 const title = computed(() =>
   movie.value !== emptyMovie ? movie.value?.title : 'Movie on Triggerscore'
 )
-const poster = `https://www.triggerscore.de/api/poster?poster_path=${movie.value?.poster_path}`
-const ogImage = `https://www.triggerscore.de/api/og-image?poster_path=${movie.value?.poster_path}`
+const poster = `https://www.triggerscore.netlify.app/api/poster?poster_path=${movie.value?.poster_path}`
+const ogImage = `https://www.triggerscore.netlify.app/api/og-image?poster_path=${movie.value?.poster_path}`
 const genres = computed(() => movie.value?.genres.map((genre: { name: string }) => genre.name))
 
 const totalRatings = computed(() => {
@@ -161,7 +161,7 @@ useSeoMeta({
   ogImage: ogImage,
   ogImageUrl: ogImage,
   ogImageSecureUrl: ogImage,
-  ogUrl: () => `https://www.triggerscore.de/movie/${route.params.id}`,
+  ogUrl: () => `https://www.triggerscore.netlify.app/movie/${route.params.id}`,
   ogType: 'website',
   charset: 'utf-8',
   viewport: 'width=device-width, initial-scale=1.0',
