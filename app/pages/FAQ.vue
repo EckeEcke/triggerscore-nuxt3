@@ -69,7 +69,7 @@ useSeoMeta({
   author: "Christian Eckardt",
   ogTitle: "Triggerscore - FAQ / Frequently asked questions",
   ogDescription: "Frequently asked questions about Triggerscore",
-  ogUrl: () => `https://www.triggerscore.netlify.app/faq`,
+  ogUrl: () => `https://triggerscore.netlify.app/faq`,
   ogType: "website",
   charset: "utf-8",
   viewport: "width=device-width, initial-scale=1.0",

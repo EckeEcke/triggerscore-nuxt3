@@ -199,7 +199,7 @@ const submitRating = (event: Event) => {
     original_title: movie.value?.original_title,
   };
 
-  fetch("https://www.triggerscore.netlify.app/.netlify/functions/postData", {
+  fetch("https://triggerscore.netlify.app/.netlify/functions/postData", {
     method: "post",
     headers: {
       "Content-Type": "application/json",

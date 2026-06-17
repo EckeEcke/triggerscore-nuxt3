@@ -5,7 +5,7 @@ Users can browse movies, view aggregated community scores, submit ratings/commen
 
 ## Live Project
 
-- Production: `https://www.triggerscore.netlify.app`
+- Production: `https://triggerscore.netlify.app`
 
 ## Tech Stack
 

@@ -186,7 +186,7 @@ useSeoMeta({
   author: "Christian Eckardt",
   ogTitle: "Triggerscore - Contact",
   ogDescription: "contact page for Triggerscore",
-  ogUrl: () => `https://www.triggerscore.netlify.app/contact`,
+  ogUrl: () => `https://triggerscore.netlify.app/contact`,
   ogType: "website",
   charset: "utf-8",
   viewport: "width=device-width, initial-scale=1.0",

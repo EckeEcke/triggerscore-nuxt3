@@ -68,7 +68,7 @@ const copied = ref(false);
 const route = useRoute();
 const currentURL = computed(
   () =>
-    `https://www.triggerscore.netlify.app/${locale.value}/movie/${route.params.id}`,
+    `https://triggerscore.netlify.app/${locale.value}/movie/${route.params.id}`,
 );
 
 const whatsAppLink = computed(

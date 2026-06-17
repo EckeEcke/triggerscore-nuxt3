@@ -14,7 +14,7 @@ const devAllowedOrigins = [
   "http://localhost:3001",
   "http://localhost:8888",
 ];
-const prodAllowedOrigins = ["https://www.triggerscore.netlify.app"];
+const prodAllowedOrigins = ["https://triggerscore.netlify.app"];
 
 const allowedOrigins =
   process.env.NODE_ENV === "development"

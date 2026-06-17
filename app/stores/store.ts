@@ -107,7 +107,7 @@ interface StoreState {
 const apiBaseUrl =
   process.env.NODE_ENV === "development"
     ? "http://localhost:8888/.netlify/functions"
-    : "https://www.triggerscore.netlify.app/.netlify/functions";
+    : "https://triggerscore.netlify.app/.netlify/functions";
 
 const sortAtoZ = (x: Movie, y: Movie): 1 | -1 | 0 => {
   const titleX = x.title ? x.title : x.original_title;

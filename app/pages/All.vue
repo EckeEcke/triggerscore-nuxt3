@@ -180,7 +180,7 @@ useSeoMeta({
   ogTitle: "Triggerscore - About / What is Triggerscore",
   ogDescription:
     "Triggerscore - rating old movies based on how much users today get triggered",
-  ogUrl: () => `https://www.triggerscore.netlify.app/about`,
+  ogUrl: () => `https://triggerscore.netlify.app/about`,
   ogType: "website",
   charset: "utf-8",
   viewport: "width=device-width, initial-scale=1.0",

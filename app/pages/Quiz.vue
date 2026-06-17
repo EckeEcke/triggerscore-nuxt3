@@ -438,7 +438,7 @@ useSeoMeta({
   author: "Christian Eckardt",
   ogTitle: "Triggerscore Quiz - Movie guessing based on keywords",
   ogDescription: "Play Movie Quiz on Triggerscore",
-  ogUrl: () => `https://www.triggerscore.netlify.app/Quiz`,
+  ogUrl: () => `https://triggerscore.netlify.app/Quiz`,
   ogType: "website",
   charset: "utf-8",
   viewport: "width=device-width, initial-scale=1.0",

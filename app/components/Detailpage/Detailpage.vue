@@ -9,15 +9,13 @@
               :src="poster"
               alt="movie poster"
               class="movie-poster detail-page-box-shadow"
-            >
+            />
             <MovieScore />
           </div>
           <div class="movie-data-section">
             <div class="movie-data-container">
               <div class="flex justify-between">
-                <h2
-                  class="title"
-                >
+                <h2 class="title">
                   {{ movie?.title ?? movie?.original_title }}
                 </h2>
               </div>
@@ -27,13 +25,14 @@
                 <span>{{ movie?.runtime }} {{ t("general.minutes") }}</span>
                 <template v-if="totalRatings.length">
                   <span v-if="totalRatings[0]" class="mx-2">|</span>
-                  <span v-if="totalRatings[0]">{{ totalRatings[0].ratings }}
+                  <span v-if="totalRatings[0]"
+                    >{{ totalRatings[0].ratings }}
                     {{ t("general.ratings") }}
                   </span>
                 </template>
                 <span v-if="movie?.vote_average" class="mx-2">|</span>
                 <span v-if="movie?.vote_average">
-                  <wbr >{{ t("rating.tmdb-rating") }}:
+                  <wbr />{{ t("rating.tmdb-rating") }}:
                   {{ movie?.vote_average.toFixed(2) }}
                 </span>
                 <span v-if="score" class="mx-2 mb-2">|</span>
@@ -51,8 +50,10 @@
                 </div>
               </div>
 
-              <i v-if="movie?.tagline && movie?.tagline.length > 1" class="text-sm md:text-base">"
-                {{ movie.tagline }}"
+              <i
+                v-if="movie?.tagline && movie?.tagline.length > 1"
+                class="text-sm md:text-base"
+                >" {{ movie.tagline }}"
               </i>
               <p class="my-4 flex flex-wrap gap-1">
                 <span
@@ -72,18 +73,18 @@
             </div>
           </div>
           <MovieComments :comments="comments" />
-          
+
           <div class="hidden md:block px-4 sm:mb-4">
             <ShareMovie :movie="movie" />
           </div>
         </div>
         <RateMovie />
-        <hr>
+        <hr />
         <div class="px-4 md:hidden py-12 mb-4">
           <ShareMovie :movie="movie" />
         </div>
       </div>
-      <hr class="border-gray-800" >
+      <hr class="border-gray-800" />
       <div class="radial-background similar-movies">
         <MovieHighlightsContainer
           v-if="similarMovies?.body"
@@ -91,7 +92,9 @@
           :movies="similarMoviesFiltered"
           shown-score="rating_total"
           :title="t('similar.headline')"
-          :sub-title="t('similar.copy', [movie?.title ?? movie?.original_title])"
+          :sub-title="
+            t('similar.copy', [movie?.title ?? movie?.original_title])
+          "
           more-spacing
         />
       </div>
@@ -99,89 +102,100 @@
   </section>
 </template>
 
-<script setup lang='ts'>
-import { useI18n } from 'vue-i18n'
-import {type TriggerScore, useStore} from '~/stores/store'
-import { computed, watch } from 'vue'
-import { useRoute } from 'vue-router'
-import {emptyMovie, type Movie} from '~/types/movie'
-import RateMovie from './RateMovie.vue'
-import MovieComments from './MovieComments.vue'
-import MovieIcons from './MovieIcons.vue'
-import MovieScore from './MovieScore.vue'
-import MovieTrailer from './MovieTrailer.vue'
-import ShareMovie from './ShareMovie.vue'
+<script setup lang="ts">
+import { useI18n } from "vue-i18n";
+import { type TriggerScore, useStore } from "~/stores/store";
+import { computed, watch } from "vue";
+import { useRoute } from "vue-router";
+import { emptyMovie, type Movie } from "~/types/movie";
+import RateMovie from "./RateMovie.vue";
+import MovieComments from "./MovieComments.vue";
+import MovieIcons from "./MovieIcons.vue";
+import MovieScore from "./MovieScore.vue";
+import MovieTrailer from "./MovieTrailer.vue";
+import ShareMovie from "./ShareMovie.vue";
 
-const store = useStore()
-const route = useRoute()
-const { t, locale } = useI18n()
+const store = useStore();
+const route = useRoute();
+const { t, locale } = useI18n();
 
-const movie: ComputedRef<Movie | undefined> = computed(() => store.selectedMovie)
-const releaseDate = movie.value?.release_date ? parseInt(movie.value.release_date.substring(0, 4)) : ''
-const score: ComputedRef<TriggerScore | undefined> = computed(() => store.selectedMovieScore)
+const movie: ComputedRef<Movie | undefined> = computed(
+  () => store.selectedMovie,
+);
+const releaseDate = movie.value?.release_date
+  ? parseInt(movie.value.release_date.substring(0, 4))
+  : "";
+const score: ComputedRef<TriggerScore | undefined> = computed(
+  () => store.selectedMovieScore,
+);
 
 const title = computed(() =>
-  movie.value !== emptyMovie ? movie.value?.title : 'Movie on Triggerscore'
-)
-const poster = `https://www.triggerscore.netlify.app/api/poster?poster_path=${movie.value?.poster_path}`
-const ogImage = `https://www.triggerscore.netlify.app/api/og-image?poster_path=${movie.value?.poster_path}`
-const genres = computed(() => movie.value?.genres.map((genre: { name: string }) => genre.name))
+  movie.value !== emptyMovie ? movie.value?.title : "Movie on Triggerscore",
+);
+const poster = `https://triggerscore.netlify.app/api/poster?poster_path=${movie.value?.poster_path}`;
+const ogImage = `https://triggerscore.netlify.app/api/og-image?poster_path=${movie.value?.poster_path}`;
+const genres = computed(() =>
+  movie.value?.genres.map((genre: { name: string }) => genre.name),
+);
 
 const totalRatings = computed(() => {
   return store.triggerscores.length > 0
     ? store.triggerscores.filter(
-        (movieFromStore) => movieFromStore.movie_id === movie.value?.id
+        (movieFromStore) => movieFromStore.movie_id === movie.value?.id,
       )
-    : []
-})
+    : [];
+});
 
 const comments: ComputedRef<string[] | undefined> = computed(() =>
   score.value
     ? score.value.comments.filter((comment: string) => comment.length > 3)
-    : undefined
-)
+    : undefined,
+);
 
 const { data: similarMovies } = useFetch<{ body: Movie[] }>(
-    () => `/api/fetchSimilarMovies?movie_id=${route.params.id}&locale=${locale.value}`,
-    {
-      immediate: true,
-      server: true,
-      watch: [locale],
-    }
-)
+  () =>
+    `/api/fetchSimilarMovies?movie_id=${route.params.id}&locale=${locale.value}`,
+  {
+    immediate: true,
+    server: true,
+    watch: [locale],
+  },
+);
 
-const similarMoviesFiltered = computed(() => similarMovies?.value?.body.filter((movie) => movie.poster_path !== null).slice(0,10))
+const similarMoviesFiltered = computed(() =>
+  similarMovies?.value?.body
+    .filter((movie) => movie.poster_path !== null)
+    .slice(0, 10),
+);
 
 useSeoMeta({
   title: title.value,
   description: () => `triggerscore rating for ${title.value}`,
-  author: 'Christian Eckardt',
+  author: "Christian Eckardt",
   ogTitle: title.value,
-  ogDescription: 'Triggerscore - rating old movies based on how much users today get triggered',
+  ogDescription:
+    "Triggerscore - rating old movies based on how much users today get triggered",
   ogImage: ogImage,
   ogImageUrl: ogImage,
   ogImageSecureUrl: ogImage,
-  ogUrl: () => `https://www.triggerscore.netlify.app/movie/${route.params.id}`,
-  ogType: 'website',
-  charset: 'utf-8',
-  viewport: 'width=device-width, initial-scale=1.0',
-})
+  ogUrl: () => `https://triggerscore.netlify.app/movie/${route.params.id}`,
+  ogType: "website",
+  charset: "utf-8",
+  viewport: "width=device-width, initial-scale=1.0",
+});
 
 watch(locale, () => {
   const loadMovie = async () => {
     try {
-      const { data } = await useFetch(
-      `/api/movie/${route.params.id}`
-      )
-      store.selectedMovie = data.value as Movie
+      const { data } = await useFetch(`/api/movie/${route.params.id}`);
+      store.selectedMovie = data.value as Movie;
     } catch (error) {
-      console.log('Oops, an error occurred while loading the movie: ', error)
+      console.log("Oops, an error occurred while loading the movie: ", error);
     }
-  }
+  };
 
-  loadMovie()
-})
-
+  loadMovie();
+});
 </script>
 
 <style scoped>
@@ -191,7 +205,9 @@ watch(locale, () => {
 }
 
 .detail-page-box-shadow {
-  box-shadow: rgba(50, 50, 93, 0.25) 0 50px 100px -20px, rgba(0, 0, 0, 0.3) 0 30px 60px -30px;
+  box-shadow:
+    rgba(50, 50, 93, 0.25) 0 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0 30px 60px -30px;
 }
 
 .movie-poster {
@@ -244,5 +260,4 @@ watch(locale, () => {
 hr {
   @apply border-gray-800 md:hidden;
 }
-
 </style>

@@ -112,7 +112,7 @@ useSeoMeta({
   ogTitle: "Triggerscore - rating movies based on triggering potential",
   ogDescription:
     "Triggerscore offers a new way of watching old movies from back in the day: could this movie still be made like this nowadays? Or would it cause a huge sh*tstorm?",
-  ogUrl: () => `https://www.triggerscore.netlify.app/`,
+  ogUrl: () => `https://triggerscore.netlify.app/`,
   ogType: "website",
   charset: "utf-8",
   viewport: "width=device-width, initial-scale=1.0",
